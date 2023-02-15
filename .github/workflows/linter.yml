@@ -1,0 +1,29 @@
+name: linter
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run-linter:
+    name: Run linter
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 17
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+
+      # ESLint must be in `package.json`
+      - name: Run Eslint
+        run: npm run lint
