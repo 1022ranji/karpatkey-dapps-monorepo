@@ -1,11 +1,11 @@
-import * as React from 'react'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+import Copyright from '@/components/Copyright'
+import Link from '@/components/Link'
+import ProTip from '@/components/ProTip'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Link from '../components/Link'
-import ProTip from '../components/ProTip'
-import Copyright from '../components/Copyright'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
 
 export default function About() {
   return (
