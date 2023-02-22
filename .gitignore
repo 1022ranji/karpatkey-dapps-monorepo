@@ -38,3 +38,4 @@ yarn-error.log*
 /.idea
 
 tsconfig.tsbuildinfo
+google-credentials.json
