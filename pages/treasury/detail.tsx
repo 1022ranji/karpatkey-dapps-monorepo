@@ -1,7 +1,5 @@
 import googleCredentials from '@/google-credentials.json'
 import { BigQuery } from '@google-cloud/bigquery'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 
@@ -12,21 +10,9 @@ interface IDetailProps {
 export default function Detail({ rows }: IDetailProps) {
   console.log(rows)
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          my: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          Hello detail
-        </Typography>
-      </Box>
-    </Container>
+    <Typography variant="h4" component="h1" gutterBottom>
+      Hello detail
+    </Typography>
   )
 }
 
@@ -61,8 +47,8 @@ export async function getServerSideProps() {
   const [rows] = await job.getQueryResults()
 
   // Print the results
-  console.log('Rows:')
-  rows.forEach((row) => console.log(row))
+  console.log('Rows:', JSON.stringify(rows))
+  //  rows.forEach((row) => console.log(row))
 
   // Pass data to the page via props
   return { props: { rows } }

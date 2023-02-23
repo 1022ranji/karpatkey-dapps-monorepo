@@ -2,34 +2,69 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import MenuIcon from '@mui/icons-material/Menu'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
-import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
+import ListItemText, { ListItemTextProps } from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
+import { Theme, css, styled } from '@mui/material/styles'
+import Link, { LinkProps } from 'next/link'
 import * as React from 'react'
+import { FC, ReactElement } from 'react'
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+const CommonCSS = (theme: Theme) => css`
+  margin-left: 5px;
+  padding: 5px 10px;
+  opacity: 0.7;
+  color: #1a1b1f;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  text-decoration: none;
+  font-family: ${theme.typography.fontFamily};
+  &:hover {
+    color: rgba(26, 27, 31, 0.6);
+  }
+`
+
+const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>`
+  ${({ theme }) => CommonCSS(theme)}
+`
+
+const LinkCustom = styled(Link)<LinkProps>`
+  ${({ theme }) => CommonCSS(theme)}
+`
+
+const ButtonCustom = styled(Button)<ButtonProps>`
+  ${({ theme }) => css`
+    ${CommonCSS(theme)};
+    text-transform: none;
+  `}
+`
+
+interface IDrawerAppBarProps {
   window?: () => Window
 }
 
-const DRAWER_WIDTH = 240
-const NAV_ITEMS = ['DAO Treasury Report', 'DAO Treasury Detail']
-const TITLE = 'Karpatkey'
+interface INavItem {
+  name: string
+  path: string
+}
 
-export default function DrawerAppBar(props: Props) {
+const DRAWER_WIDTH = 240
+const NAV_ITEMS: INavItem[] = [
+  { name: 'DAO Treasury Report', path: '/treasury/report' },
+  { name: 'DAO Treasury Detail', path: '/treasury/detail' }
+]
+
+const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
   const { window } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
@@ -37,7 +72,7 @@ export default function DrawerAppBar(props: Props) {
     setMobileOpen((prevState) => !prevState)
   }
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = React.useState<Maybe<HTMLElement>>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -48,17 +83,22 @@ export default function DrawerAppBar(props: Props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle}>
-      <Typography variant="h6" sx={{ my: 2, textAlign: 'center' }}>
-        {TITLE}
-      </Typography>
-      <Divider />
       <List>
-        {NAV_ITEMS.map((item: string, index: number) => (
-          <ListItem key={index} disablePadding>
+        <Link href="/treasury/panel" style={{ textDecoration: 'none', color: 'black' }}>
+          <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: 'left' }}>
-              <ListItemText primary={item} />
+              <ListItemTextCustom primary="Panel" />
             </ListItemButton>
           </ListItem>
+        </Link>
+        {NAV_ITEMS.map(({ name, path }: INavItem, index: number) => (
+          <Link href={path} key={index} style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+              <ListItemButton sx={{ textAlign: 'left' }}>
+                <ListItemTextCustom primary={name} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Box>
@@ -67,40 +107,32 @@ export default function DrawerAppBar(props: Props) {
   const container = window !== undefined ? () => window().document.body : undefined
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: 'white' }}>
-        <Toolbar>
-          <IconButton
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, color: 'black', display: { sm: 'none' } }}
+      <AppBar component="nav" sx={{ backgroundColor: 'background.default' }}>
+        <Toolbar sx={{ marginY: '10px' }}>
+          <Box
+            component={Link}
+            href="/"
+            sx={{ flexGrow: 1, alignItems: 'center', display: 'flex' }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            color="black"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            {TITLE}
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Button
+            <Box component="img" sx={{ width: '100px' }} src="/logo1.png" />
+          </Box>
+
+          <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+            <LinkCustom href="/treasury/panel">Panel</LinkCustom>
+
+            <ButtonCustom
               id="basic-button"
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
-              variant="outlined"
               onClick={handleClick}
               disableElevation
               endIcon={<KeyboardArrowDownIcon />}
-              sx={{ color: 'black', backgroundColor: 'white' }}
             >
               DAO Treasury Information
-            </Button>
+            </ButtonCustom>
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
@@ -109,18 +141,29 @@ export default function DrawerAppBar(props: Props) {
               MenuListProps={{
                 'aria-labelledby': 'basic-button'
               }}
+              sx={{ color: 'background.default' }}
             >
-              {NAV_ITEMS.map((item: string, index: number) => (
-                <MenuItem key={index} onClick={handleClose}>
-                  {item}
+              {NAV_ITEMS.map(({ name, path }: INavItem, index: number) => (
+                <MenuItem component={LinkCustom} href={path} key={index} onClick={handleClose}>
+                  {name}
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+          <IconButton
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, color: 'black', display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
+
       <Box component="nav">
         <Drawer
+          anchor={'right'}
           container={container}
           variant="temporary"
           open={mobileOpen}
@@ -136,38 +179,8 @@ export default function DrawerAppBar(props: Props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-        <Typography>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique unde fugit veniam eius,
-          perspiciatis sunt? Corporis qui ducimus quibusdam, aliquam dolore excepturi quae.
-          Distinctio enim at eligendi perferendis in cum quibusdam sed quae, accusantium et aperiam?
-          Quod itaque exercitationem, at ab sequi qui modi delectus quia corrupti alias distinctio
-          nostrum. Minima ex dolor modi inventore sapiente necessitatibus aliquam fuga et. Sed
-          numquam quibusdam at officia sapiente porro maxime corrupti perspiciatis asperiores,
-          exercitationem eius nostrum consequuntur iure aliquam itaque, assumenda et! Quibusdam
-          temporibus beatae doloremque voluptatum doloribus soluta accusamus porro reprehenderit eos
-          inventore facere, fugit, molestiae ab officiis illo voluptates recusandae. Vel dolor nobis
-          eius, ratione atque soluta, aliquam fugit qui iste architecto perspiciatis. Nobis,
-          voluptatem! Cumque, eligendi unde aliquid minus quis sit debitis obcaecati error, delectus
-          quo eius exercitationem tempore. Delectus sapiente, provident corporis dolorum quibusdam
-          aut beatae repellendus est labore quisquam praesentium repudiandae non vel laboriosam quo
-          ab perferendis velit ipsa deleniti modi! Ipsam, illo quod. Nesciunt commodi nihil corrupti
-          cum non fugiat praesentium doloremque architecto laborum aliquid. Quae, maxime recusandae?
-          Eveniet dolore molestiae dicta blanditiis est expedita eius debitis cupiditate porro sed
-          aspernatur quidem, repellat nihil quasi praesentium quia eos, quibusdam provident.
-          Incidunt tempore vel placeat voluptate iure labore, repellendus beatae quia unde est
-          aliquid dolor molestias libero. Reiciendis similique exercitationem consequatur, nobis
-          placeat illo laudantium! Enim perferendis nulla soluta magni error, provident repellat
-          similique cupiditate ipsam, et tempore cumque quod! Qui, iure suscipit tempora unde rerum
-          autem saepe nisi vel cupiditate iusto. Illum, corrupti? Fugiat quidem accusantium nulla.
-          Aliquid inventore commodi reprehenderit rerum reiciendis! Quidem alias repudiandae eaque
-          eveniet cumque nihil aliquam in expedita, impedit quas ipsum nesciunt ipsa ullam
-          consequuntur dignissimos numquam at nisi porro a, quaerat rem repellendus. Voluptates
-          perspiciatis, in pariatur impedit, nam facilis libero dolorem dolores sunt inventore
-          perferendis, aut sapiente modi nesciunt.
-        </Typography>
-      </Box>
-    </Box>
+    </>
   )
 }
+
+export default DrawerAppBar
