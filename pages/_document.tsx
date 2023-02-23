@@ -1,5 +1,5 @@
 import createEmotionCache from '@/config/createEmotionCache'
-import theme, { roboto } from '@/config/theme'
+import theme from '@/config/theme'
 import createEmotionServer from '@emotion/server/create-instance'
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 import * as React from 'react'
@@ -7,7 +7,7 @@ import * as React from 'react'
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en" className={roboto.className}>
+      <Html lang="en">
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link rel="shortcut icon" href="/favicon.ico" />

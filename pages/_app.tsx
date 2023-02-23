@@ -1,3 +1,5 @@
+import Layout from '@/components/Layout'
+import { TITLE } from '@/config/constants'
 import createEmotionCache from '@/config/createEmotionCache'
 import theme from '@/config/theme'
 import { CacheProvider, EmotionCache } from '@emotion/react'
@@ -20,11 +22,14 @@ export default function MyApp(props: MyAppProps) {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <title>{TITLE}</title>
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </CacheProvider>
   )
