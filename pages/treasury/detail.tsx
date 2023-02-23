@@ -46,10 +46,9 @@ export async function getServerSideProps() {
   // Wait for the query to finish
   const [rows] = await job.getQueryResults()
 
-  // Print the results
-  console.log('Rows:', JSON.stringify(rows))
-  //  rows.forEach((row) => console.log(row))
+  // We need to do this because the rows object is not serializable (some weird objects returned by the BigQuery API)
+  const parsedRows = JSON.parse(JSON.stringify(rows))
 
   // Pass data to the page via props
-  return { props: { rows } }
+  return { props: { rows: parsedRows } }
 }
