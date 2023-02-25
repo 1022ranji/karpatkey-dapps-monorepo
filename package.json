@@ -18,7 +18,7 @@
     "@google-cloud/bigquery": "^6.1.0",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.10",
-    "next": "13.1.6",
+    "next": "13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
