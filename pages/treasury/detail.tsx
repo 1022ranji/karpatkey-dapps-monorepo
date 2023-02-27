@@ -1,5 +1,12 @@
-import googleCredentials from '@/google-credentials.json'
-import { BigQuery } from '@google-cloud/bigquery'
+import TimeLineScale from '@/components/charts/TimeLineScale'
+import { DataWarehouse } from '@/services/classes/dataWarehouse.class'
+import { getLastWeekDate, getTodayDate } from '@/utils'
+import {
+  convertDataToLineSeries,
+  filterByRangeOfDates,
+  reducerTotalBalancesByDate
+} from '@/utils/mappers'
+import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 
@@ -8,47 +15,41 @@ interface IDetailProps {
 }
 
 export default function Detail({ rows }: IDetailProps) {
-  console.log(rows)
   return (
-    <Typography variant="h4" component="h1" gutterBottom>
-      Hello detail
-    </Typography>
+    <>
+      <Typography variant="h3">DAO Weekly Report.</Typography>
+      <Box sx={{ height: 350, width: '100%' }}>
+        <TimeLineScale data={rows} />
+      </Box>
+    </>
   )
 }
 
 export async function getServerSideProps() {
-  const bigquery = new BigQuery({
-    projectId: googleCredentials.project_id,
-    keyFilename: './google-credentials.json'
-  })
+  // Step 1: Create a BigQuery client
+  const dataWarehouse = DataWarehouse.getInstance()
 
-  // Retrieve view
-  const dataset = bigquery.dataset('reports')
-  const [view] = await dataset.table('vw_last_daily_balance_reports').get()
+  // Step 2: Query the data
+  const parsedRows = await dataWarehouse.getBalanceReports()
 
-  const fullTableId = view.metadata.id
-  const viewQuery = view.metadata.view.query
+  // Step 3: Filter the data by date range and DAO
+  const startDateTime = getLastWeekDate()
+  const endDateTime = getTodayDate()
 
-  // Display view properties
-  console.log(`View at ${fullTableId}`)
-  console.log(`View query: ${viewQuery}`)
+  const parsedRowsFiltered = filterByRangeOfDates(parsedRows, startDateTime, endDateTime)
+    .filter((item: any) => item['dao'] === 'Karpatkey')
+    .sort((a: any, b: any) => {
+      const aDate = a['kitche_date'].value
+      const bDate = b['kitche_date'].value
+      return new Date(aDate).getTime() - new Date(bDate).getTime()
+    })
 
-  const options = {
-    query: viewQuery,
-    // Location must match that of the dataset(s) referenced in the query.
-    location: 'US'
-  }
+  // Step 4: Reduce the data to a single object, with the date as key and the total balance as value
+  const parsedRowsReduced = parsedRowsFiltered.reduce(reducerTotalBalancesByDate, {})
 
-  // Run the query as a job
-  const [job] = await bigquery.createQueryJob(options)
-  console.log(`Job ${job.id} started.`)
-
-  // Wait for the query to finish
-  const [rows] = await job.getQueryResults()
-
-  // We need to do this because the rows object is not serializable (some weird objects returned by the BigQuery API)
-  const parsedRows = JSON.parse(JSON.stringify(rows))
+  // Step 5: Convert the data to a format that can be used by the chart
+  const rows = convertDataToLineSeries(parsedRowsReduced)
 
   // Pass data to the page via props
-  return { props: { rows: parsedRows } }
+  return { props: { rows } }
 }
