@@ -1,4 +1,4 @@
-import { TITLE } from '@/config/constants'
+import { TITLE } from '@/src/config/constants'
 import { Box, Container, Grid, Typography } from '@mui/material'
 import React, { FC, ReactElement } from 'react'
 

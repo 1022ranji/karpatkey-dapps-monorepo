@@ -1,11 +1,11 @@
-import TimeLineScale from '@/components/charts/TimeLineScale'
-import { DataWarehouse } from '@/services/classes/dataWarehouse.class'
-import { getLastWeekDate, getTodayDate } from '@/utils'
+import TimeLineScale from '@/src/components/charts/TimeLineScale'
+import { DataWarehouse } from '@/src/services/classes/dataWarehouse.class'
+import { getLastWeekDate, getTodayDate } from '@/src/utils'
 import {
   convertDataToLineSeries,
   filterByRangeOfDates,
   reducerTotalBalancesByDate
-} from '@/utils/mappers'
+} from '@/src/utils/mappers/index'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'

@@ -19,13 +19,11 @@ const Layout = ({ children }: ILayoutProps): ReactElement => {
       <Container maxWidth="lg">
         <Toolbar />
         <Box
-          sx={{
-            my: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          marginY={8}
         >
           {children}
         </Box>

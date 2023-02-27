@@ -15,8 +15,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import { Theme, css, styled } from '@mui/material/styles'
 import Link, { LinkProps } from 'next/link'
-import * as React from 'react'
-import { FC, ReactElement } from 'react'
+import React, { FC, ReactElement } from 'react'
 
 const CommonCSS = (theme: Theme) => css`
   margin-left: 5px;

@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { spawn } from 'child_process'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -11,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Status
     try {
       let message: string
       // spawn new child process to call the python script
-      const python = spawn('python3', ['./scripts/example.py'])
+      const python = spawn('python3', ['./scripts/main.py'])
 
       // collect data from script
       python.stdout.on('data', (data) => {
