@@ -6,31 +6,26 @@ const theme = createTheme({
   typography: {
     fontFamily: "'IBM Plex Sans', sans-serif",
     h1: {
-      fontFamily: "'IBM Plex Sans', sans-serif",
-      textShadow: '2px 1px #43C9ED',
+      fontFamily: "'IBM Plex Mono', sans-serif",
+      fontSize: '60px',
       lineHeight: '2.5',
       letterSpacing: '4.8px',
-      fontWeight: '500',
-      color: 'white'
+      fontWeight: '400'
     },
     h2: {
-      fontFamily: "'IBM Plex Sans', sans-serif",
-      textShadow: '2px 1px #43C9ED',
+      fontFamily: "'IBM Plex Mono', sans-serif",
       lineHeight: '2',
       letterSpacing: '3.6px',
-      fontWeight: '400',
-      color: 'white'
+      fontWeight: '400'
     },
     h3: {
-      fontFamily: "'IBM Plex Sans', sans-serif",
-      textShadow: '2px 1px #43C9ED',
+      fontFamily: "'IBM Plex Mono', sans-serif",
       lineHeight: '1.3',
       letterSpacing: '3.2px',
-      fontWeight: '300',
-      color: 'white'
+      fontWeight: '300'
     },
     h4: {
-      fontFamily: "'IBM Plex Sans', sans-serif"
+      fontFamily: "'IBM Plex Mono', sans-serif"
     },
     body1: {
       fontFamily: "'IBM Plex Sans', sans-serif",
