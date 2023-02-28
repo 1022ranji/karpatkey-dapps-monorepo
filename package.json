@@ -22,7 +22,7 @@
     "@nivo/core": "^0.80.0",
     "@nivo/line": "^0.80.0",
     "@nivo/tooltip": "^0.80.0",
-    "@typescript-eslint/parser": "^5.53.0",
+    "@typescript-eslint/parser": "^5.54.0",
     "classnames": "^2.3.2",
     "next": "13.2.1",
     "prop-types": "^15.8.1",
