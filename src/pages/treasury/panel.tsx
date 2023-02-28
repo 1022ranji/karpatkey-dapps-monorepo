@@ -1,6 +1,7 @@
 import ContainerWrapper from '@/src/components/ContainerWrapper'
 import CustomTypography from '@/src/components/CustomTypography'
 import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
+import ModalDialog from '@/src/components/ModalDialog'
 import TextLink from '@/src/components/TextLink'
 import SendIcon from '@mui/icons-material/Send'
 import Alert from '@mui/material/Alert'
@@ -18,7 +19,20 @@ export default function Panel() {
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<Maybe<Error>>(null)
 
-  const onClick = async () => {
+  const [open, setOpen] = React.useState(false)
+
+  const onClick = () => {
+    setOpen(true)
+  }
+
+  const handleClose = async (status: boolean) => {
+    setOpen(false)
+    if (status) {
+      await handleModalClick()
+    }
+  }
+
+  const handleModalClick = async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/trigger`)
@@ -52,6 +66,12 @@ export default function Panel() {
         >
           Execute python script
         </Button>
+        <ModalDialog
+          open={open}
+          title="Are you sure?"
+          description="This will execute an action on the selected position."
+          handleClose={handleClose}
+        />
         {error && <Alert severity="error">{error.message}</Alert>}
         {data && data.status && (
           <Alert severity="success">
