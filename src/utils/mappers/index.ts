@@ -30,11 +30,21 @@ export const reducerTotalBalancesByDate = (acc: any, obj: any) => {
   return acc
 }
 
+export const reducerTotalBalancesByAsset = (acc: any, obj: any) => {
+  const assetKey = obj['token_coin_asset']
+
+  if (!acc[assetKey]) acc[assetKey] = 0
+
+  acc[assetKey] = acc[assetKey] + ((obj['balance'] ?? 0) * obj['price'] ?? 0)
+
+  return acc
+}
+
 /**
  * Convert data to be used in a line series chart, from the report balance view
  * @param data
  */
-export const convertDataToLineSeries = (data: any) => {
+export const mapDataToLineSeries = (data: any) => {
   return Object.keys(data).map((daoName: string) => {
     return {
       id: daoName,
@@ -44,6 +54,20 @@ export const convertDataToLineSeries = (data: any) => {
           y: data[daoName][date].total
         }
       })
+    }
+  })
+}
+
+export const mapDataToPie = (data: any[]) => {
+  const total = Object.values(data).reduce((accumulator: any, value: any) => accumulator + value, 0)
+
+  return Object.keys(data).map((assetName: string) => {
+    const value = (data[assetName as any] / total) * 100
+    const id = assetName.charAt(0).toUpperCase() + assetName.slice(1).toLowerCase()
+    return {
+      id,
+      name: assetName,
+      value: value.toFixed(2)
     }
   })
 }

@@ -5,8 +5,8 @@ import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWr
 import { DataWarehouse } from '@/src/services/classes/dataWarehouse.class'
 import { getLastWeekDate, getTodayDate } from '@/src/utils'
 import {
-  convertDataToLineSeries,
   filterByRangeOfDates,
+  mapDataToLineSeries,
   reducerTotalBalancesByDate
 } from '@/src/utils/mappers/index'
 import Box from '@mui/material/Box'
@@ -54,7 +54,7 @@ export async function getServerSideProps() {
   const parsedRowsReduced = parsedRowsFiltered.reduce(reducerTotalBalancesByDate, {})
 
   // Step 5: Convert the data to a format that can be used by the chart
-  const rows = convertDataToLineSeries(parsedRowsReduced)
+  const rows = mapDataToLineSeries(parsedRowsReduced)
 
   // Pass data to the page via props
   return { props: { rows } }

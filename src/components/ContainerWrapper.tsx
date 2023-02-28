@@ -7,7 +7,8 @@ const StyledContainer = styled(Container)(() => ({
   margin: '0 auto',
   zIndex: 10,
   paddingLeft: 20,
-  paddingRight: 20
+  paddingRight: 20,
+  marginTop: 20
 }))
 
 const ContainerWrapper: FC<ContainerProps> = (props) => (
