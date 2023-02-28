@@ -4,18 +4,20 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every week
-      interval: "weekly"
+      # Check for updates to GitHub Actions in a daily basis
+      interval: "daily"
+    reviewers:
+      - "mariano-aguero"
   # Configuration for npm
   - package-ecosystem: "npm"
     directory: '/'
     schedule:
-      interval: 'weekly'
-      day: 'saturday'
+      interval: 'daily'
+    reviewers:
+      - "mariano-aguero"
     versioning-strategy: 'increase'
     labels:
       - 'dependencies'
-    open-pull-requests-limit: 5
     pull-request-branch-name:
       separator: '-'
     commit-message:

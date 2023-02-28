@@ -1,13 +1,15 @@
-import TimeLineScale from '@/components/charts/TimeLineScale'
-import { DataWarehouse } from '@/services/classes/dataWarehouse.class'
-import { getLastWeekDate, getTodayDate } from '@/utils'
+import TimeLineScale from '@/src/components/Charts/TimeLineScale'
+import ContainerWrapper from '@/src/components/ContainerWrapper'
+import CustomTypography from '@/src/components/CustomTypography'
+import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
+import { DataWarehouse } from '@/src/services/classes/dataWarehouse.class'
+import { getLastWeekDate, getTodayDate } from '@/src/utils'
 import {
   convertDataToLineSeries,
   filterByRangeOfDates,
   reducerTotalBalancesByDate
-} from '@/utils/mappers'
-import { Box } from '@mui/material'
-import Typography from '@mui/material/Typography'
+} from '@/src/utils/mappers/index'
+import Box from '@mui/material/Box'
 import * as React from 'react'
 
 interface IDetailProps {
@@ -16,12 +18,16 @@ interface IDetailProps {
 
 export default function Detail({ rows }: IDetailProps) {
   return (
-    <>
-      <Typography variant="h3">DAO Weekly Report.</Typography>
-      <Box sx={{ height: 350, width: '100%' }}>
-        <TimeLineScale data={rows} />
-      </Box>
-    </>
+    <ErrorBoundaryWrapper>
+      <ContainerWrapper>
+        <CustomTypography color="textSecondary" variant="h4" textAlign="center">
+          DAO Weekly Report.
+        </CustomTypography>
+        <Box sx={{ height: 350, width: '100%' }}>
+          <TimeLineScale data={rows} />
+        </Box>
+      </ContainerWrapper>
+    </ErrorBoundaryWrapper>
   )
 }
 

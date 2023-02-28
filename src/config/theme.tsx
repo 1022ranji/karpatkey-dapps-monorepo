@@ -1,4 +1,3 @@
-import { red } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 
 // Create a theme instance.
@@ -58,15 +57,32 @@ const theme = createTheme({
       default: '#eeeded'
     },
     primary: {
-      main: '#556cd6'
+      main: '#232323'
     },
     secondary: {
-      main: '#19857b'
+      main: '#6B6B6B'
     },
     error: {
-      main: red.A400
+      main: '#DF5C64'
+    },
+    warning: {
+      main: '#F0B065'
+    },
+    info: {
+      main: '#2196f3'
+    },
+    success: {
+      main: '#54B9A1'
+    },
+    common: {
+      black: '#232323',
+      white: '#eeeded'
     }
   }
 })
+
+export const midGrey = '#bdbdbd'
+export const lightGrey = '#d9d9d9'
+export const darkGrey = '#6B6B6B'
 
 export default theme
