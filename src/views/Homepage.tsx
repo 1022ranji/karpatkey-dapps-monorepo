@@ -1,16 +1,18 @@
 import ContainerWrapper from '@/src/components/ContainerWrapper'
 import CustomTypography from '@/src/components/CustomTypography'
 import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
-import * as React from 'react'
+import React, { FC } from 'react'
 
-export default function Report() {
+const HomepageContent: FC = () => {
   return (
     <ErrorBoundaryWrapper>
       <ContainerWrapper>
         <CustomTypography color="textSecondary" variant="h4" textAlign="center">
-          Hello report
+          Homepage
         </CustomTypography>
       </ContainerWrapper>
     </ErrorBoundaryWrapper>
   )
 }
+
+export default HomepageContent

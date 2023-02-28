@@ -1,4 +1,4 @@
-import Copyright from '@/src/components/Copyright'
+import Copyright from '@/src/components/Layout/Copyright'
 import Link from '@/src/components/Link'
 import ProTip from '@/src/components/ProTip'
 import Box from '@mui/material/Box'

@@ -1,4 +1,4 @@
-import Layout from '@/src/components/Layout'
+import Layout from '@/src/components/Layout/Layout'
 import { TITLE } from '@/src/config/constants'
 import createEmotionCache from '@/src/config/createEmotionCache'
 import theme from '@/src/config/theme'
@@ -54,7 +54,13 @@ export default function MyApp(props: MyAppProps) {
         <CssBaseline />
         <Layout>
           {loading ? (
-            <Box display="flex" alignItems="center">
+            <Box
+              display="flex"
+              justifyContent="center"
+              flexDirection="column"
+              alignItems="center"
+              sx={{ minHeight: 'calc(100vh - 160px)' }}
+            >
               <CircularProgress color="primary" />
             </Box>
           ) : (

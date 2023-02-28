@@ -28,6 +28,7 @@ const CommonCSS = (theme: Theme) => css`
   letter-spacing: 0.25px;
   text-decoration: none;
   font-family: ${theme.typography.fontFamily};
+
   &:hover {
     color: rgba(26, 27, 31, 0.6);
   }
@@ -62,6 +63,23 @@ const NAV_ITEMS: INavItem[] = [
   { name: 'DAO Treasury Report', path: '/treasury/report' },
   { name: 'DAO Treasury Detail', path: '/treasury/detail' }
 ]
+
+const HeaderWrapper = styled('div')(({ theme }) => ({
+  height: 100,
+  backgroundColor: theme.palette.background.default,
+  width: '100%',
+  zIndex: '999',
+  flex: '0 0 auto',
+  position: 'sticky',
+  backgroundSize: 'cover',
+  transition: 'top 0.4s ease-in-out',
+  '&.visible': {
+    top: 0
+  },
+  '&.hidden': {
+    top: -100
+  }
+}))
 
 const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
   const { window } = props
@@ -106,7 +124,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
   const container = window !== undefined ? () => window().document.body : undefined
 
   return (
-    <>
+    <HeaderWrapper>
       <CssBaseline />
       <AppBar component="nav" sx={{ backgroundColor: 'background.default' }}>
         <Toolbar sx={{ marginY: '10px' }}>
@@ -115,7 +133,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
             href="/"
             sx={{ flexGrow: 1, alignItems: 'center', display: 'flex' }}
           >
-            <Box component="img" sx={{ width: '100px' }} src="/logo.png" />
+            <Box component="img" sx={{ width: '100px' }} src="/images/logo.png" />
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
@@ -178,7 +196,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
           {drawer}
         </Drawer>
       </Box>
-    </>
+    </HeaderWrapper>
   )
 }
 

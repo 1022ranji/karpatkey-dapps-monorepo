@@ -1,7 +1,8 @@
+import CustomTypography from '@/src/components/CustomTypography'
 import TextLink from '@/src/components/TextLink'
 import { Box, Button, styled } from '@mui/material'
-import Typography from '@mui/material/Typography'
 import { NextPage } from 'next'
+import * as React from 'react'
 
 const PageWrapper = styled(Box)({
   maxWidth: 1000,
@@ -34,9 +35,9 @@ const Custom404Page: NextPage = () => {
     <PageWrapper>
       <Box height="100%" display="flex" alignItems="center">
         <Box display="block" height="100%" width="100%" position="relative">
-          <Typography variant="h3" textAlign="center">
+          <CustomTypography color="textSecondary" variant="h3" textAlign="center">
             Page not found
-          </Typography>
+          </CustomTypography>
         </Box>
         <HomeLinkWrapper>
           <TextLink useNextLink={false} href="/" withUnderlineAnimation={false}>

@@ -1,6 +1,7 @@
+import CustomTypography from '@/src/components/CustomTypography'
 import { Box, styled } from '@mui/material'
-import Typography from '@mui/material/Typography'
 import { NextPage } from 'next'
+import * as React from 'react'
 
 const PageWrapper = styled(Box)({
   maxWidth: 1000,
@@ -12,9 +13,9 @@ const Custom500Page: NextPage = () => {
     <PageWrapper>
       <Box height="100%" display="flex" position="relative" alignItems="center">
         <Box display="block" height="100%" width="100%" position="relative">
-          <Typography variant="h3" textAlign="center">
+          <CustomTypography color="textSecondary" variant="h3" textAlign="center">
             Internal server error
-          </Typography>
+          </CustomTypography>
         </Box>
       </Box>
     </PageWrapper>

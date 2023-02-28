@@ -1,6 +1,13 @@
-import Container from '@mui/material/Container'
-import * as React from 'react'
+import PageLayout from '@/src/components/Layout/Layout'
+import dynamic from 'next/dynamic'
+import { ReactElement } from 'react'
 
-export default function Home() {
-  return <Container maxWidth="lg"></Container>
-}
+const HomepageContent = dynamic(() => import('../views/Homepage'), { ssr: false })
+
+const Homepage = (): ReactElement => <HomepageContent />
+
+Homepage.getTitle = 'Home'
+
+Homepage.getLayout = (page: ReactElement) => <PageLayout>{page}</PageLayout>
+
+export default Homepage
