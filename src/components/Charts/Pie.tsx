@@ -27,10 +27,7 @@ const Pie = ({ data /* see data tab */ }: any) => (
     arcLabelsSkipAngle={10}
     arcLabelsTextColor={{
       from: 'color',
-      modifiers: [
-        ['darker', 2],
-        ['opacity', 1]
-      ]
+      modifiers: [['darker', 5]]
     }}
     defs={[
       {
@@ -55,31 +52,31 @@ const Pie = ({ data /* see data tab */ }: any) => (
     fill={[
       {
         match: {
-          id: 'stablecoins'
+          id: 'Stablecoins'
         },
         id: 'lines'
       },
       {
         match: {
-          id: 'ether'
-        },
-        id: 'dots'
-      },
-      {
-        match: {
-          id: 'gno'
+          id: 'Ether'
         },
         id: 'lines'
       },
       {
         match: {
-          id: 'bitcoin'
+          id: 'Gno'
         },
         id: 'dots'
       },
       {
         match: {
-          id: 'others'
+          id: 'Bitcoin'
+        },
+        id: 'dots'
+      },
+      {
+        match: {
+          id: 'Others'
         },
         id: 'lines'
       }
