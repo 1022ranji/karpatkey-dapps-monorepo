@@ -1,10 +1,16 @@
 import CustomTypography from '@/src/components/CustomTypography'
 import ModalDialog from '@/src/components/ModalDialog'
-import TextLink from '@/src/components/TextLink'
-import SendIcon from '@mui/icons-material/Send'
 import Alert from '@mui/material/Alert'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+import { styled } from '@mui/material/styles'
+import Link from 'next/link'
 import React from 'react'
+
+const LinkCustom = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main
+}))
 
 interface IDataAction {
   status: boolean
@@ -53,13 +59,21 @@ export default function TriggerAction() {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        mb: '10px',
+        gap: '10px'
+      }}
+    >
       <Button
         onClick={onClick}
         variant="contained"
-        endIcon={<SendIcon />}
         disabled={loading}
-        sx={{ mb: '10px' }}
+        {...(loading ? { endIcon: <CircularProgress color="primary" size={20} /> } : {})}
       >
         Execute python script
       </Button>
@@ -74,12 +88,12 @@ export default function TriggerAction() {
         <Alert severity="success">
           <CustomTypography color="textSecondary" variant="body1">
             Transaction successfully completed. You can check it{' '}
+            <LinkCustom href={data.trx || ''} target="_blank">
+              here
+            </LinkCustom>
           </CustomTypography>
-          <TextLink href={data.trx || ''} target="_blank">
-            here
-          </TextLink>
         </Alert>
       )}
-    </>
+    </Box>
   )
 }

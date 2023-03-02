@@ -1,7 +1,9 @@
 import CustomTypography from '@/src/components/CustomTypography'
 import ModalDialog from '@/src/components/ModalDialog'
 import Alert from '@mui/material/Alert'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 import React from 'react'
 
 interface IData {
@@ -51,8 +53,26 @@ export default function ResetCache() {
   }
 
   return (
-    <>
-      <Button onClick={onClick} variant="contained" disabled={loading} sx={{ mb: '10px' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        mb: '10px',
+        gap: '10px'
+      }}
+    >
+      <Button
+        onClick={onClick}
+        variant="contained"
+        disabled={loading}
+        {...(loading
+          ? {
+              endIcon: <CircularProgress color="primary" size={20} />
+            }
+          : {})}
+      >
         Reset cache
       </Button>
       <ModalDialog
@@ -69,6 +89,6 @@ export default function ResetCache() {
           </CustomTypography>
         </Alert>
       )}
-    </>
+    </Box>
   )
 }
