@@ -2,6 +2,7 @@ import Layout from '@/src/components/Layout/Layout'
 import { TITLE } from '@/src/config/constants'
 import createEmotionCache from '@/src/config/createEmotionCache'
 import theme from '@/src/config/theme'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -45,32 +46,34 @@ export default function MyApp(props: MyAppProps) {
   }, [])
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <title>{TITLE}</title>
-      </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <NoSsr>
-          <CssBaseline />
-          <Layout>
-            {loading ? (
-              <Box
-                display="flex"
-                justifyContent="center"
-                flexDirection="column"
-                alignItems="center"
-                sx={{ minHeight: 'calc(100vh - 160px)' }}
-              >
-                <CircularProgress color="primary" />
-              </Box>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </Layout>
-        </NoSsr>
-      </ThemeProvider>
-    </CacheProvider>
+    <UserProvider>
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          <title>{TITLE}</title>
+        </Head>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <NoSsr>
+            <CssBaseline />
+            <Layout>
+              {loading ? (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                  alignItems="center"
+                  sx={{ minHeight: 'calc(100vh - 160px)' }}
+                >
+                  <CircularProgress color="primary" />
+                </Box>
+              ) : (
+                <Component {...pageProps} />
+              )}
+            </Layout>
+          </NoSsr>
+        </ThemeProvider>
+      </CacheProvider>
+    </UserProvider>
   )
 }

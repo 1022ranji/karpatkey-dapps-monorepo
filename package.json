@@ -12,6 +12,7 @@
     "generate-cache": "ts-node --project tsconfig.json ./src/scripts/generateCache.ts"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^2.2.2",
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",

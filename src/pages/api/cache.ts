@@ -1,5 +1,6 @@
 import Cache from '@/src/services/classes/cache.class'
 import { DataWarehouse } from '@/src/services/classes/dataWarehouse.class'
+import { withApiAuthRequired } from '@auth0/nextjs-auth0'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Status = {
@@ -10,7 +11,10 @@ type Status = {
   }
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
+export default withApiAuthRequired(function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Status>
+) {
   return new Promise<void>(async (resolve, reject) => {
     try {
       const cache = Cache.getInstance()
@@ -31,4 +35,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Status
       reject()
     }
   })
-}
+})

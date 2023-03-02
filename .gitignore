@@ -39,3 +39,5 @@ yarn-error.log*
 
 tsconfig.tsbuildinfo
 google-credentials.json
+
+.env.local
