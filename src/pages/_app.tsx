@@ -6,6 +6,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import CssBaseline from '@mui/material/CssBaseline'
+import NoSsr from '@mui/material/NoSsr'
 import { ThemeProvider } from '@mui/material/styles'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -51,22 +52,24 @@ export default function MyApp(props: MyAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Layout>
-          {loading ? (
-            <Box
-              display="flex"
-              justifyContent="center"
-              flexDirection="column"
-              alignItems="center"
-              sx={{ minHeight: 'calc(100vh - 160px)' }}
-            >
-              <CircularProgress color="primary" />
-            </Box>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </Layout>
+        <NoSsr>
+          <CssBaseline />
+          <Layout>
+            {loading ? (
+              <Box
+                display="flex"
+                justifyContent="center"
+                flexDirection="column"
+                alignItems="center"
+                sx={{ minHeight: 'calc(100vh - 160px)' }}
+              >
+                <CircularProgress color="primary" />
+              </Box>
+            ) : (
+              <Component {...pageProps} />
+            )}
+          </Layout>
+        </NoSsr>
       </ThemeProvider>
     </CacheProvider>
   )
