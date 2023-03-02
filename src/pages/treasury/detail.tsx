@@ -2,6 +2,7 @@ import TimeLineScale from '@/src/components/Charts/TimeLineScale'
 import ContainerWrapper from '@/src/components/ContainerWrapper'
 import CustomTypography from '@/src/components/CustomTypography'
 import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
+import Logo from '@/src/components/Logo'
 import Cache from '@/src/services/classes/cache.class'
 import { getLastWeekDate, getTodayDate } from '@/src/utils'
 import {
@@ -20,9 +21,20 @@ export default function Detail({ rows }: IDetailProps) {
   return (
     <ErrorBoundaryWrapper>
       <ContainerWrapper>
-        <CustomTypography color="textSecondary" variant="h4" textAlign="center">
-          DAO Weekly Report.
-        </CustomTypography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px'
+          }}
+        >
+          <Logo />
+          <CustomTypography color="textSecondary" variant="h4" textAlign="center">
+            DAO Weekly Report.
+          </CustomTypography>
+        </Box>
         <Box sx={{ height: 350, width: '100%' }}>
           <TimeLineScale data={rows} />
         </Box>

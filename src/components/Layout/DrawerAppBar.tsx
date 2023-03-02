@@ -134,7 +134,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
             href="/"
             sx={{ flexGrow: 1, alignItems: 'center', display: 'flex' }}
           >
-            <Box component="img" sx={{ width: '100px' }} src="/images/logo.png" />
+            <Box component="img" sx={{ width: '100px' }} src="/images/logos/logo.png" />
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
