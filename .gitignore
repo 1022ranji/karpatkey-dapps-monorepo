@@ -41,3 +41,6 @@ tsconfig.tsbuildinfo
 google-credentials.json
 
 .env.local
+
+github
+github.pub
