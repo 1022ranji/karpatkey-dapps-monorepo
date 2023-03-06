@@ -1,63 +1,8 @@
-import CustomTypography from '@/src/components/CustomTypography'
-import ModalDialog from '@/src/components/ModalDialog'
-import Alert from '@mui/material/Alert'
+import ButtonAction from '@/src/components/ButtonActions/ButtonAction'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
-import { styled } from '@mui/material/styles'
-import Link from 'next/link'
 import React from 'react'
 
-const LinkCustom = styled(Link)(({ theme }) => ({
-  color: theme.palette.primary.main
-}))
-
-interface IDataAction {
-  status: boolean
-  trx?: Maybe<string>
-  error?: Maybe<Error>
-}
-
 export default function TriggerAction() {
-  const [data, setData] = React.useState<Maybe<IDataAction>>(null)
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState<Maybe<Error>>(null)
-
-  const [open, setOpen] = React.useState(false)
-
-  const onClick = () => {
-    setOpen(true)
-  }
-
-  const handleClose = async (status: boolean) => {
-    setOpen(false)
-    if (status) {
-      await handleClickAction()
-    }
-  }
-
-  const handleClickAction = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch(`/api/trigger`)
-      if (!response.ok) {
-        throw new Error(`This is an HTTP error: The status is ${response.status}`)
-      }
-      const { data } = await response.json()
-      if (!data.status) {
-        throw new Error(data.error.message)
-      }
-
-      setData(data)
-      setError(null)
-    } catch (err) {
-      setError(err as Error)
-      setData(null)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
     <Box
       sx={{
@@ -69,31 +14,13 @@ export default function TriggerAction() {
         gap: '10px'
       }}
     >
-      <Button
-        onClick={onClick}
-        variant="contained"
-        disabled={loading}
-        {...(loading ? { endIcon: <CircularProgress color="primary" size={20} /> } : {})}
-      >
-        Execute python script
-      </Button>
-      <ModalDialog
-        open={open}
-        title="Are you sure?"
-        description="This will execute an action on the selected position."
-        handleClose={handleClose}
+      <ButtonAction
+        buttonTitle="Trigger"
+        modalDialogTitle="Are you sure?"
+        modalDialogDescription="This will trigger the action."
+        successMessage="Action triggered successfully."
+        actionURL="/api/trigger"
       />
-      {error && <Alert severity="error">{error.message}</Alert>}
-      {data && data.status && (
-        <Alert severity="success">
-          <CustomTypography color="textSecondary" variant="body1">
-            Transaction successfully completed. You can check it{' '}
-            <LinkCustom href={data.trx || ''} target="_blank">
-              here
-            </LinkCustom>
-          </CustomTypography>
-        </Alert>
-      )}
     </Box>
   )
 }

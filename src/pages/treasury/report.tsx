@@ -10,6 +10,8 @@ import { getLastWeekDate, getTodayDate } from '@/src/utils'
 import {
   filterByRangeOfDates,
   mapDataToPie,
+  mapDataToTable,
+  reducerPositionsByProtocolAndAsset,
   reducerTotalBalancesByAsset
 } from '@/src/utils/mappers'
 import Box from '@mui/material/Box'
@@ -144,10 +146,11 @@ const BarData = [
 ]
 
 interface IReportProps {
-  pieData: any[]
+  portfolioSummaryData: any[]
+  positionsData: any[]
 }
 
-export default function Report({ pieData }: IReportProps) {
+export default function Report({ portfolioSummaryData }: IReportProps) {
   return (
     <ErrorBoundaryWrapper>
       <ContainerWrapper>
@@ -156,7 +159,7 @@ export default function Report({ pieData }: IReportProps) {
         </CustomTypography>
         <PaperSection title="1. Portfolio Summary">
           <Box sx={{ height: 350, width: '100%' }}>
-            <PieChart data={pieData} />
+            <PieChart data={portfolioSummaryData} />
           </Box>
           <Table />
         </PaperSection>
@@ -212,12 +215,18 @@ export async function getServerSideProps() {
       return new Date(aDate).getTime() - new Date(bDate).getTime()
     })
 
-  // Step 3: Reduce the data to a single object, with the date as key and the total balance as value
+  // Step 3: Reduce the data to a single object with the total balances by asset
   const parsedRowsReduced = parsedRowsFiltered.reduce(reducerTotalBalancesByAsset, {})
+  const portfolioSummaryData = mapDataToPie(parsedRowsReduced)
 
-  // Step 4: Convert the data to a format that can be used by the chart
-  const pieData = mapDataToPie(parsedRowsReduced)
+  // Step 4: Reduce the data to a collection of positions by protocol and asset, and then map it to the table data
+  const parsedRowsReducedByProtocol = parsedRowsFiltered.reduce(
+    reducerPositionsByProtocolAndAsset,
+    {}
+  )
+
+  const positionsData = mapDataToTable(parsedRowsReducedByProtocol)
 
   // Pass data to the page via props
-  return { props: { pieData } }
+  return { props: { portfolioSummaryData, positionsData } }
 }

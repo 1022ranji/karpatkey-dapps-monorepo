@@ -6,6 +6,7 @@
  */
 export const filterByRangeOfDates = (data: any[], startDateTime: number, endDateTime: number) => {
   return data.filter((item: any) => {
+    // TODO use moment for the time
     const dateKey = item['kitche_date'].value
     const dateKeyTime = new Date(dateKey).getTime()
     return dateKeyTime >= startDateTime && dateKeyTime <= endDateTime
@@ -21,6 +22,7 @@ export const reducerTotalBalancesByDate = (acc: any, obj: any) => {
   const daoKey = obj['dao']
   const dateKey = obj['kitche_date'].value
 
+  // TODO make this a function
   if (!acc[daoKey]) acc[daoKey] = {}
   if (!acc[daoKey][dateKey]) acc[daoKey][dateKey] = []
   acc[daoKey][dateKey] = {
@@ -70,4 +72,49 @@ export const mapDataToPie = (data: any[]) => {
       value: value.toFixed(2)
     }
   })
+}
+
+export const reducerPositionsByProtocolAndAsset = (acc: any, obj: any) => {
+  const protocolKey = obj['protocol']
+  const tokenSymbolKey = obj['Report_LPtoken_Name']
+
+  if (!acc[protocolKey]) acc[protocolKey] = {}
+  if (!acc[protocolKey][tokenSymbolKey]) acc[protocolKey][tokenSymbolKey] = {}
+  acc[protocolKey][tokenSymbolKey] = {
+    funds:
+      (acc[protocolKey][tokenSymbolKey].funds ?? 0) + ((obj['balance'] ?? 0) * obj['price'] ?? 0)
+  }
+
+  return acc
+}
+
+export const mapDataToTable = (data: any[]) => {
+  const totalFunds = Object.values(data).reduce((totalFunds: any, assetsByProtocol: any) => {
+    const totalFundsByProtocol = Object.values(assetsByProtocol).reduce(
+      (acc: any, val: any) => acc + val.funds,
+      0
+    )
+    return totalFunds + totalFundsByProtocol
+  }, 0)
+
+  const TBD = 'TBD'
+  const res = []
+  for (const protocol in data) {
+    const asset = data[protocol]
+    for (const assetName in asset) {
+      const assetData = asset[assetName]
+      res.push({
+        description: TBD,
+        protocol: protocol,
+        assets: assetName,
+        funds: assetData.funds,
+        allocation: (assetData.funds * 100) / totalFunds,
+        currentAPR: TBD,
+        previousAPR: TBD,
+        weeklyRevenue: TBD,
+        yearEstRevenue: TBD
+      })
+    }
+  }
+  return res
 }
