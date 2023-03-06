@@ -30,9 +30,9 @@
     "classnames": "^2.3.2",
     "lodash.groupby": "^4.6.0",
     "moment": "^2.29.4",
-    "next": "13.2.3",
+    "next": "^13.2.3",
     "prop-types": "^15.8.1",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-error-boundary": "^3.1.4"
   },
