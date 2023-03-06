@@ -1,3 +1,4 @@
+import { withApiAuthRequired } from '@auth0/nextjs-auth0'
 import { spawn } from 'child_process'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -9,7 +10,10 @@ type Status = {
   }
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
+export default withApiAuthRequired(function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Status>
+) {
   return new Promise<void>((resolve, reject) => {
     try {
       let message: string
@@ -47,4 +51,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Status
       reject()
     }
   })
-}
+})

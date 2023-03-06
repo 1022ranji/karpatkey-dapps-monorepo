@@ -1,5 +1,6 @@
-import googleCredentials from '@/google-credentials.json'
 import { BigQuery } from '@google-cloud/bigquery'
+
+import googleCredentials from '../../../google-credentials.json'
 
 export class DataWarehouse {
   private static instance: DataWarehouse

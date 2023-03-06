@@ -2,11 +2,12 @@ import TimeLineScale from '@/src/components/Charts/TimeLineScale'
 import ContainerWrapper from '@/src/components/ContainerWrapper'
 import CustomTypography from '@/src/components/CustomTypography'
 import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
-import { DataWarehouse } from '@/src/services/classes/dataWarehouse.class'
+import Logo from '@/src/components/Logo'
+import Cache from '@/src/services/classes/cache.class'
 import { getLastWeekDate, getTodayDate } from '@/src/utils'
 import {
-  convertDataToLineSeries,
   filterByRangeOfDates,
+  mapDataToLineSeries,
   reducerTotalBalancesByDate
 } from '@/src/utils/mappers/index'
 import Box from '@mui/material/Box'
@@ -20,9 +21,20 @@ export default function Detail({ rows }: IDetailProps) {
   return (
     <ErrorBoundaryWrapper>
       <ContainerWrapper>
-        <CustomTypography color="textSecondary" variant="h4" textAlign="center">
-          DAO Weekly Report.
-        </CustomTypography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px'
+          }}
+        >
+          <Logo />
+          <CustomTypography color="textSecondary" variant="h4" textAlign="center">
+            DAO Weekly Report.
+          </CustomTypography>
+        </Box>
         <Box sx={{ height: 350, width: '100%' }}>
           <TimeLineScale data={rows} />
         </Box>
@@ -32,17 +44,15 @@ export default function Detail({ rows }: IDetailProps) {
 }
 
 export async function getServerSideProps() {
-  // Step 1: Create a BigQuery client
-  const dataWarehouse = DataWarehouse.getInstance()
+  // Step 1: Create a cache instance and obtain the data
+  const cache = Cache.getInstance()
+  const reportData = cache.getBalanceReports()
 
-  // Step 2: Query the data
-  const parsedRows = await dataWarehouse.getBalanceReports()
-
-  // Step 3: Filter the data by date range and DAO
+  // Step 2: Filter the data by date range and DAO
   const startDateTime = getLastWeekDate()
   const endDateTime = getTodayDate()
 
-  const parsedRowsFiltered = filterByRangeOfDates(parsedRows, startDateTime, endDateTime)
+  const parsedRowsFiltered = filterByRangeOfDates(reportData, startDateTime, endDateTime)
     .filter((item: any) => item['dao'] === 'Karpatkey')
     .sort((a: any, b: any) => {
       const aDate = a['kitche_date'].value
@@ -50,11 +60,11 @@ export async function getServerSideProps() {
       return new Date(aDate).getTime() - new Date(bDate).getTime()
     })
 
-  // Step 4: Reduce the data to a single object, with the date as key and the total balance as value
+  // Step 3: Reduce the data to a single object, with the date as key and the total balance as value
   const parsedRowsReduced = parsedRowsFiltered.reduce(reducerTotalBalancesByDate, {})
 
-  // Step 5: Convert the data to a format that can be used by the chart
-  const rows = convertDataToLineSeries(parsedRowsReduced)
+  // Step 4: Convert the data to a format that can be used by the chart
+  const rows = mapDataToLineSeries(parsedRowsReduced)
 
   // Pass data to the page via props
   return { props: { rows } }

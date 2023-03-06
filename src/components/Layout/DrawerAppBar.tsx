@@ -22,12 +22,13 @@ const CommonCSS = (theme: Theme) => css`
   padding: 5px 10px;
   opacity: 0.7;
   color: #1a1b1f;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 400;
   letter-spacing: 0.25px;
   text-decoration: none;
   font-family: ${theme.typography.fontFamily};
+  font-style: normal;
 
   &:hover {
     color: rgba(26, 27, 31, 0.6);
@@ -133,7 +134,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
             href="/"
             sx={{ flexGrow: 1, alignItems: 'center', display: 'flex' }}
           >
-            <Box component="img" sx={{ width: '100px' }} src="/images/logo.png" />
+            <Box component="img" sx={{ width: '100px' }} src="/images/logos/logo.png" />
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
