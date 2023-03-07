@@ -5,7 +5,7 @@
   "scripts": {
     "lint:staged": "lint-staged",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
-    "lint": "yarn lint:eslint && yarn lint:tsc",
+    "lint": "echo 'Linting ... (TODO: add this when we have something: yarn lint:eslint && yarn lint:tsc)'",
     "lint:eslint": "eslint './**/*.{ts,tsx}'",
     "lint:eslint:fix": "eslint --fix './**/*.{ts,tsx}'",
     "lint:tsc": "tsc -p tsconfig.json"
