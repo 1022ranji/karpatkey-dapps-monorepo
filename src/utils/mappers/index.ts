@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon'
+
 /**
  * Filter data between two timestamps, from the report balance view
  * @param data
@@ -6,9 +8,8 @@
  */
 export const filterByRangeOfDates = (data: any[], startDateTime: number, endDateTime: number) => {
   return data.filter((item: any) => {
-    // TODO use moment for the time
     const dateKey = item['kitche_date'].value
-    const dateKeyTime = new Date(dateKey).getTime()
+    const dateKeyTime = DateTime.fromISO(dateKey).toUTC().toMillis()
     return dateKeyTime >= startDateTime && dateKeyTime <= endDateTime
   })
 }
