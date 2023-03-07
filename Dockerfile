@@ -1,9 +1,18 @@
-FROM node:latest AS build
+# FROM node:latest
+FROM node:lts-alpine
 
+# node:latest image : size 1.79GB
+# RUN apt update && \
+#     apt install git && \
+#     apt install openssh-client && \
+#     apt install python3-pip -y
 
-RUN apt update && \
-    apt install git && \
-    apt install openssh-client
+# node:lts-alpine image : size 988 MB
+RUN apk update && \
+    apk add git && \
+    apk add openssh-client && \
+    apk add --no-cache python3 py3-pip
+
 
 RUN mkdir -p /root/.ssh/
 COPY github /root/.ssh/id_rsa
@@ -24,28 +33,15 @@ RUN npm install
 
 # add app
 COPY . /app
+
+# clone bots-harvesting
 RUN git clone git@github.com:KarpatkeyDAO/bots-harvesting.git
+
+# install python deps
+RUN pip3 install -r ./bots-harvesting/requirements.txt
+
+# expose port
 EXPOSE 3000
 
 # start app
 CMD npm run dev 
-
-
-
-
-# # RUN npm build --output-path=dist
-
-
-
-
-# FROM nginx:alpine
-
-# # copy artifact build from the 'build environment'
-# COPY --from=build /app/dist /usr/share/nginx/html
-
-# # expose port 80
-# EXPOSE 80
-
-# # run nginx
-# CMD ["nginx", "-g", "daemon off;"]
-
