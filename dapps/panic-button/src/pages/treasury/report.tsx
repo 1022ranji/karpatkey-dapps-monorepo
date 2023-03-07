@@ -16,7 +16,6 @@ import {
 } from '@/src/utils/mappers'
 import Box from '@mui/material/Box'
 import { DateTime } from 'luxon'
-import moment from 'moment'
 import * as React from 'react'
 
 const revenueModules = [
@@ -156,7 +155,7 @@ export default function Report({ portfolioSummaryData }: IReportProps) {
     <ErrorBoundaryWrapper>
       <ContainerWrapper>
         <CustomTypography color="textSecondary" variant="h4" textAlign="left">
-          A week in karpatkey farms - {moment().format('MMM-DD-YYYY')}
+          A week in karpatkey farms - {DateTime.now().toISODate()}
         </CustomTypography>
         <PaperSection title="1. Portfolio Summary">
           <Box sx={{ height: 350, width: '100%' }}>
