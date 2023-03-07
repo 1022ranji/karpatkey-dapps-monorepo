@@ -1,10 +1,9 @@
+import { DateTime } from 'luxon'
+
 export const getLastWeekDate = () => {
-  const now = new Date()
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7).getTime()
+  return DateTime.local().minus({ days: 7 }).toMillis()
 }
 
 export const getTodayDate = () => {
-  const end = new Date()
-  end.setHours(23, 59, 59, 999)
-  return end.getTime()
+  return DateTime.local().endOf('day').toMillis()
 }

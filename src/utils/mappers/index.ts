@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon'
+
 /**
  * Filter data between two timestamps, from the report balance view
  * @param data
@@ -6,9 +8,8 @@
  */
 export const filterByRangeOfDates = (data: any[], startDateTime: number, endDateTime: number) => {
   return data.filter((item: any) => {
-    // TODO use moment for the time
     const dateKey = item['kitche_date'].value
-    const dateKeyTime = new Date(dateKey).getTime()
+    const dateKeyTime = DateTime.fromISO(dateKey).toUTC().toMillis()
     return dateKeyTime >= startDateTime && dateKeyTime <= endDateTime
   })
 }
@@ -19,14 +20,28 @@ export const filterByRangeOfDates = (data: any[], startDateTime: number, endDate
  * @param obj
  */
 export const reducerTotalBalancesByDate = (acc: any, obj: any) => {
-  const daoKey = obj['dao']
-  const dateKey = obj['kitche_date'].value
+  return reducerTotalFundsByProperties('dao', 'kitche_date', acc, obj)
+}
 
-  // TODO make this a function
-  if (!acc[daoKey]) acc[daoKey] = {}
-  if (!acc[daoKey][dateKey]) acc[daoKey][dateKey] = []
-  acc[daoKey][dateKey] = {
-    total: (acc[daoKey][dateKey].total ?? 0) + ((obj['balance'] ?? 0) * obj['price'] ?? 0)
+export const reducerPositionsByProtocolAndAsset = (acc: any, obj: any) => {
+  return reducerTotalFundsByProperties('protocol', 'Report_LPtoken_Name', acc, obj)
+}
+
+const reducerTotalFundsByProperties = (
+  propertyOne: string,
+  propertyTwo: string,
+  acc: any,
+  obj: any
+) => {
+  const propertyOneKey = obj[propertyOne]
+  const propertyTwoKey = propertyTwo.includes('date') ? obj[propertyTwo].value : obj[propertyTwo]
+
+  if (!acc[propertyOneKey]) acc[propertyOneKey] = {}
+  if (!acc[propertyOneKey][propertyTwoKey]) acc[propertyOneKey][propertyTwoKey] = {}
+  acc[propertyOneKey][propertyTwoKey] = {
+    totalFunds:
+      (acc[propertyOneKey][propertyTwoKey].totalFunds ?? 0) +
+      ((obj['balance'] ?? 0) * obj['price'] ?? 0)
   }
 
   return acc
@@ -53,7 +68,7 @@ export const mapDataToLineSeries = (data: any) => {
       data: Object.keys(data[daoName]).map((date: string) => {
         return {
           x: date,
-          y: data[daoName][date].total
+          y: data[daoName][date].totalFunds
         }
       })
     }
@@ -74,24 +89,10 @@ export const mapDataToPie = (data: any[]) => {
   })
 }
 
-export const reducerPositionsByProtocolAndAsset = (acc: any, obj: any) => {
-  const protocolKey = obj['protocol']
-  const tokenSymbolKey = obj['Report_LPtoken_Name']
-
-  if (!acc[protocolKey]) acc[protocolKey] = {}
-  if (!acc[protocolKey][tokenSymbolKey]) acc[protocolKey][tokenSymbolKey] = {}
-  acc[protocolKey][tokenSymbolKey] = {
-    funds:
-      (acc[protocolKey][tokenSymbolKey].funds ?? 0) + ((obj['balance'] ?? 0) * obj['price'] ?? 0)
-  }
-
-  return acc
-}
-
 export const mapDataToTable = (data: any[]) => {
   const totalFunds = Object.values(data).reduce((totalFunds: any, assetsByProtocol: any) => {
     const totalFundsByProtocol = Object.values(assetsByProtocol).reduce(
-      (acc: any, val: any) => acc + val.funds,
+      (acc: any, val: any) => acc + val.totalFunds,
       0
     )
     return totalFunds + totalFundsByProtocol
@@ -107,8 +108,8 @@ export const mapDataToTable = (data: any[]) => {
         description: TBD,
         protocol: protocol,
         assets: assetName,
-        funds: assetData.funds,
-        allocation: (assetData.funds * 100) / totalFunds,
+        funds: assetData.totalFunds,
+        allocation: (assetData.totalFunds * 100) / totalFunds,
         currentAPR: TBD,
         previousAPR: TBD,
         weeklyRevenue: TBD,

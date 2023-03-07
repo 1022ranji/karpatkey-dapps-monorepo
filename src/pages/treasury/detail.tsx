@@ -11,6 +11,7 @@ import {
   reducerTotalBalancesByDate
 } from '@/src/utils/mappers/index'
 import Box from '@mui/material/Box'
+import { DateTime } from 'luxon'
 import * as React from 'react'
 
 interface IDetailProps {
@@ -57,7 +58,7 @@ export async function getServerSideProps() {
     .sort((a: any, b: any) => {
       const aDate = a['kitche_date'].value
       const bDate = b['kitche_date'].value
-      return new Date(aDate).getTime() - new Date(bDate).getTime()
+      return DateTime.fromISO(aDate).toUTC().toMillis() - DateTime.fromISO(bDate).toUTC().toMillis()
     })
 
   // Step 3: Reduce the data to a single object, with the date as key and the total balance as value

@@ -15,6 +15,7 @@ import {
   reducerTotalBalancesByAsset
 } from '@/src/utils/mappers'
 import Box from '@mui/material/Box'
+import { DateTime } from 'luxon'
 import moment from 'moment'
 import * as React from 'react'
 
@@ -212,7 +213,7 @@ export async function getServerSideProps() {
     .sort((a: any, b: any) => {
       const aDate = a['kitche_date'].value
       const bDate = b['kitche_date'].value
-      return new Date(aDate).getTime() - new Date(bDate).getTime()
+      return DateTime.fromISO(aDate).toUTC().toMillis() - DateTime.fromISO(bDate).toUTC().toMillis()
     })
 
   // Step 3: Reduce the data to a single object with the total balances by asset
