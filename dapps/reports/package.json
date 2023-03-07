@@ -1,0 +1,65 @@
+{
+  "name": "reports",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "generate-cache": "ts-node --project tsconfig.json ./src/scripts/generateCache.ts",
+    "lint:staged": "lint-staged",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "lint": "yarn lint:eslint && yarn lint:tsc",
+    "lint:eslint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint:eslint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",
+    "lint:tsc": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@auth0/nextjs-auth0": "^2.2.2",
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.6",
+    "@google-cloud/bigquery": "^6.1.0",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.12",
+    "@nivo/bar": "^0.80.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/line": "^0.80.0",
+    "@nivo/pie": "^0.80.0",
+    "@nivo/tooltip": "^0.80.0",
+    "classnames": "^2.3.2",
+    "luxon": "^3.3.0",
+    "next": "^13.2.3",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "18.2.0",
+    "react-error-boundary": "^3.1.4"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/luxon": "^3.2.0",
+    "@types/node": "18.14.6",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "8.35.0",
+    "eslint-config-next": "13.2.3",
+    "eslint-config-prettier": "^8.7.0",
+    "lint-staged": "^13.1.2",
+    "prettier": "^2.8.4",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "tsc-files": "^1.1.3",
+    "typescript": "4.9.5"
+  },
+  "lint-staged": {
+    "src/**/*.+(js,ts,tsx)": [
+      "eslint -c ./dapps/reports/.eslintrc.json -cache --fix",
+      "tsc-files --noEmit"
+    ],
+    "src/**/*.{js,ts,tsx,css,md,json}": [
+      "prettier --config ./.prettierrc --write"
+    ]
+  }
+}
