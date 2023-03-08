@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import React from 'react'
 
-import ButtonAction from './ButtonAction'
+import ButtonAction from '../../components/ButtonActions/ButtonAction'
 
 export default function ResetCache() {
   return (

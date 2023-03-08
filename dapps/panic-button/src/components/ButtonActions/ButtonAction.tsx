@@ -1,11 +1,9 @@
-import CustomTypography from '@/src/components/CustomTypography'
-import ModalDialog from '@/src/components/ModalDialog'
-import useHandleAction from '@/src/hooks/useHandleAction'
-import Alert from '@mui/material/Alert'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
+import CustomTypography from '@monorepo/shared/components/CustomTypography'
+import ModalDialog from '@monorepo/shared/components/ModalDialog'
+import { Alert, Box, Button, CircularProgress } from '@mui/material'
 import React from 'react'
+
+import useHandleAction from '../../hooks/useHandleAction'
 
 interface IButtonActionProps {
   actionURL: string

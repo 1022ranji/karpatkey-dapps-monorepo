@@ -1,6 +1,7 @@
-import ButtonAction from '@/src/components/ButtonActions/ButtonAction'
 import Box from '@mui/material/Box'
 import React from 'react'
+
+import ButtonAction from '../../components/ButtonActions/ButtonAction'
 
 export default function TriggerAction() {
   return (

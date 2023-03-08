@@ -1,6 +1,6 @@
-import Cache from '@/src/services/classes/cache.class'
-import { DataWarehouse } from '@/src/services/classes/dataWarehouse.class'
 import { withApiAuthRequired } from '@auth0/nextjs-auth0'
+import Cache from '@monorepo/shared/services/classes/cache.class'
+import { DataWarehouse } from '@monorepo/shared/services/classes/dataWarehouse.class'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Status = {
