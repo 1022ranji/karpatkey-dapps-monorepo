@@ -1,18 +1,19 @@
-import TimeLineScale from '@/src/components/Charts/TimeLineScale'
-import ContainerWrapper from '@/src/components/ContainerWrapper'
-import CustomTypography from '@/src/components/CustomTypography'
-import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
-import Logo from '@/src/components/Logo'
-import Cache from '@/src/services/classes/cache.class'
-import { getLastWeekDate, getTodayDate } from '@/src/utils'
+import ContainerWrapper from '@monorepo/shared/components/ContainerWrapper'
+import CustomTypography from '@monorepo/shared/components/CustomTypography'
+import ErrorBoundaryWrapper from '@monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
+import Cache from '@monorepo/shared/services/classes/cache.class'
+import { getLastWeekDate, getTodayDate } from '@monorepo/shared/utils'
 import {
   filterByRangeOfDates,
   mapDataToLineSeries,
   reducerTotalBalancesByDate
-} from '@/src/utils/mappers/index'
+} from '@monorepo/shared/utils/mappers/index'
 import Box from '@mui/material/Box'
 import { DateTime } from 'luxon'
 import * as React from 'react'
+
+import TimeLineScale from '../../components/Charts/TimeLineScale'
+import Logo from '../../components/Logo'
 
 interface IDetailProps {
   rows: any

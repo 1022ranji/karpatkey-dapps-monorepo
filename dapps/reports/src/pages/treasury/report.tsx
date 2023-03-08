@@ -1,22 +1,23 @@
-import BarChart from '@/src/components/Charts/Bar'
-import PieChart from '@/src/components/Charts/Pie'
-import ContainerWrapper from '@/src/components/ContainerWrapper'
-import CustomTypography from '@/src/components/CustomTypography'
-import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
-import PaperSection from '@/src/components/PaperSection'
-import Table from '@/src/components/Table'
-import Cache from '@/src/services/classes/cache.class'
-import { getLastWeekDate, getTodayDate } from '@/src/utils'
+import Cache from '@monorepo/shared//services/classes/cache.class'
+import ContainerWrapper from '@monorepo/shared/components/ContainerWrapper'
+import CustomTypography from '@monorepo/shared/components/CustomTypography'
+import ErrorBoundaryWrapper from '@monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
+import PaperSection from '@monorepo/shared/components/PaperSection'
+import Table from '@monorepo/shared/components/Table'
+import { getLastWeekDate, getTodayDate } from '@monorepo/shared/utils'
 import {
   filterByRangeOfDates,
   mapDataToPie,
   mapDataToTable,
   reducerPositionsByProtocolAndAsset,
   reducerTotalBalancesByAsset
-} from '@/src/utils/mappers'
+} from '@monorepo/shared/utils/mappers'
 import Box from '@mui/material/Box'
 import { DateTime } from 'luxon'
 import * as React from 'react'
+
+import BarChart from '../../components/Charts/Bar'
+import PieChart from '../../components/Charts/Pie'
 
 const revenueModules = [
   {

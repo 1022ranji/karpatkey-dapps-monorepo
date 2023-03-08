@@ -1,6 +1,6 @@
-import ContainerWrapper from '@/src/components/ContainerWrapper'
-import CustomTypography from '@/src/components/CustomTypography'
-import ErrorBoundaryWrapper from '@/src/components/ErrorBoundary/ErrorBoundaryWrapper'
+import ContainerWrapper from '@monorepo/shared/components/ContainerWrapper'
+import CustomTypography from '@monorepo/shared/components/CustomTypography'
+import ErrorBoundaryWrapper from '@monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
 import React, { FC } from 'react'
 
 const HomepageContent: FC = () => {

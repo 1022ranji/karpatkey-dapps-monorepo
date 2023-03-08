@@ -1,9 +1,9 @@
+import Content from '@monorepo/shared/layout/Content'
+import Footer from '@monorepo/shared/layout/Footer'
 import { styled } from '@mui/material'
 import React, { ReactElement } from 'react'
 
-import Content from './Content'
 import DrawerAppBar from './DrawerAppBar'
-import Footer from './Footer'
 
 interface ILayoutProps {
   children: React.ReactNode

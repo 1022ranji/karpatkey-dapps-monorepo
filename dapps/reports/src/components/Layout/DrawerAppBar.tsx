@@ -1,18 +1,22 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import MenuIcon from '@mui/icons-material/Menu'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Button, { ButtonProps } from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import Drawer from '@mui/material/Drawer'
-import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText, { ListItemTextProps } from '@mui/material/ListItemText'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Toolbar from '@mui/material/Toolbar'
+import {
+  AppBar,
+  Box,
+  Button,
+  CssBaseline,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Toolbar
+} from '@mui/material'
+import { ButtonProps } from '@mui/material/Button'
+import { ListItemTextProps } from '@mui/material/ListItemText'
 import { Theme, css, styled } from '@mui/material/styles'
 import Link, { LinkProps } from 'next/link'
 import React, { FC, ReactElement } from 'react'
@@ -102,13 +106,6 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
   const drawer = (
     <Box onClick={handleDrawerToggle}>
       <List>
-        <Link href="/treasury/panel" style={{ textDecoration: 'none', color: 'black' }}>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'left' }}>
-              <ListItemTextCustom primary="Panel" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
         {NAV_ITEMS.map(({ name, path }: INavItem, index: number) => (
           <Link href={path} key={index} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
@@ -138,8 +135,6 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
           </Box>
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-            <LinkCustom href="/treasury/panel">Panel</LinkCustom>
-
             <ButtonCustom
               id="basic-button"
               aria-controls={open ? 'basic-menu' : undefined}

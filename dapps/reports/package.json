@@ -15,12 +15,11 @@
     "lint:tsc": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^2.2.2",
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
-    "@google-cloud/bigquery": "^6.1.0",
+    "@monorepo/shared": "0.1.0",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
     "@nivo/bar": "^0.80.0",

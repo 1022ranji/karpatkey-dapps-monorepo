@@ -1,5 +1,5 @@
-import CustomTypography from '@/src/components/CustomTypography'
-import TextLink from '@/src/components/TextLink'
+import CustomTypography from '@monorepo/shared/components/CustomTypography'
+import TextLink from '@monorepo/shared/components/TextLink'
 import { Box, Button, styled } from '@mui/material'
 import { NextPage } from 'next'
 import * as React from 'react'
