@@ -1,6 +1,6 @@
-import Copyright from '@monorepo/shared/Layout/Copyright'
 import Link from '@monorepo/shared/components/Link'
 import ProTip from '@monorepo/shared/components/ProTip'
+import Copyright from '@monorepo/shared/layout/Copyright'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
