@@ -1,8 +1,9 @@
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import { TITLE } from '@monorepo/shared/config/constants'
-import createEmotionCache from '@monorepo/shared/config/createEmotionCache'
-import theme from '@monorepo/shared/config/theme'
+import Layout from '@karpatkey-monorepo/reports/src/components/Layout/Layout'
+import { TITLE } from '@karpatkey-monorepo/shared/config/constants'
+import createEmotionCache from '@karpatkey-monorepo/shared/config/createEmotionCache'
+import theme from '@karpatkey-monorepo/shared/config/theme'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -12,8 +13,6 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Router from 'next/router'
 import * as React from 'react'
-
-import Layout from '../components/Layout/Layout'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()

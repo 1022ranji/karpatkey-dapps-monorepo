@@ -1,12 +1,11 @@
 {
-  "name": "panic-button",
+  "name": "@karpatkey-monorepo/panic-button",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "generate-cache": "ts-node --project tsconfig.json ./src/scripts/generateCache.ts",
     "lint:staged": "lint-staged",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "lint": "yarn lint:eslint && yarn lint:tsc",
@@ -20,7 +19,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
-    "@monorepo/shared": "0.1.0",
+    "@karpatkey-monorepo/shared": "0.1.0",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
     "classnames": "^2.3.2",
@@ -50,7 +49,7 @@
   },
   "lint-staged": {
     "src/**/*.+(js,ts,tsx)": [
-      "eslint -c ./dapps/reports/.eslintrc.json -cache --fix",
+      "eslint -c ./dapps/panic-button/.eslintrc.json -cache --fix",
       "tsc-files --noEmit"
     ],
     "src/**/*.{js,ts,tsx,css,md,json}": [

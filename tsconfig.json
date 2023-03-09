@@ -24,7 +24,15 @@
         "./*",
         "./src/*",
       ],
-      "@monorepo/shared": [
+      "@karpatkey-monorepo/reports": [
+        "./dapps/reports/*",
+        "./dapps/reports/src/"
+      ],
+      "@karpatkey-monorepo/panic-button": [
+        "./dapps/panic-button/*",
+        "./dapps/panic-button/src/"
+      ],
+      "@karpatkey-monorepo/shared": [
         "./shared/*"
       ]
     }

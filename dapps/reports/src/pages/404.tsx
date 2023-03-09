@@ -1,5 +1,5 @@
-import CustomTypography from '@monorepo/shared/components/CustomTypography'
-import TextLink from '@monorepo/shared/components/TextLink'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import TextLink from '@karpatkey-monorepo/shared/components/TextLink'
 import { Box, Button, styled } from '@mui/material'
 import { NextPage } from 'next'
 import * as React from 'react'

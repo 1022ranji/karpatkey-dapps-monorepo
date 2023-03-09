@@ -1,23 +1,22 @@
-import Cache from '@monorepo/shared//services/classes/cache.class'
-import ContainerWrapper from '@monorepo/shared/components/ContainerWrapper'
-import CustomTypography from '@monorepo/shared/components/CustomTypography'
-import ErrorBoundaryWrapper from '@monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
-import PaperSection from '@monorepo/shared/components/PaperSection'
-import Table from '@monorepo/shared/components/Table'
-import { getLastWeekDate, getTodayDate } from '@monorepo/shared/utils'
+import BarChart from '@karpatkey-monorepo/reports/src/components/Charts/Bar'
+import PieChart from '@karpatkey-monorepo/reports/src/components/Charts/Pie'
+import Cache from '@karpatkey-monorepo/shared//services/classes/cache.class'
+import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
+import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
+import Table from '@karpatkey-monorepo/shared/components/Table'
+import { getLastWeekDate, getTodayDate } from '@karpatkey-monorepo/shared/utils'
 import {
   filterByRangeOfDates,
   mapDataToPie,
   mapDataToTable,
   reducerPositionsByProtocolAndAsset,
   reducerTotalBalancesByAsset
-} from '@monorepo/shared/utils/mappers'
+} from '@karpatkey-monorepo/shared/utils/mappers'
 import Box from '@mui/material/Box'
 import { DateTime } from 'luxon'
 import * as React from 'react'
-
-import BarChart from '../../components/Charts/Bar'
-import PieChart from '../../components/Charts/Pie'
 
 const revenueModules = [
   {

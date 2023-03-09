@@ -1,10 +1,11 @@
 {
-  "name": "@monorepo/shared",
+  "name": "@karpatkey-monorepo/shared",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "lint:staged": "lint-staged",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "generate-cache": "ts-node --project tsconfig.json ./scripts/generateCache.ts",
     "lint": "yarn lint:eslint && yarn lint:tsc",
     "lint:eslint": "eslint './**/*.{ts,tsx}'",
     "lint:eslint:fix": "eslint --fix './**/*.{ts,tsx}'",
@@ -45,7 +46,7 @@
   },
   "lint-staged": {
     "./**/*.+(js,ts,tsx)": [
-      "eslint -c ./dapps/reports/.eslintrc.json -cache --fix",
+      "eslint -c ./shared/.eslintrc.json -cache --fix",
       "tsc-files --noEmit"
     ],
     "./**/*.{js,ts,tsx,css,md,json}": [

@@ -1,19 +1,18 @@
-import ContainerWrapper from '@monorepo/shared/components/ContainerWrapper'
-import CustomTypography from '@monorepo/shared/components/CustomTypography'
-import ErrorBoundaryWrapper from '@monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
-import Cache from '@monorepo/shared/services/classes/cache.class'
-import { getLastWeekDate, getTodayDate } from '@monorepo/shared/utils'
+import TimeLineScale from '@karpatkey-monorepo/reports/src/components/Charts/TimeLineScale'
+import Logo from '@karpatkey-monorepo/reports/src/components/Logo'
+import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
+import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
+import { getLastWeekDate, getTodayDate } from '@karpatkey-monorepo/shared/utils'
 import {
   filterByRangeOfDates,
   mapDataToLineSeries,
   reducerTotalBalancesByDate
-} from '@monorepo/shared/utils/mappers/index'
+} from '@karpatkey-monorepo/shared/utils/mappers/index'
 import Box from '@mui/material/Box'
 import { DateTime } from 'luxon'
 import * as React from 'react'
-
-import TimeLineScale from '../../components/Charts/TimeLineScale'
-import Logo from '../../components/Logo'
 
 interface IDetailProps {
   rows: any

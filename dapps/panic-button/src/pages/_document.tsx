@@ -1,6 +1,6 @@
 import createEmotionServer from '@emotion/server/create-instance'
-import createEmotionCache from '@monorepo/shared/config/createEmotionCache'
-import theme from '@monorepo/shared/config/theme'
+import createEmotionCache from '@karpatkey-monorepo/shared/config/createEmotionCache'
+import theme from '@karpatkey-monorepo/shared/config/theme'
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 import * as React from 'react'
 
