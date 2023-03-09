@@ -1,4 +1,4 @@
-import CustomTypography from '@monorepo/shared/components/CustomTypography'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box, styled } from '@mui/material'
 import { NextPage } from 'next'
 import * as React from 'react'

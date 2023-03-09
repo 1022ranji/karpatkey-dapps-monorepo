@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@monorepo/shared']
+  transpilePackages: ['@karpatkey-monorepo/shared']
 }
 
 module.exports = nextConfig

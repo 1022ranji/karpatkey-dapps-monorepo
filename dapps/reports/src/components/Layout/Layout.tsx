@@ -1,5 +1,5 @@
-import Content from '@monorepo/shared/layout/Content'
-import Footer from '@monorepo/shared/layout/Footer'
+import Content from '@karpatkey-monorepo/shared/layout/Content'
+import Footer from '@karpatkey-monorepo/shared/layout/Footer'
 import { styled } from '@mui/material'
 import React, { ReactElement } from 'react'
 

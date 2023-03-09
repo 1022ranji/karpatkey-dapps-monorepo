@@ -1,11 +1,10 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
-import ContainerWrapper from '@monorepo/shared/components/ContainerWrapper'
-import ErrorBoundaryWrapper from '@monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
+import ResetCache from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/ResetCache'
+import TriggerAction from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/TriggerAction'
+import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
+import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
 import Box from '@mui/material/Box'
 import React from 'react'
-
-import ResetCache from '../../components/ButtonActions/ResetCache'
-import TriggerAction from '../../components/ButtonActions/TriggerAction'
 
 export default withPageAuthRequired(function Panel() {
   return (
