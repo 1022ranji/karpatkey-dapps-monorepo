@@ -2,8 +2,7 @@
 
 This repository contains the source code for the Karpatkey dapps.
 
-[![Linter](https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/workflows/linter/badge.svg)]
-(https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/actions?query=workflow%3Alinter)
+[![Linter](https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/workflows/linter/badge.svg)](https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/actions?query=workflow%3Alinter)
 
 ## Getting Started
 
