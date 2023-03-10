@@ -51,8 +51,6 @@ export async function getServerSideProps() {
   const rows: any[] = getCommonServerSideProps({ daily: true, daoName: 'Karpatkey' })
 
   const positionsData = rows.reduce(reducerPositionsByProtocolAndAsset, {})
-  console.log('positions', positionsData)
-  //const positionsData = mapDataToTable(parsedRowsReducedByProtocol)
 
   // Pass data to the page via props
   return { props: { positionsData } }
