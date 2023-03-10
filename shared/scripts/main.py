@@ -2,13 +2,18 @@ from web3.exceptions import TransactionNotFound
 import time
 from defi_protocols.functions import *
 
+import sys
 import argparse
 
 parser = argparse.ArgumentParser(description="Dummy testing script", epilog='This is the epilog',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-p", "--percentage", type=int, default=100, help="percentage of liquidity to be removed")
+parser.add_argument("-e", "--execute", action='store_true', help="execute transaction")
 args = parser.parse_args()
 config = vars(args)
+
+if config['execute'] is False:
+  sys.exit()
 
 web3 = get_node(XDAI)
 
@@ -58,6 +63,7 @@ txn = ROLES_contract.functions.execTransactionWithRole(to_address, value, data, 
 
 #Creates signed transaction object
 signed_txn = web3.eth.account.sign_transaction(txn, PRIVATE_KEYS)
+
 
 #Executes transaction
 executed_txn = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
