@@ -2,6 +2,14 @@ from web3.exceptions import TransactionNotFound
 import time
 from defi_protocols.functions import *
 
+import argparse
+
+parser = argparse.ArgumentParser(description="Dummy testing script", epilog='This is the epilog',
+                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("-p", "--percentage", type=int, default=100, help="percentage of liquidity to be removed")
+args = parser.parse_args()
+config = vars(args)
+
 web3 = get_node(XDAI)
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
