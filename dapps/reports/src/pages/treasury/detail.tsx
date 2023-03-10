@@ -42,7 +42,7 @@ export default function Detail({ balancesData }: IDetailProps) {
 }
 
 export async function getServerSideProps() {
-  const rows: any[] = getCommonServerSideProps()
+  const rows: any[] = getCommonServerSideProps({ daily: false, daoName: 'Karpatkey' })
 
   // Step 3: Reduce the data to a single object, with the date as key and the total balance as value
   const parsedRowsReduced = rows.reduce(reducerTotalBalancesByDate, {})

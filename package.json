@@ -5,7 +5,8 @@
     "packages": [
       "dapps/reports",
       "dapps/panic-button",
-      "shared"
+      "shared",
+      "tools"
     ]
   },
   "scripts": {
@@ -15,13 +16,14 @@
     "update:reports": "cd dapps/reports && yarn",
     "update:panic-button": "cd dapps/panic-button && yarn",
     "update:shared": "cd shared && yarn",
-    "update": "yarn update:reports && yarn update:panic-button && yarn update:shared",
+    "update:tools": "cd tools && yarn",
+    "update": "yarn update:reports && yarn update:panic-button && yarn update:shared && yarn update:tools",
     "lint:staged": "yarn workspaces run lint:staged",
     "lint": "yarn workspaces run lint",
     "prepare": "husky install",
     "commit": "git-cz",
-    "clean": "rm -rf node_modules && rm -rf dapps/panic-button/node_modules && rm -rf dapps/reports/node_modules && rm -rf shared/node_modules",
-    "clean:locks": "rm -rf yarn.lock && rm -rf dapps/panic-button/yarn.lock && rm -rf dapps/reports/yarn.lock && rm -rf shared/yarn.lock"
+    "clean": "rm -rf node_modules && rm -rf dapps/panic-button/node_modules && rm -rf dapps/reports/node_modules && rm -rf shared/node_modules && rm -rf tools/node_modules",
+    "clean:locks": "rm -rf yarn.lock && rm -rf dapps/panic-button/yarn.lock && rm -rf dapps/reports/yarn.lock && rm -rf shared/yarn.lock && rm -rf tools/yarn.lock"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",

@@ -197,7 +197,7 @@ export default function Report({ portfolioSummaryData }: IReportProps) {
 }
 
 export async function getServerSideProps() {
-  const rows: any[] = getCommonServerSideProps()
+  const rows: any[] = getCommonServerSideProps({ daily: false, daoName: 'Karpatkey' })
 
   // Step 3: Reduce the data to a single object with the total balances by asset
   const parsedRowsReduced = rows.reduce(reducerTotalBalancesByAsset, {})
