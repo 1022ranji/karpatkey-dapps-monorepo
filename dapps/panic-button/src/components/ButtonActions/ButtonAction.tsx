@@ -1,7 +1,9 @@
+import SnackbarAction, {
+  ESnackStatus
+} from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/SnackbarAction'
 import useHandleAction from '@karpatkey-monorepo/panic-button/src/hooks/useHandleAction'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
-import ModalDialog from '@karpatkey-monorepo/shared/components/ModalDialog'
-import { Alert, Box, Button, CircularProgress } from '@mui/material'
+import ModalDialog from '@karpatkey-monorepo/shared/components/Modals/ModalDialog'
+import { Box, Button, CircularProgress } from '@mui/material'
 import React from 'react'
 
 interface IButtonActionProps {
@@ -11,12 +13,44 @@ interface IButtonActionProps {
   modalDialogDescription: string
 
   successMessage: Maybe<string>
+  component?: React.ReactNode
+  okButtonTitle?: string
+  cancelButtonTitle?: string
 }
 
 export default function ButtonAction(props: IButtonActionProps) {
-  const { buttonTitle, modalDialogTitle, modalDialogDescription, successMessage, actionURL } = props
+  const {
+    buttonTitle,
+    modalDialogTitle,
+    modalDialogDescription,
+    successMessage,
+    actionURL,
+    component,
+    okButtonTitle = 'Agree',
+    cancelButtonTitle = 'Disagree'
+  } = props
 
   const { onClick, open, loading, handleClose, error, data } = useHandleAction(actionURL)
+
+  const status = React.useMemo(() => {
+    if (error && data !== null) {
+      return ESnackStatus.Error
+    }
+    if (data && !error) {
+      return ESnackStatus.Success
+    }
+    return ESnackStatus.None
+  }, [error, data]) as ESnackStatus
+
+  const message = React.useMemo(() => {
+    if (error && data !== null) {
+      return error?.message || ''
+    }
+    if (data && !error) {
+      return successMessage || ''
+    }
+    return ''
+  }, [error, successMessage, data])
 
   return (
     <Box
@@ -44,15 +78,11 @@ export default function ButtonAction(props: IButtonActionProps) {
         title={modalDialogTitle}
         description={modalDialogDescription}
         handleClose={handleClose}
+        component={component}
+        okButtonTitle={okButtonTitle}
+        cancelButtonTitle={cancelButtonTitle}
       />
-      {error && <Alert severity="error">{error?.message}</Alert>}
-      {successMessage && data && (
-        <Alert severity="success">
-          <CustomTypography color="textSecondary" variant="body1">
-            {successMessage}
-          </CustomTypography>
-        </Alert>
-      )}
+      <SnackbarAction status={status} message={message} open={!!data} />
     </Box>
   )
 }

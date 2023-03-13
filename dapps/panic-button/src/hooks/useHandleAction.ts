@@ -8,7 +8,14 @@ export default function useHandleAction(actionURL: string) {
   const [open, setOpen] = React.useState(false)
 
   const onClick = () => {
+    reset()
     setOpen(true)
+  }
+
+  const reset = () => {
+    setData(null)
+    setError(null)
+    setLoading(false)
   }
 
   const handleClose = async (status: boolean) => {
@@ -40,5 +47,5 @@ export default function useHandleAction(actionURL: string) {
     }
   }
 
-  return { data, error, loading, handleClose, handleClickAction, onClick, open }
+  return { data, error, loading, open, handleClose, handleClickAction, onClick, reset }
 }

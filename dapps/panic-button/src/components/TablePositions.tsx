@@ -1,4 +1,4 @@
-import TriggerAction from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/TriggerAction'
+import ExtractAction from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/Extract'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import {
@@ -101,7 +101,7 @@ export default function TablePositions({ rows }: any) {
                               {parseInt(rows[row][asset].totalFunds).toFixed(2)} USD
                             </TableCell>
                             <TableCell align={'right'} sx={{ width: '33%' }}>
-                              <TriggerAction />
+                              <ExtractAction />
                             </TableCell>
                           </TableRow>
                         )

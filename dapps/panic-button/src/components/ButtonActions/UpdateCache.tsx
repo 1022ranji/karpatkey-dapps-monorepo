@@ -2,7 +2,7 @@ import ButtonAction from '@karpatkey-monorepo/panic-button/src/components/Button
 import Box from '@mui/material/Box'
 import React from 'react'
 
-export default function ResetCache() {
+export default function UpdateCache() {
   return (
     <Box
       sx={{
@@ -15,10 +15,12 @@ export default function ResetCache() {
       }}
     >
       <ButtonAction
-        buttonTitle="Reset cache"
-        modalDialogTitle="Are you sure?"
-        modalDialogDescription="This will reset the cache."
-        successMessage="Cache reset successfully."
+        buttonTitle="Update cache"
+        modalDialogTitle="Are you sure you want to update the cache?"
+        modalDialogDescription="This will update the cache."
+        successMessage="Cache updated successfully."
+        okButtonTitle="Update"
+        cancelButtonTitle="Cancel"
         actionURL="/api/cache"
       />
     </Box>
