@@ -13,7 +13,7 @@ args = parser.parse_args()
 config = vars(args)
 
 if config['execute'] is False:
-  sys.exit()
+  sys.exit(120)
 
 web3 = get_node(XDAI)
 

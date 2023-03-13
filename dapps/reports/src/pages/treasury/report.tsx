@@ -1,14 +1,12 @@
 import BarChart from '@karpatkey-monorepo/reports/src/components/Charts/Bar'
 import PieChart from '@karpatkey-monorepo/reports/src/components/Charts/Pie'
-import Cache from '@karpatkey-monorepo/shared//services/classes/cache.class'
 import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import Table from '@karpatkey-monorepo/shared/components/Table'
-import { getLastWeekDate, getTodayDate } from '@karpatkey-monorepo/shared/utils'
+import { getCommonServerSideProps } from '@karpatkey-monorepo/shared/utils'
 import {
-  filterByRangeOfDates,
   mapDataToPie,
   mapDataToTable,
   reducerPositionsByProtocolAndAsset,
@@ -199,32 +197,14 @@ export default function Report({ portfolioSummaryData }: IReportProps) {
 }
 
 export async function getServerSideProps() {
-  // Step 1: Create a cache instance and obtain the data
-  const cache = Cache.getInstance()
-  const reportData = cache.getBalanceReports()
-
-  // Step 2: Filter the data by date range and DAO
-  const startDateTime = getLastWeekDate()
-  const endDateTime = getTodayDate()
-
-  const parsedRowsFiltered = filterByRangeOfDates(reportData, startDateTime, endDateTime)
-    .filter((item: any) => item['dao'] === 'Karpatkey')
-    .sort((a: any, b: any) => {
-      const aDate = a['kitche_date'].value
-      const bDate = b['kitche_date'].value
-      return DateTime.fromISO(aDate).toUTC().toMillis() - DateTime.fromISO(bDate).toUTC().toMillis()
-    })
+  const rows: any[] = getCommonServerSideProps({ daily: false, daoName: 'Karpatkey' })
 
   // Step 3: Reduce the data to a single object with the total balances by asset
-  const parsedRowsReduced = parsedRowsFiltered.reduce(reducerTotalBalancesByAsset, {})
+  const parsedRowsReduced = rows.reduce(reducerTotalBalancesByAsset, {})
   const portfolioSummaryData = mapDataToPie(parsedRowsReduced)
 
   // Step 4: Reduce the data to a collection of positions by protocol and asset, and then map it to the table data
-  const parsedRowsReducedByProtocol = parsedRowsFiltered.reduce(
-    reducerPositionsByProtocolAndAsset,
-    {}
-  )
-
+  const parsedRowsReducedByProtocol = rows.reduce(reducerPositionsByProtocolAndAsset, {})
   const positionsData = mapDataToTable(parsedRowsReducedByProtocol)
 
   // Pass data to the page via props

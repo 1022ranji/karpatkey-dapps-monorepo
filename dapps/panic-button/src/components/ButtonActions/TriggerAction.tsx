@@ -9,7 +9,7 @@ export default function TriggerAction() {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-end',
         mb: '10px',
         gap: '10px'
       }}
