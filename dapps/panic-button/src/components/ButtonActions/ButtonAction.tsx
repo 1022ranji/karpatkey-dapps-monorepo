@@ -1,6 +1,6 @@
 import SnackbarAction, {
   ESnackStatus
-} from '@/dapps/panic-button/src/components/ButtonActions/SnackbarAction'
+} from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/SnackbarAction'
 import useHandleAction from '@karpatkey-monorepo/panic-button/src/hooks/useHandleAction'
 import ModalDialog from '@karpatkey-monorepo/shared/components/Modals/ModalDialog'
 import { Box, Button, CircularProgress } from '@mui/material'
