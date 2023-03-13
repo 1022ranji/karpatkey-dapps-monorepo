@@ -11,10 +11,14 @@ interface IModalDialog {
   handleClose: (status: boolean) => Promise<void>
   title: string
   description: string
+  component?: React.ReactNode
+  okButtonTitle?: string
+  cancelButtonTitle?: string
 }
 
 const ModalDialog = (props: IModalDialog) => {
-  const { open, handleClose, title, description } = props
+  const { open, handleClose, title, description, component, okButtonTitle, cancelButtonTitle } =
+    props
   return (
     <Dialog
       open={open}
@@ -27,6 +31,7 @@ const ModalDialog = (props: IModalDialog) => {
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">{description}</DialogContentText>
+        {component}
       </DialogContent>
       <DialogActions>
         <Button
@@ -34,7 +39,7 @@ const ModalDialog = (props: IModalDialog) => {
             await handleClose(false)
           }}
         >
-          Disagree
+          {cancelButtonTitle}
         </Button>
         <Button
           onClick={async () => {
@@ -42,7 +47,7 @@ const ModalDialog = (props: IModalDialog) => {
           }}
           autoFocus
         >
-          Agree
+          {okButtonTitle}
         </Button>
       </DialogActions>
     </Dialog>
