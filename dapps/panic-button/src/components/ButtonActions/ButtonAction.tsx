@@ -50,7 +50,7 @@ export default function ButtonAction(props: IButtonActionProps) {
       return successMessage || ''
     }
     return ''
-  }, [error, data])
+  }, [error, successMessage, data])
 
   return (
     <Box
