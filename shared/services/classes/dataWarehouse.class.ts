@@ -1,9 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import googleCredentials from '@/google-credentials.json'
 import { BigQuery } from '@google-cloud/bigquery'
-
-console.log('dirname1', __dirname)
+import googleCredentials from '@karpatkey-monorepo/shared/google-credentials.json'
 
 export class DataWarehouse {
   private static instance: DataWarehouse

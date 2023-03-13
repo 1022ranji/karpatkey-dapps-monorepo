@@ -84,7 +84,6 @@ export default function TablePositions({ rows }: any) {
   return (
     <>
       {Object.keys(rows).map((row: any, index: number) => {
-        console.log('row', rows[row])
         return (
           <Box key={index} sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 5 }}>

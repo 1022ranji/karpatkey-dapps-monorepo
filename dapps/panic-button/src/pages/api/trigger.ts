@@ -18,7 +18,7 @@ export default withApiAuthRequired(function handler(
     try {
       let message: string
       // spawn new child process to call the python script
-      const python = spawn('python3', ['../../shared/scripts/main.py'])
+      const python = spawn('python3', [`./../../shared/scripts/main.py`, '-p', '20'])
 
       // collect data from script
       python.stdout.on('data', (data) => {
@@ -30,7 +30,7 @@ export default withApiAuthRequired(function handler(
       python.on('close', (code) => {
         console.log(`child process close all stdio with code ${code} and message: ${message}`)
 
-        const status = message?.includes('Success') ?? false
+        const status = code === 120 || message?.includes('Success')
         const match = message?.match(
           /\b((https?|ftp|file):\/\/|(www|ftp)\.)[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$]/gi
         )
