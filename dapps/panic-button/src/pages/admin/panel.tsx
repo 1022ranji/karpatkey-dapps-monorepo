@@ -2,6 +2,7 @@ import UpdateCache from '@/dapps/panic-button/src/components/ButtonActions/Updat
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client'
 import Logo from '@karpatkey-monorepo/panic-button/src/components/Logo'
 import TablePositions from '@karpatkey-monorepo/panic-button/src/components/TablePositions'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
@@ -18,12 +19,8 @@ export default withPageAuthRequired(function Panel({ positionsData }: IPanelProp
   return (
     <ErrorBoundaryWrapper>
       <ContainerWrapper>
-        <Box
+        <BoxWrapperRow
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
             gap: '10px',
             mb: '30px'
           }}
@@ -32,13 +29,8 @@ export default withPageAuthRequired(function Panel({ positionsData }: IPanelProp
           <CustomTypography color="textSecondary" variant="h4" textAlign="center">
             DAO Positions
           </CustomTypography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column'
-          }}
-        >
+        </BoxWrapperRow>
+        <Box display="flex" flexDirection="column">
           <TablePositions rows={positionsData} />
           <UpdateCache />
         </Box>

@@ -1,20 +1,11 @@
 import ButtonAction from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/ButtonAction'
-import Box from '@mui/material/Box'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import TextField from '@mui/material/TextField'
 import React from 'react'
 
 export default function ExtractAction() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        mb: '10px',
-        gap: '10px'
-      }}
-    >
+    <BoxWrapperRow justifyContent="flex-end" mb="10px" gap="10px">
       <ButtonAction
         buttonTitle="Withdraw"
         modalDialogTitle="Are you sure you want to withdraw some funds?"
@@ -35,6 +26,6 @@ export default function ExtractAction() {
           />
         }
       />
-    </Box>
+    </BoxWrapperRow>
   )
 }
