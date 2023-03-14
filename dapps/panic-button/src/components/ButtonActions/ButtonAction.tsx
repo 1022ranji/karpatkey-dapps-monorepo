@@ -2,8 +2,9 @@ import SnackbarAction, {
   ESnackStatus
 } from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/SnackbarAction'
 import useHandleAction from '@karpatkey-monorepo/panic-button/src/hooks/useHandleAction'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import ModalDialog from '@karpatkey-monorepo/shared/components/Modals/ModalDialog'
-import { Box, Button, CircularProgress } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 import React from 'react'
 
 interface IButtonActionProps {
@@ -53,14 +54,7 @@ export default function ButtonAction(props: IButtonActionProps) {
   }, [error, successMessage, data])
 
   return (
-    <Box
-      display="flex"
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="flex-start"
-      mb="10px"
-      gap="10px"
-    >
+    <BoxWrapperRow justifyContent="flex-start" mb="10px" gap="10px">
       <Button
         onClick={onClick}
         variant="contained"
@@ -83,6 +77,6 @@ export default function ButtonAction(props: IButtonActionProps) {
         cancelButtonTitle={cancelButtonTitle}
       />
       <SnackbarAction status={status} message={message} open={!!data} />
-    </Box>
+    </BoxWrapperRow>
   )
 }

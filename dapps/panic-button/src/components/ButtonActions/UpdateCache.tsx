@@ -1,19 +1,10 @@
 import ButtonAction from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/ButtonAction'
-import Box from '@mui/material/Box'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import React from 'react'
 
 export default function UpdateCache() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        mb: '10px',
-        gap: '10px'
-      }}
-    >
+    <BoxWrapperRow justifyContent="flex-start" mb="10px" gap="10px">
       <ButtonAction
         buttonTitle="Update cache"
         modalDialogTitle="Are you sure you want to update the cache?"
@@ -23,6 +14,6 @@ export default function UpdateCache() {
         cancelButtonTitle="Cancel"
         actionURL="/api/cache"
       />
-    </Box>
+    </BoxWrapperRow>
   )
 }
