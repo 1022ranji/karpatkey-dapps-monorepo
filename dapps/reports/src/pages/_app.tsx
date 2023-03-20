@@ -1,5 +1,6 @@
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import Layout from '@karpatkey-monorepo/reports/src/components/Layout/Layout'
+import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
 import { TITLE } from '@karpatkey-monorepo/shared/config/constants'
 import createEmotionCache from '@karpatkey-monorepo/shared/config/createEmotionCache'
 import theme from '@karpatkey-monorepo/shared/config/theme'
@@ -52,8 +53,8 @@ export default function MyApp(props: MyAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
         <NoSsr>
-          <CssBaseline />
           <Layout>
             {loading ? (
               <Box
@@ -66,7 +67,9 @@ export default function MyApp(props: MyAppProps) {
                 <CircularProgress color="primary" />
               </Box>
             ) : (
-              <Component {...pageProps} />
+              <ErrorBoundaryWrapper>
+                <Component {...pageProps} />
+              </ErrorBoundaryWrapper>
             )}
           </Layout>
         </NoSsr>
