@@ -4,9 +4,10 @@ type ComponentProps = {
   children?: React.ReactNode
 }
 
-type NetworkId = 1 | 100
+type NetworkId = 0 | 1 | 100
 
 enum NetworkIds {
+  ALL = 0,
   ETHEREUM = 1,
   GNOSIS = 100,
 }
@@ -14,6 +15,7 @@ enum NetworkIds {
 interface DAO {
   address: string
   name: string
+  icon: string
 }
 
 interface Network {
@@ -28,3 +30,8 @@ enum PeriodTime {
 }
 
 type PeriodType = `${PeriodTime}`
+
+declare module "*.svg" {
+  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  export default content;
+}
