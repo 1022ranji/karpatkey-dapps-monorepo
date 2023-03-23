@@ -16,7 +16,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
-    "@google-cloud/bigquery": "^6.1.0",
+    "@google-cloud/bigquery": "^6.2.0",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.14",
     "@mui/utils": "^5.11.13",
