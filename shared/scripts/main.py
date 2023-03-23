@@ -13,6 +13,7 @@ args = parser.parse_args()
 config = vars(args)
 
 if config['execute'] is False:
+  print("This is a dry run, no transaction will be executed. The param percentage is %s", config['percentage'] )
   sys.exit(120)
 
 web3 = get_node(XDAI)
