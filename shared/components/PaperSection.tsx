@@ -12,7 +12,7 @@ interface IPaperSection {
 const PaperSection = (props: IPaperSection) => {
   const { title, children } = props
   return (
-    <Paper sx={{ padding: 4, marginTop: 4 }}>
+    <Paper sx={{ paddingY: 4 }}>
       <CustomTypography color="textSecondary" variant="h5" textAlign="left">
         {title}
       </CustomTypography>
