@@ -9,6 +9,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import CssBaseline from '@mui/material/CssBaseline'
 import NoSsr from '@mui/material/NoSsr'
 import { ThemeProvider } from '@mui/material/styles'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Router from 'next/router'
@@ -51,29 +53,31 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>{TITLE}</title>
       </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <NoSsr>
-          <Layout>
-            {loading ? (
-              <Box
-                display="flex"
-                justifyContent="center"
-                flexDirection="column"
-                alignItems="center"
-                sx={{ minHeight: 'calc(100vh - 160px)' }}
-              >
-                <CircularProgress color="primary" />
-              </Box>
-            ) : (
-              <ErrorBoundaryWrapper>
-                <Component {...pageProps} />
-              </ErrorBoundaryWrapper>
-            )}
-          </Layout>
-        </NoSsr>
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <NoSsr>
+            <Layout>
+              {loading ? (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                  alignItems="center"
+                  sx={{ minHeight: 'calc(100vh - 160px)' }}
+                >
+                  <CircularProgress color="primary" />
+                </Box>
+              ) : (
+                <ErrorBoundaryWrapper>
+                  <Component {...pageProps} />
+                </ErrorBoundaryWrapper>
+              )}
+            </Layout>
+          </NoSsr>
+        </ThemeProvider>
+      </LocalizationProvider>
     </CacheProvider>
   )
 }
