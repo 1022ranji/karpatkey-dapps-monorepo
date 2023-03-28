@@ -1,1 +1,4 @@
-balance-reports.json
+getDailyBalanceReports.json
+getTokens.json
+getTreasuryFinancialMetrics.json
+getTreasuryVariationMetricsDetail.json

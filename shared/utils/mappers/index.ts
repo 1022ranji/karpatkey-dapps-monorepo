@@ -47,12 +47,13 @@ const reducerTotalFundsByProperties = (
   return acc
 }
 
-export const reducerTotalBalancesByAsset = (acc: any, obj: any) => {
-  const assetKey = obj['token_coin_asset']
+export const reducerBalancesByTokenCategory = (acc: any, obj: any) => {
+  const assetKey = obj['token_category']
 
-  if (!acc[assetKey]) acc[assetKey] = 0
+  if (!acc[assetKey]) acc[assetKey] = { funds: 0, price: 0 }
 
-  acc[assetKey] = acc[assetKey] + ((obj['balance'] ?? 0) * obj['price'] ?? 0)
+  acc[assetKey].funds = acc[assetKey].funds + ((obj['bal_0'] ?? 0) * obj['period_first_price'] ?? 0)
+  acc[assetKey].price = obj['period_first_price'] ?? 0
 
   return acc
 }
@@ -75,16 +76,18 @@ export const mapDataToLineSeries = (data: any) => {
   })
 }
 
-export const mapDataToPie = (data: any[]) => {
-  const total = Object.values(data).reduce((accumulator: any, value: any) => accumulator + value, 0)
+export const mapBalancesByTokenCategory = (data: any[]) => {
+  const total = Object.values(data).reduce(
+    (accumulator: any, value: any) => accumulator + value.funds,
+    0
+  )
 
   return Object.keys(data).map((assetName: string) => {
-    const value = (data[assetName as any] / total) * 100
-    const id = assetName.charAt(0).toUpperCase() + assetName.slice(1).toLowerCase()
+    const allocation = (data[assetName as any].funds / total) * 100
     return {
-      id,
-      name: assetName,
-      value: value.toFixed(2)
+      ...data[assetName as any],
+      asset: assetName,
+      allocation: allocation.toFixed(2)
     }
   })
 }

@@ -20,10 +20,6 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*",
-        "./src/*",
-      ],
       "@karpatkey-monorepo/reports": [
         "./dapps/reports/*",
         "./dapps/reports/src/"
