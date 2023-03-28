@@ -1,4 +1,5 @@
 import { withApiAuthRequired } from '@auth0/nextjs-auth0'
+import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
 import { DataWarehouse } from '@karpatkey-monorepo/shared/services/classes/dataWarehouse.class'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -19,12 +20,16 @@ export default withApiAuthRequired(function handler(
     try {
       const cache = Cache.getInstance()
 
-      // Step 1: Create a BigQuery client
       const dataWarehouse = DataWarehouse.getInstance()
 
       // Step 2: Query the data
-      const reportData = await dataWarehouse.getBalanceReports()
-      cache.writeBalanceReports(reportData)
+      const cachePromises = ALLOWED_REPORTS.map(async (report) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const reportData = await dataWarehouse[report.reportName]()
+        cache.write(report.reportName, reportData)
+      })
+      await Promise.all(cachePromises)
 
       // send data to browser
       res.status(200).json({ data: { status: true, message: 'Cache successfully regenerated' } })

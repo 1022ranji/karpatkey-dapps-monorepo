@@ -1,26 +1,8 @@
 import { Command } from 'commander'
 
+import { ALLOWED_REPORTS } from '../config/constants'
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
-
-const allowedReports: { reportName: string; fileName: string }[] = [
-  {
-    reportName: 'getDailyBalanceReports',
-    fileName: 'daily-balance-reports'
-  },
-  {
-    reportName: 'getTreasuryFinancialMetrics',
-    fileName: 'treasury-financial-metrics'
-  },
-  {
-    reportName: 'getTokens',
-    fileName: 'tokens'
-  },
-  {
-    reportName: 'getTreasuryVariationMetricsDetail',
-    fileName: 'treasury-variation-metrics-detail'
-  }
-]
 
 const program = new Command()
 
@@ -36,7 +18,7 @@ if (!reportName) {
   process.exit(1)
 }
 
-const report = allowedReports.find((report) => report.reportName === reportName)
+const report = ALLOWED_REPORTS.find((report) => report.reportName === reportName)
 if (!report) {
   console.error(`Report name ${reportName} is not allowed`)
   process.exit(1)

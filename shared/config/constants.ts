@@ -126,3 +126,22 @@ export const NETWORK_DEFAULT = 0 as NetworkId
 export const DAO_DEFAULT = ZERO_ADDRESS
 
 export const PERIOD_TYPE_DEFAULT = 'week' as PeriodType
+
+export const ALLOWED_REPORTS: { reportName: string; fileName: string }[] = [
+  {
+    reportName: 'getDailyBalanceReports',
+    fileName: 'daily-balance-reports'
+  },
+  {
+    reportName: 'getTreasuryFinancialMetrics',
+    fileName: 'treasury-financial-metrics'
+  },
+  {
+    reportName: 'getTokens',
+    fileName: 'tokens'
+  },
+  {
+    reportName: 'getTreasuryVariationMetricsDetail',
+    fileName: 'treasury-variation-metrics-detail'
+  }
+]
