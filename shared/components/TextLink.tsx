@@ -40,7 +40,6 @@ const LinkWrapper = styled('div')(() => ({
   }
 }))
 
-// eslint-disable-next-line react/display-name
 const LinkComponent = memo(
   ({
     className,
@@ -57,7 +56,6 @@ const LinkComponent = memo(
   )
 )
 
-// eslint-disable-next-line react/display-name
 const CustomLink = memo(
   ({ href, ...others }: LinkBaseProps & { withUnderlineAnimation?: boolean }) => (
     <LinkWrapper>
