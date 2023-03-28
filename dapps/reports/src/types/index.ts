@@ -6,7 +6,7 @@ export type TReportFilter = {
 }
 
 export type TReportData = {
-  summaryData: any[]
+  data: any[]
 }
 
 export type TReportProps = TReportData & TReportFilter

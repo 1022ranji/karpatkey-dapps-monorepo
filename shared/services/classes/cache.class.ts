@@ -11,12 +11,12 @@ export default class Cache {
     return Cache.instance
   }
 
-  getBalanceReports() {
-    const data = fs.readFileSync('../../shared/cache/balance-reports.json', 'utf8')
+  getReport(reportName: string) {
+    const data = fs.readFileSync(`../../shared/cache/${reportName}.json`, 'utf8')
     return JSON.parse(data)
   }
 
-  writeBalanceReports(data: any) {
-    fs.writeFileSync('../../shared/cache/balance-reports.json', JSON.stringify(data), 'utf8')
+  write(reportName: string, data: any) {
+    fs.writeFileSync(`../shared/cache/${reportName}.json`, JSON.stringify(data), 'utf8')
   }
 }

@@ -16,6 +16,7 @@ interface DAO {
   address: string
   name: string
   icon: string
+  keyName: string
 }
 
 interface Network {
@@ -35,3 +36,5 @@ declare module "*.svg" {
   const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
   export default content;
 }
+
+type Report = 'getDailyBalanceReports' | 'getTreasuryFinancialMetrics' | 'getTokens' | 'getTreasuryVariationMetricsDetail'

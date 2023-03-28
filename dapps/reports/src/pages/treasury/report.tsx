@@ -48,8 +48,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // We validate the params here to avoid any errors in the page
   await filterSchemaValidation.validate(params)
 
-  const { summaryData = [] as any[] } = await getCommonServerSideProps(params)
+  const { data = [] as any[] } = await getCommonServerSideProps(params)
 
   // Pass data to the page via props
-  return { props: { summaryData, ...params } }
+  return { props: { data, ...params } }
 }

@@ -82,7 +82,7 @@ export const getNetworkByNetworkId = (networkId: NetworkId) => {
 }
 
 export const getDAOByAddress = (address: string, networkId: NetworkId) => {
-  return DAOs[networkId].DAOs.find((dao) => dao.address === address)
+  return DAOs[networkId].DAOs.find((dao) => dao.address.toLowerCase() === address.toLowerCase())
 }
 
 export const getNetworkNameByDAOAddress = (address: string) => {
@@ -121,4 +121,34 @@ export function shortenAddress(address: string, chars = 4): string {
 
 export const isDefaultAddress = (address: string) => {
   return address === ZERO_ADDRESS
+}
+
+export const getMetricByPeriodType = (periodType: PeriodType) => {
+  switch (periodType) {
+    case 'day':
+      return 'balances_daily'
+    case 'week':
+      return 'balances_weekly'
+    case 'month':
+      return 'balances_monthly'
+    case 'year':
+      return 'balances_yearly'
+    default:
+      return ''
+  }
+}
+
+export const getMetricByPeriod = (period: string, periodType: PeriodType) => {
+  switch (periodType) {
+    case 'day':
+      return DateTime.fromISO(period).toFormat('yyyy-MM-dd')
+    case 'week':
+      return DateTime.fromISO(period).toFormat('yyyy_WW')
+    case 'month':
+      return DateTime.fromISO(period).toFormat('yyyy_MM')
+    case 'year':
+      return DateTime.fromISO(period).toFormat('yyyy')
+    default:
+      return ''
+  }
 }
