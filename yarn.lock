@@ -1499,6 +1499,11 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
+"@types/randomcolor@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@types/randomcolor/-/randomcolor-0.5.7.tgz#314b84f571cb11bc3a7785c42d50efc7fa327147"
+  integrity sha512-LPcG96dGYRCsXlk1fslUNIg6ebEi+bKNyn84uBL/pu2cRSf5i/djD3ArJZOyzszVMVV/DB87va6pMZP+tRSl/w==
+
 "@types/react-copy-to-clipboard@^5.0.4":
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/@types/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.4.tgz#558f2c38a97f53693e537815f6024f1e41e36a7e"
@@ -1916,6 +1921,11 @@ big.js@^6.0.0:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-6.2.1.tgz#7205ce763efb17c2e41f26f121c420c6a7c2744f"
   integrity sha512-bCtHMwL9LeDIozFn+oNhhFoq+yQ3BNdnsLSASUxLciOb1vgvpHsIO1dsENiGMgbb4SkP5TrzWzRiLddn8ahVOQ==
+
+bignumber.js@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-8.1.1.tgz#4b072ae5aea9c20f6730e4e5d529df1271c4d885"
+  integrity sha512-QD46ppGintwPGuL1KqmwhR0O+N2cZUg8JG/VzwI2e28sM9TqHjQB10lI4QAaMHVbLzwVLLAwEglpKPViWX+5NQ==
 
 bignumber.js@^9.0.0:
   version "9.1.1"
@@ -4821,6 +4831,13 @@ number-to-bn@1.7.0:
     bn.js "4.11.6"
     strip-hex-prefix "1.0.0"
 
+numbro@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/numbro/-/numbro-2.3.6.tgz#4bd622ebe59ccbc49dad365c5b9eed200781fa21"
+  integrity sha512-pxpoTT3hVxQGaOA2RTzXR/muonQNd1K1HPJbWo7QOmxPwiPmoFCFfsG9XXgW3uqjyzezJ0P9IvCPDXUtJexjwg==
+  dependencies:
+    bignumber.js "^8.1.1"
+
 object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -5199,6 +5216,11 @@ randombytes@^2.1.0:
   integrity sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==
   dependencies:
     safe-buffer "^5.1.0"
+
+randomcolor@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/randomcolor/-/randomcolor-0.6.2.tgz#7a57362ae1a1278439aeed2c15e5deb8ea33f56d"
+  integrity sha512-Mn6TbyYpFgwFuQ8KJKqf3bqqY9O1y37/0jgSK/61PUxV4QfIMv0+K2ioq8DfOjkBslcjwSzRfIDEXfzA9aCx7A==
 
 react-copy-to-clipboard@^5.1.0:
   version "5.1.0"
