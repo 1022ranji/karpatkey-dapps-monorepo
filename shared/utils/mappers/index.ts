@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import randomColor from 'randomcolor'
 
 /**
  * Filter data between two timestamps, from the report balance view
@@ -47,13 +48,17 @@ const reducerTotalFundsByProperties = (
   return acc
 }
 
-export const reducerBalancesByTokenCategory = (acc: any, obj: any) => {
+export const reducerBalancesByTokenCategory = (
+  acc: any,
+  obj: any
+): { funds: number; price: number }[] => {
   const assetKey = obj['token_category']
 
   if (!acc[assetKey]) acc[assetKey] = { funds: 0, price: 0 }
 
-  acc[assetKey].funds = acc[assetKey].funds + ((obj['bal_0'] ?? 0) * obj['period_first_price'] ?? 0)
-  acc[assetKey].price = obj['period_first_price'] ?? 0
+  acc[assetKey].funds =
+    acc[assetKey].funds + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+  acc[assetKey].price = +obj['next_period_first_price'] ?? 0
 
   return acc
 }
@@ -76,18 +81,35 @@ export const mapDataToLineSeries = (data: any) => {
   })
 }
 
-export const mapBalancesByTokenCategory = (data: any[]) => {
+export type TMapBalancesByTokenCategory = {
+  fill: string
+  asset: string
+  allocation: number
+  funds: number
+  price: number
+}
+
+export const mapBalancesByTokenCategory = (
+  data: { funds: number; price: number }[]
+): TMapBalancesByTokenCategory[] => {
   const total = Object.values(data).reduce(
-    (accumulator: any, value: any) => accumulator + value.funds,
+    (accumulator: number, value: { funds: number; price: number }) => accumulator + value.funds,
     0
   )
 
-  return Object.keys(data).map((assetName: string) => {
-    const allocation = (data[assetName as any].funds / total) * 100
+  const colours = randomColor({
+    hue: 'monochrome',
+    count: Object.keys(data).length,
+    luminosity: 'light'
+  })
+
+  return Object.keys(data).map((assetName: string, index: number) => {
+    const allocation = (+data[assetName as any].funds / +total) * 100
     return {
       ...data[assetName as any],
       asset: assetName,
-      allocation: allocation.toFixed(2)
+      allocation: allocation,
+      fill: colours[index]
     }
   })
 }
