@@ -140,7 +140,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
     <HeaderWrapper>
       <CssBaseline />
       <AppBar component="nav" sx={{ backgroundColor: 'background.default' }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', gap: 2 }}>
           <IconButton
             aria-label="open drawer"
             edge="start"
@@ -152,7 +152,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
           <BoxWrapperRow>
             <BoxWrapperRow gap={6}>
               <Logo />
-              <Box sx={{ display: { xs: 'none', sm: 'flex' } }} gap={2}>
+              <BoxWrapperRow sx={{ display: { xs: 'none', sm: 'flex' } }} gap={2}>
                 {NAV_ITEMS.map(({ name, path }: INavItem, index: number) => {
                   return (
                     <LinkCustom
@@ -168,21 +168,15 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
                     </LinkCustom>
                   )
                 })}
-              </Box>
+              </BoxWrapperRow>
             </BoxWrapperRow>
           </BoxWrapperRow>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="center"
-            gap={4}
-          >
+          <BoxWrapperRow gap={4} sx={{ display: { xs: 'none', sm: 'flex' } }}>
             {daoAddress && !isDefaultAddress(daoAddress as string) && (
               <MenuAddress address={daoAddress as string} />
             )}
             <FormNetworkDropdown control={control} name={'network'} onChange={onChangeNetwork} />
-          </Box>
+          </BoxWrapperRow>
         </Toolbar>
       </AppBar>
 
