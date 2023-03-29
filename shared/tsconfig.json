@@ -1,5 +1,8 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["../types/additional.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "types": ["../types/additional.d.ts"]
+  }
 }
