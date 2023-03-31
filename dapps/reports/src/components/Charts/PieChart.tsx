@@ -4,8 +4,19 @@ import numbro from 'numbro'
 import React from 'react'
 import { Pie, PieChart as PieChartRecharts, ResponsiveContainer, Sector } from 'recharts'
 
+const RADIAN = Math.PI / 180
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+  const x = cx + radius * Math.cos(-midAngle * RADIAN)
+  const y = cy + radius * Math.sin(-midAngle * RADIAN)
+
+  return (
+    <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  )
+}
 const renderActiveShape = (props: any) => {
-  const RADIAN = Math.PI / 180
   const {
     cx,
     cy,
@@ -102,7 +113,7 @@ const PieChart = ({ data, ...props }: BoxProps & TPieChartProps) => {
 
   return (
     <Box {...props}>
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" minWidth={300} height={400}>
         <PieChartRecharts width={600} height={400}>
           <Pie
             activeIndex={activeIndex}
@@ -111,7 +122,8 @@ const PieChart = ({ data, ...props }: BoxProps & TPieChartProps) => {
             cx="50%"
             cy="50%"
             innerRadius={60}
-            outerRadius={100}
+            outerRadius={120}
+            label={renderCustomizedLabel}
             fill="#bdbdbd"
             dataKey="allocation"
             onMouseEnter={onPieEnter}
