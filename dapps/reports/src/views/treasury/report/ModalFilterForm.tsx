@@ -9,7 +9,7 @@ type TModalFilterForm = {
   watch: any
 }
 type TModalFilterFormProps = TModalFilterForm & TReportFilter
-const ModalFilterForm = ({ control, chainId, watch }: TModalFilterFormProps) => {
+const ModalFilterForm = ({ control, watch }: TModalFilterFormProps) => {
   return (
     <Box
       display="flex"
@@ -19,7 +19,7 @@ const ModalFilterForm = ({ control, chainId, watch }: TModalFilterFormProps) => 
       gap={4}
       marginTop={4}
     >
-      <FormDAODropdown control={control} name={'daoAddress'} watch={watch} chainId={chainId} />
+      <FormDAODropdown control={control} name={'daoName'} watch={watch} />
       <FormToggleType control={control} name={'periodType'} />
       {/*<FormDatePicker control={control} name={'period'} />*/}
     </Box>

@@ -17,7 +17,7 @@ const Logo = () => (
         color: '#1A1A1A'
       }}
     >
-      Karpatkey
+      karpatkey
     </CustomTypography>
   </Box>
 )

@@ -18,7 +18,9 @@ if (!reportName) {
   process.exit(1)
 }
 
-const report = ALLOWED_REPORTS.find((report) => report.reportName === reportName)
+const report = ALLOWED_REPORTS.find(
+  (report: { fileName: string; reportName: Report }) => report.reportName === reportName
+)
 if (!report) {
   console.error(`Report name ${reportName} is not allowed`)
   process.exit(1)
@@ -34,8 +36,8 @@ if (!report) {
     // Step 2: Query the data
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const reportData = await dataWarehouse[report.reportName]()
-    cache.write(report.reportName, reportData)
+    const reportData = await dataWarehouse[report.reportName as Report]()
+    cache.write(report.reportName as Report, reportData)
     console.log(`Success, cache generated!`)
   } catch (e) {
     console.error(e)

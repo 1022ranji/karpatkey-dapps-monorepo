@@ -1,11 +1,5 @@
 import { getAddress } from '@ethersproject/address'
-import {
-  BASIC_NETWORKS,
-  DAOs,
-  NETWORKS,
-  NONE,
-  ZERO_ADDRESS
-} from '@karpatkey-monorepo/shared/config/constants'
+import { DAOs, NETWORKS, NONE, ZERO_ADDRESS } from '@karpatkey-monorepo/shared/config/constants'
 import { DateTime } from 'luxon'
 
 export const getLastWeekDate = () => {
@@ -50,21 +44,29 @@ export const getHumanPeriod = (period: string, periodType: PeriodType) => {
   }
 }
 
-export const getHumanDAO = (address: string, networkId: NetworkId) => {
-  const dao = DAOs[networkId].DAOs.find((dao) => dao.address === address)
-  return dao ? dao.name : NONE
-}
-
-export const getHumanNetwork = (networkId: NetworkId) => {
-  return NETWORKS[networkId].name
-}
-
-export const getDAOsForDropdownByNetwork = (networkId: NetworkIds) => {
-  return DAOs[networkId].DAOs.map((dao) => ({
-    value: dao.address,
-    name: dao.name,
-    icon: dao.icon
-  })).sort((a, b) => a.name.localeCompare(b.name))
+export const getDAOsForDropdown = () => {
+  return Object.values(DAOs)
+    .map((value: Network) => {
+      return value.DAOs.map((dao) => ({
+        keyName: dao.keyName,
+        name: dao.name,
+        icon: dao.icon
+      }))
+    })
+    .flat()
+    .reduce(
+      (
+        accumulator: { keyName: DAO_NAME; name: string; icon: string }[],
+        current: { keyName: DAO_NAME; name: string; icon: string }
+      ) => {
+        if (!accumulator.find((item) => item.keyName === current.keyName)) {
+          accumulator.push(current)
+        }
+        return accumulator
+      },
+      []
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 export const getNetworksForDropdown = () => {
@@ -81,26 +83,33 @@ export const getNetworkByNetworkId = (networkId: NetworkId) => {
   return NETWORKS[networkId]
 }
 
-export const getDAOByAddress = (address: string, networkId: NetworkId) => {
-  return DAOs[networkId].DAOs.find((dao) => dao.address.toLowerCase() === address.toLowerCase())
+export const getDAOByAddress = (address: string) => {
+  const dao = Object.values(DAOs).find((network) =>
+    network.DAOs.find((dao) => dao.addresses.includes(address))
+  )
+  return dao?.DAOs.find((dao) => dao.addresses.includes(address))
 }
 
-export const getNetworkNameByDAOAddress = (address: string) => {
-  const network = Object.entries(BASIC_NETWORKS).find(([key]) => {
-    return DAOs[key as unknown as NetworkId].DAOs.some((dao: any) => dao.address === address)
+export const getDAOByDAOName = (daoName: DAO_NAME) => {
+  const dao = Object.values(DAOs).find((network) =>
+    network.DAOs.find((dao) => dao.keyName === daoName)
+  )
+  return dao?.DAOs.find((dao) => dao.keyName === daoName)
+}
+
+export const getNetworkExplorerURLByDAOAddress = (daoName: DAO_NAME) => {
+  const network = Object.entries(DAOs).find(([, value]) => {
+    return value.DAOs.some((dao) => dao.keyName === daoName)
   })
-  return network ? network[1].name : NONE
+  const dao = getDAOByDAOName(daoName)
+
+  return network
+    ? `${NETWORKS[network[0] as unknown as NetworkId].explorerURL}${dao?.addresses[0]}`
+    : NONE
 }
 
-export const getNetworkExplorerURLByDAOAddress = (address: string) => {
-  const network = Object.entries(BASIC_NETWORKS).find(([key]) => {
-    return DAOs[key as unknown as NetworkId].DAOs.some((dao: any) => dao.address === address)
-  })
-  return network ? `${network[1].explorerURL}${address}` : NONE
-}
-
-export const existAddressInDAOs = (address: string, networkId: NetworkId) => {
-  return DAOs[networkId].DAOs.some((dao) => dao.address === address)
+export const existDAOKeyName = (daoName: string) => {
+  return Object.values(DAOs).some((network) => network.DAOs.some((dao) => dao.keyName === daoName))
 }
 
 export function isAddress(value: any): string | false {
@@ -138,6 +147,21 @@ export const getMetricByPeriodType = (periodType: PeriodType) => {
   }
 }
 
+export const getDateTypeByPeriodType = (periodType: PeriodType) => {
+  switch (periodType) {
+    case 'day':
+      return 'day'
+    case 'week':
+      return 'week'
+    case 'month':
+      return 'month'
+    case 'year':
+      return 'year'
+    default:
+      return ''
+  }
+}
+
 export const getMetricByPeriod = (period: string, periodType: PeriodType) => {
   switch (periodType) {
     case 'day':
@@ -151,4 +175,18 @@ export const getMetricByPeriod = (period: string, periodType: PeriodType) => {
     default:
       return ''
   }
+}
+
+export const getAddressByDAOName = (daoName: DAO_NAME) => {
+  const dao = Object.values(DAOs).find((network) =>
+    network.DAOs.find((dao) => dao.keyName === daoName)
+  )
+  return dao?.DAOs.find((dao) => dao.keyName === daoName)?.addresses[0] || ZERO_ADDRESS
+}
+
+export const getNameByDAOName = (daoName: DAO_NAME) => {
+  const dao = Object.values(DAOs).find((network) =>
+    network.DAOs.find((dao) => dao.keyName === daoName)
+  )
+  return dao?.DAOs.find((dao) => dao.keyName === daoName)?.name || NONE
 }

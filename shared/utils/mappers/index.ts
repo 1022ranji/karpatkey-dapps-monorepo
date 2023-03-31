@@ -25,7 +25,21 @@ export const reducerTotalBalancesByDate = (acc: any, obj: any) => {
 }
 
 export const reducerPositionsByProtocolAndAsset = (acc: any, obj: any) => {
-  return reducerTotalFundsByProperties('protocol', 'Report_LPtoken_Name', acc, obj)
+  if (!acc['protocol']) acc['protocol'] = {}
+  if (!acc['protocol']['lptoken_name'])
+    acc['protocol']['lptoken_name'] = { funds: 0, allocation: 0, revenue: 0 }
+
+  // 'total farming'
+  if (obj['m09']) {
+    acc['protocol']['lptoken_name'].funds += obj['total farming']
+  }
+
+  // 'farming rewards'
+  if (obj['m14']) {
+    acc['protocol']['lptoken_name'].revenue += obj['farming rewards']
+  }
+
+  return acc
 }
 
 const reducerTotalFundsByProperties = (
@@ -60,6 +74,21 @@ export const reducerBalancesByTokenCategory = (
     acc[assetKey].funds + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
   acc[assetKey].price = +obj['next_period_first_price'] ?? 0
 
+  return acc
+}
+
+export const reducerTotalFunds = (acc: any, obj: any): number => {
+  acc = acc + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+  return acc
+}
+
+export const reducerCapitalUtilization = (acc: any, obj: any): number => {
+  acc = acc + (obj['metric'] && obj['metric'] === 'capital utilization' ? obj['metric_value'] : 0)
+  return acc
+}
+
+export const reducerFarmingResults = (acc: any, obj: any): number => {
+  acc = acc + (obj['metric'] && obj['metric'] === 'total farming' ? obj['metric_value'] : 0)
   return acc
 }
 
