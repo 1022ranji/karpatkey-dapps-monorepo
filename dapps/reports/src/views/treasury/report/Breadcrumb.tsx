@@ -3,32 +3,39 @@ import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { NONE } from '@karpatkey-monorepo/shared/config/constants'
 import {
-  getDAOByAddress,
-  getHumanDAO,
+  existDAOKeyName,
+  getDAOByDAOName,
   getHumanPeriod,
   getHumanPeriodType,
-  isDefaultAddress
+  getNameByDAOName
 } from '@karpatkey-monorepo/shared/utils'
 import { Breadcrumbs, styled } from '@mui/material'
 import Image from 'next/image'
 import * as React from 'react'
 
 const BreadcrumbItem = styled(CustomTypography)(({ theme }) => ({
-  fontStyle: 'italic',
+  fontStyle: 'normal',
+  fontWeight: 400,
+  fontSize: '18px',
+  lineHeight: '23px',
   color: theme.palette.text.primary
 }))
 
 const Breadcrumb = (props: TReportFilter) => {
-  const { chainId, periodType, daoAddress, period } = props
-  const daoTitle =
-    daoAddress && !isDefaultAddress(daoAddress) ? getHumanDAO(daoAddress, chainId) : 'all the DAOs'
+  const { periodType, daoName, period } = props
+  const daoTitle = daoName && existDAOKeyName(daoName) ? getNameByDAOName(daoName) : 'all the DAOs'
   const periodTypeHuman = periodType ? getHumanPeriodType(periodType) : NONE
   const periodHuman = period && periodType ? getHumanPeriod(period, periodType) : NONE
 
-  const dao = getDAOByAddress(daoAddress, chainId)
+  const dao = getDAOByDAOName(daoName)
 
   return (
-    <BoxWrapperRow gap={2}>
+    <BoxWrapperRow
+      sx={{
+        display: { xs: 'none', sm: 'flex' }
+      }}
+      gap={2}
+    >
       <BreadcrumbItem>Filtered by:</BreadcrumbItem>
       <Breadcrumbs aria-label="breadcrumb">
         <BreadcrumbItem>

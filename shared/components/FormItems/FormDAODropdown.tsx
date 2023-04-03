@@ -1,31 +1,21 @@
 import { TFormProps } from '@karpatkey-monorepo/reports/src/types'
-import Address from '@karpatkey-monorepo/shared/components/Address'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
-import {
-  getDAOByAddress,
-  getDAOsForDropdownByNetwork,
-  getNetworkNameByDAOAddress,
-  isDefaultAddress
-} from '@karpatkey-monorepo/shared/utils'
+import { getDAOByDAOName, getDAOsForDropdown } from '@karpatkey-monorepo/shared/utils'
 import { Box, ListItemIcon, MenuItem, Select } from '@mui/material'
 import Image from 'next/image'
 import * as React from 'react'
 import { Controller } from 'react-hook-form'
 
-type TFormDAOChainId = {
-  chainId: NetworkId
+type TFormDAO = {
   watch: any
 }
 
-type TFormDAODropdownProps = TFormProps & TFormDAOChainId
+type TFormDAODropdownProps = TFormProps & TFormDAO
 
 const FormDAODropdown = (props: TFormDAODropdownProps) => {
-  const { name, control, watch, chainId } = props
-  const DAOs = getDAOsForDropdownByNetwork(chainId)
-
-  const daoAddress = watch(name)
-  const networkName = getNetworkNameByDAOAddress(daoAddress)
+  const { name, control } = props
+  const DAOs = getDAOsForDropdown()
 
   return (
     <Controller
@@ -53,7 +43,7 @@ const FormDAODropdown = (props: TFormDAODropdownProps) => {
               }
             }}
             renderValue={(selected) => {
-              const dao = getDAOByAddress(selected, chainId)
+              const dao = getDAOByDAOName(selected as DAO_NAME)
               return (
                 <BoxWrapperRow gap={2} sx={{ minWidth: 100 }}>
                   <Image src={dao?.icon || ''} alt={dao?.name || ''} width={24} height={24} />
@@ -64,8 +54,8 @@ const FormDAODropdown = (props: TFormDAODropdownProps) => {
               )
             }}
           >
-            {DAOs.map(({ value, name, icon }, index) => (
-              <MenuItem key={index} value={value}>
+            {DAOs.map(({ keyName, name, icon }, index) => (
+              <MenuItem key={index} value={keyName}>
                 <ListItemIcon sx={{ marginRight: 2 }}>
                   <Image src={icon} alt={name} width={24} height={24} />
                 </ListItemIcon>
@@ -75,14 +65,6 @@ const FormDAODropdown = (props: TFormDAODropdownProps) => {
               </MenuItem>
             ))}
           </Select>
-          {daoAddress && !isDefaultAddress(daoAddress as string) && (
-            <Address address={daoAddress} />
-          )}
-          {networkName && !isDefaultAddress(daoAddress as string) && (
-            <CustomTypography ellipsis color="textSecondary" variant="body1">
-              Network: {networkName || ''}
-            </CustomTypography>
-          )}
         </Box>
       )}
     />

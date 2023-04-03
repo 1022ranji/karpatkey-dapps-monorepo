@@ -1,28 +1,121 @@
 import { TReportFilter } from '@karpatkey-monorepo/reports/src/types'
 import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
 
-import { getDAOByAddress, getMetricByPeriod, getMetricByPeriodType } from './index'
-import { mapBalancesByTokenCategory, reducerBalancesByTokenCategory } from './mappers'
+import { getDAOByDAOName, getDateTypeByPeriodType, getMetricByPeriodType } from './index'
+import {
+  mapBalancesByTokenCategory,
+  mapperFundsByBlockchain,
+  mapperFundsByProtocol,
+  mapperFundsByTokenCategory,
+  mapperFundsByType,
+  reducerBalancesByTokenCategory,
+  reducerCapitalUtilization,
+  reducerFarmingResults,
+  reducerFundsByBlockchain,
+  reducerFundsByProtocol,
+  reducerFundsByTokenCategory,
+  reducerFundsByType,
+  reducerTotalFunds
+} from './mappers'
 
 export const getCommonServerSideProps = async (params: TReportFilter) => {
-  const { chainId, periodType, period, daoAddress } = params
+  const { periodType, daoName } = params
 
   // Step 1: Create a BigQuery client
   const cache = Cache.getInstance()
 
   // Step 2: Query the data
-  const rows = await cache.getReport('getTreasuryVariationMetricsDetail')
+  const variationMetricsDetail = await cache.getReport(
+    'getTreasuryVariationMetricsDetail' as Report
+  )
+  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as Report)
+  const financialPositions = await cache.getReport('getTreasuryFinancialPositions' as Report)
 
-  const { keyName } = getDAOByAddress(daoAddress, chainId) || {}
+  // Step 3: Filter data by common params, like daoName, periodType and period
+  const { keyName } = getDAOByDAOName(daoName) || {}
   const metricPeriodType = getMetricByPeriodType(periodType)
-  const metricPeriod = getMetricByPeriod(period, periodType)
+  const dateTypePeriodType = getDateTypeByPeriodType(periodType)
+  // const metricPeriod = getMetricByPeriod(period, periodType)
 
-  const rowsFiltered = rows.filter((row: any) => {
-    return row.metric === metricPeriodType && row.dao === keyName && row.year_month === metricPeriod
+  // Filter data by common params, like daoName, periodType and period
+  const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) => {
+    return (
+      row.metric.includes(metricPeriodType) && row.dao === keyName && row.year_month === '2023_12'
+    )
   })
 
-  const rowsReduced = rowsFiltered.reduce(reducerBalancesByTokenCategory, [])
+  const financialPositionsFiltered = financialPositions.filter((row: any) => {
+    return (
+      row.date_type.includes(dateTypePeriodType) &&
+      row.dao === keyName &&
+      row.year_month === '2023_12'
+    )
+  })
 
-  const data = mapBalancesByTokenCategory(rowsReduced)
-  return { data }
+  //TODO: continue here
+  const financialMetricsFiltered = financialMetrics.filter((row: any) => {
+    return (
+      row.date_type === dateTypePeriodType && row.dao === keyName && row.year_month === '2023_12'
+    )
+  })
+
+  const variationMetricsDetailFilteredReduced = variationMetricsDetailFiltered.reduce(
+    reducerBalancesByTokenCategory,
+    []
+  )
+
+  // Pie charts
+
+  // Funds by token category
+  const rowsFundsByTokenCategory = variationMetricsDetailFiltered
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce(reducerFundsByTokenCategory, [])
+  const fundsByTokenCategory = mapperFundsByTokenCategory(rowsFundsByTokenCategory).sort(
+    (a: any, b: any) => b.funds - a.funds
+  )
+
+  // Funds by type
+  const rowsFundsByType = variationMetricsDetailFiltered
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce(reducerFundsByType, [])
+  const fundsByType = mapperFundsByType(rowsFundsByType).sort((a: any, b: any) => b.funds - a.funds)
+
+  // Funds by blockchain
+  const rowsFundsByBlockchain = variationMetricsDetailFiltered
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce(reducerFundsByBlockchain, [])
+  const fundsByBlockchain = mapperFundsByBlockchain(rowsFundsByBlockchain).sort(
+    (a: any, b: any) => b.funds - a.funds
+  )
+
+  // Funds by protocol
+  const rowsFundsByProtocol = financialPositionsFiltered.reduce(reducerFundsByProtocol, [])
+  const fundsByProtocol = mapperFundsByProtocol(rowsFundsByProtocol).sort(
+    (a: any, b: any) => b.funds - a.funds
+  )
+
+  // Summary blocks
+  const totalFunds = variationMetricsDetailFiltered.reduce(reducerTotalFunds, 0)
+  const capitalUtilization = financialMetricsFiltered.reduce(reducerCapitalUtilization, 0)
+  const farmingResults = financialMetricsFiltered.reduce(reducerFarmingResults, 0)
+
+  // Temp
+  const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
+
+  return {
+    summary,
+    totalFunds,
+    capitalUtilization,
+    farmingResults,
+    fundsByTokenCategory,
+    fundsByType,
+    fundsByBlockchain,
+    fundsByProtocol
+  }
 }

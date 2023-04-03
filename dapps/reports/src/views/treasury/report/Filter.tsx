@@ -1,7 +1,7 @@
 import { TReportFilter } from '@karpatkey-monorepo/reports/src/types'
+import Setting from '@karpatkey-monorepo/shared/components/Icons/Setting'
 import ModalDialog from '@karpatkey-monorepo/shared/components/Modals/ModalDialog'
-import FilterAltIcon from '@mui/icons-material/FilterAlt'
-import { Tooltip } from '@mui/material'
+import { IconButton, Tooltip } from '@mui/material'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
@@ -36,7 +36,9 @@ const Filter = (props: TReportFilter) => {
   return (
     <>
       <Tooltip title="Open filter modal dialog">
-        <FilterAltIcon fontSize="medium" onClick={handleClick} sx={{ cursor: 'pointer' }} />
+        <IconButton onClick={handleClick}>
+          <Setting />
+        </IconButton>
       </Tooltip>
       <ModalDialog
         open={open}

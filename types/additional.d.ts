@@ -1,40 +1,55 @@
 declare type Maybe<T> = T | null
 
-type ComponentProps = {
+declare type ComponentProps = {
   children?: React.ReactNode
 }
 
-type NetworkId = 0 | 1 | 100
+declare type NetworkId = 0 | 1 | 100
 
-enum NetworkIds {
+declare enum NetworkIds {
   ALL = 0,
   ETHEREUM = 1,
   GNOSIS = 100,
 }
 
-interface DAO {
-  address: string
+declare interface DAO {
+  addresses: string[]
   name: string
   icon: string
-  keyName: string
+  keyName: DAO_NAME
 }
 
-interface Network {
+declare interface Network {
   DAOs: DAO[]
 }
 
-enum PeriodTime {
+declare enum PeriodTime {
   YEAR = 'year',
   WEEK = 'week',
   MONTH = 'month',
   DAY = 'day'
 }
 
-type PeriodType = `${PeriodTime}`
+declare type PeriodType = `${PeriodTime}`
 
 declare module "*.svg" {
   const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
   export default content;
 }
 
-type Report = 'getDailyBalanceReports' | 'getTreasuryFinancialMetrics' | 'getTokens' | 'getTreasuryVariationMetricsDetail'
+declare type Report =
+  'getDailyBalanceReports'
+  | 'getTreasuryFinancialMetrics'
+  | 'getTokens'
+  | 'getTreasuryVariationMetricsDetail'
+  | 'getTreasuryFinancialPositions'
+
+declare type DAO_NAME =
+  'GnosisDAO'
+  | 'Gnosis LTD'
+  | 'BalancerDAO'
+  | 'ENS'
+  | 'CowDAO'
+  | 'Karpatkey'
+  | 'Gnosis Guild'
+  | 'None'

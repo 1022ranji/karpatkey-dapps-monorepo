@@ -1,20 +1,25 @@
 export type TReportFilter = {
-  chainId: NetworkId
-  daoAddress: string
+  daoName: DAO_NAME
   period: string
   periodType: PeriodType
 }
 
 export type TReportData = {
-  data: any[]
+  summary: any[]
+  totalFunds: number
+  capitalUtilization: number
+  farmingResults: number
+  fundsByTokenCategory: any[]
+  fundsByType: any[]
+  fundsByBlockchain: any[]
+  fundsByProtocol: any[]
 }
 
 export type TReportProps = TReportData & TReportFilter
 
 export type TTitleProps = {
-  chainId: NetworkId
   periodType: PeriodType
-  daoAddress: string
+  daoName: DAO_NAME
 }
 
 export type TFormProps = {

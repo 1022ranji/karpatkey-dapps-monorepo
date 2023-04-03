@@ -1,12 +1,23 @@
-import ChartLabels from '@karpatkey-monorepo/reports/src/components/Charts/ChartLabels'
 import { TReportFilter, TReportProps } from '@karpatkey-monorepo/reports/src/types'
 import Breadcrumb from '@karpatkey-monorepo/reports/src/views/treasury/report/Breadcrumb'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
-import { Box } from '@mui/material'
+import { Box, Divider, Grid } from '@mui/material'
 import dynamic from 'next/dynamic'
+import numbro from 'numbro'
 import * as React from 'react'
+
+const Loading = () => (
+  <CustomTypography
+    color="textSecondary"
+    variant="body1"
+    justifyContent="center"
+    textAlign="center"
+  >
+    Loading...
+  </CustomTypography>
+)
 
 const DynamicTitle = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Title')
@@ -14,102 +25,137 @@ const DynamicTitle = dynamic(
 const DynamicFilter = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Filter')
 )
-const DynamicCopy = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Copy')
-)
-const DynamicSummary = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Summary'),
-  {
-    loading: () => (
-      <CustomTypography
-        color="textSecondary"
-        variant="body1"
-        justifyContent="center"
-        textAlign="center"
-      >
-        Loading...
-      </CustomTypography>
-    )
-  }
-)
+const DynamicOpen = dynamic(() => import('dapps/reports/src/views/treasury/report/Open'))
+
 const DynamicPieChart = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/PieChart'),
-  {
-    loading: () => (
-      <CustomTypography
-        color="textSecondary"
-        variant="body1"
-        justifyContent="center"
-        textAlign="center"
-      >
-        Loading...
-      </CustomTypography>
-    )
-  }
+  () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie'),
+  { loading: () => <Loading /> }
+)
+const DynamicPositions = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Positions'),
+  { loading: () => <Loading /> }
 )
 
+const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/components/InfoCard'), {
+  loading: () => <Loading />
+})
+
 const Page = (props: TReportProps) => {
-  const { chainId, periodType, daoAddress, period, data } = props
-  const paramProps = { chainId, periodType, daoAddress, period }
+  const {
+    periodType,
+    daoName,
+    period,
+    summary,
+    totalFunds,
+    capitalUtilization,
+    farmingResults,
+    fundsByTokenCategory,
+    fundsByType,
+    fundsByBlockchain,
+    fundsByProtocol
+  } = props
+  const paramProps = { periodType, daoName, period }
+
   return (
     <>
-      <BoxWrapperRow sx={{ paddingY: 4 }}>
-        <DynamicTitle periodType={periodType} daoAddress={daoAddress} chainId={chainId} />
+      <BoxWrapperRow sx={{ marginTop: '101px', marginBottom: '101px' }}>
+        <DynamicTitle periodType={periodType} daoName={daoName} />
       </BoxWrapperRow>
       <Box
         display={'flex'}
         flexDirection={'row'}
         alignItems={'center'}
         justifyContent={'space-between'}
-        sx={{ paddingY: 2 }}
+        sx={{ paddingY: 4, justifyContent: { xs: 'flex-end', sm: 'space-between' } }}
       >
         <Breadcrumb {...(paramProps as TReportFilter)} />
         <BoxWrapperRow gap={2}>
           <DynamicFilter {...(paramProps as TReportFilter)} />
-          <DynamicCopy {...(paramProps as TReportFilter)} />
+          <DynamicOpen {...(paramProps as TReportFilter)} />
         </BoxWrapperRow>
       </Box>
 
-      <PaperSection title="1. Portfolio Summary">
-        <BoxWrapperRow
-          sx={(theme) => ({
-            flexDirection: 'row',
-            [theme.breakpoints.down('lg')]: {
-              flexDirection: 'column'
-            }
-          })}
+      <PaperSection title="Summary">
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          <BoxWrapperRow
-            sx={(theme) => ({
-              width: '50%',
-              paddingRight: '2rem',
-              [theme.breakpoints.down('lg')]: {
-                width: '100%',
-                paddingLeft: 0
-              }
-            })}
-          >
-            <DynamicPieChart data={data} sx={{ width: '80%' }} />
-            <ChartLabels data={data} sx={{ width: '20%' }} />
-          </BoxWrapperRow>
-          <Box
-            sx={(theme) => ({
-              width: '50%',
-              paddingLeft: '2rem',
-              [theme.breakpoints.down('lg')]: {
-                width: '100%',
-                paddingLeft: 0
-              }
-            })}
-          >
-            <DynamicSummary data={data} />
-          </Box>
-        </BoxWrapperRow>
+          <Grid item xs={4} sm={4} md={4}>
+            <DynamicInfoCard
+              title="Total funds"
+              value={numbro(totalFunds).formatCurrency({
+                spaceSeparated: true,
+                mantissa: 2
+              })}
+            />
+          </Grid>
+          <Grid item xs={4} sm={4} md={4}>
+            <DynamicInfoCard
+              title="Capital utilization"
+              value={numbro(capitalUtilization).format({
+                output: 'percent',
+                spaceSeparated: true,
+                mantissa: 2
+              })}
+            />
+          </Grid>
+          <Grid item xs={4} sm={12} md={4}>
+            <DynamicInfoCard
+              title="Farming results"
+              value={numbro(farmingResults).formatCurrency({
+                spaceSeparated: true,
+                mantissa: 2
+              })}
+            />
+          </Grid>
+        </Grid>
+        <Divider sx={{ marginY: 2 }} />
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
+        >
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart
+              data={fundsByTokenCategory}
+              title="Total funds by token category"
+              dataKey="funds"
+            />
+          </Grid>
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
+          </Grid>
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart
+              data={fundsByBlockchain}
+              title="Total funds by blockchain"
+              dataKey="funds"
+            />
+          </Grid>
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart
+              data={fundsByProtocol}
+              title="Farming funds by protocol"
+              dataKey="allocation"
+            />
+          </Grid>
+        </Grid>
       </PaperSection>
-      <PaperSection title="2. Revenues">TODO</PaperSection>
-      <PaperSection title="3. Positions">TODO</PaperSection>
-      <PaperSection title="4. Portfolio">TODO</PaperSection>
-      <PaperSection title="5. Treasury variation">TODO</PaperSection>
+      <PaperSection title="Balance Overview">
+        <DynamicPositions data={summary} />
+      </PaperSection>
+      <PaperSection title="Treasury Variation">
+        <DynamicPositions data={summary} />
+      </PaperSection>
+      <PaperSection title="Farming Funds / Results">
+        <DynamicPositions data={summary} />
+      </PaperSection>
+      <PaperSection title="Token Detail">
+        <DynamicPositions data={summary} />
+      </PaperSection>
     </>
   )
 }

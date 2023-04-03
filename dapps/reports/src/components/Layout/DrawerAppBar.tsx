@@ -1,45 +1,39 @@
-import { TReportFilter } from '@karpatkey-monorepo/reports/src/types'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
-import FormNetworkDropdown from '@karpatkey-monorepo/shared/components/FormItems/FormNetworkDropdown'
 import Logo from '@karpatkey-monorepo/shared/components/Logo'
 import MenuAddress from '@karpatkey-monorepo/shared/components/MenuAddress'
-import {
-  DAO_DEFAULT,
-  NETWORK_DEFAULT,
-  PERIOD_TYPE_DEFAULT
-} from '@karpatkey-monorepo/shared/config/constants'
-import { isDefaultAddress } from '@karpatkey-monorepo/shared/utils'
+import { DAO_NAME_DEFAULT } from '@karpatkey-monorepo/shared/config/constants'
+import { existDAOKeyName } from '@karpatkey-monorepo/shared/utils'
 import MenuIcon from '@mui/icons-material/Menu'
 import {
   AppBar,
   Box,
   CssBaseline,
+  Divider,
   Drawer,
   IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
+  Slide,
   Toolbar
 } from '@mui/material'
 import { ListItemTextProps } from '@mui/material/ListItemText'
 import { Theme, css, styled } from '@mui/material/styles'
-import { DateTime } from 'luxon'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FC, ReactElement } from 'react'
-import { useForm } from 'react-hook-form'
 
 const CommonCSS = (theme: Theme) => css`
-  margin-left: 5px;
-  letter-spacing: 0.25px;
   text-decoration: none;
   font-family: ${theme.typography.fontFamily};
-  font-weight: 600;
+  font-weight: 400;
+  font-style: normal;
   font-size: 16px;
   line-height: 20px;
-  color: #1a1b1f;
-  opacity: 0.7;
+  letter-spacing: 0.25px;
+  color: #1a1a1a;
 
   &:hover {
     color: rgba(26, 27, 31, 0.6);
@@ -65,7 +59,7 @@ interface INavItem {
 
 const DRAWER_WIDTH = 240
 const NAV_ITEMS: INavItem[] = [
-  { name: 'DAO treasury report', path: '/treasury/report' },
+  { name: 'Report', path: '/treasury/report' },
   { name: 'Other', path: '/treasury/other' }
 ]
 
@@ -76,40 +70,41 @@ const HeaderWrapper = styled('div')(({ theme }) => ({
   zIndex: '999',
   flex: '0 0 auto',
   position: 'sticky',
-  backgroundSize: 'cover',
-  transition: 'top 0.4s ease-in-out',
-  '&.visible': {
-    top: 0
-  },
-  '&.hidden': {
-    top: -100
-  }
+  backgroundSize: 'cover'
 }))
+
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window
+  children: React.ReactElement
+}
+
+function HideOnScroll(props: Props) {
+  const { children, window } = props
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined
+  })
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  )
+}
 
 const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
   const router = useRouter()
 
-  const {
-    chainId = NETWORK_DEFAULT,
-    daoAddress = DAO_DEFAULT,
-    period = DateTime.now().toISODate(),
-    periodType = PERIOD_TYPE_DEFAULT
-  } = router.query
-
-  const params = { chainId: +chainId, daoAddress, period, periodType } as TReportFilter
-
-  const onChangeNetwork = (network: number) => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...params, chainId: network }
-    })
-  }
+  const { daoName = DAO_NAME_DEFAULT } = router.query
 
   const { window } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
-
-  const methods = useForm({ defaultValues: { network: chainId } })
-  const { control } = methods
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState)
@@ -139,46 +134,91 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
   return (
     <HeaderWrapper>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: 'background.default' }}>
-        <Toolbar sx={{ justifyContent: 'space-between', gap: 2 }}>
-          <IconButton
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, color: 'black', display: { sm: 'none' } }}
+      <HideOnScroll {...props}>
+        <AppBar
+          component="nav"
+          sx={{
+            backgroundColor: 'background.default',
+            boxShadow: 'none',
+            justifyContent: 'space-between',
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          <Toolbar
+            sx={{
+              justifyContent: 'space-between',
+              gap: 2,
+              maxWidth: '1284px',
+              width: '100%',
+              margin: '0 auto'
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-          <BoxWrapperRow>
-            <BoxWrapperRow gap={6}>
-              <Logo />
-              <BoxWrapperRow sx={{ display: { xs: 'none', sm: 'flex' } }} gap={2}>
-                {NAV_ITEMS.map(({ name, path }: INavItem, index: number) => {
-                  return (
-                    <LinkCustom
-                      id="basic-button"
-                      aria-controls={open ? 'basic-menu' : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? 'true' : undefined}
-                      href={path}
-                      key={index}
-                      sx={path === router.pathname ? { opacity: 1, fontWeight: 700 } : {}}
-                    >
-                      {name}
-                    </LinkCustom>
-                  )
-                })}
-              </BoxWrapperRow>
-            </BoxWrapperRow>
-          </BoxWrapperRow>
-          <BoxWrapperRow gap={4} sx={{ display: { xs: 'none', sm: 'flex' } }}>
-            {daoAddress && !isDefaultAddress(daoAddress as string) && (
-              <MenuAddress address={daoAddress as string} />
-            )}
-            <FormNetworkDropdown control={control} name={'network'} onChange={onChangeNetwork} />
-          </BoxWrapperRow>
-        </Toolbar>
-      </AppBar>
+            <IconButton
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, color: 'black', display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+              gap={6}
+              sx={{ width: '100%' }}
+            >
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                sx={{ width: '100%' }}
+              >
+                <Logo />
+                <BoxWrapperRow sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                  {NAV_ITEMS.map(({ name, path }: INavItem, index: number) => {
+                    return (
+                      <LinkCustom
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        href={path}
+                        key={index}
+                        sx={
+                          path === router.pathname
+                            ? {
+                                opacity: 1,
+                                color: '#1a1b1f',
+                                fontWeight: 700,
+                                '&:not(:last-child)': {
+                                  marginRight: '52px'
+                                }
+                              }
+                            : {
+                                '&:not(:last-child)': {
+                                  marginRight: '52px'
+                                }
+                              }
+                        }
+                      >
+                        {name}
+                      </LinkCustom>
+                    )
+                  })}
+                  {daoName && existDAOKeyName(daoName as DAO_NAME) && (
+                    <>
+                      <Divider orientation="vertical" flexItem sx={{ marginRight: '52px' }} />
+                      <MenuAddress daoName={daoName as DAO_NAME} />
+                    </>
+                  )}
+                </BoxWrapperRow>
+              </Box>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
 
       <Box component="nav">
         <Drawer

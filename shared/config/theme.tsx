@@ -5,19 +5,19 @@ const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 600,
+      sm: 800,
       md: 900,
       lg: 1200,
       xl: 1536
     }
   },
   typography: {
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: "'IBM Plex Mono', sans-serif",
     h1: {
       fontFamily: "'IBM Plex Mono', sans-serif",
       fontSize: '60px',
       lineHeight: '70px',
-      fontWeight: '600',
+      fontWeight: '400',
       color: 'rgba(51, 51, 51, 1)'
     },
     h2: {
@@ -37,7 +37,7 @@ const theme = createTheme({
       fontFamily: "'IBM Plex Mono', sans-serif"
     },
     body1: {
-      fontFamily: 'IBM Plex Sans',
+      fontFamily: "'IBM Plex Mono', sans-serif",
       fontSize: '18px',
       lineHeight: '23px',
       fontWeight: '400'
