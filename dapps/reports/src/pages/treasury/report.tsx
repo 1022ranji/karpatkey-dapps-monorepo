@@ -44,7 +44,10 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     totalFunds = 0,
     capitalUtilization = 0,
     farmingResults = 0,
-    fundsByTokenCategory = []
+    fundsByTokenCategory = [],
+    fundsByType = [],
+    fundsByBlockchain = [],
+    fundsByProtocol = []
   } = await getCommonServerSideProps(params)
 
   // Pass data to the page via props
@@ -55,6 +58,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       capitalUtilization,
       farmingResults,
       fundsByTokenCategory,
+      fundsByType,
+      fundsByBlockchain,
+      fundsByProtocol,
       ...params
     }
   }

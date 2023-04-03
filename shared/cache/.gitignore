@@ -2,3 +2,4 @@ getDailyBalanceReports.json
 getTokens.json
 getTreasuryFinancialMetrics.json
 getTreasuryVariationMetricsDetail.json
+getTreasuryFinancialPositions.json

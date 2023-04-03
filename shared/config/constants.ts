@@ -144,5 +144,9 @@ export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
   {
     reportName: 'getTreasuryVariationMetricsDetail',
     fileName: 'treasury-variation-metrics-detail'
+  },
+  {
+    reportName: 'getTreasuryFinancialPositions',
+    fileName: 'treasury-financial-positions'
   }
 ]

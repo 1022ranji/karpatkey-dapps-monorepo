@@ -135,13 +135,13 @@ export const isDefaultAddress = (address: string) => {
 export const getMetricByPeriodType = (periodType: PeriodType) => {
   switch (periodType) {
     case 'day':
-      return 'balances_daily'
+      return '_daily'
     case 'week':
-      return 'balances_weekly'
+      return '_weekly'
     case 'month':
-      return 'balances_monthly'
+      return '_monthly'
     case 'year':
-      return 'balances_yearly'
+      return '_yearly'
     default:
       return ''
   }

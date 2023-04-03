@@ -57,6 +57,16 @@ export class DataWarehouse {
     return await this.executeCommonJobQuery(viewQuery)
   }
 
+  async getTreasuryFinancialPositions() {
+    const { bigQuery } = this
+
+    const dataset = bigQuery.dataset('reports')
+    const [view] = await dataset.table('vw_treasury_financial_positions').get()
+    const viewQuery = view.metadata.view.query
+
+    return this.executeCommonJobQuery(viewQuery)
+  }
+
   async executeCommonJobQuery(viewQuery: string) {
     const options = {
       query: viewQuery,

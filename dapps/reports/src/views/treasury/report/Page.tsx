@@ -26,10 +26,7 @@ const DynamicFilter = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Filter')
 )
 const DynamicOpen = dynamic(() => import('dapps/reports/src/views/treasury/report/Open'))
-// const DynamicSummary = dynamic(
-//   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Summary'),
-//   {loading: () => <Loading/>}
-// )
+
 const DynamicPieChart = dynamic(
   () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie'),
   { loading: () => <Loading /> }
@@ -52,7 +49,10 @@ const Page = (props: TReportProps) => {
     totalFunds,
     capitalUtilization,
     farmingResults,
-    fundsByTokenCategory
+    fundsByTokenCategory,
+    fundsByType,
+    fundsByBlockchain,
+    fundsByProtocol
   } = props
   const paramProps = { periodType, daoName, period }
 
@@ -126,18 +126,18 @@ const Page = (props: TReportProps) => {
             />
           </Grid>
           <Grid item xs={4} sm={4} md={6}>
-            <DynamicPieChart data={summary} title="Total funds by token" dataKey="allocation" />
+            <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
           </Grid>
           <Grid item xs={4} sm={4} md={6}>
             <DynamicPieChart
-              data={summary}
+              data={fundsByBlockchain}
               title="Total funds by blockchain"
-              dataKey="allocation"
+              dataKey="funds"
             />
           </Grid>
           <Grid item xs={4} sm={4} md={6}>
             <DynamicPieChart
-              data={summary}
+              data={fundsByProtocol}
               title="Farming funds by protocol"
               dataKey="allocation"
             />

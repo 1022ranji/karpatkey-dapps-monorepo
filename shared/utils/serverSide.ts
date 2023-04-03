@@ -4,11 +4,17 @@ import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
 import { getDAOByDAOName, getDateTypeByPeriodType, getMetricByPeriodType } from './index'
 import {
   mapBalancesByTokenCategory,
+  mapperFundsByBlockchain,
+  mapperFundsByProtocol,
   mapperFundsByTokenCategory,
+  mapperFundsByType,
   reducerBalancesByTokenCategory,
   reducerCapitalUtilization,
   reducerFarmingResults,
+  reducerFundsByBlockchain,
+  reducerFundsByProtocol,
   reducerFundsByTokenCategory,
+  reducerFundsByType,
   reducerTotalFunds
 } from './mappers'
 
@@ -23,14 +29,27 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     'getTreasuryVariationMetricsDetail' as Report
   )
   const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as Report)
+  const financialPositions = await cache.getReport('getTreasuryFinancialPositions' as Report)
 
+  // Step 3: Filter data by common params, like daoName, periodType and period
   const { keyName } = getDAOByDAOName(daoName) || {}
   const metricPeriodType = getMetricByPeriodType(periodType)
   const dateTypePeriodType = getDateTypeByPeriodType(periodType)
   // const metricPeriod = getMetricByPeriod(period, periodType)
 
+  // Filter data by common params, like daoName, periodType and period
   const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) => {
-    return row.metric === metricPeriodType && row.dao === keyName && row.year_month === '2023_12'
+    return (
+      row.metric.includes(metricPeriodType) && row.dao === keyName && row.year_month === '2023_12'
+    )
+  })
+
+  const financialPositionsFiltered = financialPositions.filter((row: any) => {
+    return (
+      row.date_type.includes(dateTypePeriodType) &&
+      row.dao === keyName &&
+      row.year_month === '2023_12'
+    )
   })
 
   //TODO: continue here
@@ -46,11 +65,40 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
   )
 
   // Pie charts
-  const rowsFundsByTokenCategory = variationMetricsDetailFiltered.reduce(
-    reducerFundsByTokenCategory,
-    []
+
+  // Funds by token category
+  const rowsFundsByTokenCategory = variationMetricsDetailFiltered
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce(reducerFundsByTokenCategory, [])
+  const fundsByTokenCategory = mapperFundsByTokenCategory(rowsFundsByTokenCategory).sort(
+    (a: any, b: any) => b.funds - a.funds
   )
-  const fundsByTokenCategory = mapperFundsByTokenCategory(rowsFundsByTokenCategory)
+
+  // Funds by type
+  const rowsFundsByType = variationMetricsDetailFiltered
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce(reducerFundsByType, [])
+  const fundsByType = mapperFundsByType(rowsFundsByType).sort((a: any, b: any) => b.funds - a.funds)
+
+  // Funds by blockchain
+  const rowsFundsByBlockchain = variationMetricsDetailFiltered
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce(reducerFundsByBlockchain, [])
+  const fundsByBlockchain = mapperFundsByBlockchain(rowsFundsByBlockchain).sort(
+    (a: any, b: any) => b.funds - a.funds
+  )
+
+  // Funds by protocol
+  const rowsFundsByProtocol = financialPositionsFiltered.reduce(reducerFundsByProtocol, [])
+  const fundsByProtocol = mapperFundsByProtocol(rowsFundsByProtocol).sort(
+    (a: any, b: any) => b.funds - a.funds
+  )
 
   // Summary blocks
   const totalFunds = variationMetricsDetailFiltered.reduce(reducerTotalFunds, 0)
@@ -60,5 +108,14 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
 
-  return { summary, totalFunds, capitalUtilization, farmingResults, fundsByTokenCategory }
+  return {
+    summary,
+    totalFunds,
+    capitalUtilization,
+    farmingResults,
+    fundsByTokenCategory,
+    fundsByType,
+    fundsByBlockchain,
+    fundsByProtocol
+  }
 }

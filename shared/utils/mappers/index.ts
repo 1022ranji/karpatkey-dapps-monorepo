@@ -80,21 +80,21 @@ export const reducerBalancesByTokenCategory = (
 export const reducerFundsByTokenCategory = (
   acc: any,
   obj: any
-): { funds: number; price: number }[] => {
-  const assetKey = obj['token_category']
+): { funds: number; label: string }[] => {
+  const assetKey = obj['token_category'].trim()
 
-  if (!acc[assetKey]) acc[assetKey] = { funds: 0, asset: assetKey }
+  if (!acc[assetKey]) acc[assetKey] = { funds: 0, label: assetKey }
 
   acc[assetKey].funds =
     acc[assetKey].funds + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
-  acc[assetKey].asset = assetKey
+  acc[assetKey].label = assetKey
 
   return acc
 }
 
 export const mapperFundsByTokenCategory = (
-  data: { funds: number; asset: string }[]
-): { fill: string; value: string; allocation: number; funds: number; asset: string }[] => {
+  data: { funds: number; label: string }[]
+): { fill: string; value: string; allocation: number; funds: number; label: string }[] => {
   const total = Object.values(data).reduce(
     (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
     0
@@ -106,7 +106,108 @@ export const mapperFundsByTokenCategory = (
       value: key,
       allocation: (data[key as any].funds / total) * 100,
       funds: data[key as any].funds,
-      asset: data[key as any].asset
+      label: data[key as any].label
+    }
+  })
+}
+
+export const reducerFundsByType = (acc: any, obj: any): { funds: number; price: number }[] => {
+  const metric = obj['metric'].trim()
+  const protocol = obj['protocol'].trim()
+  const metricKey = metric.includes('unclaimed_rewards')
+    ? 'Unclaimed Rewards'
+    : metric.includes('balance') && protocol.includes('Wallet')
+    ? 'Wallet'
+    : 'Farming Funds'
+
+  if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
+
+  acc[metricKey].funds =
+    acc[metricKey].funds + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+  acc[metricKey].label = metricKey
+
+  return acc
+}
+
+export const mapperFundsByType = (
+  data: { funds: number; label: string }[]
+): { fill: string; value: string; allocation: number; funds: number; label: string }[] => {
+  const total = Object.values(data).reduce(
+    (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+    0
+  )
+
+  return Object.keys(data).map((key: string) => {
+    return {
+      fill: randomColor(),
+      value: key,
+      allocation: (data[key as any].funds / total) * 100,
+      funds: data[key as any].funds,
+      label: data[key as any].label
+    }
+  })
+}
+
+export const reducerFundsByBlockchain = (
+  acc: any,
+  obj: any
+): { funds: number; label: number }[] => {
+  const blockchain = obj['blockchain'].trim()
+
+  if (!acc[blockchain]) acc[blockchain] = { funds: 0, label: blockchain }
+
+  acc[blockchain].funds =
+    acc[blockchain].funds + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+  acc[blockchain].label = blockchain
+
+  return acc
+}
+
+export const mapperFundsByBlockchain = (
+  data: { funds: number; label: string }[]
+): { fill: string; value: string; allocation: number; funds: number; label: string }[] => {
+  const total = Object.values(data).reduce(
+    (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+    0
+  )
+
+  return Object.keys(data).map((key: string) => {
+    return {
+      fill: randomColor(),
+      value: key,
+      allocation: (data[key as any].funds / total) * 100,
+      funds: data[key as any].funds,
+      label: data[key as any].label
+    }
+  })
+}
+
+export const reducerFundsByProtocol = (acc: any, obj: any): { funds: number; label: number }[] => {
+  const protocol = obj['protocol'].trim()
+
+  if (!acc[protocol]) acc[protocol] = { funds: 0, label: protocol }
+
+  acc[protocol].funds = acc[protocol].funds + (obj['Funds'] ?? 0)
+  acc[protocol].label = protocol
+
+  return acc
+}
+
+export const mapperFundsByProtocol = (
+  data: { funds: number; label: string }[]
+): { fill: string; value: string; allocation: number; funds: number; label: string }[] => {
+  const total = Object.values(data).reduce(
+    (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+    0
+  )
+
+  return Object.keys(data).map((key: string) => {
+    return {
+      fill: randomColor(),
+      value: key,
+      allocation: (data[key as any].funds / total) * 100,
+      funds: data[key as any].funds,
+      label: data[key as any].label
     }
   })
 }

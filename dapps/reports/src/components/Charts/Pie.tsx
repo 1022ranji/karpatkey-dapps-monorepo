@@ -1,10 +1,10 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { TMapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/mappers'
-import { Box, BoxProps, List, ListItem } from '@mui/material'
+import { Box, BoxProps, Grid, List, ListItem } from '@mui/material'
 import React from 'react'
 import { Cell, Legend, Pie, PieChart as PieRechart } from 'recharts'
 
-const COLORS = ['#1A1A1A', '#555555', '#888787', '#B9B9B9', '#EEEDED']
+const COLORS = ['#808080', '#D0D0D0', '#A9A9A9', '#C0C0C0', '#71797E', '#B2BEB5']
 
 export type TPieChartProps = {
   data: TMapBalancesByTokenCategory[]
@@ -14,21 +14,23 @@ export type TPieChartProps = {
 
 const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.35
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.3
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
   const y = cy + radius * Math.sin(-midAngle * RADIAN)
 
-  return (
+  return percent * 100 > 2 ? (
     <text
       x={x}
       y={y}
       fill="white"
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
-      fontSize="12px"
+      fontSize="10px"
     >
-      {`${(percent * 100).toFixed(0)}%`}
+      {`${(percent * 100).toFixed(1)}%`}
     </text>
+  ) : (
+    <text />
   )
 }
 
@@ -36,14 +38,18 @@ const CustomizedLegend = (props: any) => {
   const { payload } = props
   return (
     <Box sx={{ width: 180 }}>
-      <List sx={{ marginX: 2 }}>
+      <List sx={{ marginLeft: 2 }}>
         {payload.map((entry: any, index: any) => {
           return (
             <ListItem key={index}>
-              <Box flexDirection="row" display="flex" gap={2}>
-                <Box sx={{ background: entry.color, height: 17, width: 44 }} />
-                <CustomTypography variant="body2">{entry.payload.payload.value}</CustomTypography>
-              </Box>
+              <Grid container rowSpacing={1} columnSpacing={1} columns={2}>
+                <Grid item>
+                  <Box sx={{ background: entry.color, height: 17, width: 25, maxWidth: 25 }} />
+                </Grid>
+                <Grid item>
+                  <CustomTypography variant="body2">{entry.payload.payload.value}</CustomTypography>
+                </Grid>
+              </Grid>
             </ListItem>
           )
         })}
@@ -80,7 +86,7 @@ const PieChart = ({ data, title, dataKey, ...props }: BoxProps & TPieChartProps)
           data={data}
           cx="50%"
           cy="50%"
-          innerRadius={60}
+          innerRadius={40}
           outerRadius={100}
           fill="#8884d8"
           dataKey={dataKey}
