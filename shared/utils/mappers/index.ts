@@ -77,6 +77,40 @@ export const reducerBalancesByTokenCategory = (
   return acc
 }
 
+export const reducerFundsByTokenCategory = (
+  acc: any,
+  obj: any
+): { funds: number; price: number }[] => {
+  const assetKey = obj['token_category']
+
+  if (!acc[assetKey]) acc[assetKey] = { funds: 0, asset: assetKey }
+
+  acc[assetKey].funds =
+    acc[assetKey].funds + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+  acc[assetKey].asset = assetKey
+
+  return acc
+}
+
+export const mapperFundsByTokenCategory = (
+  data: { funds: number; asset: string }[]
+): { fill: string; value: string; allocation: number; funds: number; asset: string }[] => {
+  const total = Object.values(data).reduce(
+    (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+    0
+  )
+
+  return Object.keys(data).map((key: string) => {
+    return {
+      fill: randomColor(),
+      value: key,
+      allocation: (data[key as any].funds / total) * 100,
+      funds: data[key as any].funds,
+      asset: data[key as any].asset
+    }
+  })
+}
+
 export const reducerTotalFunds = (acc: any, obj: any): number => {
   acc = acc + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
   return acc
@@ -112,7 +146,7 @@ export const mapDataToLineSeries = (data: any) => {
 
 export type TMapBalancesByTokenCategory = {
   fill: string
-  asset: string
+  value: string
   allocation: number
   funds: number
   price: number
@@ -136,7 +170,7 @@ export const mapBalancesByTokenCategory = (
     const allocation = (+data[assetName as any].funds / +total) * 100
     return {
       ...data[assetName as any],
-      asset: assetName,
+      value: assetName,
       allocation: allocation,
       fill: colours[index]
     }

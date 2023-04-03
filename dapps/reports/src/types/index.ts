@@ -9,6 +9,7 @@ export type TReportData = {
   totalFunds: number
   capitalUtilization: number
   farmingResults: number
+  fundsByTokenCategory: any[]
 }
 
 export type TReportProps = TReportData & TReportFilter

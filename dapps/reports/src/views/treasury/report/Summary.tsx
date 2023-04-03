@@ -1,4 +1,4 @@
-import { TPieChartProps } from '@karpatkey-monorepo/reports/src/components/Charts/PieChart'
+import { TPieChartProps } from '@karpatkey-monorepo/reports/src/components/Charts/Pie'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
@@ -35,7 +35,7 @@ const Summary: React.FC<TSummary> = ({ data }: TSummary) => {
             {data.map((row: TMapBalancesByTokenCategory, index: number) => (
               <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.asset}
+                  {row.value}
                 </TableCell>
                 <TableCell align="right" title={row.price + ''}>
                   {numbro(row.price).formatCurrency({
@@ -66,7 +66,9 @@ const Summary: React.FC<TSummary> = ({ data }: TSummary) => {
           Total funds:
         </CustomTypography>
         <CustomTypography color="textSecondary" variant="h6" textAlign="center">
-          {numbro(data.reduce((acc, curr) => acc + curr.funds, 0)).formatCurrency({
+          {numbro(
+            data.reduce((acc: number, curr: TMapBalancesByTokenCategory) => acc + curr.funds, 0)
+          ).formatCurrency({
             spaceSeparated: true,
             mantissa: 2
           })}

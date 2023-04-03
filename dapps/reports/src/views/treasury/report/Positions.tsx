@@ -1,4 +1,3 @@
-import { TPieChartProps } from '@karpatkey-monorepo/reports/src/components/Charts/PieChart'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import { TMapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/mappers'
 import { BoxProps } from '@mui/material'
@@ -11,7 +10,7 @@ import TableRow from '@mui/material/TableRow'
 import numbro from 'numbro'
 import * as React from 'react'
 
-type TSummary = TPieChartProps & BoxProps
+type TSummary = { data: TMapBalancesByTokenCategory[] } & BoxProps
 
 const Positions: React.FC<TSummary> = ({ data }: TSummary) => {
   return (
@@ -29,7 +28,7 @@ const Positions: React.FC<TSummary> = ({ data }: TSummary) => {
           {data.map((row: TMapBalancesByTokenCategory, index: number) => (
             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {row.asset}
+                {row.value}
               </TableCell>
               <TableCell align="right" title={row.price + ''}>
                 {numbro(row.price).formatCurrency({

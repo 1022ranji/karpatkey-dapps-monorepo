@@ -44,8 +44,16 @@ const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/compone
 })
 
 const Page = (props: TReportProps) => {
-  const { periodType, daoName, period, summary, totalFunds, capitalUtilization, farmingResults } =
-    props
+  const {
+    periodType,
+    daoName,
+    period,
+    summary,
+    totalFunds,
+    capitalUtilization,
+    farmingResults,
+    fundsByTokenCategory
+  } = props
   const paramProps = { periodType, daoName, period }
 
   return (
@@ -107,29 +115,47 @@ const Page = (props: TReportProps) => {
         <Grid
           container
           rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicPieChart data={summary} />
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart
+              data={fundsByTokenCategory}
+              title="Total funds by token category"
+              dataKey="funds"
+            />
           </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicPieChart data={summary} />
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart data={summary} title="Total funds by token" dataKey="allocation" />
           </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicPieChart data={summary} />
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart
+              data={summary}
+              title="Total funds by blockchain"
+              dataKey="allocation"
+            />
           </Grid>
-          <Grid item xs={4} sm={4} md={12}>
-            <DynamicPieChart data={summary} />
+          <Grid item xs={4} sm={4} md={6}>
+            <DynamicPieChart
+              data={summary}
+              title="Farming funds by protocol"
+              dataKey="allocation"
+            />
           </Grid>
         </Grid>
       </PaperSection>
-      <PaperSection title="Balance Overview">TODO</PaperSection>
+      <PaperSection title="Balance Overview">
+        <DynamicPositions data={summary} />
+      </PaperSection>
       <PaperSection title="Treasury Variation">
         <DynamicPositions data={summary} />
       </PaperSection>
-      <PaperSection title="Farming Funds / Results">TODO</PaperSection>
-      <PaperSection title="Token Detail">TODO</PaperSection>
+      <PaperSection title="Farming Funds / Results">
+        <DynamicPositions data={summary} />
+      </PaperSection>
+      <PaperSection title="Token Detail">
+        <DynamicPositions data={summary} />
+      </PaperSection>
     </>
   )
 }

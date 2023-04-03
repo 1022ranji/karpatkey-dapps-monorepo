@@ -4,9 +4,11 @@ import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
 import { getDAOByDAOName, getDateTypeByPeriodType, getMetricByPeriodType } from './index'
 import {
   mapBalancesByTokenCategory,
+  mapperFundsByTokenCategory,
   reducerBalancesByTokenCategory,
   reducerCapitalUtilization,
   reducerFarmingResults,
+  reducerFundsByTokenCategory,
   reducerTotalFunds
 } from './mappers'
 
@@ -42,11 +44,21 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     reducerBalancesByTokenCategory,
     []
   )
+
+  // Pie charts
+  const rowsFundsByTokenCategory = variationMetricsDetailFiltered.reduce(
+    reducerFundsByTokenCategory,
+    []
+  )
+  const fundsByTokenCategory = mapperFundsByTokenCategory(rowsFundsByTokenCategory)
+
   // Summary blocks
   const totalFunds = variationMetricsDetailFiltered.reduce(reducerTotalFunds, 0)
   const capitalUtilization = financialMetricsFiltered.reduce(reducerCapitalUtilization, 0)
   const farmingResults = financialMetricsFiltered.reduce(reducerFarmingResults, 0)
 
+  // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
-  return { summary, totalFunds, capitalUtilization, farmingResults }
+
+  return { summary, totalFunds, capitalUtilization, farmingResults, fundsByTokenCategory }
 }
