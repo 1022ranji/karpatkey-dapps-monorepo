@@ -18,6 +18,7 @@ import {
   reducerTotalFunds
 } from './mappers'
 
+// TODO try to reduce the size of this function in some way
 export const getCommonServerSideProps = async (params: TReportFilter) => {
   const { periodType, daoName } = params
 

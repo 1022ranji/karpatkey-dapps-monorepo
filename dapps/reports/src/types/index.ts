@@ -4,6 +4,7 @@ export type TReportFilter = {
   periodType: PeriodType
 }
 
+// TODO: improve types without the use of "any"
 export type TReportData = {
   summary: any[]
   totalFunds: number
@@ -22,6 +23,7 @@ export type TTitleProps = {
   daoName: DAO_NAME
 }
 
+// TODO improve types without the use of "any"
 export type TFormProps = {
   name: string
   control: any

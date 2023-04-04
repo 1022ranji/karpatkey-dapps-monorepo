@@ -40,6 +40,7 @@ const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/compone
   loading: () => <Loading />
 })
 
+// TODO this view is too big, split it into smaller components, also add a rule to the linter to prevent this, like max 200 lines per file
 const Page = (props: TReportProps) => {
   const {
     periodType,
