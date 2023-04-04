@@ -33,13 +33,11 @@ const InfoCard = ({ title, value }: IInfoCardProps) => {
       sx={{ justifyContent: { xs: 'flex-start', sm: 'center' } }}
     >
       <Paper
-        sx={(theme) => ({
+        sx={{
           minWidth: '200px',
           width: '100%',
-          maxWidth: '800px',
-          background: theme.palette.background.paper,
-          borderRadius: '29.4104px'
-        })}
+          maxWidth: '800px'
+        }}
       >
         <BoxWrapperRow gap={1} sx={{ flexDirection: 'row', justifyContent: 'center' }}>
           <Box display="flex" flexDirection="column" sx={{ padding: 4 }}>
