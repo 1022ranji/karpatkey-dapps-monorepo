@@ -47,7 +47,15 @@ const CustomizedLegend = (props: any) => {
                   <Box sx={{ background: entry.color, height: 17, width: 25, maxWidth: 25 }} />
                 </Grid>
                 <Grid item>
-                  <CustomTypography variant="body2">{entry.payload.payload.value}</CustomTypography>
+                  <CustomTypography
+                    variant="body2"
+                    sx={{
+                      wordWrap: 'break-word',
+                      width: '6rem'
+                    }}
+                  >
+                    {entry.payload.payload.value}
+                  </CustomTypography>
                 </Grid>
               </Grid>
             </ListItem>
@@ -70,8 +78,7 @@ const PieChart = ({ data, title, dataKey, ...props }: BoxProps & TPieChartProps)
       <CustomTypography
         variant="h6"
         color="textSecondary"
-        sx={{ height: '70px' }}
-        textAlign="center"
+        sx={{ height: '70px', textAlign: 'center' }}
       >
         {title}
       </CustomTypography>
