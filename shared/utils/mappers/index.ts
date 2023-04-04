@@ -81,7 +81,7 @@ export const reducerFundsByTokenCategory = (
   acc: any,
   obj: any
 ): { funds: number; label: string }[] => {
-  const assetKey = obj['token_category'].trim()
+  const assetKey = obj['token_category'].replace(/[0-9][0-9] /g, '').trim()
 
   if (!acc[assetKey]) acc[assetKey] = { funds: 0, label: assetKey }
 

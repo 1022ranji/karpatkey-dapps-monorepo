@@ -36,9 +36,7 @@ const InfoCard = ({ title, value }: IInfoCardProps) => {
         sx={{
           minWidth: '200px',
           width: '100%',
-          maxWidth: '800px',
-          background: '#C7C7C7',
-          borderRadius: '29.4104px'
+          maxWidth: '800px'
         }}
       >
         <BoxWrapperRow gap={1} sx={{ flexDirection: 'row', justifyContent: 'center' }}>
