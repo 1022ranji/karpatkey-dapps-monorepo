@@ -4,6 +4,7 @@ import FormToggleType from '@karpatkey-monorepo/shared/components/FormItems/Form
 import { Box } from '@mui/material'
 import * as React from 'react'
 
+// TODO improve this type definition to be more specific
 type TModalFilterForm = {
   control: any
   watch: any
@@ -21,7 +22,10 @@ const ModalFilterForm = ({ control, watch }: TModalFilterFormProps) => {
     >
       <FormDAODropdown control={control} name={'daoName'} watch={watch} />
       <FormToggleType control={control} name={'periodType'} />
-      {/*<FormDatePicker control={control} name={'period'} />*/}
+      {/*
+      //TODO rework this component to be more generic, reusable and make it work with react-hook-form
+      <FormDatePicker control={control} name={'period'} />
+      */}
     </Box>
   )
 }

@@ -15,12 +15,12 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  ListItemTextProps,
   Slide,
-  Toolbar
+  Toolbar,
+  useScrollTrigger
 } from '@mui/material'
-import { ListItemTextProps } from '@mui/material/ListItemText'
 import { Theme, css, styled } from '@mui/material/styles'
-import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FC, ReactElement } from 'react'

@@ -1,10 +1,7 @@
 import Link from '@karpatkey-monorepo/shared/components/Link'
 import ProTip from '@karpatkey-monorepo/shared/components/ProTip'
 import Copyright from '@karpatkey-monorepo/shared/layout/Copyright'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+import { Box, Button, Container, Typography } from '@mui/material'
 import * as React from 'react'
 
 export default function About() {
