@@ -35,6 +35,10 @@ const DynamicPositions = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Positions'),
   { loading: () => <Loading /> }
 )
+const DynamicBalanceOverview = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/BalanceOverview'),
+  { loading: () => <Loading /> }
+)
 
 const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/components/InfoCard'), {
   loading: () => <Loading />
@@ -53,7 +57,9 @@ const Page = (props: TReportProps) => {
     fundsByTokenCategory,
     fundsByType,
     fundsByBlockchain,
-    fundsByProtocol
+    fundsByProtocol,
+    balanceOverviewType,
+    balanceOverviewBlockchain
   } = props
   const paramProps = { periodType, daoName, period }
 
@@ -146,7 +152,10 @@ const Page = (props: TReportProps) => {
         </Grid>
       </PaperSection>
       <PaperSection title="Balance Overview">
-        <DynamicPositions data={summary} />
+        <DynamicBalanceOverview
+          balanceOverviewType={balanceOverviewType}
+          balanceOverviewBlockchain={balanceOverviewBlockchain}
+        />
       </PaperSection>
       <PaperSection title="Treasury Variation">
         <DynamicPositions data={summary} />

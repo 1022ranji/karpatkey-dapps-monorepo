@@ -14,6 +14,8 @@ export type TReportData = {
   fundsByType: any[]
   fundsByBlockchain: any[]
   fundsByProtocol: any[]
+  balanceOverviewType: any[]
+  balanceOverviewBlockchain: any[]
 }
 
 export type TReportProps = TReportData & TReportFilter
