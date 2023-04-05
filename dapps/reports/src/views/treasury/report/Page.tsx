@@ -39,10 +39,15 @@ const DynamicBalanceOverview = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/BalanceOverview'),
   { loading: () => <Loading /> }
 )
-
 const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/components/InfoCard'), {
   loading: () => <Loading />
 })
+const DynamicTreasuryVariation = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/TreasuryVariation'),
+  {
+    loading: () => <Loading />
+  }
+)
 
 // TODO this view is too big, split it into smaller components, also add a rule to the linter to prevent this, like max 200 lines per file
 const Page = (props: TReportProps) => {
@@ -158,7 +163,7 @@ const Page = (props: TReportProps) => {
         />
       </PaperSection>
       <PaperSection title="Treasury Variation">
-        <DynamicPositions data={summary} />
+        <DynamicTreasuryVariation />
       </PaperSection>
       <PaperSection title="Farming Funds / Results">
         <DynamicPositions data={summary} />
