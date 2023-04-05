@@ -23,7 +23,7 @@
     "@emotion/styled": "^11.10.6",
     "@ethersproject/address": "^5.7.0",
     "@google-cloud/bigquery": "^6.2.0",
-    "@mui/icons-material": "^5.11.11",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.16",
     "@mui/utils": "^5.11.13",
     "@types/randomcolor": "^0.5.7",
