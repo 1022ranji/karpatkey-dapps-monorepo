@@ -19,7 +19,7 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
     "@karpatkey-monorepo/shared": "0.1.0",
-    "@mui/icons-material": "^5.11.11",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.16",
     "@mui/x-date-pickers": "^6.0.4",
     "@types/react-copy-to-clipboard": "^5.0.4",
