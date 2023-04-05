@@ -58,7 +58,8 @@ const Page = (props: TReportProps) => {
     fundsByType,
     fundsByBlockchain,
     fundsByProtocol,
-    balanceOverviewType
+    balanceOverviewType,
+    balanceOverviewBlockchain
   } = props
   const paramProps = { periodType, daoName, period }
 
@@ -151,7 +152,10 @@ const Page = (props: TReportProps) => {
         </Grid>
       </PaperSection>
       <PaperSection title="Balance Overview">
-        <DynamicBalanceOverview data={balanceOverviewType} />
+        <DynamicBalanceOverview
+          balanceOverviewType={balanceOverviewType}
+          balanceOverviewBlockchain={balanceOverviewBlockchain}
+        />
       </PaperSection>
       <PaperSection title="Treasury Variation">
         <DynamicPositions data={summary} />
