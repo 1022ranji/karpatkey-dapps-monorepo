@@ -4,11 +4,13 @@ import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
 import { getDAOByDAOName, getDateTypeByPeriodType, getMetricByPeriodType } from './index'
 import {
   mapBalancesByTokenCategory,
+  mapperBalanceOverviewBlockchain,
   mapperBalanceOverviewType,
   mapperFundsByBlockchain,
   mapperFundsByProtocol,
   mapperFundsByTokenCategory,
   mapperFundsByType,
+  reducerBalanceOverviewBlockchain,
   reducerBalanceOverviewType,
   reducerBalancesByTokenCategory,
   reducerCapitalUtilization,
@@ -109,6 +111,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
   const farmingResults = financialMetricsFiltered.reduce(reducerFarmingResults, 0)
 
   // #### Balance Overview block ####
+  // Funds by token category / Type
   const rowsBalanceOverviewType = variationMetricsDetailFiltered
     .filter((row: any) => {
       return row.metric.includes('balances') || row.metric.includes('unclaim')
@@ -118,6 +121,17 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
   const balanceOverviewType = mapperBalanceOverviewType(rowsBalanceOverviewType).sort(
     (a: any, b: any) => b.funds - a.funds
   )
+
+  // Funds by token category / Blockchain
+  const rowsBalanceOverviewBlockchain = variationMetricsDetailFiltered
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce(reducerBalanceOverviewBlockchain, [])
+
+  const balanceOverviewBlockchain = mapperBalanceOverviewBlockchain(
+    rowsBalanceOverviewBlockchain
+  ).sort((a: any, b: any) => b.funds - a.funds)
 
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
@@ -131,6 +145,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     fundsByType,
     fundsByBlockchain,
     fundsByProtocol,
-    balanceOverviewType
+    balanceOverviewType,
+    balanceOverviewBlockchain
   }
 }
