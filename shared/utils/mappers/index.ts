@@ -212,6 +212,44 @@ export const mapperFundsByProtocol = (
   })
 }
 
+export const reducerBalanceOverviewType = (acc: any, obj: any): { funds: number }[][] => {
+  const metric = obj['metric'].trim()
+  const tokenCategory = obj['token_category'].replace(/[0-9][0-9] /g, '').trim()
+  const protocol = obj['protocol'].trim()
+  const metricKey = metric.includes('unclaim')
+    ? 'Unclaimed Rewards'
+    : metric.includes('balance') && protocol.includes('Wallet')
+    ? 'Wallet'
+    : 'Farming Funds'
+
+  if (!acc[tokenCategory]) acc[tokenCategory] = {}
+  if (!acc[tokenCategory][metricKey])
+    acc[tokenCategory][metricKey] = { funds: 0, row: tokenCategory, column: metricKey }
+  acc[tokenCategory][metricKey].funds =
+    acc[tokenCategory][metricKey].funds +
+    ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+
+  return acc
+}
+
+export const mapperBalanceOverviewType = (
+  data: { funds: number; row: string; column: string }[][]
+): any[] => {
+  return Object.keys(data).map((key: string) => {
+    const farmingFunds = data[key as any]['Farming Funds' as any]?.funds ?? 0
+    const unclaimedRewards = data[key as any]['Unclaimed Rewards' as any]?.funds ?? 0
+    const wallet = data[key as any]['Wallet' as any]?.funds ?? 0
+    const total = farmingFunds + unclaimedRewards + wallet
+    return {
+      'Token Category': key,
+      'Farming Funds': farmingFunds,
+      'Unclaimed Rewards': unclaimedRewards,
+      Wallet: wallet,
+      Total: total
+    }
+  })
+}
+
 export const reducerTotalFunds = (acc: any, obj: any): number => {
   acc = acc + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
   return acc
