@@ -67,6 +67,12 @@ export class DataWarehouse {
     return this.executeCommonJobQuery(viewQuery)
   }
 
+  async getTreasuryHistoricVariation() {
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports.dm_treasury_historic_variation\``
+
+    return await this.executeCommonJobQuery(viewQuery)
+  }
+
   async executeCommonJobQuery(viewQuery: string) {
     const options = {
       query: viewQuery,

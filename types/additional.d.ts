@@ -43,6 +43,7 @@ declare type Report =
   | 'getTokens'
   | 'getTreasuryVariationMetricsDetail'
   | 'getTreasuryFinancialPositions'
+  | 'getTreasuryHistoricVariation'
 
 declare type DAO_NAME =
   'GnosisDAO'
