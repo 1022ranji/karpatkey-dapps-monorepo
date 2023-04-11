@@ -19,7 +19,8 @@ import {
   reducerFundsByProtocol,
   reducerFundsByTokenCategory,
   reducerFundsByType,
-  reducerTotalFunds
+  reducerTotalFunds,
+  reducerTreasuryVariationForThePeriod
 } from './mappers'
 
 // TODO try to reduce the size of this function in some way
@@ -133,6 +134,32 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     rowsBalanceOverviewBlockchain
   ).sort((a: any, b: any) => b.funds - a.funds)
 
+  // Treasury variation
+  // For the period
+  const values: any[] = []
+  const rowsTreasuryVariation = financialMetricsFiltered
+    .filter((row: any) => {
+      return (
+        row.metric === 'total farming' ||
+        row.metric === 'non farming ops' ||
+        row.metric === 'usd initial balance & UR' ||
+        row.metric === 'usd final balance'
+      )
+    })
+    .reduce(reducerTreasuryVariationForThePeriod, [])
+    .sort((a: any, b: any) => a.key - b.key)
+    .map((row: any, index: number) => {
+      values[index] = {
+        uv: row.funds,
+        pv: index === 0 ? 0 : values[index - 1].pv + values[index - 1].uv
+      }
+      return {
+        ...row,
+        uv: row.funds,
+        pv: index === 0 || index === 3 ? 0 : values[index - 1].pv + values[index - 1].uv
+      }
+    })
+
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
 
@@ -146,6 +173,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     fundsByBlockchain,
     fundsByProtocol,
     balanceOverviewType,
-    balanceOverviewBlockchain
+    balanceOverviewBlockchain,
+    rowsTreasuryVariation
   }
 }

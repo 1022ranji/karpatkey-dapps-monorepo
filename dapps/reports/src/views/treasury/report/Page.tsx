@@ -42,8 +42,8 @@ const DynamicBalanceOverview = dynamic(
 const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/components/InfoCard'), {
   loading: () => <Loading />
 })
-const DynamicTreasuryVariation = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/TreasuryVariation'),
+const DynamicWaterfall = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/components/Charts/Waterfall'),
   {
     loading: () => <Loading />
   }
@@ -64,7 +64,8 @@ const Page = (props: TReportProps) => {
     fundsByBlockchain,
     fundsByProtocol,
     balanceOverviewType,
-    balanceOverviewBlockchain
+    balanceOverviewBlockchain,
+    rowsTreasuryVariation
   } = props
   const paramProps = { periodType, daoName, period }
 
@@ -163,7 +164,31 @@ const Page = (props: TReportProps) => {
         />
       </PaperSection>
       <PaperSection title="Treasury Variation">
-        <DynamicTreasuryVariation />
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columns={{ xs: 4, sm: 4, md: 4 }}
+        >
+          <Grid item xs={4} sm={4} md={4}>
+            <DynamicWaterfall
+              title="Treasury variation for the period ($USD)"
+              data={rowsTreasuryVariation}
+            />
+          </Grid>
+          <Grid item xs={4} sm={4} md={4}>
+            <DynamicWaterfall
+              title="Treasury variation in 2023 ($USD)"
+              data={rowsTreasuryVariation}
+            />
+          </Grid>
+          <Grid item xs={4} sm={4} md={4}>
+            <DynamicWaterfall
+              title="Treasury variation for the period (detail) ($USD)"
+              data={rowsTreasuryVariation}
+            />
+          </Grid>
+        </Grid>
       </PaperSection>
       <PaperSection title="Farming Funds / Results">
         <DynamicPositions data={summary} />

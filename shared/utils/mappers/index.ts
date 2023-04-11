@@ -284,6 +284,33 @@ export const mapperBalanceOverviewBlockchain = (
     .sort((a: any, b: any) => b.Total - a.Total)
 }
 
+export const reducerTreasuryVariationForThePeriod = (
+  acc: any,
+  obj: any
+): { funds: number; value: string; key: number }[] => {
+  const metric = obj['metric'].trim()
+  const metricKey =
+    metric === 'usd initial balance & UR'
+      ? { value: 'Initial Balance', key: 1 }
+      : metric === 'non farming ops'
+      ? { value: 'NonFarming Results', key: 2 }
+      : metric === 'total farming'
+      ? { value: 'Farming Results', key: 3 }
+      : metric === 'usd final balance'
+      ? { value: 'Final Balance', key: 4 }
+      : { value: metric, key: 5 }
+
+  if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
+
+  acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + (obj['metric_value'] ?? 0)
+  acc[metricKey.key - 1] = {
+    ...acc[metricKey.key - 1],
+    ...metricKey
+  }
+
+  return acc
+}
+
 export const reducerTotalFunds = (acc: any, obj: any): number => {
   acc = acc + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
   return acc
