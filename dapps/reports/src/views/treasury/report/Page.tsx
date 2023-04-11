@@ -4,6 +4,7 @@ import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import { Box, Divider, Grid } from '@mui/material'
+import { DateTime } from 'luxon'
 import dynamic from 'next/dynamic'
 import numbro from 'numbro'
 import * as React from 'react'
@@ -65,7 +66,8 @@ const Page = (props: TReportProps) => {
     fundsByProtocol,
     balanceOverviewType,
     balanceOverviewBlockchain,
-    rowsTreasuryVariation
+    rowsTreasuryVariation,
+    rowsHistoricVariation
   } = props
   const paramProps = { periodType, daoName, period }
 
@@ -178,8 +180,8 @@ const Page = (props: TReportProps) => {
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
             <DynamicWaterfall
-              title="Treasury variation in 2023 ($USD)"
-              data={rowsTreasuryVariation}
+              title={'Treasury variation in ' + DateTime.now().toFormat('yyyy') + ' ($USD)'}
+              data={rowsHistoricVariation}
             />
           </Grid>
           <Grid item xs={4} sm={4} md={4}>

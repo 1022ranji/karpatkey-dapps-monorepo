@@ -11,7 +11,6 @@ export type TWaterfallProps = {
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
-    console.log('payload', payload)
     return (
       <Paper elevation={24} sx={{ backgroundColor: '#d9d9d9', width: 160, height: 60 }}>
         <CustomTypography

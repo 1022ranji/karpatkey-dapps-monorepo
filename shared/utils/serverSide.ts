@@ -20,6 +20,7 @@ import {
   reducerFundsByTokenCategory,
   reducerFundsByType,
   reducerTotalFunds,
+  reducerTreasuryHistoricVariation,
   reducerTreasuryVariationForThePeriod
 } from './mappers'
 
@@ -36,17 +37,20 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
   )
   const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as Report)
   const financialPositions = await cache.getReport('getTreasuryFinancialPositions' as Report)
+  const historicVariation = await cache.getReport('getTreasuryHistoricVariation' as Report)
 
   // Step 3: Filter data by common params, like daoName, periodType and period
   const { keyName } = getDAOByDAOName(daoName) || {}
   const metricPeriodType = getMetricByPeriodType(periodType)
   const dateTypePeriodType = getDateTypeByPeriodType(periodType)
-  // const metricPeriod = getMetricByPeriod(period, periodType)
+  const metricPeriod = '2023_12' //getMetricByPeriod(period, periodType)
 
   // Filter data by common params, like daoName, periodType and period
   const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) => {
     return (
-      row.metric.includes(metricPeriodType) && row.dao === keyName && row.year_month === '2023_12'
+      row.metric.includes(metricPeriodType) &&
+      row.dao === keyName &&
+      row.year_month === metricPeriod
     )
   })
 
@@ -54,14 +58,22 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     return (
       row.date_type.includes(dateTypePeriodType) &&
       row.dao === keyName &&
-      row.year_month === '2023_12'
+      row.year_month === metricPeriod
+    )
+  })
+
+  const historicVariationFiltered = historicVariation.filter((row: any) => {
+    return (
+      row.date_type.includes(dateTypePeriodType) &&
+      row.dao === keyName &&
+      row.year_month === metricPeriod
     )
   })
 
   //TODO: continue here
   const financialMetricsFiltered = financialMetrics.filter((row: any) => {
     return (
-      row.date_type === dateTypePeriodType && row.dao === keyName && row.year_month === '2023_12'
+      row.date_type === dateTypePeriodType && row.dao === keyName && row.year_month === metricPeriod
     )
   })
 
@@ -136,7 +148,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
 
   // Treasury variation
   // For the period
-  const values: any[] = []
+  const valuesForThePeriod: any[] = []
   const rowsTreasuryVariation = financialMetricsFiltered
     .filter((row: any) => {
       return (
@@ -149,16 +161,61 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     .reduce(reducerTreasuryVariationForThePeriod, [])
     .sort((a: any, b: any) => a.key - b.key)
     .map((row: any, index: number) => {
-      values[index] = {
+      valuesForThePeriod[index] = {
         uv: row.funds,
-        pv: index === 0 ? 0 : values[index - 1].pv + values[index - 1].uv
+        pv: index === 0 ? 0 : valuesForThePeriod[index - 1].pv + valuesForThePeriod[index - 1].uv
       }
       return {
         ...row,
         uv: row.funds,
-        pv: index === 0 || index === 3 ? 0 : values[index - 1].pv + values[index - 1].uv
+        pv:
+          index === 0 || index === 3
+            ? 0
+            : valuesForThePeriod[index - 1].pv + valuesForThePeriod[index - 1].uv
       }
     })
+
+  // In this year
+  const valuesForThisYear: any[] = []
+  const rowsHistoricVariation = historicVariationFiltered
+    .filter((row: any) => {
+      return (
+        row.metric.includes('Initial Balance') ||
+        row.metric.includes('NonFarming Results') ||
+        row.metric.includes('Farming Results')
+      )
+    })
+    .reduce(reducerTreasuryHistoricVariation, [])
+    .sort((a: any, b: any) => a.key - b.key)
+    .map((row: any, index: number) => {
+      valuesForThisYear[index] = {
+        uv: row.funds,
+        pv: index === 0 ? 0 : valuesForThisYear[index - 1].pv + valuesForThisYear[index - 1].uv
+      }
+      return {
+        ...row,
+        uv: row.funds,
+        pv:
+          index === 0 || index === 3
+            ? 0
+            : valuesForThisYear[index - 1].pv + valuesForThisYear[index - 1].uv
+      }
+    })
+
+  const rowsHistoricVariationTotal = rowsHistoricVariation.reduce(
+    (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+    0
+  )
+
+  rowsHistoricVariation[3] = {
+    funds: rowsHistoricVariationTotal,
+    value: 'Final Balance',
+    key: 4,
+    uv: rowsHistoricVariationTotal,
+    pv: 0
+  }
+
+  console.log('total', rowsHistoricVariation)
 
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
@@ -174,6 +231,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     fundsByProtocol,
     balanceOverviewType,
     balanceOverviewBlockchain,
-    rowsTreasuryVariation
+    rowsTreasuryVariation,
+    rowsHistoricVariation
   }
 }
