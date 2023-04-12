@@ -9,16 +9,19 @@ export type TWaterfallProps = {
   data: any[]
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
-      <Paper elevation={24} sx={{ backgroundColor: '#d9d9d9', width: 160, height: 60 }}>
+      <Paper
+        elevation={24}
+        sx={{ backgroundColor: '#d9d9d9', width: 160, minHeight: 60, maxHeight: 360 }}
+      >
         <CustomTypography
           variant="body2"
           color="textSecondary"
           sx={{ padding: 1, fontWeight: 'bold', textAlign: 'left' }}
         >
-          {label}
+          {payload[1].payload.value}
         </CustomTypography>
         <CustomTypography
           variant="body2"
@@ -66,7 +69,16 @@ const Waterfall = ({ title, data, ...props }: BoxProps & TWaterfallProps) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="value" fontSize={12} />
+        <XAxis
+          dataKey={(obj: any) => {
+            if (data.length > 4) {
+              return obj.shortedValue
+            } else {
+              return obj.value
+            }
+          }}
+          fontSize={12}
+        />
         <YAxis
           fontSize={12}
           tickFormatter={(tick) => {

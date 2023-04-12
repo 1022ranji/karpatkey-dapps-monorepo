@@ -311,6 +311,48 @@ export const reducerTreasuryVariationForThePeriod = (
   return acc
 }
 
+export const reducerTreasuryVariationForThePeriodDetail = (
+  acc: any,
+  obj: any
+): { funds: number; value: string; shortedValue: string; key: number }[] => {
+  const metric = obj['metric'].trim()
+
+  if (metric === 'farming price variation') console.log('obj', obj)
+
+  const metricKey =
+    metric === 'usd initial balance & UR'
+      ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
+      : metric === 'non farming price variation'
+      ? { value: 'NonFarm-Price var for in bal', shortedValue: 'NFP', key: 2 }
+      : metric === 'nonfarming_income'
+      ? { value: 'NonFarm-Income', shortedValue: 'NFI', key: 3 }
+      : metric === 'nonfarming_outcome'
+      ? { value: 'NonFarm-Outcome', shortedValue: 'NFO', key: 4 }
+      : metric === 'nonfarming_swap'
+      ? { value: 'NonFarm-Swaps', shortedValue: 'NFS', key: 5 }
+      : metric === 'nonfarming_bridge'
+      ? { value: 'NonFarm-Bridges', shortedValue: 'NFB', key: 6 }
+      : metric === 'farming executed only swaps'
+      ? { value: 'Farm-Swaps', shortedValue: 'FS', key: 7 }
+      : metric === 'farming rewards'
+      ? { value: 'Farm-Rewards', shortedValue: 'FR', key: 8 }
+      : metric === 'farming token variation'
+      ? { value: 'Farm-Fees/Rebasing/Pool Tkn Var', shortedValue: 'FFRP', key: 9 }
+      : metric === 'farming price variation'
+      ? { value: 'Farm-Price Variation in Rew,Fees,TkVar', shortedValue: 'FPVRFT', key: 10 }
+      : { value: metric, key: 11 }
+
+  if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
+
+  acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + (obj['metric_value'] ?? 0)
+  acc[metricKey.key - 1] = {
+    ...acc[metricKey.key - 1],
+    ...metricKey
+  }
+
+  return acc
+}
+
 export const reducerTreasuryHistoricVariation = (
   acc: any,
   obj: any

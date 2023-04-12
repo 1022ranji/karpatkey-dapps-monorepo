@@ -67,7 +67,8 @@ const Page = (props: TReportProps) => {
     balanceOverviewType,
     balanceOverviewBlockchain,
     rowsTreasuryVariation,
-    rowsHistoricVariation
+    rowsHistoricVariation,
+    rowsTreasuryVariationForThePeriodDetail
   } = props
   const paramProps = { periodType, daoName, period }
 
@@ -187,7 +188,7 @@ const Page = (props: TReportProps) => {
           <Grid item xs={4} sm={4} md={4}>
             <DynamicWaterfall
               title="Treasury variation for the period (detail) ($USD)"
-              data={rowsTreasuryVariation}
+              data={rowsTreasuryVariationForThePeriodDetail}
             />
           </Grid>
         </Grid>

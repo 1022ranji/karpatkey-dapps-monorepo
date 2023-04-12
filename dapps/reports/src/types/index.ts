@@ -18,6 +18,7 @@ export type TReportData = {
   balanceOverviewBlockchain: any[]
   rowsTreasuryVariation: any[]
   rowsHistoricVariation: any[]
+  rowsTreasuryVariationForThePeriodDetail: any[]
 }
 
 export type TReportProps = TReportData & TReportFilter

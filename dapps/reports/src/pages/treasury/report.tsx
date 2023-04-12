@@ -51,7 +51,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     balanceOverviewType = [],
     balanceOverviewBlockchain = [],
     rowsTreasuryVariation = [],
-    rowsHistoricVariation = []
+    rowsHistoricVariation = [],
+    rowsTreasuryVariationForThePeriodDetail = []
   } = await getCommonServerSideProps(params)
 
   // Pass data to the page via props
@@ -69,6 +70,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       balanceOverviewBlockchain,
       rowsTreasuryVariation,
       rowsHistoricVariation,
+      rowsTreasuryVariationForThePeriodDetail,
       ...params
     }
   }

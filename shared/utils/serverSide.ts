@@ -21,7 +21,8 @@ import {
   reducerFundsByType,
   reducerTotalFunds,
   reducerTreasuryHistoricVariation,
-  reducerTreasuryVariationForThePeriod
+  reducerTreasuryVariationForThePeriod,
+  reducerTreasuryVariationForThePeriodDetail
 } from './mappers'
 
 // TODO try to reduce the size of this function in some way
@@ -215,7 +216,58 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     pv: 0
   }
 
-  console.log('total', rowsHistoricVariation)
+  // For the period, detail
+  const valuesForThePeriodDetail: any[] = []
+  const rowsTreasuryVariationForThePeriodDetail = financialMetricsFiltered
+    .filter((row: any) => {
+      return (
+        row.metric === 'non farming price variation' ||
+        row.metric === 'usd initial balance & UR' ||
+        row.metric === 'nonfarming_swap' ||
+        row.metric === 'nonfarming_outcome' ||
+        row.metric === 'nonfarming_income' ||
+        row.metric === 'farming rewards' ||
+        row.metric === 'farming token variation' ||
+        row.metric === 'farming price variation' ||
+        row.metric === 'farming executed only swaps' ||
+        row.metric === 'nonfarming_bridge'
+      )
+    })
+    .reduce(reducerTreasuryVariationForThePeriodDetail, [])
+    .filter((elm: any) => elm)
+    .sort((a: any, b: any) => a.key - b.key)
+    .map((row: any, index: number) => {
+      valuesForThePeriodDetail[index] = {
+        uv: row.funds,
+        pv:
+          index === 0
+            ? 0
+            : valuesForThePeriodDetail[index - 1].pv + valuesForThePeriodDetail[index - 1].uv
+      }
+      return {
+        ...row,
+        uv: row.funds,
+        pv:
+          index === 0
+            ? 0
+            : valuesForThePeriodDetail[index - 1].pv + valuesForThePeriodDetail[index - 1].uv
+      }
+    })
+
+  const rowsTreasuryVariationForThePeriodDetailTotal =
+    rowsTreasuryVariationForThePeriodDetail.reduce(
+      (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+      0
+    )
+
+  rowsTreasuryVariationForThePeriodDetail.push({
+    funds: rowsTreasuryVariationForThePeriodDetailTotal,
+    value: 'Final Balance',
+    shortedValue: 'FB',
+    key: 12,
+    uv: rowsTreasuryVariationForThePeriodDetailTotal,
+    pv: 0
+  })
 
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
@@ -232,6 +284,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     balanceOverviewType,
     balanceOverviewBlockchain,
     rowsTreasuryVariation,
-    rowsHistoricVariation
+    rowsHistoricVariation,
+    rowsTreasuryVariationForThePeriodDetail
   }
 }
