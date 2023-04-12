@@ -1,5 +1,6 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
+import TableCellTotal from '@karpatkey-monorepo/shared/components/TableCellTotal'
 import {
   Box,
   BoxProps,
@@ -10,16 +11,8 @@ import {
   TableHead,
   TableRow
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
 import numbro from 'numbro'
 import * as React from 'react'
-
-const TableCellTotal = styled(TableCell)(({ theme }) => ({
-  lineHeight: '1.5rem',
-  fontWeight: 500,
-  fontSize: '0.875rem',
-  color: theme.palette.text.primary
-}))
 
 type TBalanceOverview = { balanceOverviewType: any; balanceOverviewBlockchain: any } & BoxProps
 

@@ -6,6 +6,7 @@ import {
   mapBalancesByTokenCategory,
   mapperBalanceOverviewBlockchain,
   mapperBalanceOverviewType,
+  mapperFarmingFundsByProtocol,
   mapperFundsByBlockchain,
   mapperFundsByProtocol,
   mapperFundsByTokenCategory,
@@ -14,11 +15,13 @@ import {
   reducerBalanceOverviewType,
   reducerBalancesByTokenCategory,
   reducerCapitalUtilization,
+  reducerFarmingFundsByProtocol,
   reducerFarmingResults,
   reducerFundsByBlockchain,
   reducerFundsByProtocol,
   reducerFundsByTokenCategory,
   reducerFundsByType,
+  reducerTotalFarmingFunds,
   reducerTotalFunds,
   reducerTreasuryHistoricVariation,
   reducerTreasuryVariationForThePeriod,
@@ -208,13 +211,13 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     0
   )
 
-  rowsHistoricVariation[3] = {
+  rowsHistoricVariation.push({
     funds: rowsHistoricVariationTotal,
     value: 'Final Balance',
     key: 4,
     uv: rowsHistoricVariationTotal,
     pv: 0
-  }
+  })
 
   // For the period, detail
   const valuesForThePeriodDetail: any[] = []
@@ -269,6 +272,40 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     pv: 0
   })
 
+  // Farming Funds / Results
+  // Farming result block
+  const totalFarmingFunds = financialMetricsFiltered.reduce(reducerTotalFarmingFunds, 0)
+
+  // Farming funds / Results by protocol
+  const rowsFarmingFundsByProtocolReduced = financialPositionsFiltered.reduce(
+    reducerFarmingFundsByProtocol,
+    []
+  )
+
+  const rowsFarmingFundsByProtocolFlat = Object.values(rowsFarmingFundsByProtocolReduced).reduce(
+    (acc: any, curVal: any) => {
+      return acc.concat(Object.values(curVal))
+    },
+    []
+  )
+  const rowsFarmingFundsByProtocol = mapperFarmingFundsByProtocol(
+    rowsFarmingFundsByProtocolFlat as any[]
+  ).sort((a: any, b: any) => b.funds - a.funds)
+
+  const rowsFarmingFundsByProtocolTotals = rowsFarmingFundsByProtocol.reduce(
+    (
+      accumulator: { fundsTotal: number; unclaimedTotal: number; resultsTotal: number },
+      currentValue: { funds: number; unclaimed: number; results: number }
+    ) => {
+      return {
+        fundsTotal: accumulator.fundsTotal + currentValue.funds,
+        unclaimedTotal: accumulator.unclaimedTotal + currentValue.unclaimed,
+        resultsTotal: accumulator.resultsTotal + currentValue.results
+      }
+    },
+    { fundsTotal: 0, unclaimedTotal: 0, resultsTotal: 0 }
+  )
+
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
 
@@ -285,6 +322,9 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     balanceOverviewBlockchain,
     rowsTreasuryVariation,
     rowsHistoricVariation,
-    rowsTreasuryVariationForThePeriodDetail
+    rowsTreasuryVariationForThePeriodDetail,
+    totalFarmingFunds,
+    rowsFarmingFundsByProtocol,
+    rowsFarmingFundsByProtocolTotals
   }
 }

@@ -382,6 +382,47 @@ export const reducerTotalFunds = (acc: any, obj: any): number => {
   return acc
 }
 
+export const reducerTotalFarmingFunds = (acc: any, obj: any): number => {
+  acc = acc + (obj['metric'] === 'total farming') ? obj['metric_value'] : 0
+  return acc
+}
+
+export const reducerFarmingFundsByProtocol = (acc: any, obj: any) => {
+  const protocol = obj['protocol'].trim()
+  const position = obj['Assets'].trim()
+  if (!acc[protocol]) acc[protocol] = {}
+  if (!acc[protocol][position])
+    acc[protocol][position] = {
+      funds: 0,
+      allocation: 0,
+      unclaimed: 0,
+      results: 0,
+      protocol,
+      position
+    }
+
+  // 'total farming'
+  acc[protocol][position].funds += obj['Funds']
+  acc[protocol][position].unclaimed += obj['Unclaimed_Rewards']
+  acc[protocol][position].results += obj['Revenue']
+
+  return acc
+}
+
+export const mapperFarmingFundsByProtocol = (data: any[]): any[] => {
+  const total = data.reduce(
+    (accumulator: number, currentValue: any) => accumulator + currentValue.funds,
+    0
+  )
+
+  return data.map((value: any) => {
+    return {
+      ...value,
+      allocation: (value.funds / total) * 100
+    }
+  })
+}
+
 export const reducerCapitalUtilization = (acc: any, obj: any): number => {
   acc = acc + (obj['metric'] && obj['metric'] === 'capital utilization' ? obj['metric_value'] : 0)
   return acc

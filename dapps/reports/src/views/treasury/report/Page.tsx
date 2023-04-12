@@ -49,6 +49,12 @@ const DynamicWaterfall = dynamic(
     loading: () => <Loading />
   }
 )
+const DynamicFarmingFunds = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/FarmingFunds'),
+  {
+    loading: () => <Loading />
+  }
+)
 
 // TODO this view is too big, split it into smaller components, also add a rule to the linter to prevent this, like max 200 lines per file
 const Page = (props: TReportProps) => {
@@ -68,7 +74,10 @@ const Page = (props: TReportProps) => {
     balanceOverviewBlockchain,
     rowsTreasuryVariation,
     rowsHistoricVariation,
-    rowsTreasuryVariationForThePeriodDetail
+    rowsTreasuryVariationForThePeriodDetail,
+    totalFarmingFunds,
+    rowsFarmingFundsByProtocol,
+    rowsFarmingFundsByProtocolTotals
   } = props
   const paramProps = { periodType, daoName, period }
 
@@ -194,7 +203,29 @@ const Page = (props: TReportProps) => {
         </Grid>
       </PaperSection>
       <PaperSection title="Farming Funds / Results">
-        <DynamicPositions data={summary} />
+        <Grid
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
+        >
+          <Grid item xs={4} sm={8} md={12}>
+            <DynamicInfoCard
+              title="Farming Results"
+              value={numbro(totalFarmingFunds).formatCurrency({
+                spaceSeparated: true,
+                mantissa: 2
+              })}
+            />
+            <Divider sx={{ marginY: 2 }} />
+          </Grid>
+          <Grid item xs={4} sm={8} md={12}>
+            <DynamicFarmingFunds
+              funds={rowsFarmingFundsByProtocol}
+              totals={rowsFarmingFundsByProtocolTotals}
+            />
+          </Grid>
+        </Grid>
       </PaperSection>
       <PaperSection title="Token Detail">
         <DynamicPositions data={summary} />
