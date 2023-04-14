@@ -1,10 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { BigQuery } from '@google-cloud/bigquery'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import googleCredentials from '../../google-credentials.json'
+import { GOOGLE_CREDS, GOOGLE_PROJECT_ID } from '../../config/constants'
 
 export class DataWarehouse {
   private static instance: DataWarehouse
@@ -12,8 +8,8 @@ export class DataWarehouse {
 
   private constructor() {
     this.bigQuery = new BigQuery({
-      projectId: googleCredentials.project_id,
-      keyFilename: '../shared/google-credentials.json'
+      projectId: GOOGLE_PROJECT_ID,
+      credentials: GOOGLE_CREDS
     })
   }
 

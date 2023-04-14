@@ -43,7 +43,7 @@ const FormDAODropdown = (props: TFormDAODropdownProps) => {
               }
             }}
             renderValue={(selected) => {
-              const dao = getDAOByDAOName(selected as DAO_NAME)
+              const dao = getDAOByDAOName(selected as TDAO_Name)
               return (
                 <BoxWrapperRow gap={2} sx={{ minWidth: 100 }}>
                   <Image src={dao?.icon || ''} alt={dao?.name || ''} width={24} height={24} />

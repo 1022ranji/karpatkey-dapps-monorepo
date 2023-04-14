@@ -80,26 +80,26 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
               <TableCellTotal align="left"> </TableCellTotal>
               <TableCellTotal align="left">Total</TableCellTotal>
               <TableCellTotal align="right">
-                {numbro(totals.fundsTotal).formatCurrency({
+                {numbro(totals?.fundsTotal || 0).formatCurrency({
                   spaceSeparated: true,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                {numbro(1).format({
+                {numbro(totals?.fundsTotal ? 1 : 0).format({
                   output: 'percent',
                   spaceSeparated: true,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
-                {numbro(totals.unclaimedTotal).formatCurrency({
+                {numbro(totals?.unclaimedTotal || 0).formatCurrency({
                   spaceSeparated: true,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
-                {numbro(totals.resultsTotal).formatCurrency({
+                {numbro(totals?.resultsTotal || 0).formatCurrency({
                   spaceSeparated: true,
                   mantissa: 2
                 })}

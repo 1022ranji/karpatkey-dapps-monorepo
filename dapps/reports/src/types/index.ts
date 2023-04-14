@@ -1,7 +1,7 @@
 export type TReportFilter = {
-  daoName: DAO_NAME
+  daoName: TDAO_Name
   period: string
-  periodType: PeriodType
+  periodType: TPeriodType
 }
 
 // TODO: improve types without the use of "any"
@@ -37,8 +37,8 @@ export type TReportData = {
 export type TReportProps = TReportData & TReportFilter
 
 export type TTitleProps = {
-  periodType: PeriodType
-  daoName: DAO_NAME
+  periodType: TPeriodType
+  daoName: TDAO_Name
 }
 
 // TODO improve types without the use of "any"

@@ -91,7 +91,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
     setMobileOpen((prevState) => !prevState)
   }
 
-  const [anchorEl, setAnchorEl] = React.useState<Maybe<HTMLElement>>(null)
+  const [anchorEl, setAnchorEl] = React.useState<TMaybe<HTMLElement>>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)

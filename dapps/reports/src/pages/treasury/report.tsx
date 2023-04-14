@@ -29,7 +29,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     daoName = DAO_NAME_DEFAULT
   } = query
 
-  const existDAO = existDAOKeyName(daoName as DAO_NAME)
+  const existDAO = existDAOKeyName(daoName as TDAO_Name)
   if (!existDAO) {
     throw new Error('DAO does not exist')
   }

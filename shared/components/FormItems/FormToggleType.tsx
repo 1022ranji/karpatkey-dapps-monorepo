@@ -4,7 +4,7 @@ import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import * as React from 'react'
 import { Controller } from 'react-hook-form'
 
-const PeriodTypes: { value: PeriodType; name: string }[] = [
+const PeriodTypes: { value: TPeriodType; name: string }[] = [
   {
     value: 'year',
     name: 'Yearly'

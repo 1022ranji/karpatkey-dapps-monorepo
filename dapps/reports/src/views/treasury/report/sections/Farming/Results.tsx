@@ -76,19 +76,19 @@ const Results: React.FC<IFarmingResultsDetailByProtocol> = (
               <TableCellTotal align="left"> </TableCellTotal>
               <TableCellTotal align="left">Total</TableCellTotal>
               <TableCellTotal align="right">
-                {numbro(totalDetails.rewardsTotal).formatCurrency({
+                {numbro(totalDetails?.rewardsTotal || 0).formatCurrency({
                   spaceSeparated: true,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
-                {numbro(totalDetails.feesTotal).formatCurrency({
+                {numbro(totalDetails?.feesTotal || 0).formatCurrency({
                   spaceSeparated: true,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
-                {numbro(totalDetails.total).formatCurrency({
+                {numbro(totalDetails?.total || 0).formatCurrency({
                   spaceSeparated: true,
                   mantissa: 2
                 })}

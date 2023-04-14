@@ -4,7 +4,7 @@ export const NONE = 'None'
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-export const EthereumDAOs: DAO[] = [
+export const EthereumDAOs: IDAO[] = [
   {
     addresses: ['0x849d52316331967b6ff1198e5e32a0eb168d039d'],
     name: 'Gnosis DAO',
@@ -43,7 +43,7 @@ export const EthereumDAOs: DAO[] = [
   }
 ]
 
-export const GnosisDAOs: DAO[] = [
+export const GnosisDAOs: IDAO[] = [
   {
     addresses: ['0x458cd345b4c05e8df39d0a07220feb4ec19f5e6f'],
     name: 'Gnosis DAO',
@@ -64,7 +64,7 @@ export const GnosisDAOs: DAO[] = [
   }
 ]
 
-export const DAOs: { [K in NetworkIds]: Network } = {
+export const DAOs: { [K in ENetworkIds]: INetwork } = {
   0: {
     DAOs: [
       {
@@ -123,12 +123,12 @@ export const NETWORKS = {
   ...BASIC_NETWORKS
 }
 
-export const NETWORK_DEFAULT = 0 as NetworkId
-export const DAO_NAME_DEFAULT = 'Karpatkey' as DAO_NAME
+export const NETWORK_DEFAULT = (process.env.REACT_NETWORK_DEFAULT || 0) as TNetworkId
+export const DAO_NAME_DEFAULT = (process.env.REACT_DAO_NAME_DEFAULT || 'Karpatkey') as TDAO_Name
 
-export const PERIOD_TYPE_DEFAULT = 'week' as PeriodType
+export const PERIOD_TYPE_DEFAULT = (process.env.REACT_PERIOD_TYPE_DEFAULT || 'month') as TPeriodType
 
-export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
+export const ALLOWED_REPORTS: { reportName: TReport; fileName: string }[] = [
   {
     reportName: 'getDailyBalanceReports',
     fileName: 'daily-balance-reports'
@@ -154,3 +154,11 @@ export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
     fileName: 'treasury-historic-variation'
   }
 ]
+
+export const GOOGLE_PROJECT_ID = process.env.REACT_GOOGLE_PROJECT_ID
+export const GOOGLE_CREDS = {
+  client_id: process.env.REACT_GOOGLE_CLIENT_ID,
+  client_email: process.env.REACT_GOOGLE_CLIENT_EMAIL,
+  project_id: GOOGLE_PROJECT_ID,
+  private_key: process.env?.REACT_GOOGLE_PRIVATE_KEY?.replace(new RegExp('\\\\n', 'g'), '\n')
+}

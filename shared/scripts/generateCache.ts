@@ -1,8 +1,12 @@
 import { Command } from 'commander'
+import * as dotenv from 'dotenv'
 
 import { ALLOWED_REPORTS } from '../config/constants'
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
+
+// see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
 
 const program = new Command()
 
@@ -19,7 +23,7 @@ if (!reportName) {
 }
 
 const report = ALLOWED_REPORTS.find(
-  (report: { fileName: string; reportName: Report }) => report.reportName === reportName
+  (report: { fileName: string; reportName: TReport }) => report.reportName === reportName
 )
 if (!report) {
   console.error(`Report name ${reportName} is not allowed`)
@@ -34,10 +38,8 @@ if (!report) {
     const dataWarehouse = DataWarehouse.getInstance()
 
     // Step 2: Query the data
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const reportData = await dataWarehouse[report.reportName as Report]()
-    cache.write(report.reportName as Report, reportData)
+    const reportData = await dataWarehouse[report.reportName as TReport]()
+    cache.writeConsole(report.reportName as TReport, reportData)
     console.log(`Success, cache generated!`)
   } catch (e) {
     console.error(e)
