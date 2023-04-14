@@ -74,7 +74,6 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     )
   })
 
-  //TODO: continue here
   const financialMetricsFiltered = financialMetrics.filter((row: any) => {
     return (
       row.date_type === dateTypePeriodType && row.dao === keyName && row.year_month === metricPeriod
@@ -306,6 +305,60 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     { fundsTotal: 0, unclaimedTotal: 0, resultsTotal: 0 }
   )
 
+  // Farming results details by protocol
+  const financialMetricsFilteredByMetric = financialMetricsFiltered
+    .filter((row: any) => {
+      return (
+        row.protocol !== 'Wallet' &&
+        (row.metric === 'farming rewards' || row.metric === 'farming token variation')
+      )
+    })
+    .reduce((acc: any, obj: any) => {
+      const protocol = obj['protocol'].trim()
+      const position = obj['lptoken_name'].trim()
+      const metric = obj['metric'].trim()
+
+      if (!acc[protocol]) acc[protocol] = {}
+      if (!acc[protocol][position])
+        acc[protocol][position] = {
+          rewards: 0,
+          fees: 0,
+          total: 0,
+          protocol,
+          position
+        }
+
+      acc[protocol][position].rewards += metric === 'farming rewards' ? obj['metric_value'] : 0
+      acc[protocol][position].fees += metric === 'farming token variation' ? obj['metric_value'] : 0
+      acc[protocol][position].total = acc[protocol][position].rewards + acc[protocol][position].fees
+
+      return acc
+    }, [])
+
+  const rowsFarmingResultsDetailsByProtocol = Object.keys(financialMetricsFilteredByMetric).reduce(
+    (result: any, protocol: string) => {
+      Object.keys(financialMetricsFilteredByMetric[protocol]).forEach((position: string) => {
+        result.push(financialMetricsFilteredByMetric[protocol][position])
+      })
+      return result
+    },
+    []
+  )
+
+  const rowsFarmingResultsDetailsByProtocolTotals = rowsFarmingResultsDetailsByProtocol.reduce(
+    (
+      accumulator: { rewardsTotal: number; feesTotal: number; total: number },
+      currentValue: { rewards: number; fees: number; total: number }
+    ) => {
+      return {
+        rewardsTotal: accumulator.rewardsTotal + currentValue.rewards,
+        feesTotal: accumulator.feesTotal + currentValue.fees,
+        total: accumulator.total + currentValue.total
+      }
+    },
+    { rewardsTotal: 0, feesTotal: 0, total: 0 }
+  )
+
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
 
@@ -325,6 +378,8 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     rowsTreasuryVariationForThePeriodDetail,
     totalFarmingFunds,
     rowsFarmingFundsByProtocol,
-    rowsFarmingFundsByProtocolTotals
+    rowsFarmingFundsByProtocolTotals,
+    rowsFarmingResultsDetailsByProtocol,
+    rowsFarmingResultsDetailsByProtocolTotals
   }
 }

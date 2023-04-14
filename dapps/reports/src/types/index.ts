@@ -21,7 +21,17 @@ export type TReportData = {
   rowsTreasuryVariationForThePeriodDetail: any[]
   totalFarmingFunds: number
   rowsFarmingFundsByProtocol: any[]
-  rowsFarmingFundsByProtocolTotals: any
+  rowsFarmingFundsByProtocolTotals: {
+    fundsTotal: number
+    unclaimedTotal: number
+    resultsTotal: number
+  }
+  rowsFarmingResultsDetailsByProtocol: any[]
+  rowsFarmingResultsDetailsByProtocolTotals: {
+    rewardsTotal: number
+    feesTotal: number
+    total: number
+  }
 }
 
 export type TReportProps = TReportData & TReportFilter

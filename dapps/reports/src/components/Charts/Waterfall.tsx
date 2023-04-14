@@ -48,13 +48,8 @@ const Waterfall = ({ title, data, ...props }: BoxProps & TWaterfallProps) => {
       justifyContent="center"
       alignItems="center"
       {...props}
-      sx={{ marginY: '20px' }}
     >
-      <CustomTypography
-        variant="h6"
-        color="textSecondary"
-        sx={{ height: '70px', textAlign: 'center' }}
-      >
+      <CustomTypography variant="h6" color="textSecondary" sx={{ textAlign: 'center' }}>
         {title}
       </CustomTypography>
       <BarChart

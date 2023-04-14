@@ -1,6 +1,7 @@
-import Divider from '@mui/material/Divider'
+import { Divider } from '@mui/material'
 import * as React from 'react'
 
+import BoxWrapperColumn from './BoxWrapperColumn'
 import CustomTypography from './CustomTypography'
 import Paper from './Paper'
 
@@ -12,14 +13,14 @@ interface IPaperSection {
 const PaperSection = (props: IPaperSection) => {
   const { title, children } = props
   return (
-    <Paper sx={{ paddingY: 6 }}>
+    <Paper>
       {title && (
         <CustomTypography color="textSecondary" variant="h5" textAlign="left">
           {title}
         </CustomTypography>
       )}
       <Divider sx={{ marginY: 2 }} />
-      {children}
+      <BoxWrapperColumn>{children}</BoxWrapperColumn>
     </Paper>
   )
 }

@@ -317,8 +317,6 @@ export const reducerTreasuryVariationForThePeriodDetail = (
 ): { funds: number; value: string; shortedValue: string; key: number }[] => {
   const metric = obj['metric'].trim()
 
-  if (metric === 'farming price variation') console.log('obj', obj)
-
   const metricKey =
     metric === 'usd initial balance & UR'
       ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
