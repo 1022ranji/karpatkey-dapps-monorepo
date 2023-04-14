@@ -1,50 +1,49 @@
 import { TReportFilter, TReportProps } from '@karpatkey-monorepo/reports/src/types'
 import Breadcrumb from '@karpatkey-monorepo/reports/src/views/treasury/report/Breadcrumb'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
-import { Box, Divider, Grid } from '@mui/material'
-import { DateTime } from 'luxon'
 import dynamic from 'next/dynamic'
-import numbro from 'numbro'
 import * as React from 'react'
-
-const Loading = () => (
-  <CustomTypography
-    color="textSecondary"
-    variant="body1"
-    justifyContent="center"
-    textAlign="center"
-  >
-    Loading...
-  </CustomTypography>
-)
 
 const DynamicTitle = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Title')
 )
+
 const DynamicFilter = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Filter')
 )
+
 const DynamicOpen = dynamic(() => import('dapps/reports/src/views/treasury/report/Open'))
 
-const DynamicPieChart = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie'),
-  { loading: () => <Loading /> }
-)
 const DynamicPositions = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Positions'),
   { loading: () => <Loading /> }
 )
+
 const DynamicBalanceOverview = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/BalanceOverview'),
+  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/sections/BalanceOverview'),
   { loading: () => <Loading /> }
 )
-const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/components/InfoCard'), {
-  loading: () => <Loading />
-})
-const DynamicWaterfall = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/Waterfall'),
+
+const DynamicSummary = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/sections/Summary'),
+  { loading: () => <Loading /> }
+)
+
+const DynamicTreasuryVariation = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/views/treasury/report/sections/TreasuryVariation'),
+  {
+    loading: () => <Loading />
+  }
+)
+
+const DynamicFarmingFundsResults = dynamic(
+  () =>
+    import(
+      '@karpatkey-monorepo/reports/src/views/treasury/report/sections/Farming/FarmingFundsResults'
+    ),
   {
     loading: () => <Loading />
   }
@@ -68,138 +67,79 @@ const Page = (props: TReportProps) => {
     balanceOverviewBlockchain,
     rowsTreasuryVariation,
     rowsHistoricVariation,
-    rowsTreasuryVariationForThePeriodDetail
+    rowsTreasuryVariationForThePeriodDetail,
+    totalFarmingFunds,
+    rowsFarmingFundsByProtocol,
+    rowsFarmingFundsByProtocolTotals,
+    rowsFarmingResultsDetailsByProtocol,
+    rowsFarmingResultsDetailsByProtocolTotals
   } = props
+
   const paramProps = { periodType, daoName, period }
 
+  const treasuryVariationProps = {
+    rowsTreasuryVariation,
+    rowsHistoricVariation,
+    rowsTreasuryVariationForThePeriodDetail
+  }
+
+  const balanceOverviewProps = {
+    balanceOverviewType,
+    balanceOverviewBlockchain
+  }
+
+  const summaryProps = {
+    totalFunds,
+    capitalUtilization,
+    farmingResults,
+    fundsByTokenCategory,
+    fundsByType,
+    fundsByBlockchain,
+    fundsByProtocol
+  }
+
+  const farmingFundsResultsProps = {
+    totalFarmingFunds,
+    rowsFarmingFundsByProtocol,
+    rowsFarmingFundsByProtocolTotals,
+    rowsFarmingResultsDetailsByProtocol,
+    rowsFarmingResultsDetailsByProtocolTotals
+  }
+
   return (
-    <>
-      <BoxWrapperRow sx={{ marginTop: '101px', marginBottom: '101px' }}>
-        <DynamicTitle periodType={periodType} daoName={daoName} />
-      </BoxWrapperRow>
-      <Box
-        display={'flex'}
-        flexDirection={'row'}
-        alignItems={'center'}
+    <BoxWrapperColumn gap={10}>
+      <DynamicTitle periodType={periodType} daoName={daoName} />
+      <BoxWrapperRow
         justifyContent={'space-between'}
-        sx={{ paddingY: 4, justifyContent: { xs: 'flex-end', sm: 'space-between' } }}
+        sx={{ justifyContent: { xs: 'flex-end', sm: 'space-between' } }}
       >
         <Breadcrumb {...(paramProps as TReportFilter)} />
         <BoxWrapperRow gap={2}>
           <DynamicFilter {...(paramProps as TReportFilter)} />
           <DynamicOpen {...(paramProps as TReportFilter)} />
         </BoxWrapperRow>
-      </Box>
+      </BoxWrapperRow>
 
       <PaperSection title="Summary">
-        <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicInfoCard
-              title="Total funds"
-              value={numbro(totalFunds).formatCurrency({
-                spaceSeparated: true,
-                mantissa: 2
-              })}
-            />
-          </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicInfoCard
-              title="Capital utilization"
-              value={numbro(capitalUtilization).format({
-                output: 'percent',
-                spaceSeparated: true,
-                mantissa: 2
-              })}
-            />
-          </Grid>
-          <Grid item xs={4} sm={12} md={4}>
-            <DynamicInfoCard
-              title="Farming results"
-              value={numbro(farmingResults).formatCurrency({
-                spaceSeparated: true,
-                mantissa: 2
-              })}
-            />
-          </Grid>
-        </Grid>
-        <Divider sx={{ marginY: 2 }} />
-        <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          <Grid item xs={4} sm={4} md={6}>
-            <DynamicPieChart
-              data={fundsByTokenCategory}
-              title="Total funds by token category"
-              dataKey="funds"
-            />
-          </Grid>
-          <Grid item xs={4} sm={4} md={6}>
-            <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
-          </Grid>
-          <Grid item xs={4} sm={4} md={6}>
-            <DynamicPieChart
-              data={fundsByBlockchain}
-              title="Total funds by blockchain"
-              dataKey="funds"
-            />
-          </Grid>
-          <Grid item xs={4} sm={4} md={6}>
-            <DynamicPieChart
-              data={fundsByProtocol}
-              title="Farming funds by protocol"
-              dataKey="allocation"
-            />
-          </Grid>
-        </Grid>
+        <DynamicSummary {...summaryProps} />
       </PaperSection>
+
       <PaperSection title="Balance Overview">
-        <DynamicBalanceOverview
-          balanceOverviewType={balanceOverviewType}
-          balanceOverviewBlockchain={balanceOverviewBlockchain}
-        />
+        <DynamicBalanceOverview {...balanceOverviewProps} />
       </PaperSection>
+
       <PaperSection title="Treasury Variation">
-        <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          columns={{ xs: 4, sm: 4, md: 4 }}
-        >
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicWaterfall
-              title="Treasury variation for the period ($USD)"
-              data={rowsTreasuryVariation}
-            />
-          </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicWaterfall
-              title={'Treasury variation in ' + DateTime.now().toFormat('yyyy') + ' ($USD)'}
-              data={rowsHistoricVariation}
-            />
-          </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <DynamicWaterfall
-              title="Treasury variation for the period (detail) ($USD)"
-              data={rowsTreasuryVariationForThePeriodDetail}
-            />
-          </Grid>
-        </Grid>
+        <DynamicTreasuryVariation {...treasuryVariationProps} />
       </PaperSection>
+
       <PaperSection title="Farming Funds / Results">
-        <DynamicPositions data={summary} />
+        <DynamicFarmingFundsResults {...farmingFundsResultsProps} />
       </PaperSection>
+
       <PaperSection title="Token Detail">
         <DynamicPositions data={summary} />
       </PaperSection>
-    </>
+    </BoxWrapperColumn>
   )
 }
 

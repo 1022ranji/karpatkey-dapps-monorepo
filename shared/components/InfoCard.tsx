@@ -40,7 +40,7 @@ const InfoCard = ({ title, value }: IInfoCardProps) => {
         }}
       >
         <BoxWrapperRow gap={1} sx={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <Box display="flex" flexDirection="column" sx={{ padding: 4 }}>
+          <Box display="flex" flexDirection="column" sx={{ padding: 1 }}>
             <Title variant={'h6'}>{title}</Title>
             <Value>{value}</Value>
           </Box>

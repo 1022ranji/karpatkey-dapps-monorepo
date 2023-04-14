@@ -6,7 +6,7 @@ import * as React from 'react'
 const Title = ({ periodType, daoName }: TTitleProps) => {
   const daoTitle = daoName && existDAOKeyName(daoName) ? getNameByDAOName(daoName) : 'all the DAOs'
   return (
-    <CustomTypography variant="h1" textAlign="center">
+    <CustomTypography variant="h1" textAlign="center" sx={{ paddingTop: '40px' }}>
       A {periodType} in {daoTitle} farms
     </CustomTypography>
   )

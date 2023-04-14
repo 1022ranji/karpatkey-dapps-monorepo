@@ -73,13 +73,10 @@ const PieChart = ({ data, title, dataKey, ...props }: BoxProps & TPieChartProps)
       justifyContent="center"
       alignItems="center"
       {...props}
-      sx={{ marginY: '20px' }}
+      sx={{ paddingY: '20px' }}
+      gap={2}
     >
-      <CustomTypography
-        variant="h6"
-        color="textSecondary"
-        sx={{ height: '70px', textAlign: 'center' }}
-      >
+      <CustomTypography variant="h6" color="textSecondary" sx={{ textAlign: 'center' }}>
         {title}
       </CustomTypography>
       <PieRechart width={390} height={210}>

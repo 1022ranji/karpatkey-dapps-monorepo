@@ -6,6 +6,7 @@ import {
   mapBalancesByTokenCategory,
   mapperBalanceOverviewBlockchain,
   mapperBalanceOverviewType,
+  mapperFarmingFundsByProtocol,
   mapperFundsByBlockchain,
   mapperFundsByProtocol,
   mapperFundsByTokenCategory,
@@ -14,11 +15,13 @@ import {
   reducerBalanceOverviewType,
   reducerBalancesByTokenCategory,
   reducerCapitalUtilization,
+  reducerFarmingFundsByProtocol,
   reducerFarmingResults,
   reducerFundsByBlockchain,
   reducerFundsByProtocol,
   reducerFundsByTokenCategory,
   reducerFundsByType,
+  reducerTotalFarmingFunds,
   reducerTotalFunds,
   reducerTreasuryHistoricVariation,
   reducerTreasuryVariationForThePeriod,
@@ -71,7 +74,6 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     )
   })
 
-  //TODO: continue here
   const financialMetricsFiltered = financialMetrics.filter((row: any) => {
     return (
       row.date_type === dateTypePeriodType && row.dao === keyName && row.year_month === metricPeriod
@@ -208,13 +210,13 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     0
   )
 
-  rowsHistoricVariation[3] = {
+  rowsHistoricVariation.push({
     funds: rowsHistoricVariationTotal,
     value: 'Final Balance',
     key: 4,
     uv: rowsHistoricVariationTotal,
     pv: 0
-  }
+  })
 
   // For the period, detail
   const valuesForThePeriodDetail: any[] = []
@@ -269,6 +271,94 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     pv: 0
   })
 
+  // Farming Funds / Results
+  // Farming result block
+  const totalFarmingFunds = financialMetricsFiltered.reduce(reducerTotalFarmingFunds, 0)
+
+  // Farming funds / Results by protocol
+  const rowsFarmingFundsByProtocolReduced = financialPositionsFiltered.reduce(
+    reducerFarmingFundsByProtocol,
+    []
+  )
+
+  const rowsFarmingFundsByProtocolFlat = Object.values(rowsFarmingFundsByProtocolReduced).reduce(
+    (acc: any, curVal: any) => {
+      return acc.concat(Object.values(curVal))
+    },
+    []
+  )
+  const rowsFarmingFundsByProtocol = mapperFarmingFundsByProtocol(
+    rowsFarmingFundsByProtocolFlat as any[]
+  ).sort((a: any, b: any) => b.funds - a.funds)
+
+  const rowsFarmingFundsByProtocolTotals = rowsFarmingFundsByProtocol.reduce(
+    (
+      accumulator: { fundsTotal: number; unclaimedTotal: number; resultsTotal: number },
+      currentValue: { funds: number; unclaimed: number; results: number }
+    ) => {
+      return {
+        fundsTotal: accumulator.fundsTotal + currentValue.funds,
+        unclaimedTotal: accumulator.unclaimedTotal + currentValue.unclaimed,
+        resultsTotal: accumulator.resultsTotal + currentValue.results
+      }
+    },
+    { fundsTotal: 0, unclaimedTotal: 0, resultsTotal: 0 }
+  )
+
+  // Farming results details by protocol
+  const financialMetricsFilteredByMetric = financialMetricsFiltered
+    .filter((row: any) => {
+      return (
+        row.protocol !== 'Wallet' &&
+        (row.metric === 'farming rewards' || row.metric === 'farming token variation')
+      )
+    })
+    .reduce((acc: any, obj: any) => {
+      const protocol = obj['protocol'].trim()
+      const position = obj['lptoken_name'].trim()
+      const metric = obj['metric'].trim()
+
+      if (!acc[protocol]) acc[protocol] = {}
+      if (!acc[protocol][position])
+        acc[protocol][position] = {
+          rewards: 0,
+          fees: 0,
+          total: 0,
+          protocol,
+          position
+        }
+
+      acc[protocol][position].rewards += metric === 'farming rewards' ? obj['metric_value'] : 0
+      acc[protocol][position].fees += metric === 'farming token variation' ? obj['metric_value'] : 0
+      acc[protocol][position].total = acc[protocol][position].rewards + acc[protocol][position].fees
+
+      return acc
+    }, [])
+
+  const rowsFarmingResultsDetailsByProtocol = Object.keys(financialMetricsFilteredByMetric).reduce(
+    (result: any, protocol: string) => {
+      Object.keys(financialMetricsFilteredByMetric[protocol]).forEach((position: string) => {
+        result.push(financialMetricsFilteredByMetric[protocol][position])
+      })
+      return result
+    },
+    []
+  )
+
+  const rowsFarmingResultsDetailsByProtocolTotals = rowsFarmingResultsDetailsByProtocol.reduce(
+    (
+      accumulator: { rewardsTotal: number; feesTotal: number; total: number },
+      currentValue: { rewards: number; fees: number; total: number }
+    ) => {
+      return {
+        rewardsTotal: accumulator.rewardsTotal + currentValue.rewards,
+        feesTotal: accumulator.feesTotal + currentValue.fees,
+        total: accumulator.total + currentValue.total
+      }
+    },
+    { rewardsTotal: 0, feesTotal: 0, total: 0 }
+  )
+
   // Temp
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
 
@@ -285,6 +375,11 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     balanceOverviewBlockchain,
     rowsTreasuryVariation,
     rowsHistoricVariation,
-    rowsTreasuryVariationForThePeriodDetail
+    rowsTreasuryVariationForThePeriodDetail,
+    totalFarmingFunds,
+    rowsFarmingFundsByProtocol,
+    rowsFarmingFundsByProtocolTotals,
+    rowsFarmingResultsDetailsByProtocol,
+    rowsFarmingResultsDetailsByProtocolTotals
   }
 }
