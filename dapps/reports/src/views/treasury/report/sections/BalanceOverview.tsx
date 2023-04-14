@@ -16,23 +16,17 @@ import * as React from 'react'
 
 type TBalanceOverview = { balanceOverviewType: any; balanceOverviewBlockchain: any } & BoxProps
 
-const BalanceOverview: React.FC<TBalanceOverview> = ({
-  balanceOverviewType,
-  balanceOverviewBlockchain
-}: TBalanceOverview) => {
-  const dataFooterType: any = {
-    'Token Category': 'Total'
-  }
+const BalanceOverview: React.FC<TBalanceOverview> = (props: TBalanceOverview) => {
+  const { balanceOverviewType, balanceOverviewBlockchain } = props
 
-  const dataFooterBlockchain: any = {
-    'Token Category': 'Total'
-  }
+  const dataFooterType = {} as any
+  const dataFooterBlockchain = {} as any
 
   // TODO, we can improve this, we can make a component for this, so we don't repeat the code
   return (
-    <Box display="flex" flexDirection="column" justifyContent="center" gap={2}>
-      <Box display="flex" flexDirection="column" justifyContent="center" gap={2} mt={5}>
-        <CustomTypography variant="h6" align="center">
+    <Box display="flex" flexDirection="column" justifyContent="center" gap={4} marginTop={4}>
+      <Box display="flex" flexDirection="column" justifyContent="center" gap={4}>
+        <CustomTypography variant="h6" color="textSecondary" align="center">
           Funds by Token Category / Type
         </CustomTypography>
         <TableContainer component={Paper}>
@@ -92,7 +86,7 @@ const BalanceOverview: React.FC<TBalanceOverview> = ({
                 )
               })}
               <TableRow>
-                <TableCellTotal align="left">{dataFooterType['Token Category']}</TableCellTotal>
+                <TableCellTotal align="left">Total</TableCellTotal>
                 <TableCellTotal align="right">
                   {numbro(dataFooterType['Farming Funds']).formatCurrency({
                     spaceSeparated: true,
@@ -122,8 +116,8 @@ const BalanceOverview: React.FC<TBalanceOverview> = ({
           </Table>
         </TableContainer>
       </Box>
-      <Box display="flex" flexDirection="column" justifyContent="center" gap={2} mt={5}>
-        <CustomTypography variant="h6" align="center">
+      <Box display="flex" flexDirection="column" justifyContent="center" gap={4}>
+        <CustomTypography variant="h6" color="textSecondary" align="center">
           Funds by Token Category / Blockchain
         </CustomTypography>
         <TableContainer component={Paper}>
@@ -173,9 +167,7 @@ const BalanceOverview: React.FC<TBalanceOverview> = ({
                 )
               })}
               <TableRow>
-                <TableCellTotal align="left">
-                  {dataFooterBlockchain['Token Category']}
-                </TableCellTotal>
+                <TableCellTotal align="left">Total</TableCellTotal>
                 <TableCellTotal align="right">
                   {numbro(dataFooterBlockchain['Ethereum']).formatCurrency({
                     spaceSeparated: true,

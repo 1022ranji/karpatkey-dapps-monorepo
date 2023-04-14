@@ -18,11 +18,11 @@ interface IFarmingFunds {
   totals: any
 }
 
-const FarmingFunds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
+const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
   return (
-    <Box display="flex" flexDirection="column" justifyContent="center" gap={2}>
-      <CustomTypography variant="h6" align="center">
-        Farming Funds / Results by Protocol
+    <Box display="flex" flexDirection="column" justifyContent="center" gap={4}>
+      <CustomTypography variant="h6" color="textSecondary" align="center">
+        Farming funds / Results by protocol
       </CustomTypography>
       <TableContainer component={Paper}>
         <Table sx={{ width: '100%' }}>
@@ -108,11 +108,16 @@ const FarmingFunds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds)
           </TableBody>
         </Table>
       </TableContainer>
-      <CustomTypography variant="body2" align="left" sx={{ fontStyle: 'italic' }}>
+      <CustomTypography
+        variant="body2"
+        color="textSecondary"
+        align="right"
+        sx={{ fontStyle: 'italic' }}
+      >
         *Farming Results includes results from fees, rebasing, pool token variation and rewards
       </CustomTypography>
     </Box>
   )
 }
 
-export default FarmingFunds
+export default Funds
