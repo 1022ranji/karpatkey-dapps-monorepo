@@ -14,7 +14,7 @@ export const getStartTodayDate = () => {
   return DateTime.local().startOf('day').toMillis()
 }
 
-export const getHumanPeriodType = (periodType: PeriodType) => {
+export const getHumanPeriodType = (periodType: TPeriodType) => {
   switch (periodType) {
     case 'day':
       return 'Daily'
@@ -29,7 +29,7 @@ export const getHumanPeriodType = (periodType: PeriodType) => {
   }
 }
 
-export const getHumanPeriod = (period: string, periodType: PeriodType) => {
+export const getHumanPeriod = (period: string, periodType: TPeriodType) => {
   switch (periodType) {
     case 'day':
       return DateTime.fromISO(period).toFormat('yyyy-MM-dd')
@@ -46,7 +46,7 @@ export const getHumanPeriod = (period: string, periodType: PeriodType) => {
 
 export const getDAOsForDropdown = () => {
   return Object.values(DAOs)
-    .map((value: Network) => {
+    .map((value: INetwork) => {
       return value.DAOs.map((dao) => ({
         keyName: dao.keyName,
         name: dao.name,
@@ -56,8 +56,8 @@ export const getDAOsForDropdown = () => {
     .flat()
     .reduce(
       (
-        accumulator: { keyName: DAO_NAME; name: string; icon: string }[],
-        current: { keyName: DAO_NAME; name: string; icon: string }
+        accumulator: { keyName: TDAO_Name; name: string; icon: string }[],
+        current: { keyName: TDAO_Name; name: string; icon: string }
       ) => {
         if (!accumulator.find((item) => item.keyName === current.keyName)) {
           accumulator.push(current)
@@ -79,7 +79,7 @@ export const getNetworksForDropdown = () => {
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
-export const getNetworkByNetworkId = (networkId: NetworkId) => {
+export const getNetworkByNetworkId = (networkId: TNetworkId) => {
   return NETWORKS[networkId]
 }
 
@@ -90,25 +90,25 @@ export const getDAOByAddress = (address: string) => {
   return dao?.DAOs.find((dao) => dao.addresses.includes(address))
 }
 
-export const getDAOByDAOName = (daoName: DAO_NAME) => {
+export const getDAOByDAOName = (daoName: TDAO_Name) => {
   const dao = Object.values(DAOs).find((network) =>
     network.DAOs.find((dao) => dao.keyName === daoName)
   )
   return dao?.DAOs.find((dao) => dao.keyName === daoName)
 }
 
-export const getNetworkExplorerURLByDAOAddress = (daoName: DAO_NAME) => {
+export const getNetworkExplorerURLByDAOAddress = (daoName: TDAO_Name) => {
   const network = Object.entries(DAOs).find(([, value]) => {
     return value.DAOs.some((dao) => dao.keyName === daoName)
   })
   const dao = getDAOByDAOName(daoName)
 
   return network
-    ? `${NETWORKS[network[0] as unknown as NetworkId].explorerURL}${dao?.addresses[0]}`
+    ? `${NETWORKS[network[0] as unknown as TNetworkId].explorerURL}${dao?.addresses[0]}`
     : NONE
 }
 
-export const existDAOKeyName = (daoName: string) => {
+export const existDAOKeyName = (daoName: TDAO_Name) => {
   return Object.values(DAOs).some((network) => network.DAOs.some((dao) => dao.keyName === daoName))
 }
 
@@ -132,7 +132,7 @@ export const isDefaultAddress = (address: string) => {
   return address === ZERO_ADDRESS
 }
 
-export const getMetricByPeriodType = (periodType: PeriodType) => {
+export const getMetricByPeriodType = (periodType: TPeriodType) => {
   switch (periodType) {
     case 'day':
       return '_daily'
@@ -147,7 +147,7 @@ export const getMetricByPeriodType = (periodType: PeriodType) => {
   }
 }
 
-export const getDateTypeByPeriodType = (periodType: PeriodType) => {
+export const getDateTypeByPeriodType = (periodType: TPeriodType) => {
   switch (periodType) {
     case 'day':
       return 'day'
@@ -162,7 +162,7 @@ export const getDateTypeByPeriodType = (periodType: PeriodType) => {
   }
 }
 
-export const getMetricByPeriod = (period: string, periodType: PeriodType) => {
+export const getMetricByPeriod = (period: string, periodType: TPeriodType) => {
   switch (periodType) {
     case 'day':
       return DateTime.fromISO(period).toFormat('yyyy-MM-dd')
@@ -177,14 +177,14 @@ export const getMetricByPeriod = (period: string, periodType: PeriodType) => {
   }
 }
 
-export const getAddressByDAOName = (daoName: DAO_NAME) => {
+export const getAddressByDAOName = (daoName: TDAO_Name) => {
   const dao = Object.values(DAOs).find((network) =>
     network.DAOs.find((dao) => dao.keyName === daoName)
   )
   return dao?.DAOs.find((dao) => dao.keyName === daoName)?.addresses[0] || ZERO_ADDRESS
 }
 
-export const getNameByDAOName = (daoName: DAO_NAME) => {
+export const getNameByDAOName = (daoName: TDAO_Name) => {
   const dao = Object.values(DAOs).find((network) =>
     network.DAOs.find((dao) => dao.keyName === daoName)
   )

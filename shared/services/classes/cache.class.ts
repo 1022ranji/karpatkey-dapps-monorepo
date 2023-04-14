@@ -11,12 +11,16 @@ export default class Cache {
     return Cache.instance
   }
 
-  getReport(reportName: Report) {
+  getReport(reportName: TReport) {
     const data = fs.readFileSync(`../../shared/cache/${reportName}.json`, 'utf8')
     return JSON.parse(data)
   }
 
-  write(reportName: Report, data: any) {
-    fs.writeFileSync(`../shared/cache/${reportName}.json`, JSON.stringify(data), 'utf8')
+  writeConsole(reportName: TReport, data: any) {
+    fs.writeFileSync(`./cache/${reportName}.json`, JSON.stringify(data), 'utf8')
+  }
+
+  writeApi(reportName: TReport, data: any) {
+    fs.writeFileSync(`../../shared/cache/${reportName}.json`, JSON.stringify(data), 'utf8')
   }
 }

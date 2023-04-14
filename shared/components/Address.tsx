@@ -7,7 +7,7 @@ import * as React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 type TAddressProps = {
-  daoName: DAO_NAME
+  daoName: TDAO_Name
 }
 
 const Address = (props: TAddressProps) => {

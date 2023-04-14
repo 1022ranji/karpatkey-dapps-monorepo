@@ -7,5 +7,5 @@ const BoxWrapper = styled('div')(() => ({
   minHeight: 'calc(100vh - 160px)'
 }))
 
-const Content: FC<ComponentProps> = ({ children }) => <BoxWrapper>{children}</BoxWrapper>
+const Content: FC<TComponentProps> = ({ children }) => <BoxWrapper>{children}</BoxWrapper>
 export default Content

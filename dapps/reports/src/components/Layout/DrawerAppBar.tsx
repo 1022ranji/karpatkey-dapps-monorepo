@@ -110,7 +110,7 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
     setMobileOpen((prevState) => !prevState)
   }
 
-  const [anchorEl] = React.useState<Maybe<HTMLElement>>(null)
+  const [anchorEl] = React.useState<TMaybe<HTMLElement>>(null)
   const open = Boolean(anchorEl)
 
   const drawer = (
@@ -207,10 +207,10 @@ const DrawerAppBar: FC = (props: IDrawerAppBarProps): ReactElement => {
                       </LinkCustom>
                     )
                   })}
-                  {daoName && existDAOKeyName(daoName as DAO_NAME) && (
+                  {daoName && existDAOKeyName(daoName as TDAO_Name) && (
                     <>
                       <Divider orientation="vertical" flexItem sx={{ marginRight: '52px' }} />
-                      <MenuAddress daoName={daoName as DAO_NAME} />
+                      <MenuAddress daoName={daoName as TDAO_Name} />
                     </>
                   )}
                 </BoxWrapperRow>

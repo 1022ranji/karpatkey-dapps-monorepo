@@ -1,4 +1,3 @@
-import { withApiAuthRequired } from '@auth0/nextjs-auth0'
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
 import { DataWarehouse } from '@karpatkey-monorepo/shared/services/classes/dataWarehouse.class'
@@ -12,10 +11,7 @@ type Status = {
   }
 }
 
-export default withApiAuthRequired(function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Status>
-) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
   return new Promise<void>(async (resolve, reject) => {
     try {
       const cache = Cache.getInstance()
@@ -24,10 +20,8 @@ export default withApiAuthRequired(function handler(
 
       // Step 2: Query the data
       const cachePromises = ALLOWED_REPORTS.map(async (report) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const reportData = await dataWarehouse[report.reportName]()
-        cache.writeApi(report.reportName, reportData)
+        const reportData = await dataWarehouse[report.reportName as TReport]()
+        cache.writeApi(report.reportName as TReport, reportData)
       })
       await Promise.all(cachePromises)
 
@@ -40,4 +34,4 @@ export default withApiAuthRequired(function handler(
       reject()
     }
   })
-})
+}

@@ -37,19 +37,19 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
 
   // Step 2: Query the data
   const variationMetricsDetail = await cache.getReport(
-    'getTreasuryVariationMetricsDetail' as Report
+    'getTreasuryVariationMetricsDetail' as TReport
   )
-  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as Report)
-  const financialPositions = await cache.getReport('getTreasuryFinancialPositions' as Report)
-  const historicVariation = await cache.getReport('getTreasuryHistoricVariation' as Report)
+  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as TReport)
+  const financialPositions = await cache.getReport('getTreasuryFinancialPositions' as TReport)
+  const historicVariation = await cache.getReport('getTreasuryHistoricVariation' as TReport)
 
-  // Step 3: Filter data by common params, like daoName, periodType and period
+  // Step 3: Get filter data like daoName, periodType and period
   const { keyName } = getDAOByDAOName(daoName) || {}
   const metricPeriodType = getMetricByPeriodType(periodType)
   const dateTypePeriodType = getDateTypeByPeriodType(periodType)
-  const metricPeriod = '2023_12' //getMetricByPeriod(period, periodType)
+  const metricPeriod = '2023_3' //getMetricByPeriod(period, periodType)
 
-  // Filter data by common params, like daoName, periodType and period
+  // Step 4: Apply filters to the data by common params, like daoName, periodType and period
   const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) => {
     return (
       row.metric.includes(metricPeriodType) &&
@@ -80,10 +80,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     )
   })
 
-  const variationMetricsDetailFilteredReduced = variationMetricsDetailFiltered.reduce(
-    reducerBalancesByTokenCategory,
-    []
-  )
+  // #####################################################
 
   // #### Summary blocks ####
 
@@ -162,6 +159,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
       )
     })
     .reduce(reducerTreasuryVariationForThePeriod, [])
+    .filter((elm: any) => elm)
     .sort((a: any, b: any) => a.key - b.key)
     .map((row: any, index: number) => {
       valuesForThePeriod[index] = {
@@ -189,6 +187,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
       )
     })
     .reduce(reducerTreasuryHistoricVariation, [])
+    .filter((elm: any) => elm)
     .sort((a: any, b: any) => a.key - b.key)
     .map((row: any, index: number) => {
       valuesForThisYear[index] = {
@@ -360,6 +359,10 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
   )
 
   // Temp
+  const variationMetricsDetailFilteredReduced = variationMetricsDetailFiltered.reduce(
+    reducerBalancesByTokenCategory,
+    []
+  )
   const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
 
   return {
