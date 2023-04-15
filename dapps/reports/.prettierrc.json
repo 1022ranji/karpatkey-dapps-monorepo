@@ -7,8 +7,8 @@
   "semi": false,
   "singleQuote": true,
   "useTabs": false,
-  "organizeImportsSkipDestructiveCodeActions": false,
+  "organizeImportsSkipDestructiveCodeActions": true,
   "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
-  "importOrderSeparation": false,
-  "importOrderSortSpecifiers": false
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

@@ -67,7 +67,7 @@
       "tsc-files --noEmit"
     ],
     "src/**/*.{js,ts,tsx,css,md,json}": [
-      "prettier --config ./.prettierrc --write"
+      "prettier --config ./.prettierrc --ignore-path ./.prettierignore --write"
     ]
   }
 }
