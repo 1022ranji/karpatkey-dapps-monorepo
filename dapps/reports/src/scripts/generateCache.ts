@@ -1,5 +1,6 @@
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import { Command } from 'commander'
+
 import * as dotenv from 'dotenv'
 
 import Cache from '../services/classes/cache.class'
