@@ -6,5 +6,9 @@
   "tabWidth": 2,
   "semi": false,
   "singleQuote": true,
-  "useTabs": false
+  "useTabs": false,
+  "organizeImportsSkipDestructiveCodeActions": false,
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": false
 }
