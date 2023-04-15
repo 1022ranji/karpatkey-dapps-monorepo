@@ -1,4 +1,6 @@
-import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
+// prettier-ignore
+// eslint-ignore-next-line
+import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants';
 import { Command } from 'commander'
 
 import Cache from '../services/classes/cache.class'
