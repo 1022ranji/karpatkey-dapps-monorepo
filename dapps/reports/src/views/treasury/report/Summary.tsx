@@ -39,20 +39,20 @@ const Summary: React.FC<TSummary> = ({ data }: TSummary) => {
                 </TableCell>
                 <TableCell align="right" title={row.price + ''}>
                   {numbro(row.price).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCell>
                 <TableCell align="right" title={row.funds + ''}>
                   {numbro(row.funds).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCell>
                 <TableCell align="right" title={row.allocation + ''}>
                   {numbro(row.allocation / 100).format({
                     output: 'percent',
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCell>
@@ -69,7 +69,7 @@ const Summary: React.FC<TSummary> = ({ data }: TSummary) => {
           {numbro(
             data.reduce((acc: number, curr: TMapBalancesByTokenCategory) => acc + curr.funds, 0)
           ).formatCurrency({
-            spaceSeparated: true,
+            spaceSeparated: false,
             mantissa: 2
           })}
         </CustomTypography>

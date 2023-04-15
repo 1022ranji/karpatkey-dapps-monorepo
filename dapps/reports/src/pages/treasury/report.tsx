@@ -1,13 +1,14 @@
 import { TReportFilter, TReportProps } from '@karpatkey-monorepo/reports/src/types'
 import { filterSchemaValidation } from '@karpatkey-monorepo/reports/src/validations'
 import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
-import { DAO_NAME_DEFAULT, PERIOD_TYPE_DEFAULT } from '@karpatkey-monorepo/shared/config/constants'
 import { existDAOKeyName } from '@karpatkey-monorepo/shared/utils'
-import { getCommonServerSideProps } from '@karpatkey-monorepo/shared/utils/serverSide'
 import { DateTime } from 'luxon'
 import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import * as React from 'react'
+
+import { DAO_NAME_DEFAULT, PERIOD_TYPE_DEFAULT } from '../../config/constants'
+import { getCommonServerSideProps } from '../../utils/serverSide'
 
 const DynamicReport = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Page')

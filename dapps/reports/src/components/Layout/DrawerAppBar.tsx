@@ -1,7 +1,6 @@
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import Logo from '@karpatkey-monorepo/shared/components/Logo'
 import MenuAddress from '@karpatkey-monorepo/shared/components/MenuAddress'
-import { DAO_NAME_DEFAULT } from '@karpatkey-monorepo/shared/config/constants'
 import { existDAOKeyName } from '@karpatkey-monorepo/shared/utils'
 import MenuIcon from '@mui/icons-material/Menu'
 import {
@@ -24,6 +23,8 @@ import { Theme, css, styled } from '@mui/material/styles'
 import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FC, ReactElement } from 'react'
+
+import { DAO_NAME_DEFAULT } from '../../config/constants'
 
 const CommonCSS = (theme: Theme) => css`
   text-decoration: none;

@@ -60,25 +60,25 @@ const BalanceOverview: React.FC<TBalanceOverview> = (props: TBalanceOverview) =>
                     </TableCell>
                     <TableCell align="right">
                       {numbro(row['Farming Funds'] || 0).formatCurrency({
-                        spaceSeparated: true,
+                        spaceSeparated: false,
                         mantissa: 2
                       })}
                     </TableCell>
                     <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                       {numbro(row['Unclaimed Rewards'] || 0).formatCurrency({
-                        spaceSeparated: true,
+                        spaceSeparated: false,
                         mantissa: 2
                       })}
                     </TableCell>
                     <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                       {numbro(row['Wallet'] || 0).formatCurrency({
-                        spaceSeparated: true,
+                        spaceSeparated: false,
                         mantissa: 2
                       })}
                     </TableCell>
                     <TableCell align="right">
                       {numbro(row['Total'] || 0).formatCurrency({
-                        spaceSeparated: true,
+                        spaceSeparated: false,
                         mantissa: 2
                       })}
                     </TableCell>
@@ -89,25 +89,25 @@ const BalanceOverview: React.FC<TBalanceOverview> = (props: TBalanceOverview) =>
                 <TableCellTotal align="left">Total</TableCellTotal>
                 <TableCellTotal align="right">
                   {numbro(dataFooterType['Farming Funds']).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCellTotal>
                 <TableCellTotal align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                   {numbro(dataFooterType['Unclaimed Rewards'] || 0).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCellTotal>
                 <TableCellTotal align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                   {numbro(dataFooterType['Wallet'] || 0).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCellTotal>
                 <TableCellTotal align="right">
                   {numbro(dataFooterType['Total'] || 0).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCellTotal>
@@ -147,19 +147,19 @@ const BalanceOverview: React.FC<TBalanceOverview> = (props: TBalanceOverview) =>
                     </TableCell>
                     <TableCell align="right">
                       {numbro(row['Ethereum'] || 0).formatCurrency({
-                        spaceSeparated: true,
+                        spaceSeparated: false,
                         mantissa: 2
                       })}
                     </TableCell>
                     <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                       {numbro(row['Gnosis'] || 0).formatCurrency({
-                        spaceSeparated: true,
+                        spaceSeparated: false,
                         mantissa: 2
                       })}
                     </TableCell>
                     <TableCell align="right">
                       {numbro(row['Total'] || 0).formatCurrency({
-                        spaceSeparated: true,
+                        spaceSeparated: false,
                         mantissa: 2
                       })}
                     </TableCell>
@@ -170,19 +170,19 @@ const BalanceOverview: React.FC<TBalanceOverview> = (props: TBalanceOverview) =>
                 <TableCellTotal align="left">Total</TableCellTotal>
                 <TableCellTotal align="right">
                   {numbro(dataFooterBlockchain['Ethereum'] || 0).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCellTotal>
                 <TableCellTotal align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                   {numbro(dataFooterBlockchain['Gnosis'] || 0).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCellTotal>
                 <TableCellTotal align="right">
                   {numbro(dataFooterBlockchain['Total'] || 0).formatCurrency({
-                    spaceSeparated: true,
+                    spaceSeparated: false,
                     mantissa: 2
                   })}
                 </TableCellTotal>

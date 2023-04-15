@@ -1,7 +1,7 @@
+import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import { Command } from 'commander'
 import * as dotenv from 'dotenv'
 
-import { ALLOWED_REPORTS } from '../config/constants'
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
 

@@ -53,19 +53,19 @@ const Results: React.FC<IFarmingResultsDetailByProtocol> = (
                   </TableCell>
                   <TableCell align="right">
                     {numbro(row['rewards']).formatCurrency({
-                      spaceSeparated: true,
+                      spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
                   <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                     {numbro(row['fees']).formatCurrency({
-                      spaceSeparated: true,
+                      spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
                   <TableCell align="right">
                     {numbro(row['total']).formatCurrency({
-                      spaceSeparated: true,
+                      spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
@@ -77,19 +77,19 @@ const Results: React.FC<IFarmingResultsDetailByProtocol> = (
               <TableCellTotal align="left">Total</TableCellTotal>
               <TableCellTotal align="right">
                 {numbro(totalDetails?.rewardsTotal || 0).formatCurrency({
-                  spaceSeparated: true,
+                  spaceSeparated: false,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
                 {numbro(totalDetails?.feesTotal || 0).formatCurrency({
-                  spaceSeparated: true,
+                  spaceSeparated: false,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
                 {numbro(totalDetails?.total || 0).formatCurrency({
-                  spaceSeparated: true,
+                  spaceSeparated: false,
                   mantissa: 2
                 })}
               </TableCellTotal>

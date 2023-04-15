@@ -50,26 +50,26 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
                   </TableCell>
                   <TableCell align="right">
                     {numbro(row['funds']).formatCurrency({
-                      spaceSeparated: true,
+                      spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
                   <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                     {numbro(row['allocation'] / 100).format({
                       output: 'percent',
-                      spaceSeparated: true,
+                      spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
                   <TableCell align="right">
                     {numbro(row['unclaimed']).formatCurrency({
-                      spaceSeparated: true,
+                      spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
                   <TableCell align="right">
                     {numbro(row['results']).formatCurrency({
-                      spaceSeparated: true,
+                      spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
@@ -81,26 +81,26 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
               <TableCellTotal align="left">Total</TableCellTotal>
               <TableCellTotal align="right">
                 {numbro(totals?.fundsTotal || 0).formatCurrency({
-                  spaceSeparated: true,
+                  spaceSeparated: false,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                 {numbro(totals?.fundsTotal ? 1 : 0).format({
                   output: 'percent',
-                  spaceSeparated: true,
+                  spaceSeparated: false,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
                 {numbro(totals?.unclaimedTotal || 0).formatCurrency({
-                  spaceSeparated: true,
+                  spaceSeparated: false,
                   mantissa: 2
                 })}
               </TableCellTotal>
               <TableCellTotal align="right">
                 {numbro(totals?.resultsTotal || 0).formatCurrency({
-                  spaceSeparated: true,
+                  spaceSeparated: false,
                   mantissa: 2
                 })}
               </TableCellTotal>

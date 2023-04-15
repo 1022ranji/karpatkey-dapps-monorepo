@@ -1,7 +1,10 @@
+import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
 import { TReportFilter } from '@karpatkey-monorepo/reports/src/types'
-import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
-
-import { getDAOByDAOName, getDateTypeByPeriodType, getMetricByPeriodType } from './index'
+import {
+  getDAOByDAOName,
+  getDateTypeByPeriodType,
+  getMetricByPeriodType
+} from '@karpatkey-monorepo/shared/utils/'
 import {
   mapBalancesByTokenCategory,
   mapperBalanceOverviewBlockchain,
@@ -26,7 +29,7 @@ import {
   reducerTreasuryHistoricVariation,
   reducerTreasuryVariationForThePeriod,
   reducerTreasuryVariationForThePeriodDetail
-} from './mappers'
+} from '@karpatkey-monorepo/shared/utils//mappers'
 
 // TODO try to reduce the size of this function in some way
 export const getCommonServerSideProps = async (params: TReportFilter) => {
