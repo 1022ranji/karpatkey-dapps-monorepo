@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
+// prettier-ignore
+import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants';
 import { Command } from 'commander'
 
 import Cache from '../services/classes/cache.class'
