@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import A from '@karpatkey-monorepo/reports/src/scripts/loadEnv'
+
+/* eslint-enable @typescript-eslint/no-unused-vars */
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import { Command } from 'commander'
 
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import A from './loadEnv'
 
 const program = new Command()
 
