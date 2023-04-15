@@ -1,11 +1,11 @@
-// prettier-ignore
-// eslint-ignore-next-line
-import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants';
+import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import { Command } from 'commander'
 
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
-import './loadEnv'
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import A from './loadEnv'
 
 const program = new Command()
 
