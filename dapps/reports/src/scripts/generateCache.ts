@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv'
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
 
-// see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+/* eslint-disable */
 dotenv.config()
 
 const program = new Command()
