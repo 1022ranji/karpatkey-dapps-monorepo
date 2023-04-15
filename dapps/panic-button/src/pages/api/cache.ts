@@ -1,7 +1,7 @@
 import { withApiAuthRequired } from '@auth0/nextjs-auth0'
+import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
+import { DataWarehouse } from '@karpatkey-monorepo/reports/src/services/classes/dataWarehouse.class'
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
-import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
-import { DataWarehouse } from '@karpatkey-monorepo/shared/services/classes/dataWarehouse.class'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Status = {

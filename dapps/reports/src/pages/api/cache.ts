@@ -1,7 +1,8 @@
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
-import Cache from '@karpatkey-monorepo/shared/services/classes/cache.class'
-import { DataWarehouse } from '@karpatkey-monorepo/shared/services/classes/dataWarehouse.class'
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+import Cache from '../../services/classes/cache.class'
+import { DataWarehouse } from '../../services/classes/dataWarehouse.class'
 
 type Status = {
   data: {

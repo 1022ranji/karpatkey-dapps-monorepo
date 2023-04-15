@@ -20,7 +20,7 @@
     "update": "yarn update:reports && yarn update:panic-button && yarn update:shared && yarn update:tools",
     "lint:staged": "yarn workspaces run lint:staged",
     "lint": "yarn workspaces run lint",
-    "generate:cache": "cd shared && yarn generate:cache",
+    "generate:cache": "cd dapps/reports && yarn generate:cache",
     "prepare": "husky install",
     "commit": "git-cz",
     "clean": "rm -rf node_modules && rm -rf dapps/panic-button/node_modules && rm -rf dapps/reports/node_modules && rm -rf shared/node_modules && rm -rf tools/node_modules",

@@ -46,7 +46,7 @@ const Summary = (props: ISummary) => {
           <DynamicInfoCard
             title="Total funds"
             value={numbro(totalFunds).formatCurrency({
-              spaceSeparated: true,
+              spaceSeparated: false,
               mantissa: 2
             })}
           />
@@ -56,7 +56,7 @@ const Summary = (props: ISummary) => {
             title="Capital utilization"
             value={numbro(capitalUtilization).format({
               output: 'percent',
-              spaceSeparated: true,
+              spaceSeparated: false,
               mantissa: 2
             })}
           />
@@ -65,7 +65,7 @@ const Summary = (props: ISummary) => {
           <DynamicInfoCard
             title="Farming results"
             value={numbro(farmingResults).formatCurrency({
-              spaceSeparated: true,
+              spaceSeparated: false,
               mantissa: 2
             })}
           />

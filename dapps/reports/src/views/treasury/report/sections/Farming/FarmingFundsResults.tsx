@@ -60,7 +60,7 @@ const FarmingFundsResults = (props: IFarmingFundsResults) => {
         <DynamicInfoCard
           title="Farming Results"
           value={numbro(totalFarmingFunds).formatCurrency({
-            spaceSeparated: true,
+            spaceSeparated: false,
             mantissa: 2
           })}
         />
@@ -72,7 +72,7 @@ const FarmingFundsResults = (props: IFarmingFundsResults) => {
         <DynamicInfoCard
           title="Farming Results from Farm-Swaps"
           value={numbro(0).formatCurrency({
-            spaceSeparated: true,
+            spaceSeparated: false,
             mantissa: 2
           })}
         />
