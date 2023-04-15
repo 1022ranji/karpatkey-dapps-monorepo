@@ -8,7 +8,7 @@
   "singleQuote": true,
   "useTabs": false,
   "organizeImportsSkipDestructiveCodeActions": true,
-  "importOrder": ["^dotenv(.*)$", "^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }

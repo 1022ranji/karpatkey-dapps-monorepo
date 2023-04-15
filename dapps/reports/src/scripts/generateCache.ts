@@ -1,12 +1,9 @@
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import { Command } from 'commander'
 
-import * as dotenv from 'dotenv'
-
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
-
-dotenv.config()
+import './loadEnv'
 
 const program = new Command()
 
