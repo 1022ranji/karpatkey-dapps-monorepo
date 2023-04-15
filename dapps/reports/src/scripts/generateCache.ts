@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv'
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
 
-/* eslint-disable */
+// prettier-ignore
 dotenv.config()
 
 const program = new Command()
