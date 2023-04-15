@@ -1,10 +1,8 @@
-// prettier-ignore
-import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants';
-import { Command } from 'commander'
-
 import Cache from '../services/classes/cache.class'
 import { DataWarehouse } from '../services/classes/dataWarehouse.class'
 import './loadEnv'
+import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
+import { Command } from 'commander'
 
 const program = new Command()
 
