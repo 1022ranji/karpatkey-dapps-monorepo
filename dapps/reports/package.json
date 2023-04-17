@@ -31,7 +31,7 @@
     "@mui/x-date-pickers": "^6.2.0",
     "@types/react-copy-to-clipboard": "^5.0.4",
     "dotenv": "^16.0.3",
-    "commander": "^10.0.0",
+    "commander": "^10.0.1",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "luxon": "^3.3.0",
