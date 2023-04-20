@@ -1,6 +1,7 @@
 export const getFarmingFundsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    acc = acc + (obj['metric'] === 'total farming') ? obj['metric_value'] : 0
+    const value = obj['metric'] === 'total farming' ? obj['metric_value'] : 0
+    acc += value
     return acc
   }, 0)
 }
