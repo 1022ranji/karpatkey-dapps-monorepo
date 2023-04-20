@@ -10,15 +10,16 @@ export const getTreasuryVariationForThePeriod = (data: any) => {
       )
     })
     .reduce((acc: any, obj: any): { funds: number; value: string; key: number }[] => {
+      const metricCode = obj['metric_code'].trim()
       const metric = obj['metric'].trim()
       const metricKey =
-        metric === 'usd initial balance & UR'
+        metricCode === 'm07'
           ? { value: 'Initial Balance', key: 1 }
-          : metric === 'non farming ops'
+          : metricCode === 'm10'
           ? { value: 'NonFarming Results', key: 2 }
-          : metric === 'total farming'
+          : metricCode === 'm09'
           ? { value: 'Farming Results', key: 3 }
-          : metric === 'usd final balance'
+          : metricCode === 'm06' // TODO should be m08 ? URI
           ? { value: 'Final Balance', key: 4 }
           : { value: metric, key: 5 }
 
@@ -175,20 +176,18 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
     .filter((elm: any) => elm)
     .sort((a: any, b: any) => a.key - b.key)
     .map((row: any, index: number) => {
+      const pvValue =
+        index === 0
+          ? 0
+          : valuesForThePeriodDetail[index - 1].pv + valuesForThePeriodDetail[index - 1].uv
       valuesForThePeriodDetail[index] = {
         uv: row.funds,
-        pv:
-          index === 0
-            ? 0
-            : valuesForThePeriodDetail[index - 1].pv + valuesForThePeriodDetail[index - 1].uv
+        pv: pvValue
       }
       return {
         ...row,
         uv: row.funds,
-        pv:
-          index === 0
-            ? 0
-            : valuesForThePeriodDetail[index - 1].pv + valuesForThePeriodDetail[index - 1].uv
+        pv: pvValue
       }
     })
 

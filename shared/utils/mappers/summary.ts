@@ -157,14 +157,16 @@ export const getTotalFunds = (data: any) => {
 
 export const getCapitalUtilization = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    acc = acc + (obj['metric'] && obj['metric'] === 'capital utilization' ? obj['metric_value'] : 0)
+    const value = obj['metric'] === 'capital utilization' ? obj['metric_value'] : 0
+    acc = acc + value
     return acc
   }, 0)
 }
 
 export const getFarmingResults = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    acc = acc + (obj['metric_code'] && obj['metric_code'] === 'm09' ? obj['metric_value'] : 0)
+    const value = obj['metric_code'] === 'm09' ? obj['metric_value'] : 0 // TODO the value is not OK, URI
+    acc = acc + value
     return acc
   }, 0)
 }
