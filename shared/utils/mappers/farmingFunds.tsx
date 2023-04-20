@@ -9,30 +9,39 @@ export const getFarmingFundsTotal = (data: any) => {
 
 export const getFarmingFundsByProtocol = (data: any) => {
   const rows = data.reduce((acc: any, obj: any) => {
+    console.log(obj)
+    const blockchain = obj['blockchain'].trim()
     const protocol = obj['protocol'].trim()
     const position = obj['Assets'].trim()
-    if (!acc[protocol]) acc[protocol] = {}
-    if (!acc[protocol][position])
-      acc[protocol][position] = {
+    if (!acc[blockchain]) acc[blockchain] = {}
+    if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
+    if (!acc[blockchain][protocol][position])
+      acc[blockchain][protocol][position] = {
         funds: 0,
         allocation: 0,
         unclaimed: 0,
         results: 0,
+        blockchain,
         protocol,
         position
       }
 
     // 'total farming'
-    acc[protocol][position].funds += obj['Funds']
-    acc[protocol][position].unclaimed += obj['Unclaimed_Rewards']
-    acc[protocol][position].results += obj['Revenue']
+    acc[blockchain][protocol][position].funds += obj['Funds']
+    acc[blockchain][protocol][position].unclaimed += obj['Unclaimed_Rewards']
+    acc[blockchain][protocol][position].results += obj['Revenue']
 
     return acc
   }, [])
 
-  const rowsFlat: any = Object.values(rows).reduce((acc: any, curVal: any) => {
-    return acc.concat(Object.values(curVal))
-  }, [])
+  const rowsFlat: any = []
+  for (const blockchain in rows) {
+    for (const protocol in rows[blockchain]) {
+      for (const position in rows[blockchain][protocol]) {
+        rowsFlat.push(rows[blockchain][protocol][position])
+      }
+    }
+  }
 
   const total = rowsFlat.reduce(
     (accumulator: number, currentValue: any) => accumulator + currentValue.funds,
