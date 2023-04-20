@@ -1,5 +1,6 @@
 export const getFarmingFundsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
+    // TODO: this value is different in the datawarehouse report, check it URI
     const value = obj['metric'] === 'total farming' ? obj['metric_value'] : 0
     acc += value
     return acc
