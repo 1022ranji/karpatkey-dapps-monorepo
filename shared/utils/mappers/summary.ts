@@ -145,10 +145,14 @@ export const getSummaryFundsByProtocol = (data: any) => {
 }
 
 export const getTotalFunds = (data: any) => {
-  return data.reduce((acc: any, obj: any): number => {
-    acc = acc + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
-    return acc
-  }, 0)
+  return data
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce((acc: any, obj: any): number => {
+      acc = acc + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+      return acc
+    }, 0)
 }
 
 export const getCapitalUtilization = (data: any) => {
@@ -160,7 +164,7 @@ export const getCapitalUtilization = (data: any) => {
 
 export const getFarmingResults = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    acc = acc + (obj['metric'] && obj['metric'] === 'total farming' ? obj['metric_value'] : 0)
+    acc = acc + (obj['metric_code'] && obj['metric_code'] === 'm09' ? obj['metric_value'] : 0)
     return acc
   }, 0)
 }
