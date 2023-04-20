@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import '@karpatkey-monorepo/reports/src/scripts/loadEnv'
+import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
+import { DataWarehouse } from '@karpatkey-monorepo/reports/src/services/classes/dataWarehouse.class'
 
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import { Command } from 'commander'
-
-import Cache from '../services/classes/cache.class'
-import { DataWarehouse } from '../services/classes/dataWarehouse.class'
 
 const program = new Command()
 

@@ -1,6 +1,5 @@
 import { BigQuery } from '@google-cloud/bigquery'
-
-import { GOOGLE_CREDS, GOOGLE_PROJECT_ID } from '../../config/constants'
+import { GOOGLE_CREDS, GOOGLE_PROJECT_ID } from '@karpatkey-monorepo/reports/src/config/constants'
 
 export class DataWarehouse {
   private static instance: DataWarehouse
