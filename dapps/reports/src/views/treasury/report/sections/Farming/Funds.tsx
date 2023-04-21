@@ -28,13 +28,18 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableCell align="left">Protocol</TableCell>
+              <TableCell align="left">Blockchain</TableCell>
+              <TableCell align="right">Protocol</TableCell>
               <TableCell align="right">Position</TableCell>
               <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                 Farming Funds
               </TableCell>
-              <TableCell align="right">Allocation</TableCell>
-              <TableCell align="right">Unclaimed Rewards</TableCell>
+              <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                Allocation
+              </TableCell>
+              <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                Unclaimed Rewards
+              </TableCell>
               <TableCell align="right">Farming Results *</TableCell>
             </TableRow>
           </TableHead>
@@ -43,32 +48,35 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
               return (
                 <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row">
-                    {row['protocol']}
+                    {row.blockchain}
                   </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row['position']}
+                  <TableCell align="right" component="th" scope="row">
+                    {row.protocol}
                   </TableCell>
-                  <TableCell align="right">
-                    {numbro(row['funds']).formatCurrency({
+                  <TableCell align="right" component="th" scope="row">
+                    {row.position}
+                  </TableCell>
+                  <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                    {numbro(row.funds).formatCurrency({
                       spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
                   <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                    {numbro(row['allocation'] / 100).format({
+                    {numbro(row.allocation / 100).format({
                       output: 'percent',
                       spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
-                  <TableCell align="right">
-                    {numbro(row['unclaimed']).formatCurrency({
+                  <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                    {numbro(row.unclaimed).formatCurrency({
                       spaceSeparated: false,
                       mantissa: 2
                     })}
                   </TableCell>
                   <TableCell align="right">
-                    {numbro(row['results']).formatCurrency({
+                    {numbro(row.results).formatCurrency({
                       spaceSeparated: false,
                       mantissa: 2
                     })}
@@ -78,8 +86,9 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
             })}
             <TableRow>
               <TableCellTotal align="left"> </TableCellTotal>
+              <TableCellTotal align="left"> </TableCellTotal>
               <TableCellTotal align="left">Total</TableCellTotal>
-              <TableCellTotal align="right">
+              <TableCellTotal align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                 {numbro(totals?.fundsTotal || 0).formatCurrency({
                   spaceSeparated: false,
                   mantissa: 2
@@ -92,7 +101,7 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
                   mantissa: 2
                 })}
               </TableCellTotal>
-              <TableCellTotal align="right">
+              <TableCellTotal align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                 {numbro(totals?.unclaimedTotal || 0).formatCurrency({
                   spaceSeparated: false,
                   mantissa: 2
@@ -111,7 +120,7 @@ const Funds: React.FC<IFarmingFunds> = ({ funds, totals }: IFarmingFunds) => {
       <CustomTypography
         variant="body2"
         color="textSecondary"
-        align="right"
+        align="left"
         sx={{ fontStyle: 'italic' }}
       >
         *Farming Results includes results from fees, rebasing, pool token variation and rewards

@@ -1,4 +1,9 @@
+import {
+  DAO_NAME_DEFAULT,
+  PERIOD_TYPE_DEFAULT
+} from '@karpatkey-monorepo/reports/src/config/constants'
 import { TReportFilter, TReportProps } from '@karpatkey-monorepo/reports/src/types'
+import { getCommonServerSideProps } from '@karpatkey-monorepo/reports/src/utils/serverSide'
 import { filterSchemaValidation } from '@karpatkey-monorepo/reports/src/validations'
 import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
 import { existDAOKeyName } from '@karpatkey-monorepo/shared/utils'
@@ -6,9 +11,6 @@ import { DateTime } from 'luxon'
 import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import * as React from 'react'
-
-import { DAO_NAME_DEFAULT, PERIOD_TYPE_DEFAULT } from '../../config/constants'
-import { getCommonServerSideProps } from '../../utils/serverSide'
 
 const DynamicReport = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/treasury/report/Page')
@@ -57,6 +59,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     totalFarmingFunds = 0,
     rowsFarmingFundsByProtocol,
     rowsFarmingFundsByProtocolTotals,
+    totalFarmingResultsFarmSwaps,
     rowsFarmingResultsDetailsByProtocol,
     rowsFarmingResultsDetailsByProtocolTotals
   } = await getCommonServerSideProps(params)
@@ -80,6 +83,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       totalFarmingFunds,
       rowsFarmingFundsByProtocol,
       rowsFarmingFundsByProtocolTotals,
+      totalFarmingResultsFarmSwaps,
       rowsFarmingResultsDetailsByProtocol,
       rowsFarmingResultsDetailsByProtocolTotals,
       ...params

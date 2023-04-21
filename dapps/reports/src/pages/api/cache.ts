@@ -1,10 +1,9 @@
+import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
+import { DataWarehouse } from '@karpatkey-monorepo/reports/src/services/classes/dataWarehouse.class'
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import Cache from '../../services/classes/cache.class'
-import { DataWarehouse } from '../../services/classes/dataWarehouse.class'
-
-type Status = {
+type TStatus = {
   data: {
     status: boolean
     message?: TMaybe<string>
@@ -12,7 +11,7 @@ type Status = {
   }
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<TStatus>) {
   return new Promise<void>(async (resolve, reject) => {
     try {
       const cache = Cache.getInstance()

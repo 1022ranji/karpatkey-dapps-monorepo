@@ -91,8 +91,8 @@ const Waterfall = ({ title, data, ...props }: BoxProps & TWaterfallProps) => {
             if (item.uv < 0) {
               return <Cell key={index} fill="#DF5C64" />
             }
-            if (item.value === 'Final Balance') {
-              return <Cell key={index} fill="#54B9A1" />
+            if (item.value === 'Initial Balance' || item.value === 'Final Balance') {
+              return <Cell key={index} fill="#6B6B6B" />
             }
             return <Cell key={index} fill="#54B9A1" />
           })}

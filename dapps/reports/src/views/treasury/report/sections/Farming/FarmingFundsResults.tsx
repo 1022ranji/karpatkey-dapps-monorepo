@@ -30,6 +30,7 @@ interface IFarmingFundsResults {
     unclaimedTotal: number
     resultsTotal: number
   }
+  totalFarmingResultsFarmSwaps: number
   rowsFarmingResultsDetailsByProtocol: any[]
   rowsFarmingResultsDetailsByProtocolTotals: {
     rewardsTotal: number
@@ -43,6 +44,7 @@ const FarmingFundsResults = (props: IFarmingFundsResults) => {
     totalFarmingFunds,
     rowsFarmingFundsByProtocol: funds,
     rowsFarmingFundsByProtocolTotals: totals,
+    totalFarmingResultsFarmSwaps: totalFarmSwaps,
     rowsFarmingResultsDetailsByProtocol: fundsDetails,
     rowsFarmingResultsDetailsByProtocolTotals: totalDetails
   } = props
@@ -71,7 +73,7 @@ const FarmingFundsResults = (props: IFarmingFundsResults) => {
       <Grid item xs={4} sm={8} md={12}>
         <DynamicInfoCard
           title="Farming Results from Farm-Swaps"
-          value={numbro(0).formatCurrency({
+          value={numbro(totalFarmSwaps).formatCurrency({
             spaceSeparated: false,
             mantissa: 2
           })}

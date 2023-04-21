@@ -1,6 +1,7 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { TMapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/mappers'
 import { Box, BoxProps, Grid, List, ListItem } from '@mui/material'
+import numbro from 'numbro'
 import React from 'react'
 import { Cell, Legend, Pie, PieChart as PieRechart } from 'recharts'
 
@@ -27,7 +28,11 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
       dominantBaseline="central"
       fontSize="10px"
     >
-      {`${(percent * 100).toFixed(1)}%`}
+      {numbro(percent).format({
+        output: 'percent',
+        spaceSeparated: false,
+        mantissa: 2
+      })}
     </text>
   ) : (
     <text />
