@@ -70,6 +70,7 @@ const Page = (props: TReportProps) => {
     totalFarmingFunds,
     rowsFarmingFundsByProtocol,
     rowsFarmingFundsByProtocolTotals,
+    totalFarmingResultsFarmSwaps,
     rowsFarmingResultsDetailsByProtocol,
     rowsFarmingResultsDetailsByProtocolTotals
   } = props
@@ -101,6 +102,7 @@ const Page = (props: TReportProps) => {
     totalFarmingFunds,
     rowsFarmingFundsByProtocol,
     rowsFarmingFundsByProtocolTotals,
+    totalFarmingResultsFarmSwaps,
     rowsFarmingResultsDetailsByProtocol,
     rowsFarmingResultsDetailsByProtocolTotals
   }

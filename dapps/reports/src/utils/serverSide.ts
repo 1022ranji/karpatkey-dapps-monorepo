@@ -18,7 +18,8 @@ import {
   getFarmingFundsByProtocolTotals,
   getFarmingFundsTotal,
   getFarmingResultsDetailsByProtocol,
-  getFarmingResultsDetailsByProtocolTotals
+  getFarmingResultsDetailsByProtocolTotals,
+  getFarmingResultsFarmSwapsTotal
 } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import {
   getCapitalUtilization,
@@ -137,10 +138,14 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     rowsFarmingFundsByProtocol
   )
 
+  // Farming result from farm swaps
+  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsFiltered)
+
   // Farming results details by protocol
   const rowsFarmingResultsDetailsByProtocol =
     getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
 
+  // Farming results details by protocol Totals
   const rowsFarmingResultsDetailsByProtocolTotals = getFarmingResultsDetailsByProtocolTotals(
     rowsFarmingResultsDetailsByProtocol
   )
@@ -169,6 +174,7 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     totalFarmingFunds,
     rowsFarmingFundsByProtocol,
     rowsFarmingFundsByProtocolTotals,
+    totalFarmingResultsFarmSwaps,
     rowsFarmingResultsDetailsByProtocol,
     rowsFarmingResultsDetailsByProtocolTotals
   }

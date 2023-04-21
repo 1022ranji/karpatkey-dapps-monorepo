@@ -59,6 +59,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     totalFarmingFunds = 0,
     rowsFarmingFundsByProtocol,
     rowsFarmingFundsByProtocolTotals,
+    totalFarmingResultsFarmSwaps,
     rowsFarmingResultsDetailsByProtocol,
     rowsFarmingResultsDetailsByProtocolTotals
   } = await getCommonServerSideProps(params)
@@ -82,6 +83,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       totalFarmingFunds,
       rowsFarmingFundsByProtocol,
       rowsFarmingFundsByProtocolTotals,
+      totalFarmingResultsFarmSwaps,
       rowsFarmingResultsDetailsByProtocol,
       rowsFarmingResultsDetailsByProtocolTotals,
       ...params

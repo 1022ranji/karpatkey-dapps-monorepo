@@ -26,6 +26,7 @@ export type TReportData = {
     unclaimedTotal: number
     resultsTotal: number
   }
+  totalFarmingResultsFarmSwaps: number
   rowsFarmingResultsDetailsByProtocol: any[]
   rowsFarmingResultsDetailsByProtocolTotals: {
     rewardsTotal: number

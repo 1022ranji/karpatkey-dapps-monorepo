@@ -1,6 +1,5 @@
 export const getFarmingFundsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    // TODO: this value is different in the datawarehouse report, check it URI
     const value = obj['metric'] === 'total farming' ? obj['metric_value'] : 0
     acc += value
     return acc
@@ -9,7 +8,6 @@ export const getFarmingFundsTotal = (data: any) => {
 
 export const getFarmingFundsByProtocol = (data: any) => {
   const rows = data.reduce((acc: any, obj: any) => {
-    console.log(obj)
     const blockchain = obj['blockchain'].trim()
     const protocol = obj['protocol'].trim()
     const position = obj['Assets'].trim()
@@ -72,6 +70,14 @@ export const getFarmingFundsByProtocolTotals = (data: any) => {
     },
     { fundsTotal: 0, unclaimedTotal: 0, resultsTotal: 0 }
   )
+}
+
+export const getFarmingResultsFarmSwapsTotal = (data: any) => {
+  return data.reduce((acc: any, obj: any): number => {
+    const value = obj['metric_code'] === 'm20' ? obj['metric_value'] : 0
+    acc += value
+    return acc
+  }, 0)
 }
 
 export const getFarmingResultsDetailsByProtocol = (data: any) => {
