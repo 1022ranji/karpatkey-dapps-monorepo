@@ -9,7 +9,8 @@ const FooterWrapper = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   position: 'relative',
   zIndex: 10,
-  padding: 0,
+  marginTop: 20,
+  marginBottom: 20,
   flex: '0 0 auto'
 }))
 
