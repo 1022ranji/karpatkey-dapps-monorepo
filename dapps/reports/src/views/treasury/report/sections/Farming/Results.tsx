@@ -32,7 +32,8 @@ const Results: React.FC<IFarmingResultsDetailByProtocol> = (
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableCell align="left">Protocol</TableCell>
+              <TableCell align="left">Blockchain</TableCell>
+              <TableCell align="right">Protocol</TableCell>
               <TableCell align="right">Position</TableCell>
               <TableCell align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                 Rewards
@@ -46,10 +47,13 @@ const Results: React.FC<IFarmingResultsDetailByProtocol> = (
               return (
                 <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row">
-                    {row['protocol']}
+                    {row.blockchain}
                   </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row['position']}
+                  <TableCell align="right" component="th" scope="row">
+                    {row.protocol}
+                  </TableCell>
+                  <TableCell align="right" component="th" scope="row">
+                    {row.position}
                   </TableCell>
                   <TableCell align="right">
                     {numbro(row['rewards']).formatCurrency({
@@ -73,6 +77,7 @@ const Results: React.FC<IFarmingResultsDetailByProtocol> = (
               )
             })}
             <TableRow>
+              <TableCellTotal align="left"> </TableCellTotal>
               <TableCellTotal align="left"> </TableCellTotal>
               <TableCellTotal align="left">Total</TableCellTotal>
               <TableCellTotal align="right">
