@@ -1,12 +1,23 @@
 # Karpatkey dapps monorepo
 
-This repository contains the source code for the Karpatkey dapps.
+This repository contains the source code for the karpatkey dapps.
 
 [![Linter](https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/workflows/linter/badge.svg)](https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/actions?query=workflow%3Alinter)
 
+### This repository is a work in progress, please be patient, we still have a lot to do.
+
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWUxMWE4MGQyNjBhMjJhZDdmNzA5NGYyNTZmZmI4NzhlNjdkMzQ0NSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/Sm9AfJRiZofjlrkAAl/giphy.gif"/>
+
+
 ## Getting Started
 
-... TODO: Complete
+TODO: Complete
+
+## Project Links
+- 📰 [Kanban Board](https://github.com/orgs/KarpatkeyDAO/projects/1)
+
+## How to use
+TODO: Complete
 
 ## Docker
 
@@ -21,3 +32,12 @@ docker run -p 3000:3000 dharmendrakariya/reports:test
 ```
 
 - App will be up and running on http://localhost:3000/
+
+## Roadmap
+- Create report dApp. *In progress*
+- Integrate new design. *In progress*
+- Create revoker dApp.
+- Create panic button dApp.
+
+## Contribution
+Any and every contribution is welcomed and appreciated.
