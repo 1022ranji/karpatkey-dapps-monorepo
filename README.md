@@ -6,9 +6,6 @@ This repository contains the source code for the karpatkey dapps.
 
 ### This repository is a work in progress, please be patient, we still have a lot to do.
 
-<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWUxMWE4MGQyNjBhMjJhZDdmNzA5NGYyNTZmZmI4NzhlNjdkMzQ0NSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/Sm9AfJRiZofjlrkAAl/giphy.gif"/>
-
-
 ## Getting Started
 
 TODO: Complete
