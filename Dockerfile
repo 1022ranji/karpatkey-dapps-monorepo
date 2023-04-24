@@ -1,5 +1,7 @@
 # FROM node:latest
 FROM node:lts-alpine
+ARG SSH_PRIVATE_KEY
+ENV SSH_PRIVATE_KEY ${SSH_PRIVATE_KEY}
 
 # node:latest image : size 1.79GB
 # RUN apt update && \
@@ -15,9 +17,7 @@ RUN apk update && \
 
 
 RUN mkdir -p /root/.ssh/
-COPY github /root/.ssh/id_rsa
-# RUN echo "$SSH_KEY" > /root/.ssh/id_rsa
-COPY github.pub /root/.ssh/id_rsa.pub
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
 RUN chmod -R 600 /root/.ssh/
 RUN ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
