@@ -13,7 +13,7 @@
     "dev:reports": "cd dapps/reports && yarn dev",
     "dev:panic-button": "cd dapps/panic-button && yarn dev",
     "dev": "yarn dev:reports & yarn dev:panic-button",
-    "start:report": "cd dapps/reports && yarn install && yarn build && yarn start",
+    "start:reports": "cd dapps/reports && yarn install && yarn build && yarn start",
     "start:panic-button": "cd dapps/panic-button && yarn install && yarn build && yarn start",
     "start": "yarn start:reports & yarn start:panic-button",
     "update:reports": "cd dapps/reports && yarn",
