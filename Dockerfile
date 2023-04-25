@@ -42,6 +42,7 @@ RUN pip3 install -r ./bots-harvesting/requirements.txt
 
 # expose port
 EXPOSE 3000
+EXPOSE 3001
 
 # start app
 CMD yarn start:reports
