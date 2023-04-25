@@ -33,7 +33,9 @@ jobs:
           images: registry.digitalocean.com/karpatkey/karpatkey-dapps-monorepo
           tags: |
             type=ref,event=branch
-            type=sha,prefix={{branch}}-
+            type=sha,prefix={{branch}}
+            type=raw,value={{branch}}
+            type=semver,pattern={{version}},value=v1.0.0
 
 
       - name: Login to Docker
