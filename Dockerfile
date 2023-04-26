@@ -1,23 +1,22 @@
-# FROM node:latest
+
 FROM node:lts-alpine
-ARG SSH_PRIVATE_KEY
-ENV SSH_PRIVATE_KEY ${SSH_PRIVATE_KEY}
 
-# node:latest image : size 1.79GB
-# RUN apt update && \
-#     apt install git && \
-#     apt install openssh-client && \
-#     apt install python3-pip -y
-
-# node:lts-alpine image : size 988 MB
 RUN apk update && \
     apk add git && \
     apk add openssh-client && \
     apk add --no-cache python3 py3-pip
 
+# RUN --mount=type=secret,id=SSH_PRIVATE_KEY \
+#    export SSH_PRIVATE_KEY=$(cat /run/secrets/SSH_PRIVATE_KEY)
+   
+# RUN mkdir -p /root/.ssh/
+# RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+# RUN chmod -R 600 /root/.ssh/
+# RUN ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
 RUN mkdir -p /root/.ssh/
-RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+RUN --mount=type=secret,id=SSH_PRIVATE_KEY \
+    cat /run/secrets/SSH_PRIVATE_KEY >> /root/.ssh/id_rsa
 RUN chmod -R 600 /root/.ssh/
 RUN ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
