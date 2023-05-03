@@ -21,7 +21,7 @@
     "generate:cache": "yarn cache:dailyBalanceReports && yarn cache:treasuryFinancialMetrics && yarn cache:tokens && yarn cache:treasuryVariationMetricsDetail && yarn cache:treasuryFinancialPositions && yarn cache:treasuryHistoricVariation"
   },
   "dependencies": {
-    "@emotion/cache": "^11.10.7",
+    "@emotion/cache": "^11.10.8",
     "@emotion/react": "^11.10.8",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.8",
