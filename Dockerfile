@@ -1,25 +1,31 @@
-# FROM node:latest
-FROM node:lts-alpine
 
-# node:latest image : size 1.79GB
-# RUN apt update && \
-#     apt install git && \
-#     apt install openssh-client && \
-#     apt install python3-pip -y
+FROM alpine as builder
+ARG SSH_PRIVATE_KEY
+ENV SSH_PRIVATE_KEY ${SSH_PRIVATE_KEY}
 
-# node:lts-alpine image : size 988 MB
 RUN apk update && \
     apk add git && \
     apk add openssh-client && \
     apk add --no-cache python3 py3-pip
 
-
 RUN mkdir -p /root/.ssh/
-COPY github /root/.ssh/id_rsa
-# RUN echo "$SSH_KEY" > /root/.ssh/id_rsa
-COPY github.pub /root/.ssh/id_rsa.pub
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+RUN cat /root/.ssh/id_rsa
 RUN chmod -R 600 /root/.ssh/
 RUN ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+
+WORKDIR /app
+
+# clone bots-harvesting
+RUN git clone git@github.com:KarpatkeyDAO/bots-harvesting.git
+
+
+FROM node:lts-alpine as runner
+
+RUN apk update && \
+    apk add git && \
+    apk add openssh-client && \
+    apk add --no-cache python3 py3-pip
 
 WORKDIR /app
 
@@ -29,19 +35,20 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install and cache app dependencies
 COPY package.json /app/package.json
 
-RUN npm install
+RUN yarn install --pure-lockfile
 
 # add app
 COPY . /app
 
-# clone bots-harvesting
-RUN git clone git@github.com:KarpatkeyDAO/bots-harvesting.git
-
-# install python deps
-RUN pip3 install -r ./bots-harvesting/requirements.txt
-
 # expose port
 EXPOSE 3000
+EXPOSE 3001
+
+# copy bots-harvesting
+COPY --from=builder /app/bots-harvesting /app/bots-harvesting
+
+# install deps for bots-harvesting
+RUN pip3 install -r ./bots-harvesting/requirements.txt
 
 # start app
-CMD npm run dev 
+CMD yarn start:reports
