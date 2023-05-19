@@ -19,7 +19,7 @@
     "@google-cloud/bigquery": "^6.2.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.1",
-    "@mui/utils": "^5.12.3",
+    "@mui/utils": "^5.13.1",
     "@types/randomcolor": "^0.5.7",
     "classnames": "^2.3.2",
     "clsx": "^1.2.1",
