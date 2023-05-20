@@ -35,7 +35,7 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
     "luxon": "^3.3.0",
-    "next": "^13.4.2",
+    "next": "^13.4.3",
     "numbro": "^2.3.6",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
