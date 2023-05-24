@@ -36,7 +36,7 @@ const Summary = (props: SummaryProps) => {
   } = props
 
   return (
-    <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={3}>
+    <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={12}>
       <BoxWrapperRow gap={2} sx={{ justifyContent: 'space-between' }}>
         <DynamicInfoCard
           title="Total funds"
