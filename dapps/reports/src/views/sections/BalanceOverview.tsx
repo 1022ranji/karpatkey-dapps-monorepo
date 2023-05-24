@@ -27,7 +27,7 @@ const BalanceOverview = (props: BalanceOverview) => {
       <BoxWrapperColumn gap={4} marginTop={'30px'}>
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <CustomTypography variant="balanceOverviewSubtitle">
-            Funds by token category and Type/blockchain
+            Funds by token category and type/blockchain
           </CustomTypography>
           <ToggleButtonGroup
             value={toggleType}

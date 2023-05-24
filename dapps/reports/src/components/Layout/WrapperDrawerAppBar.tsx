@@ -27,17 +27,17 @@ const HEADER_HEIGHT = 100
 
 type Section =
   | 'Summary'
-  | 'Balance Overview'
-  | 'Treasury Variation'
-  | 'Farming Funds'
-  | 'Token Details'
+  | 'Balance overview'
+  | 'Treasury variation'
+  | 'Farming funds'
+  | 'Token details'
 
 const SECTIONS: Section[] = [
   'Summary',
-  'Balance Overview',
-  'Treasury Variation',
-  'Farming Funds',
-  'Token Details'
+  'Balance overview',
+  'Treasury variation',
+  'Farming funds',
+  'Token details'
 ]
 
 const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>(() => ({
