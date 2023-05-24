@@ -24,9 +24,9 @@ const TableFunds = (props: TableFundsProps) => {
             <TableRow>
               <TableHeadCellCustom align="left">Blockchain</TableHeadCellCustom>
               <TableHeadCellCustom align="left">Position</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Farming Funds</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Unclaimed Rewards</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Farming Results *</TableHeadCellCustom>
+              <TableHeadCellCustom align="right">Farming funds</TableHeadCellCustom>
+              <TableHeadCellCustom align="right">Unclaimed rewards</TableHeadCellCustom>
+              <TableHeadCellCustom align="right">Farming results *</TableHeadCellCustom>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -18,14 +18,10 @@ const TableType = (props: TableTypeProps) => {
       <Table sx={{ width: '100%' }}>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom align="left">Token Category</TableHeadCellCustom>
-            <TableHeadCellCustom align="left">Farming Funds</TableHeadCellCustom>
-            <TableHeadCellCustom align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-              Unclaimed Rewards
-            </TableHeadCellCustom>
-            <TableHeadCellCustom align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-              Wallet
-            </TableHeadCellCustom>
+            <TableHeadCellCustom align="left">Token category</TableHeadCellCustom>
+            <TableHeadCellCustom align="left">Farming funds</TableHeadCellCustom>
+            <TableHeadCellCustom align="right">Unclaimed rewards</TableHeadCellCustom>
+            <TableHeadCellCustom align="right">Wallet</TableHeadCellCustom>
             <TableHeadCellCustom align="right">Grand total</TableHeadCellCustom>
           </TableRow>
         </TableHead>
@@ -39,10 +35,8 @@ const TableType = (props: TableTypeProps) => {
             dataFooterType['Total'] = (dataFooterType['Total'] || 0) + row['Total']
 
             return (
-              <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCellCustom component="th" scope="row">
-                  {row['Token Category']}
-                </TableCellCustom>
+              <TableRow key={index}>
+                <TableCellCustom align="left">{row['Token Category']}</TableCellCustom>
                 <TableCellCustom align="left">
                   {numbro(row['Farming Funds'] || 0).formatCurrency({
                     spaceSeparated: false,
@@ -50,14 +44,14 @@ const TableType = (props: TableTypeProps) => {
                     thousandSeparated: true
                   })}
                 </TableCellCustom>
-                <TableCellCustom align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                <TableCellCustom align="right">
                   {numbro(row['Unclaimed Rewards'] || 0).formatCurrency({
                     spaceSeparated: false,
                     mantissa: 2,
                     thousandSeparated: true
                   })}
                 </TableCellCustom>
-                <TableCellCustom align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                <TableCellCustom align="right">
                   {numbro(row['Wallet'] || 0).formatCurrency({
                     spaceSeparated: false,
                     mantissa: 2,
@@ -90,14 +84,14 @@ const TableType = (props: TableTypeProps) => {
                 thousandSeparated: true
               })}
             </TableFooterCellCustom>
-            <TableFooterCellCustom align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+            <TableFooterCellCustom align="right">
               {numbro(dataFooterType['Unclaimed Rewards'] || 0).formatCurrency({
                 spaceSeparated: false,
                 mantissa: 2,
                 thousandSeparated: true
               })}
             </TableFooterCellCustom>
-            <TableFooterCellCustom align="right" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+            <TableFooterCellCustom align="right">
               {numbro(dataFooterType['Wallet'] || 0).formatCurrency({
                 spaceSeparated: false,
                 mantissa: 2,

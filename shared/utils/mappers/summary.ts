@@ -58,10 +58,10 @@ export const getSummaryFundsByType = (data: any) => {
       const metric = obj['metric'].trim()
       const protocol = obj['protocol'].trim()
       const metricKey = metric.includes('unclaimed_rewards')
-        ? 'Unclaimed Rewards'
+        ? 'Unclaimed rewards'
         : metric.includes('balance') && protocol.includes('Wallet')
         ? 'Wallet'
-        : 'Farming Funds'
+        : 'Farming funds'
 
       if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
 
