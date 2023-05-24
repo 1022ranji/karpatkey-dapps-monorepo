@@ -1,5 +1,19 @@
 import randomColor from 'randomcolor'
 
+const COLORS = [
+  '#808080',
+  '#B6B6B6',
+  '#C0C0C0',
+  '#535353',
+  '#A9A9A9',
+  '#5c5c5c',
+
+  '#DEDEDE',
+  '#383838',
+  '#71797E',
+  '#B2BEB5'
+]
+
 export const getSummaryFundsByTokenCategory = (data: any) => {
   const rows: { funds: number; label: string }[] = data
     .filter((row: any) => {
@@ -23,9 +37,9 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index: number) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -64,9 +78,9 @@ export const getSummaryFundsByType = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index: number) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -99,9 +113,9 @@ export const getSummaryFundsByBlockchain = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index: number) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -132,9 +146,9 @@ export const getSummaryFundsByProtocol = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,

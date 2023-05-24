@@ -13,7 +13,7 @@ interface IButtonActionProps {
   modalDialogTitle: string
   modalDialogDescription: string
 
-  successMessage: TMaybe<string>
+  successMessage: Maybe<string>
   component?: React.ReactNode
   okButtonTitle?: string
   cancelButtonTitle?: string

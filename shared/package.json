@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "lint:staged": "lint-staged",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
     "lint": "yarn lint:eslint && yarn lint:tsc",
     "lint:eslint": "eslint './**/*.{ts,tsx}'",
     "lint:eslint:fix": "eslint --fix './**/*.{ts,tsx}'",
@@ -29,7 +29,8 @@
     "randomcolor": "^0.6.2",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
-    "react-error-boundary": "^4.0.4"
+    "react-error-boundary": "^4.0.4",
+    "react-hook-form": "^7.43.9"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",

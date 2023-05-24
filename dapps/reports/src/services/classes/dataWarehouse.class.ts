@@ -21,9 +21,7 @@ export class DataWarehouse {
   }
 
   async getDailyBalanceReports() {
-    const { bigQuery } = this
-
-    const dataset = bigQuery.dataset('reports')
+    const dataset = this.bigQuery.dataset('reports')
     const [view] = await dataset.table('vw_last_daily_balance_reports').get()
     const viewQuery = view.metadata.view.query
 
@@ -31,9 +29,7 @@ export class DataWarehouse {
   }
 
   async getTreasuryFinancialMetrics() {
-    const { bigQuery } = this
-
-    const dataset = bigQuery.dataset('reports')
+    const dataset = this.bigQuery.dataset('reports')
     const [view] = await dataset.table('vw_treasury_financial_metrics').get()
     const viewQuery = view.metadata.view.query
 
@@ -53,9 +49,7 @@ export class DataWarehouse {
   }
 
   async getTreasuryFinancialPositions() {
-    const { bigQuery } = this
-
-    const dataset = bigQuery.dataset('reports')
+    const dataset = this.bigQuery.dataset('reports')
     const [view] = await dataset.table('vw_treasury_financial_positions').get()
     const viewQuery = view.metadata.view.query
 

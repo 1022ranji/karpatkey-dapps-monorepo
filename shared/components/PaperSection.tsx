@@ -1,26 +1,35 @@
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import Paper from '@karpatkey-monorepo/shared/components/Paper'
+import { slugify } from '@karpatkey-monorepo/shared/utils'
 import { Divider } from '@mui/material'
+import { styled } from '@mui/material'
 import * as React from 'react'
 
-import BoxWrapperColumn from './BoxWrapperColumn'
-import CustomTypography from './CustomTypography'
-import Paper from './Paper'
+const SpanHidden = styled('span')({
+  display: 'block',
+  position: 'relative',
+  top: '-110px',
+  visibility: 'hidden'
+})
 
-interface IPaperSection {
-  title?: string
+interface PaperSectionProps {
+  title: string
   children: React.ReactNode
 }
 
-const PaperSection = (props: IPaperSection) => {
+const PaperSection = (props: PaperSectionProps) => {
   const { title, children } = props
   return (
     <Paper>
-      {title && (
-        <CustomTypography color="textSecondary" variant="h5" textAlign="left">
+      <Divider />
+      <BoxWrapperColumn sx={{ marginX: '30px', marginTop: '30px', marginBottom: '30px' }} gap={2}>
+        <SpanHidden id={slugify(title)} />
+        <CustomTypography variant="paperSectionTitle" textAlign="left">
           {title}
         </CustomTypography>
-      )}
-      <Divider sx={{ marginY: 2 }} />
-      <BoxWrapperColumn>{children}</BoxWrapperColumn>
+        <BoxWrapperColumn>{children}</BoxWrapperColumn>
+      </BoxWrapperColumn>
     </Paper>
   )
 }

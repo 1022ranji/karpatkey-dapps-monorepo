@@ -1,21 +1,20 @@
-import Content from '@karpatkey-monorepo/shared/layout/Content'
+import WrapperDrawerAppBar from '@karpatkey-monorepo/reports/src/components/Layout/WrapperDrawerAppBar'
 import Footer from '@karpatkey-monorepo/shared/layout/Footer'
 import LayoutWrapper from '@karpatkey-monorepo/shared/layout/LayoutWrapper'
 import React, { ReactElement } from 'react'
 
-import DrawerAppBar from './DrawerAppBar'
-
-interface ILayoutProps {
+interface LayoutProps {
   children: React.ReactNode
 }
 
-const Layout = ({ children }: ILayoutProps): ReactElement => {
+const Layout = ({ children }: LayoutProps): ReactElement => {
   return (
-    <LayoutWrapper>
-      <DrawerAppBar />
-      <Content>{children}</Content>
-      <Footer />
-    </LayoutWrapper>
+    <WrapperDrawerAppBar>
+      <LayoutWrapper>
+        {children}
+        <Footer />
+      </LayoutWrapper>
+    </WrapperDrawerAppBar>
   )
 }
 

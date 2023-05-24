@@ -5,8 +5,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 type Status = {
   data: {
     status: boolean
-    trx?: TMaybe<string>
-    error?: TMaybe<Error>
+    trx?: Maybe<string>
+    error?: Maybe<Error>
   }
 }
 

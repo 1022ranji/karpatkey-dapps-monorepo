@@ -1,6 +1,5 @@
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import * as React from 'react'
-
-import CustomTypography from './CustomTypography'
 
 const Loading = () => (
   <CustomTypography
