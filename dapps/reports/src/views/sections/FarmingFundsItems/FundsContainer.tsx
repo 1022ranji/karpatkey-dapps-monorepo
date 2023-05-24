@@ -1,5 +1,6 @@
 import Filter from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/Filter'
 import Form from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/Form'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
@@ -91,7 +92,7 @@ const FundsContainer = (props: FundsContainerProps) => {
     : null
 
   return (
-    <>
+    <BoxWrapperColumn gap={4}>
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
         <CustomTypography variant="balanceOverviewSubtitle">
           Farming funds/results by protocol
@@ -116,7 +117,7 @@ const FundsContainer = (props: FundsContainerProps) => {
         </Filter>
       </BoxWrapperRow>
       <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
-    </>
+    </BoxWrapperColumn>
   )
 }
 

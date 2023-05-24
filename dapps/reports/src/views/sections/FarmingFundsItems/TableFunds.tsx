@@ -121,7 +121,7 @@ const TableFunds = (props: TableFundsProps) => {
         align="left"
         sx={{ fontStyle: 'italic' }}
       >
-        *Farming Results includes results from fees, rebasing, pool token variation and rewards
+        * Farming Results includes results from fees, rebasing, pool token variation and rewards
       </CustomTypography>
     </BoxWrapperColumn>
   )

@@ -21,7 +21,7 @@ const FarmingFunds = (props: FarmingFundsProps) => {
 
   return (
     <PaperSection title="Farming funds">
-      <BoxWrapperColumn gap={4} marginTop={'30px'}>
+      <BoxWrapperColumn gap={10}>
         <FundsContainer {...{ funds }} />
         <ResultsContainer {...{ fundsDetails }} />
         <BoxWrapperColumn gap={2}>
