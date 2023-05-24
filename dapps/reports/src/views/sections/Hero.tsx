@@ -44,9 +44,9 @@ const Hero = () => {
           </BoxWrapperColumn>
         </BoxWrapperRow>
         <BoxWrapperRow gap={2}>
-          {dao.addresses.map((daoAddress, index) => {
-            return <ButtonAddress key={index} daoAddress={daoAddress} />
-          })}
+          {dao.addresses.map((daoAddress, index) => (
+            <ButtonAddress key={index} daoAddress={daoAddress} />
+          ))}
         </BoxWrapperRow>
       </BoxWrapperColumn>
     </BoxWrapperColumn>

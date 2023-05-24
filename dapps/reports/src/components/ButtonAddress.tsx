@@ -13,10 +13,9 @@ const ButtonAddress = (props: ButtonAddressProp) => {
   const { daoAddress } = props
   const { address, chainId } = daoAddress
 
-  const value = React.useMemo(() => {
-    const chain = CHAINS.find((chain) => chain.id === chainId)
-    return `${chain?.explorer}/${address}`
-  }, [address, chainId])
+  const chain = CHAINS.find((chain) => chain.id === chainId)
+  const value = `${chain?.explorer}/${address}`
+
   const onClick = () => {
     window.open(value, '_blank')
   }
@@ -24,7 +23,7 @@ const ButtonAddress = (props: ButtonAddressProp) => {
   return (
     <Button onClick={onClick} sx={{ gap: 2, height: '48px', padding: '6px 14px' }}>
       <Safe />
-      {shortenAddress(address)}
+      {chain?.short}:{shortenAddress(address)}
       <ArrowUpWhite />
     </Button>
   )
