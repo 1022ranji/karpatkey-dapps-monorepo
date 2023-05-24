@@ -3,7 +3,7 @@ import React from 'react'
 import CustomTypography from './CustomTypography'
 
 interface FilterTextOptionProps {
-  title: Maybe<string | number>
+  title: Maybe<string>
 }
 
 const FilterTextOption = (props: FilterTextOptionProps) => {
