@@ -28,8 +28,14 @@ const Filter = (props: FilterProps) => {
         id={id || ''}
         aria-describedby={id}
       >
-        <FilterTextOption title={blockchain || 'Blockchain'} />
-        <FilterTextOption title={protocol || 'Protocol'} />
+        <FilterTextOption
+          title={blockchain || 'Blockchain'}
+          {...(blockchain ? { fontWeight: 'extra-bold' } : {})}
+        />
+        <FilterTextOption
+          title={protocol || 'Protocol'}
+          {...(protocol ? { fontWeight: 'extra-bold' } : {})}
+        />
       </BoxWrapperRow>
       <CustomPopover
         id={id}
