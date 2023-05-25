@@ -23,7 +23,7 @@ const PaperSection = (props: PaperSectionProps) => {
   return (
     <Paper>
       <Divider />
-      <BoxWrapperColumn sx={{ marginX: '30px', marginTop: '30px', marginBottom: '30px' }} gap={4}>
+      <BoxWrapperColumn sx={{ marginX: '30px', marginBottom: '30px' }} gap={4}>
         <SpanHidden id={slugify(title)} />
         <CustomTypography variant="paperSectionTitle" textAlign="left">
           {title}
