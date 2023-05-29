@@ -46,7 +46,7 @@ const Menu = () => {
   const id = open ? 'simple-popover' : undefined
 
   return (
-    <BoxWrapperRow gap={10}>
+    <BoxWrapperRow gap={2}>
       <CustomTypography variant="filterTitle">Filters</CustomTypography>
 
       <BoxWrapperRow
@@ -56,9 +56,19 @@ const Menu = () => {
         aria-describedby={id}
         gap={2}
       >
-        {daoName ? <FilterTextOption title={daoName} /> : <FilterSkeleton />}
-        {monthName ? <FilterTextOption title={monthName} /> : <FilterSkeleton />}
-        {yearName ? <FilterTextOption title={yearName + ''} /> : <FilterSkeleton />}
+        {!daoName || !monthName || !yearName ? (
+          <>
+            <FilterSkeleton />
+            <FilterSkeleton />
+            <FilterSkeleton />
+          </>
+        ) : (
+          <>
+            <FilterTextOption title={daoName} />
+            <FilterTextOption title={monthName} />
+            <FilterTextOption title={yearName + ''} />
+          </>
+        )}
       </BoxWrapperRow>
       <CustomPopover id={id} open={open} anchorEl={anchorEl} handleClose={handleClose}>
         <Form onRequestClose={handleClose} />
