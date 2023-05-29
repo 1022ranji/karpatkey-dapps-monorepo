@@ -42,7 +42,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "recharts": "^2.6.2",
-    "yup": "^1.1.1"
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
