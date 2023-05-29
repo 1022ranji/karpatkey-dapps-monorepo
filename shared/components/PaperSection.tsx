@@ -1,17 +1,10 @@
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
+import SpanHidden from '@karpatkey-monorepo/shared/components/SpanHidden'
 import { slugify } from '@karpatkey-monorepo/shared/utils'
 import { Divider } from '@mui/material'
-import { styled } from '@mui/material'
 import * as React from 'react'
-
-const SpanHidden = styled('span')({
-  display: 'block',
-  position: 'relative',
-  top: '-110px',
-  visibility: 'hidden'
-})
 
 interface PaperSectionProps {
   title: string
