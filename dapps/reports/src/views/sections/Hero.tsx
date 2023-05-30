@@ -3,7 +3,6 @@ import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.conte
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
-import SpanHidden from '@karpatkey-monorepo/shared/components/SpanHidden'
 import { FILTER_DAO } from '@karpatkey-monorepo/shared/config/constants'
 import { getDAO, getMonthName, slugify } from '@karpatkey-monorepo/shared/utils'
 import Image from 'next/image'
@@ -23,11 +22,11 @@ const Hero = () => {
 
   return (
     <BoxWrapperColumn sx={{ margin: '30px 30px' }}>
-      <SpanHidden id={slugify('summary')} top={200} />
       <BoxWrapperColumn sx={{ alignItems: 'flex-start' }} gap={4}>
         <BoxWrapperRow gap={2}>
           <Image src={dao.icon} alt={dao.name} width={116} height={116} />
           <BoxWrapperColumn
+            id={slugify('summary')}
             sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
           >
             <CustomTypography variant="heroSectionTitle">{dao.name.trim()}</CustomTypography>

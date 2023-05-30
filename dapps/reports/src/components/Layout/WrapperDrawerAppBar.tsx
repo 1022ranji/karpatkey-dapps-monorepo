@@ -59,6 +59,7 @@ interface WrapperDrawerAppBarProps {
 const WrapperDrawerAppBar = (props: WrapperDrawerAppBarProps): ReactElement => {
   const router = useRouter()
   const [, hash = 'summary'] = router.asPath.split('#')
+
   const drawer = (
     <Box sx={{ padding: '10px 10px' }}>
       <List>
