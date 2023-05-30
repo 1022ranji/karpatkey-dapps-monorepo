@@ -27,6 +27,7 @@ const Hero = () => {
           <Image src={dao.icon} alt={dao.name} width={116} height={116} />
           <BoxWrapperColumn
             id={slugify('summary')}
+            className={'scrollable'}
             sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
           >
             <CustomTypography variant="heroSectionTitle">{dao.name.trim()}</CustomTypography>
