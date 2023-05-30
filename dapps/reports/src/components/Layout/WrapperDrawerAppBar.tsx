@@ -27,17 +27,17 @@ const HEADER_HEIGHT = 100
 
 type Section =
   | 'Summary'
-  | 'Balance Overview'
-  | 'Treasury Variation'
-  | 'Farming Funds'
-  | 'Token Details'
+  | 'Balance overview'
+  | 'Treasury variation'
+  | 'Farming funds'
+  | 'Token details'
 
 const SECTIONS: Section[] = [
   'Summary',
-  'Balance Overview',
-  'Treasury Variation',
-  'Farming Funds',
-  'Token Details'
+  'Balance overview',
+  'Treasury variation',
+  'Farming funds',
+  'Token details'
 ]
 
 const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>(() => ({
@@ -52,10 +52,6 @@ const HeaderWrapper = styled(Box)(({ theme }: any) => ({
 }))
 
 interface WrapperDrawerAppBarProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window
   children: React.ReactElement
 }
@@ -63,6 +59,7 @@ interface WrapperDrawerAppBarProps {
 const WrapperDrawerAppBar = (props: WrapperDrawerAppBarProps): ReactElement => {
   const router = useRouter()
   const [, hash = 'summary'] = router.asPath.split('#')
+
   const drawer = (
     <Box sx={{ padding: '10px 10px' }}>
       <List>

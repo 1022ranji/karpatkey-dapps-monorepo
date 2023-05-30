@@ -24,10 +24,10 @@ const BalanceOverview = (props: BalanceOverview) => {
 
   return (
     <PaperSection title="Balance overview">
-      <BoxWrapperColumn gap={4} marginTop={'30px'}>
+      <BoxWrapperColumn>
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <CustomTypography variant="balanceOverviewSubtitle">
-            Funds by token category and Type/blockchain
+            Funds by token category and type/blockchain
           </CustomTypography>
           <ToggleButtonGroup
             value={toggleType}

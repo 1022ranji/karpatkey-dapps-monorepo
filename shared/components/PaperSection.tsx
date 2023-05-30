@@ -3,15 +3,7 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import { slugify } from '@karpatkey-monorepo/shared/utils'
 import { Divider } from '@mui/material'
-import { styled } from '@mui/material'
 import * as React from 'react'
-
-const SpanHidden = styled('span')({
-  display: 'block',
-  position: 'relative',
-  top: '-110px',
-  visibility: 'hidden'
-})
 
 interface PaperSectionProps {
   title: string
@@ -23,9 +15,13 @@ const PaperSection = (props: PaperSectionProps) => {
   return (
     <Paper>
       <Divider />
-      <BoxWrapperColumn sx={{ marginX: '30px', marginTop: '30px', marginBottom: '30px' }} gap={2}>
-        <SpanHidden id={slugify(title)} />
-        <CustomTypography variant="paperSectionTitle" textAlign="left">
+      <BoxWrapperColumn sx={{ marginX: '30px', marginY: '30px' }} gap={4}>
+        <CustomTypography
+          id={slugify(title)}
+          className={'scrollable'}
+          variant="paperSectionTitle"
+          textAlign="left"
+        >
           {title}
         </CustomTypography>
         <BoxWrapperColumn>{children}</BoxWrapperColumn>

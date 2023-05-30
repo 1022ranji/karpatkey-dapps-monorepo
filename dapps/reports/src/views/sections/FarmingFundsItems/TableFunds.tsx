@@ -1,11 +1,10 @@
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
-import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
-import { Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import numbro from 'numbro'
 import * as React from 'react'
 
@@ -18,15 +17,15 @@ const TableFunds = (props: TableFundsProps) => {
   const { funds, totals } = props
   return (
     <BoxWrapperColumn gap={4}>
-      <TableContainer component={Paper}>
+      <TableContainer component={Box}>
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
               <TableHeadCellCustom align="left">Blockchain</TableHeadCellCustom>
               <TableHeadCellCustom align="left">Position</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Farming Funds</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Unclaimed Rewards</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Farming Results *</TableHeadCellCustom>
+              <TableHeadCellCustom align="right">Farming funds</TableHeadCellCustom>
+              <TableHeadCellCustom align="right">Unclaimed rewards</TableHeadCellCustom>
+              <TableHeadCellCustom align="right">Farming results *</TableHeadCellCustom>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -121,7 +120,7 @@ const TableFunds = (props: TableFundsProps) => {
         align="left"
         sx={{ fontStyle: 'italic' }}
       >
-        *Farming Results includes results from fees, rebasing, pool token variation and rewards
+        * Farming Results includes results from fees, rebasing, pool token variation and rewards
       </CustomTypography>
     </BoxWrapperColumn>
   )

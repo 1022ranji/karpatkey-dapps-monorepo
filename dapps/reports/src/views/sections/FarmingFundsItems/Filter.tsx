@@ -19,10 +19,8 @@ const Filter = (props: FilterProps) => {
   const { id, open, anchorEl, handleClose, children, handleClick, blockchain, protocol } = props
 
   return (
-    <BoxWrapperRow gap={2}>
-      <CustomTypography variant="filterTitle" sx={{ marginRight: '32px' }}>
-        Filters
-      </CustomTypography>
+    <BoxWrapperRow gap={10}>
+      <CustomTypography variant="filterTitle">Filters</CustomTypography>
       <BoxWrapperRow
         component={'span'}
         gap={2}
@@ -30,8 +28,14 @@ const Filter = (props: FilterProps) => {
         id={id || ''}
         aria-describedby={id}
       >
-        <FilterTextOption title={blockchain || 'Blockchain'} />
-        <FilterTextOption title={protocol || 'Protocol'} />
+        <FilterTextOption
+          title={blockchain || 'Blockchain'}
+          {...(blockchain ? { fontWeight: 'extra-bold' } : {})}
+        />
+        <FilterTextOption
+          title={protocol || 'Protocol'}
+          {...(protocol ? { fontWeight: 'extra-bold' } : {})}
+        />
       </BoxWrapperRow>
       <CustomPopover
         id={id}

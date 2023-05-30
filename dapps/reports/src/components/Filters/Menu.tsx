@@ -47,9 +47,7 @@ const Menu = () => {
 
   return (
     <BoxWrapperRow gap={2}>
-      <CustomTypography variant="filterTitle" sx={{ marginRight: '32px' }}>
-        Filters
-      </CustomTypography>
+      <CustomTypography variant="filterTitle">Filters</CustomTypography>
 
       <BoxWrapperRow
         component={'span'}
@@ -58,9 +56,19 @@ const Menu = () => {
         aria-describedby={id}
         gap={2}
       >
-        {filter.dao ? <FilterTextOption title={daoName} /> : <FilterSkeleton />}
-        {filter.month ? <FilterTextOption title={monthName} /> : <FilterSkeleton />}
-        {filter.year ? <FilterTextOption title={yearName} /> : <FilterSkeleton />}
+        {!daoName || !monthName || !yearName ? (
+          <>
+            <FilterSkeleton />
+            <FilterSkeleton />
+            <FilterSkeleton />
+          </>
+        ) : (
+          <>
+            <FilterTextOption title={daoName} />
+            <FilterTextOption title={monthName} />
+            <FilterTextOption title={yearName + ''} />
+          </>
+        )}
       </BoxWrapperRow>
       <CustomPopover id={id} open={open} anchorEl={anchorEl} handleClose={handleClose}>
         <Form onRequestClose={handleClose} />

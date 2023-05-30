@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import React, { ReactElement } from 'react'
 
-const HomepageContent = dynamic(() => import('../views/Homepage'))
+const HomepageContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Homepage'))
 const Homepage = (props: ReportProps) => <HomepageContent {...props} />
 
 Homepage.getTitle = 'Home'

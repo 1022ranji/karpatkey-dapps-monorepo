@@ -6,6 +6,7 @@ import Hero from '@karpatkey-monorepo/reports/src/views/sections/Hero'
 import Summary from '@karpatkey-monorepo/reports/src/views/sections/Summary'
 import TokenDetails from '@karpatkey-monorepo/reports/src/views/sections/TokenDetails'
 import TreasuryVariation from '@karpatkey-monorepo/reports/src/views/sections/TreasuryVariation'
+import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import BoxContainerWrapper from '@karpatkey-monorepo/shared/components/BoxContainerWrapper'
 import * as React from 'react'
 
@@ -46,26 +47,36 @@ const HomepageContent = (props: ReportProps) => {
 
   return (
     <BoxContainerWrapper gap={3}>
-      <Hero />
-      <Summary
-        totalFunds={totalFunds}
-        capitalUtilization={capitalUtilization}
-        farmingResults={farmingResults}
-        fundsByTokenCategory={fundsByTokenCategory}
-        fundsByType={fundsByType}
-        fundsByBlockchain={fundsByBlockchain}
-        fundsByProtocol={fundsByProtocol}
-      />
-      <BalanceOverview
-        balanceOverviewType={balanceOverviewType}
-        balanceOverviewBlockchain={balanceOverviewBlockchain}
-      />
-      <TreasuryVariation
-        rowsTreasuryVariation={rowsTreasuryVariation}
-        rowsHistoricVariation={rowsHistoricVariation}
-        rowsTreasuryVariationForThePeriodDetail={rowsTreasuryVariationForThePeriodDetail}
-      />
-      <FarmingFunds {...farmingFundsResultsProps} />
+      <AnimatePresenceWrapper>
+        <Hero />
+      </AnimatePresenceWrapper>
+      <AnimatePresenceWrapper>
+        <Summary
+          totalFunds={totalFunds}
+          capitalUtilization={capitalUtilization}
+          farmingResults={farmingResults}
+          fundsByTokenCategory={fundsByTokenCategory}
+          fundsByType={fundsByType}
+          fundsByBlockchain={fundsByBlockchain}
+          fundsByProtocol={fundsByProtocol}
+        />
+      </AnimatePresenceWrapper>
+      <AnimatePresenceWrapper>
+        <BalanceOverview
+          balanceOverviewType={balanceOverviewType}
+          balanceOverviewBlockchain={balanceOverviewBlockchain}
+        />
+      </AnimatePresenceWrapper>
+      <AnimatePresenceWrapper>
+        <TreasuryVariation
+          rowsTreasuryVariation={rowsTreasuryVariation}
+          rowsHistoricVariation={rowsHistoricVariation}
+          rowsTreasuryVariationForThePeriodDetail={rowsTreasuryVariationForThePeriodDetail}
+        />
+      </AnimatePresenceWrapper>
+      <AnimatePresenceWrapper>
+        <FarmingFunds {...farmingFundsResultsProps} />
+      </AnimatePresenceWrapper>
       <TokenDetails />
     </BoxContainerWrapper>
   )
