@@ -2,14 +2,14 @@ import { CustomAutocomplete } from '@karpatkey-monorepo/shared/components/Custom
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import * as React from 'react'
 
-const Label = () => <CustomTypography variant="filterTextRenderInput">Protocol</CustomTypography>
+const Label = () => <CustomTypography variant="filterTextRenderInput">Token</CustomTypography>
 
-interface ProtocolAutocompleteProps {
+interface TokenAutocompleteProps {
   name: string
   control: any
   options: any
 }
 
-export default function ProtocolAutocomplete(props: ProtocolAutocompleteProps) {
+export default function TokenAutocomplete(props: TokenAutocompleteProps) {
   return <CustomAutocomplete {...props} label={<Label />} />
 }

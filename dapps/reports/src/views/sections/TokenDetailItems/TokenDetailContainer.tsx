@@ -1,6 +1,6 @@
-import Filter from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/Filter'
-import Form from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/Form'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
+import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import dynamic from 'next/dynamic'
@@ -65,7 +65,8 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
     setAnchorEl(null)
   }
 
-  const onSubmitClose = (blockchain: string) => {
+  const onSubmitClose = (params: any) => {
+    const { blockchain } = params
     setBlockchainFilter(blockchain)
   }
 
@@ -87,6 +88,7 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       anchorEl={anchorEl}
       open={open}
       blockchain={blockchainFilter}
+      enableBlockchain
     >
       <Form
         blockchainOptions={blockchainOptions}

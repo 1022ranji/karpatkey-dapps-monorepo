@@ -1,10 +1,10 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
+import ContainerWrapper from '@karpatkey-monorepo/shared/components/Wrappers/ContainerWrapper'
 import ErrorIcon from '@mui/icons-material/Error'
 import { Box, styled } from '@mui/material'
 import React, { FC } from 'react'
 import { FallbackProps } from 'react-error-boundary'
-import ContainerWrapper from 'shared/components/Wrappers/ContainerWrapper'
 
 const GENERIC_ERROR_MESSAGE = 'Oops! Something went wrong'
 const DESCRIPTION_ERROR_MESSAGE = 'This issue has been addressed to the team.'

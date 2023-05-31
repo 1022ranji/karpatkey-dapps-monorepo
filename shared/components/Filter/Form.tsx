@@ -1,6 +1,8 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import BlockchainAutocomplete from '@karpatkey-monorepo/shared/components/Form/BlockchainAutocomplete'
+import ProtocolAutocomplete from '@karpatkey-monorepo/shared/components/Form/ProtocolAutocomplete'
+import TokenAutocomplete from '@karpatkey-monorepo/shared/components/Form/TokenAutocomplete'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import WarningIcon from '@mui/icons-material/Warning'
@@ -18,10 +20,14 @@ const ButtonStyled = styled(Button)({
 
 type FormValues = {
   blockchain: Maybe<AutocompleteOption>
+  protocol: Maybe<AutocompleteOption>
+  token: Maybe<AutocompleteOption>
 }
 
 const validationSchema = yup.object({
-  blockchain: yup.object().notRequired()
+  blockchain: yup.object().notRequired(),
+  protocol: yup.object().notRequired(),
+  token: yup.object().notRequired()
 })
 
 const useYupValidationResolver = (validationSchema: any) =>
@@ -59,34 +65,66 @@ const useYupValidationResolver = (validationSchema: any) =>
 
 interface FormProps {
   onRequestClose: () => void
-  onSubmitClose: (blockchain: string) => void
-  defaultBlockchainValue?: Maybe<AutocompleteOption>
+  onSubmitClose: ({
+    blockchain,
+    protocol,
+    token
+  }: {
+    blockchain: string | number
+    protocol?: string | number
+    token?: string | number
+  }) => void
+  defaultBlockchainValue: Maybe<AutocompleteOption>
+  defaultProtocolValue?: Maybe<AutocompleteOption>
+  defaultTokenValue?: Maybe<AutocompleteOption>
   blockchainOptions: AutocompleteOption[]
+  protocolOptions?: AutocompleteOption[]
+  tokenOptions?: AutocompleteOption[]
 }
 
 const Form = (props: FormProps) => {
-  const { onRequestClose, defaultBlockchainValue, blockchainOptions, onSubmitClose } = props
+  const {
+    onRequestClose,
+    defaultBlockchainValue = null,
+    defaultTokenValue = null,
+    defaultProtocolValue = null,
+    blockchainOptions,
+    protocolOptions = [],
+    tokenOptions = [],
+    onSubmitClose
+  } = props
 
   // Yup validation
   const resolver = useYupValidationResolver(validationSchema)
+
+  const defaultValues: FormValues = {
+    blockchain: defaultBlockchainValue,
+    protocol: defaultProtocolValue,
+    token: defaultTokenValue
+  }
 
   const {
     handleSubmit,
     control,
     formState: { errors }
   } = useForm<FormValues>({
-    defaultValues: {
-      blockchain: defaultBlockchainValue
-    },
+    defaultValues,
     resolver
   })
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     const blockchain = data?.blockchain?.id ?? ''
+    const protocol = data?.protocol?.id ?? ''
+    const token = data?.token?.id ?? ''
 
     onRequestClose()
 
-    onSubmitClose(String(blockchain))
+    const params = {
+      blockchain,
+      protocol,
+      token
+    }
+    onSubmitClose(params)
   }
 
   return (
@@ -103,6 +141,20 @@ const Form = (props: FormProps) => {
                 name={'blockchain'}
               />
             </Stack>
+            {protocolOptions.length > 0 ? (
+              <Stack width={200}>
+                <ProtocolAutocomplete
+                  options={protocolOptions}
+                  control={control}
+                  name={'protocol'}
+                />
+              </Stack>
+            ) : null}
+            {tokenOptions.length > 0 ? (
+              <Stack width={200}>
+                <TokenAutocomplete options={tokenOptions} control={control} name={'token'} />
+              </Stack>
+            ) : null}
           </BoxWrapperRow>
           <BoxWrapperRow gap={2} sx={{ justifyContent: 'space-between' }}>
             {errors && Object.values(errors).length > 0 && (

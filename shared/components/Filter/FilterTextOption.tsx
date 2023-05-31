@@ -1,6 +1,6 @@
 import React from 'react'
 
-import CustomTypography, { CustomTypographyProps } from './CustomTypography'
+import CustomTypography, { CustomTypographyProps } from '../CustomTypography'
 
 interface FilterTextOptionProps {
   title: Maybe<string>

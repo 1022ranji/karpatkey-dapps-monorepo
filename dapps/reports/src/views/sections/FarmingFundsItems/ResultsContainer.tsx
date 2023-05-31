@@ -1,6 +1,6 @@
-import Filter from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/Filter'
-import Form from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/Form'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
+import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import { getFarmingResultsDetailsByProtocolTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
@@ -67,7 +67,8 @@ const ResultsContainer = (props: ResultsContainerProps) => {
     setAnchorEl(null)
   }
 
-  const onSubmitClose = (blockchain: string, protocol: string) => {
+  const onSubmitClose = (params: any) => {
+    const { blockchain, protocol } = params
     setBlockchainFilter(blockchain)
     setProtocolFilter(protocol)
   }
@@ -98,6 +99,8 @@ const ResultsContainer = (props: ResultsContainerProps) => {
       open={open}
       blockchain={blockchainFilter}
       protocol={protocolFilter}
+      enableProtocol
+      enableBlockchain
     >
       <Form
         blockchainOptions={blockchainOptions}
