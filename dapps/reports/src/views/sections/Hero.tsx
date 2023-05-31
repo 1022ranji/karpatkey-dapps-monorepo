@@ -21,27 +21,25 @@ const Hero = () => {
   }
 
   return (
-    <BoxWrapperColumn sx={{ margin: '30px 30px' }}>
-      <BoxWrapperColumn sx={{ alignItems: 'flex-start' }} gap={4}>
-        <BoxWrapperRow gap={4}>
-          <Image src={dao.icon} alt={dao.name} width={116} height={116} />
-          <BoxWrapperColumn
-            id={slugify('summary')}
-            className={'scrollable'}
-            sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
-          >
-            <CustomTypography variant="heroSectionTitle">{dao.name.trim()}</CustomTypography>
-            <CustomTypography variant="heroSectionSubtitle">
-              {monthName.trim()} Treasury Report
-            </CustomTypography>
-          </BoxWrapperColumn>
-        </BoxWrapperRow>
-        <BoxWrapperRow gap={4}>
-          {dao.addresses.map((daoAddress, index) => (
-            <ButtonAddress key={index} daoAddress={daoAddress} />
-          ))}
-        </BoxWrapperRow>
-      </BoxWrapperColumn>
+    <BoxWrapperColumn sx={{ margin: '30px 30px', alignItems: 'flex-start' }} gap={4}>
+      <BoxWrapperRow gap={4}>
+        <Image src={dao.icon} alt={dao.name} width={116} height={116} />
+        <BoxWrapperColumn
+          id={slugify('summary')}
+          className={'scrollable'}
+          sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
+        >
+          <CustomTypography variant="heroSectionTitle">{dao.name.trim()}</CustomTypography>
+          <CustomTypography variant="heroSectionSubtitle">
+            {monthName.trim()} Treasury Report
+          </CustomTypography>
+        </BoxWrapperColumn>
+      </BoxWrapperRow>
+      <BoxWrapperRow gap={4}>
+        {dao.addresses.map((daoAddress, index) => (
+          <ButtonAddress key={index} daoAddress={daoAddress} />
+        ))}
+      </BoxWrapperRow>
     </BoxWrapperColumn>
   )
 }

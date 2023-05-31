@@ -123,6 +123,14 @@ const theme = createTheme({
       lineHeight: '44px',
       color: '#1A1A1A'
     },
+    paperSectionSubtitle: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '700 !important',
+      fontSize: '22px',
+      lineHeight: '24px',
+      color: '#1A1A1A'
+    },
     heroSectionTitle: {
       fontFamily: 'IBM Plex Mono',
       fontStyle: 'normal',
@@ -377,6 +385,7 @@ declare module '@mui/material/styles' {
     filterTextRenderInput: React.CSSProperties
     filterErrorMessage: React.CSSProperties
     paperSectionTitle: React.CSSProperties
+    paperSectionSubtitle: React.CSSProperties
     heroSectionTitle: React.CSSProperties
     heroSectionSubtitle: React.CSSProperties
     infoCardTitle: React.CSSProperties
@@ -395,6 +404,7 @@ declare module '@mui/material/styles' {
     filterTextRenderInput?: React.CSSProperties
     filterErrorMessage?: React.CSSProperties
     paperSectionTitle?: React.CSSProperties
+    paperSectionSubtitle?: React.CSSProperties
     heroSectionTitle?: React.CSSProperties
     heroSectionSubtitle?: React.CSSProperties
     infoCardTitle?: React.CSSProperties
@@ -414,6 +424,7 @@ declare module '@mui/material/Typography' {
     filterTextRenderInput: true
     filterErrorMessage: true
     paperSectionTitle: true
+    paperSectionSubtitle: true
     heroSectionTitle: true
     heroSectionSubtitle: true
     infoCardTitle: true

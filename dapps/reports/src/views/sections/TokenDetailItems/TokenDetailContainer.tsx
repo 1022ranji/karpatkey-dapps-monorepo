@@ -1,10 +1,8 @@
 import Filter from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/Filter'
 import Form from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/Form'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Loading from '@karpatkey-monorepo/shared/components/Loading'
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 
@@ -81,28 +79,28 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       }
     : null
 
+  const filter = (
+    <Filter
+      id={id}
+      handleClick={handleClick}
+      handleClose={handleClose}
+      anchorEl={anchorEl}
+      open={open}
+      blockchain={blockchainFilter}
+    >
+      <Form
+        blockchainOptions={blockchainOptions}
+        onRequestClose={handleClose}
+        onSubmitClose={onSubmitClose}
+        defaultBlockchainValue={defaultBlockchainValue}
+      />
+    </Filter>
+  )
+
   return (
-    <BoxWrapperColumn gap={4}>
-      <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-        <CustomTypography variant="balanceOverviewSubtitle">Token detail</CustomTypography>
-        <Filter
-          id={id}
-          handleClick={handleClick}
-          handleClose={handleClose}
-          anchorEl={anchorEl}
-          open={open}
-          blockchain={blockchainFilter}
-        >
-          <Form
-            blockchainOptions={blockchainOptions}
-            onRequestClose={handleClose}
-            onSubmitClose={onSubmitClose}
-            defaultBlockchainValue={defaultBlockchainValue}
-          />
-        </Filter>
-      </BoxWrapperRow>
+    <PaperSection title="Token detail" subTitle="Token detail" filter={filter}>
       <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
-    </BoxWrapperColumn>
+    </PaperSection>
   )
 }
 

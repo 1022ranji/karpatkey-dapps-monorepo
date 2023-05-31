@@ -1,9 +1,6 @@
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import { DateTime } from 'luxon'
@@ -34,48 +31,49 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
     setToggleType(value)
   }
 
-  return (
-    <PaperSection title="Treasury variation">
-      <BoxWrapperColumn gap={10}>
-        <BoxWrapperColumn>
-          <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-            <CustomTypography variant="balanceOverviewSubtitle">
-              Treasury variation summary
-            </CustomTypography>
+  const filter = (
+    <ToggleButtonGroup
+      value={toggleType}
+      exclusive
+      onChange={handleChange}
+      aria-label="Balance overview type"
+    >
+      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
+        Selected period
+      </ToggleButton>
+      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
+        Year to period
+      </ToggleButton>
+    </ToggleButtonGroup>
+  )
 
-            <ToggleButtonGroup
-              value={toggleType}
-              exclusive
-              onChange={handleChange}
-              aria-label="Balance overview type"
-            >
-              <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
-                Selected period
-              </ToggleButton>
-              <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
-                Year to period
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </BoxWrapperRow>
-          <TabPanel value={toggleType} index={0}>
-            <DynamicWaterfall
-              title="Treasury variation for the period ($USD)"
-              data={rowsTreasuryVariation}
-            />
-          </TabPanel>
-          <TabPanel value={toggleType} index={1}>
-            <DynamicWaterfall
-              title={'Treasury variation in ' + DateTime.now().toFormat('yyyy') + ' ($USD)'}
-              data={rowsHistoricVariation}
-            />
-          </TabPanel>
-        </BoxWrapperColumn>
+  return (
+    <>
+      <PaperSection
+        title="Treasury variation"
+        subTitle="Treasury variation summary"
+        filter={filter}
+      >
+        <TabPanel value={toggleType} index={0}>
+          <DynamicWaterfall
+            title="Treasury variation for the period ($USD)"
+            data={rowsTreasuryVariation}
+          />
+        </TabPanel>
+        <TabPanel value={toggleType} index={1}>
+          <DynamicWaterfall
+            title={'Treasury variation in ' + DateTime.now().toFormat('yyyy') + ' ($USD)'}
+            data={rowsHistoricVariation}
+          />
+        </TabPanel>
+      </PaperSection>
+      <PaperSection>
         <DynamicWaterfall
           title="Treasury variation for the period (detail) ($USD)"
           data={rowsTreasuryVariationForThePeriodDetail}
         />
-      </BoxWrapperColumn>
-    </PaperSection>
+      </PaperSection>
+    </>
   )
 }
 
