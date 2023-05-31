@@ -2,6 +2,10 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import numbro from 'numbro'
 import * as React from 'react'
@@ -45,11 +49,14 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                     </BoxWrapperColumn>
                   </TableCellCustom>
                   <TableCellCustom align="left">
-                    {numbro(row.priceAvg).formatCurrency({
-                      spaceSeparated: false,
-                      mantissa: 0,
-                      thousandSeparated: true
-                    })}
+                    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                      {numbro(row.priceAvg).formatCurrency({
+                        spaceSeparated: false,
+                        mantissa: 0,
+                        thousandSeparated: true
+                      })}
+                      <OpenInNewIcon fontSize={'small'} />
+                    </BoxWrapperRow>
                   </TableCellCustom>
                   <TableCellCustom align="right">
                     {numbro(row.balance).formatCurrency({
@@ -66,11 +73,18 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                     })}
                   </TableCellCustom>
                   <TableCellCustom align="right">
-                    {numbro(row.priceVariation).format({
-                      output: 'percent',
-                      spaceSeparated: false,
-                      mantissa: 2
-                    })}
+                    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
+                      {numbro(row.priceVariation).format({
+                        output: 'percent',
+                        spaceSeparated: false,
+                        mantissa: 2
+                      })}
+                      {row.priceVariation > 0 ? (
+                        <ArrowUpwardIcon fontSize={'small'} />
+                      ) : (
+                        <ArrowDownwardIcon fontSize={'small'} />
+                      )}
+                    </BoxWrapperRow>
                   </TableCellCustom>
                 </TableRow>
               )
