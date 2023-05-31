@@ -1,9 +1,9 @@
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { TITLE } from '@karpatkey-monorepo/shared/config/constants'
 import { Box } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React, { FC, ReactElement } from 'react'
+import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 const FooterWrapper = styled(Box)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default

@@ -1,6 +1,6 @@
-import { CustomAutocomplete } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import * as React from 'react'
+import { CustomAutocomplete } from 'shared/components/CustomAutocomplete'
+import CustomTypography from 'shared/components/CustomTypography'
 
 const Label = () => <CustomTypography variant="filterTextRenderInput">Blockchain</CustomTypography>
 

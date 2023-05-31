@@ -1,11 +1,11 @@
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { MapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/mappers'
 import { Box, BoxProps, List, ListItem } from '@mui/material'
 import numbro from 'numbro'
 import React from 'react'
 import { Cell, Pie, PieChart as PieRechart } from 'recharts'
+import BoxWrapperColumn from 'shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 export type PieChartProps = {
   data: MapBalancesByTokenCategory[]

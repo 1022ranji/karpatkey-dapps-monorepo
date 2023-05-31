@@ -1,8 +1,8 @@
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
+import FundsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsContainer'
+import ResultsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/ResultsContainer'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
-import FundsContainer from 'dapps/reports/src/views/sections/FarmingFundsItems/FundsContainer'
-import ResultsContainer from 'dapps/reports/src/views/sections/FarmingFundsItems/ResultsContainer'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import numbro from 'numbro'
 import * as React from 'react'
 

@@ -1,7 +1,7 @@
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import React from 'react'
+import BoxWrapperColumn from 'shared/components/Wrappers/BoxWrapperColumn'
 
 interface InfoCardProps {
   title: string

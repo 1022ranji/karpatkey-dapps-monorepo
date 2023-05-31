@@ -1,15 +1,19 @@
+import TokenDetailContainer from '@karpatkey-monorepo/reports/src/views/sections/TokenDetails/TokenDetailContainer'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import * as React from 'react'
 
-const TokenDetails = () => {
+interface TokenDetailsProps {
+  tokenDetails: any[]
+}
+
+const TokenDetails = (props: TokenDetailsProps) => {
+  const { tokenDetails } = props
   return (
     <PaperSection title="Token details">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-      been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer
-      took a galley of type and scrambled it to make a type specimen book. It has survived not only
-      five centuries, but also the leap into electronic typesetting, remaining essentially
-      unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-      Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
-      including versions of Lorem Ipsum.
+      <BoxWrapperColumn gap={10}>
+        <TokenDetailContainer tokenDetails={tokenDetails} />
+      </BoxWrapperColumn>
     </PaperSection>
   )
 }

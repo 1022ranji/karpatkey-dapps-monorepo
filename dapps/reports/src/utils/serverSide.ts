@@ -19,6 +19,7 @@ import {
   getSummaryFundsByType,
   getTotalFunds
 } from '@karpatkey-monorepo/shared/utils/mappers/summary'
+import { getTokenDetails } from '@karpatkey-monorepo/shared/utils/mappers/tokenDetails'
 import {
   getTreasuryVariationForThePeriod,
   getTreasuryVariationForThePeriodDetails,
@@ -132,6 +133,9 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const farmingResultsDetailsByProtocol =
     getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
 
+  // Token detail
+  const tokenDetails = getTokenDetails(variationMetricsDetailFiltered)
+
   return {
     totalFunds,
     capitalUtilization,
@@ -147,6 +151,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     rowsTreasuryVariationForThePeriodDetail,
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
-    totalFarmingResultsFarmSwaps
+    totalFarmingResultsFarmSwaps,
+    tokenDetails
   }
 }

@@ -1,6 +1,4 @@
 import { ActionKind, useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
@@ -18,6 +16,8 @@ import { DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import BoxWrapperColumn from 'shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 import * as yup from 'yup'
 
 const ButtonStyled = styled(Button)({

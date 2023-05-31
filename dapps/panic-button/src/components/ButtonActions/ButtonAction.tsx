@@ -2,10 +2,10 @@ import SnackbarAction, {
   ESnackStatus
 } from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/SnackbarAction'
 import useHandleAction from '@karpatkey-monorepo/panic-button/src/hooks/useHandleAction'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import ModalDialog from '@karpatkey-monorepo/shared/components/Modals/ModalDialog'
 import { Button, CircularProgress } from '@mui/material'
 import React from 'react'
+import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 interface IButtonActionProps {
   actionURL: string

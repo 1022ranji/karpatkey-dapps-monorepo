@@ -1,8 +1,8 @@
 import CustomPopover from '@karpatkey-monorepo/shared/components/CustomPopover'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import FilterTextOption from '@karpatkey-monorepo/shared/components/FilterTextOption'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import * as React from 'react'
+import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 interface FilterProps {
   id: string | undefined
@@ -12,11 +12,10 @@ interface FilterProps {
   handleClick: (event: any) => void
   children: React.ReactNode
   blockchain: Maybe<string>
-  protocol: Maybe<string>
 }
 
 const Filter = (props: FilterProps) => {
-  const { id, open, anchorEl, handleClose, children, handleClick, blockchain, protocol } = props
+  const { id, open, anchorEl, handleClose, children, handleClick, blockchain } = props
 
   return (
     <BoxWrapperRow gap={10}>
@@ -31,10 +30,6 @@ const Filter = (props: FilterProps) => {
         <FilterTextOption
           title={blockchain || 'Blockchain'}
           {...(blockchain ? { fontWeight: 'extra-bold' } : {})}
-        />
-        <FilterTextOption
-          title={protocol || 'Protocol'}
-          {...(protocol ? { fontWeight: 'extra-bold' } : {})}
         />
       </BoxWrapperRow>
       <CustomPopover
