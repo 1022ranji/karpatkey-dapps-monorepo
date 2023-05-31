@@ -23,7 +23,7 @@ const Hero = () => {
   return (
     <BoxWrapperColumn sx={{ margin: '30px 30px' }}>
       <BoxWrapperColumn sx={{ alignItems: 'flex-start' }} gap={4}>
-        <BoxWrapperRow gap={2}>
+        <BoxWrapperRow gap={4}>
           <Image src={dao.icon} alt={dao.name} width={116} height={116} />
           <BoxWrapperColumn
             id={slugify('summary')}
@@ -36,7 +36,7 @@ const Hero = () => {
             </CustomTypography>
           </BoxWrapperColumn>
         </BoxWrapperRow>
-        <BoxWrapperRow gap={2}>
+        <BoxWrapperRow gap={4}>
           {dao.addresses.map((daoAddress, index) => (
             <ButtonAddress key={index} daoAddress={daoAddress} />
           ))}

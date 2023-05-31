@@ -24,7 +24,7 @@ const FarmingFunds = (props: FarmingFundsProps) => {
       <BoxWrapperColumn gap={10}>
         <FundsContainer {...{ funds }} />
         <ResultsContainer {...{ fundsDetails }} />
-        <BoxWrapperColumn gap={2}>
+        <BoxWrapperColumn gap={4}>
           <CustomTypography variant="balanceOverviewSubtitle">
             Farming results from Farm-Swaps
           </CustomTypography>

@@ -37,7 +37,7 @@ const Summary = (props: SummaryProps) => {
 
   return (
     <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
-      <BoxWrapperRow gap={2} sx={{ justifyContent: 'space-between' }}>
+      <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
         <DynamicInfoCard
           title="Total funds"
           value={numbro(totalFunds).formatCurrency({
@@ -63,7 +63,7 @@ const Summary = (props: SummaryProps) => {
           })}
         />
       </BoxWrapperRow>
-      <BoxWrapperRow gap={2} sx={{ justifyContent: 'space-between' }}>
+      <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
         <DynamicPieChart
           data={fundsByTokenCategory}
           title="Total funds by token category"

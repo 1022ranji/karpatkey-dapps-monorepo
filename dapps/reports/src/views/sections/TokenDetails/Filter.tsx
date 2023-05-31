@@ -18,7 +18,7 @@ const Filter = (props: FilterProps) => {
   const { id, open, anchorEl, handleClose, children, handleClick, blockchain } = props
 
   return (
-    <BoxWrapperRow gap={10}>
+    <BoxWrapperRow gap={4}>
       <CustomTypography variant="filterTitle">Filters</CustomTypography>
       <BoxWrapperRow
         component={'span'}
