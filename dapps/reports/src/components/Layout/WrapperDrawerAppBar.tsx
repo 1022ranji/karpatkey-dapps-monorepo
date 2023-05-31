@@ -1,5 +1,6 @@
 import Filters from '@karpatkey-monorepo/reports/src/components/Filters/Menu'
 import Logo from '@karpatkey-monorepo/shared/components/Logo'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { slugify } from '@karpatkey-monorepo/shared/utils'
 import CircleIcon from '@mui/icons-material/Circle'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
@@ -20,7 +21,6 @@ import { styled } from '@mui/material/styles'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { ReactElement } from 'react'
-import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 const DRAWER_WIDTH = 290
 const HEADER_HEIGHT = 100

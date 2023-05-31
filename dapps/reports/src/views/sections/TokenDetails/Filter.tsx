@@ -1,8 +1,8 @@
 import CustomPopover from '@karpatkey-monorepo/shared/components/CustomPopover'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import FilterTextOption from '@karpatkey-monorepo/shared/components/FilterTextOption'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import * as React from 'react'
-import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 interface FilterProps {
   id: string | undefined

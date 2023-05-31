@@ -7,8 +7,8 @@ import Summary from '@karpatkey-monorepo/reports/src/views/sections/Summary'
 import TokenDetails from '@karpatkey-monorepo/reports/src/views/sections/TokenDetails'
 import TreasuryVariation from '@karpatkey-monorepo/reports/src/views/sections/TreasuryVariation'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
+import BoxContainerWrapper from '@karpatkey-monorepo/shared/components/Wrappers/BoxContainerWrapper'
 import * as React from 'react'
-import BoxContainerWrapper from 'shared/components/Wrappers/BoxContainerWrapper'
 
 const HomepageContent = (props: ReportProps) => {
   const {

@@ -4,10 +4,10 @@ import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.conte
 import CustomPopover from '@karpatkey-monorepo/shared/components/CustomPopover'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import FilterTextOption from '@karpatkey-monorepo/shared/components/FilterTextOption'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { getDAOName, getMonthName } from '@karpatkey-monorepo/shared/utils'
 import Skeleton from '@mui/material/Skeleton'
 import React from 'react'
-import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 const FilterSkeleton = () => {
   return (

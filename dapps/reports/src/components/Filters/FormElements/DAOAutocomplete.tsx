@@ -1,12 +1,12 @@
 import { CustomAutocomplete } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, TextField } from '@mui/material'
 import { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 import Image from 'next/image'
 import * as React from 'react'
-import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 const DAOs = FILTER_DAOS.map((option: FILTER_DAO) => {
   return {

@@ -1,6 +1,6 @@
 import ButtonAction from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/ButtonAction'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import React from 'react'
-import BoxWrapperRow from 'shared/components/Wrappers/BoxWrapperRow'
 
 export default function UpdateCache() {
   return (
