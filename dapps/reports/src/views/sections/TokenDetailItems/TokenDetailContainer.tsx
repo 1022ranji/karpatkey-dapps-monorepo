@@ -1,5 +1,5 @@
-import Filter from '@karpatkey-monorepo/reports/src/views/sections/TokenDetails/Filter'
-import Form from '@karpatkey-monorepo/reports/src/views/sections/TokenDetails/Form'
+import Filter from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/Filter'
+import Form from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/Form'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Loading from '@karpatkey-monorepo/shared/components/Loading'
@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import * as React from 'react'
 
 const DynamicTableTokenDetail = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/sections/TokenDetails/TableTokenDetail'),
+  () => import('@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TableTokenDetail'),
   {
     loading: () => <Loading />
   }
