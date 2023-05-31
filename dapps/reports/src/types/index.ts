@@ -22,6 +22,7 @@ export type ReportData = {
   farmingFundsByProtocol: any[]
   farmingResultsDetailsByProtocol: any[]
   tokenDetails: any[]
+  tokenDetailsGrouped: any[]
 }
 
 export type ReportProps = ReportData & Filter

@@ -15,7 +15,7 @@ const PaperSection = (props: PaperSectionProps) => {
   return (
     <Paper>
       <Divider />
-      <BoxWrapperColumn sx={{ marginX: '30px', marginY: '30px' }}>
+      <BoxWrapperColumn sx={{ marginX: '30px', marginY: '30px' }} gap={3}>
         <CustomTypography
           id={slugify(title)}
           className={'scrollable'}

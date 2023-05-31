@@ -42,7 +42,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
     totalFarmingResultsFarmSwaps,
-    tokenDetails
+    tokenDetails,
+    tokenDetailsGrouped
   } = await getCommonServerSideProps(params)
 
   // Pass data to the page via props
@@ -64,6 +65,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       farmingResultsDetailsByProtocol,
       totalFarmingResultsFarmSwaps,
       tokenDetails,
+      tokenDetailsGrouped,
       ...params
     }
   }

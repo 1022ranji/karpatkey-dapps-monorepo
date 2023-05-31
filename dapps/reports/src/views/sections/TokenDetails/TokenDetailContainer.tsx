@@ -17,15 +17,32 @@ const DynamicTableTokenDetail = dynamic(
 
 interface TokenDetailContainerProps {
   tokenDetails: any[]
+  tokenDetailsGrouped: any[]
 }
 
 const TokenDetailContainer = (props: TokenDetailContainerProps) => {
-  const { tokenDetails = [] } = props
+  const { tokenDetails = [], tokenDetailsGrouped = [] } = props
   const [blockchainFilter, setBlockchainFilter] = React.useState<Maybe<string>>(null)
 
-  const filteredTokenDetails = tokenDetails.filter((tokenDetail) => {
-    return blockchainFilter ? blockchainFilter === tokenDetail['blockchain'] : true
-  })
+  const filteredTokenDetailsWithoutAllocation = blockchainFilter
+    ? tokenDetails.filter((tokenDetail) => {
+        return blockchainFilter ? blockchainFilter === tokenDetail['blockchain'] : true
+      })
+    : tokenDetailsGrouped
+
+  const usdValueTotal = filteredTokenDetailsWithoutAllocation.reduce(
+    (accumulator: number, currentValue: any) => accumulator + currentValue.usdValue,
+    0
+  )
+
+  const filteredTokenDetails = filteredTokenDetailsWithoutAllocation
+    .map((tokenDetail) => {
+      return {
+        ...tokenDetail,
+        allocation: tokenDetail.usdValue / usdValueTotal
+      }
+    })
+    .sort((a, b) => b.allocation - a.allocation)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 

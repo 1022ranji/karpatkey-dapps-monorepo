@@ -5,14 +5,18 @@ import * as React from 'react'
 
 interface TokenDetailsProps {
   tokenDetails: any[]
+  tokenDetailsGrouped: any[]
 }
 
 const TokenDetails = (props: TokenDetailsProps) => {
-  const { tokenDetails } = props
+  const { tokenDetails, tokenDetailsGrouped } = props
   return (
     <PaperSection title="Token details">
       <BoxWrapperColumn gap={10}>
-        <TokenDetailContainer tokenDetails={tokenDetails} />
+        <TokenDetailContainer
+          tokenDetails={tokenDetails}
+          tokenDetailsGrouped={tokenDetailsGrouped}
+        />
       </BoxWrapperColumn>
     </PaperSection>
   )
