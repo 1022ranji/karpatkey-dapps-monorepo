@@ -95,6 +95,7 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
         onRequestClose={handleClose}
         onSubmitClose={onSubmitClose}
         defaultBlockchainValue={defaultBlockchainValue}
+        enableBlockchain
       />
     </Filter>
   )

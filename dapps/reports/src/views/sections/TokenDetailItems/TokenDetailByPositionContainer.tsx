@@ -72,6 +72,9 @@ const TokenDetailByPositionContainer = () => {
         defaultBlockchainValue={defaultBlockchainValue}
         defaultProtocolValue={defaultProtocolValue}
         defaultTokenValue={defaultTokenValue}
+        enableBlockchain
+        enableProtocol
+        enableToken
       />
     </Filter>
   )

@@ -109,6 +109,8 @@ const ResultsContainer = (props: ResultsContainerProps) => {
         onSubmitClose={onSubmitClose}
         defaultBlockchainValue={defaultBlockchainValue}
         defaultProtocolValue={defaultProtocolValue}
+        enableProtocol
+        enableBlockchain
       />
     </Filter>
   )

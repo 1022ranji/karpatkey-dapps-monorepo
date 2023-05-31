@@ -80,6 +80,9 @@ interface FormProps {
   blockchainOptions: AutocompleteOption[]
   protocolOptions?: AutocompleteOption[]
   tokenOptions?: AutocompleteOption[]
+  enableProtocol?: boolean
+  enableBlockchain?: boolean
+  enableToken?: boolean
 }
 
 const Form = (props: FormProps) => {
@@ -91,7 +94,10 @@ const Form = (props: FormProps) => {
     blockchainOptions,
     protocolOptions = [],
     tokenOptions = [],
-    onSubmitClose
+    onSubmitClose,
+    enableToken,
+    enableBlockchain,
+    enableProtocol
   } = props
 
   // Yup validation
@@ -134,14 +140,16 @@ const Form = (props: FormProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <BoxWrapperColumn gap={2}>
           <BoxWrapperRow gap={2}>
-            <Stack width={200}>
-              <BlockchainAutocomplete
-                options={blockchainOptions}
-                control={control}
-                name={'blockchain'}
-              />
-            </Stack>
-            {protocolOptions.length > 0 ? (
+            {enableBlockchain ? (
+              <Stack width={200}>
+                <BlockchainAutocomplete
+                  options={blockchainOptions}
+                  control={control}
+                  name={'blockchain'}
+                />
+              </Stack>
+            ) : null}
+            {enableProtocol ? (
               <Stack width={200}>
                 <ProtocolAutocomplete
                   options={protocolOptions}
@@ -150,7 +158,7 @@ const Form = (props: FormProps) => {
                 />
               </Stack>
             ) : null}
-            {tokenOptions.length > 0 ? (
+            {enableToken ? (
               <Stack width={200}>
                 <TokenAutocomplete options={tokenOptions} control={control} name={'token'} />
               </Stack>

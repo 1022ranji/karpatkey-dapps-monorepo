@@ -109,6 +109,8 @@ const FundsContainer = (props: FundsContainerProps) => {
         onSubmitClose={onSubmitClose}
         defaultBlockchainValue={defaultBlockchainValue}
         defaultProtocolValue={defaultProtocolValue}
+        enableProtocol
+        enableBlockchain
       />
     </Filter>
   )
