@@ -1,14 +1,13 @@
 import randomColor from 'randomcolor'
 
 const COLORS = [
-  '#808080',
-  '#B6B6B6',
+  '#535353', //OK
+  '#808080', //OK
+  '#B6B6B6', //OK
+  '#DEDEDE', //OK
   '#C0C0C0',
-  '#535353',
   '#A9A9A9',
   '#5c5c5c',
-
-  '#DEDEDE',
   '#383838',
   '#71797E',
   '#B2BEB5'
