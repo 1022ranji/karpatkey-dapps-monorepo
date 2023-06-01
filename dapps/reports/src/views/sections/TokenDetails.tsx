@@ -6,14 +6,15 @@ import TokenDetailByPositionContainer from './TokenDetailItems/TokenDetailByPosi
 interface TokenDetailsProps {
   tokenDetails: any[]
   tokenDetailsGrouped: any[]
+  tokenDetailByPosition: any[]
 }
 
 const TokenDetails = (props: TokenDetailsProps) => {
-  const { tokenDetails, tokenDetailsGrouped } = props
+  const { tokenDetails, tokenDetailsGrouped, tokenDetailByPosition } = props
   return (
     <>
       <TokenDetailContainer tokenDetails={tokenDetails} tokenDetailsGrouped={tokenDetailsGrouped} />
-      <TokenDetailByPositionContainer />
+      <TokenDetailByPositionContainer tokenDetailByPosition={tokenDetailByPosition} />
     </>
   )
 }

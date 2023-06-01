@@ -31,7 +31,8 @@ const HomepageContent = (props: ReportProps) => {
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
     tokenDetails,
-    tokenDetailsGrouped
+    tokenDetailsGrouped,
+    tokenDetailByPosition
   } = props
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -80,7 +81,11 @@ const HomepageContent = (props: ReportProps) => {
         <FarmingFunds {...farmingFundsResultsProps} />
       </AnimatePresenceWrapper>
       <AnimatePresenceWrapper>
-        <TokenDetails tokenDetails={tokenDetails} tokenDetailsGrouped={tokenDetailsGrouped} />
+        <TokenDetails
+          tokenDetails={tokenDetails}
+          tokenDetailsGrouped={tokenDetailsGrouped}
+          tokenDetailByPosition={tokenDetailByPosition}
+        />
       </AnimatePresenceWrapper>
     </BoxContainerWrapper>
   )

@@ -1,9 +1,16 @@
+import CardsTokenDetailByPosition from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/CardsTokenDetailByPosition'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import * as React from 'react'
 
-const TokenDetailByPositionContainer = () => {
+interface TokenDetailByPositionContainerProps {
+  tokenDetailByPosition: any[]
+}
+
+const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerProps) => {
+  const { tokenDetailByPosition = [] } = props
+
   const [blockchainFilter, setBlockchainFilter] = React.useState<Maybe<string>>(null)
   const [protocolFilter, setProtocolFilter] = React.useState<Maybe<string>>(null)
   const [tokenFilter, setTokenFilter] = React.useState<Maybe<string>>(null)
@@ -81,7 +88,7 @@ const TokenDetailByPositionContainer = () => {
 
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
-      something
+      <CardsTokenDetailByPosition tokenDetailByPosition={tokenDetailByPosition} />
     </PaperSection>
   )
 }

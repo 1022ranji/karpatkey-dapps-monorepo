@@ -23,6 +23,7 @@ export type ReportData = {
   farmingResultsDetailsByProtocol: any[]
   tokenDetails: any[]
   tokenDetailsGrouped: any[]
+  tokenDetailByPosition: any[]
 }
 
 export type ReportProps = ReportData & Filter
