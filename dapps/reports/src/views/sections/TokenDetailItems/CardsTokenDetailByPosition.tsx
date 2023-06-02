@@ -2,7 +2,7 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { Box, Divider, Grid } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import numbro from 'numbro'
 import * as React from 'react'
 
@@ -74,12 +74,11 @@ const CardBoxPosition = (props: CardBoxPositionProps) => {
   return (
     <BoxWrapperColumn
       sx={{
-        width: '290px',
+        width: '340px',
         height: 'content-fit',
         padding: '8px 8px',
         border: '1px solid #B6B6B6',
-        background: 'background.paper',
-        '.MuiBox-root:last-child > hr:last-child': { display: 'none' }
+        background: 'background.paper'
       }}
       gap={2}
     >
@@ -186,7 +185,15 @@ const CardsTokenDetailByPosition = (props: CardsTokenDetailByPositionProps) => {
   const { tokenDetailByPosition } = props
 
   return (
-    <Grid container spacing={4}>
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: 'auto auto auto auto',
+        gridAutoRows: 'minmax(440px, auto)',
+        alignItems: 'stretch',
+        gap: '10px 10px'
+      }}
+    >
       {Object.keys(tokenDetailByPosition).map((blockchain: string) => {
         const protocols = Object.keys(tokenDetailByPosition[blockchain as any])
         return protocols.map((protocol: string) => {
@@ -194,19 +201,18 @@ const CardsTokenDetailByPosition = (props: CardsTokenDetailByPositionProps) => {
           return positions.map((position: string, index: number) => {
             const data = tokenDetailByPosition[blockchain as any][protocol][position]
             return (
-              <Grid item key={index}>
-                <CardBoxPosition
-                  blockchain={blockchain}
-                  protocol={protocol}
-                  position={position}
-                  data={data}
-                />
-              </Grid>
+              <CardBoxPosition
+                key={index}
+                blockchain={blockchain}
+                protocol={protocol}
+                position={position}
+                data={data}
+              />
             )
           })
         })
       })}
-    </Grid>
+    </Box>
   )
 }
 
