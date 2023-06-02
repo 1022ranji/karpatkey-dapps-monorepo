@@ -3,7 +3,10 @@ import Position from '@karpatkey-monorepo/reports/src/views/sections/TokenDetail
 import Title from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Title'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import numbro from 'numbro'
 import * as React from 'react'
+
+import ItemText from './ItemText'
 
 interface CardItemProps {
   blockchain: string
@@ -21,6 +24,22 @@ interface CardItemProps {
 
 const CardItem = (props: CardItemProps) => {
   const { blockchain, protocol, position, data } = props
+
+  const totalUSDValue = Object.keys(data).reduce((acc: any, cur: any) => {
+    const tokens = data[cur]
+    const total = Object.keys(tokens).reduce((acc: any, cur: any) => {
+      const tokenData = tokens[cur]
+      return acc + tokenData.usdValue
+    }, 0)
+    return acc + total
+  }, 0)
+
+  const totalUSDValueWithFormat = numbro(totalUSDValue).formatCurrency({
+    spaceSeparated: false,
+    thousandSeparated: true,
+    mantissa: 0
+  })
+
   return (
     <BoxWrapperColumn
       sx={{
@@ -31,13 +50,16 @@ const CardItem = (props: CardItemProps) => {
         border: '1px solid #B6B6B6',
         background: 'background.paper'
       }}
-      gap={2}
+      gap={4}
     >
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
         <Title title={blockchain} />
         <Title title={protocol} />
       </BoxWrapperRow>
-      <Position position={position} />
+      <BoxWrapperColumn gap={1}>
+        <Position position={position} />
+        <ItemText itemText={totalUSDValueWithFormat} />
+      </BoxWrapperColumn>
       {Object.keys(data)
         .sort((a: string, b: string) => a.localeCompare(b))
         .map((title: string, index: number) => {

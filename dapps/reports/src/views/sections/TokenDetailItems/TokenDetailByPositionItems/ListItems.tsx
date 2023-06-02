@@ -2,7 +2,7 @@ import ItemText from '@karpatkey-monorepo/reports/src/views/sections/TokenDetail
 import ItemUSD from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/ItemUSD'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { Box, Divider } from '@mui/material'
+import { Divider } from '@mui/material'
 import numbro from 'numbro'
 import * as React from 'react'
 
@@ -19,8 +19,10 @@ interface ListItemsProps {
 const ListItems = ({ title, tokens }: ListItemsProps) => {
   return (
     <BoxWrapperColumn sx={{ gap: 2 }}>
-      <ItemText itemText={title} />
-      <Divider />
+      <BoxWrapperColumn gap={1}>
+        <ItemText itemText={title} />
+        <Divider sx={{ borderBottomWidth: 5 }} />
+      </BoxWrapperColumn>
       {Object.keys(tokens).map((token: string, index: number) => {
         const tokenData = tokens[token]
         const usdValue = numbro(tokenData.usdValue).formatCurrency({
@@ -28,18 +30,15 @@ const ListItems = ({ title, tokens }: ListItemsProps) => {
           thousandSeparated: true,
           mantissa: 0
         })
-
         return (
-          <Box key={index}>
-            <BoxWrapperColumn>
-              <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-                <ItemText itemText={token} />
-                <ItemText itemText={tokenData.tokenBalance.toFixed(2)} />
-              </BoxWrapperRow>
-              <ItemUSD itemUsd={usdValue} />
-            </BoxWrapperColumn>
+          <BoxWrapperColumn key={index} gap={1}>
+            <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
+              <ItemText itemText={token} />
+              <ItemText itemText={tokenData.tokenBalance.toFixed(2)} />
+            </BoxWrapperRow>
+            <ItemUSD itemUsd={usdValue} />
             <Divider />
-          </Box>
+          </BoxWrapperColumn>
         )
       })}
     </BoxWrapperColumn>
