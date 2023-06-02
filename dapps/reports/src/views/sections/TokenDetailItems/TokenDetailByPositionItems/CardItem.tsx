@@ -25,7 +25,7 @@ const CardItem = (props: CardItemProps) => {
     <BoxWrapperColumn
       sx={{
         minWidth: '340px',
-        minHeight: '620px',
+        minHeight: '450px',
         height: 'content-fit',
         padding: '8px 8px',
         border: '1px solid #B6B6B6',
