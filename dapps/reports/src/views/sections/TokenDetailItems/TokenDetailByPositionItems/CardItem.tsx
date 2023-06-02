@@ -7,6 +7,7 @@ import numbro from 'numbro'
 import * as React from 'react'
 
 import ItemText from './ItemText'
+import ProtocolIcon from './ProtocolIcon'
 
 interface CardItemProps {
   blockchain: string
@@ -54,7 +55,10 @@ const CardItem = (props: CardItemProps) => {
     >
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
         <Title title={blockchain} />
-        <Title title={protocol} />
+        <BoxWrapperRow gap={1}>
+          <ProtocolIcon protocol={protocol} />
+          <Title title={protocol} />
+        </BoxWrapperRow>
       </BoxWrapperRow>
       <BoxWrapperColumn gap={1}>
         <Position position={position} />
