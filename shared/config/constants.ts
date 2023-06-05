@@ -163,3 +163,78 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     ]
   }
 ]
+
+export const TOKEN_COINGECKO_PRICE_URL = [
+  {
+    tokenName: 'DAI',
+    url: 'https://www.coingecko.com/en/coins/dai'
+  },
+  {
+    tokenName: 'WETH',
+    url: 'https://www.coingecko.com/en/coins/weth'
+  },
+  {
+    tokenName: 'GNO',
+    url: 'https://www.coingecko.com/en/coins/gnosis'
+  },
+  {
+    tokenName: 'stETH',
+    url: 'https://www.coingecko.com/en/coins/lido-staked-ether'
+  },
+  {
+    tokenName: 'USDT',
+    url: 'https://www.coingecko.com/en/coins/tether'
+  },
+  {
+    tokenName: 'USDC',
+    url: 'https://www.coingecko.com/en/coins/usd-coin'
+  },
+  {
+    tokenName: 'WBTC',
+    url: 'https://www.coingecko.com/en/coins/wrapped-bitcoin'
+  },
+  {
+    tokenName: 'Aura',
+    url: 'https://www.coingecko.com/en/coins/aura-finance'
+  },
+  {
+    tokenName: 'Cow',
+    url: 'https://www.coingecko.com/en/coins/cow-protocol'
+  },
+  {
+    tokenName: 'Agve',
+    url: 'https://www.coingecko.com/en/coins/agave-token'
+  },
+  {
+    tokenName: 'Bal',
+    url: 'https://www.coingecko.com/en/coins/balancer'
+  },
+  {
+    tokenName: 'ETH',
+    url: 'https://www.coingecko.com/en/coins/ethereum'
+  },
+  {
+    tokenName: 'CRV',
+    url: 'https://www.coingecko.com/en/coins/curve-dao-token'
+  },
+  {
+    tokenName: 'NOTE',
+    url: 'https://www.coingecko.com/en/coins/notional-finance'
+  },
+  {
+    tokenName: 'CVX',
+    url: 'https://www.coingecko.com/en/coins/convex-finance'
+  },
+  {
+    tokenName: 'auraBAL',
+    url: 'https://www.coingecko.com/en/coins/aura-bal'
+  },
+  {
+    tokenName: 'COMP',
+    url: 'https://www.coingecko.com/en/coins/compound'
+  },
+  {
+    tokenName: 'XDAI',
+    url: 'https://www.coingecko.com/en/coins/xdai'
+  }
+]

@@ -3,6 +3,7 @@ import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCe
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import { TOKEN_COINGECKO_PRICE_URL } from '@karpatkey-monorepo/shared/config/constants'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
@@ -49,6 +50,15 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
             ) : null}
             {filteredTokenDetails.length > 0
               ? filteredTokenDetails.map((row: any, index: number) => {
+                  const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
+                    (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
+                  )
+                  const onClick = () => {
+                    if (TOKEN) {
+                      window.open(TOKEN.url, '_blank')
+                    }
+                  }
+
                   return (
                     <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
@@ -66,7 +76,13 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                             mantissa: 0,
                             thousandSeparated: true
                           })}
-                          <OpenInNewIcon fontSize={'small'} />
+                          {TOKEN && (
+                            <OpenInNewIcon
+                              onClick={onClick}
+                              fontSize={'small'}
+                              sx={{ cursor: 'pointer' }}
+                            />
+                          )}
                         </BoxWrapperRow>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
