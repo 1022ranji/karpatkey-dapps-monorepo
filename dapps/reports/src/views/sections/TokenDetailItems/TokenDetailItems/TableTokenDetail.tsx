@@ -70,11 +70,26 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                         </BoxWrapperRow>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {numbro(row.balance).formatCurrency({
-                          spaceSeparated: false,
-                          mantissa: 2,
-                          thousandSeparated: true
-                        })}
+                        <BoxWrapperColumn
+                          sx={{
+                            minWidth: 'max-content',
+                            width: '125px',
+                            maxWidth: '100%',
+                            alignItems: 'flex-end'
+                          }}
+                        >
+                          {numbro(row.balance).format({
+                            spaceSeparated: false,
+                            mantissa: 2
+                          })}
+                          <CustomTypography variant="tableCellSubData">
+                            {numbro(row.usdValue).formatCurrency({
+                              spaceSeparated: false,
+                              mantissa: 2,
+                              thousandSeparated: true
+                            })}
+                          </CustomTypography>
+                        </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         {numbro(row.allocation).format({
