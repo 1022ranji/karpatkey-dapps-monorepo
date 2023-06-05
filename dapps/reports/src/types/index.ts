@@ -1,12 +1,11 @@
-export type TReportFilter = {
-  daoName: TDAO_Name
-  period: string
-  periodType: TPeriodType
+export type Filter = {
+  dao: Maybe<number>
+  month: Maybe<number>
+  year: Maybe<number>
 }
 
 // TODO: improve types without the use of "any"
-export type TReportData = {
-  summary: any[]
+export type ReportData = {
   totalFunds: number
   capitalUtilization: number
   farmingResults: number
@@ -19,31 +18,18 @@ export type TReportData = {
   rowsTreasuryVariation: any[]
   rowsHistoricVariation: any[]
   rowsTreasuryVariationForThePeriodDetail: any[]
-  totalFarmingFunds: number
-  rowsFarmingFundsByProtocol: any[]
-  rowsFarmingFundsByProtocolTotals: {
-    fundsTotal: number
-    unclaimedTotal: number
-    resultsTotal: number
-  }
   totalFarmingResultsFarmSwaps: number
-  rowsFarmingResultsDetailsByProtocol: any[]
-  rowsFarmingResultsDetailsByProtocolTotals: {
-    rewardsTotal: number
-    feesTotal: number
-    total: number
-  }
+  farmingFundsByProtocol: any[]
+  farmingResultsDetailsByProtocol: any[]
+  tokenDetails: any[]
+  tokenDetailsGrouped: any[]
+  tokenDetailByPosition: any[]
 }
 
-export type TReportProps = TReportData & TReportFilter
-
-export type TTitleProps = {
-  periodType: TPeriodType
-  daoName: TDAO_Name
-}
+export type ReportProps = ReportData & Filter
 
 // TODO improve types without the use of "any"
-export type TFormProps = {
+export type FormProps = {
   name: string
   control: any
   onChange?: (value: any) => void

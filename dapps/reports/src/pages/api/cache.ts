@@ -3,15 +3,15 @@ import { DataWarehouse } from '@karpatkey-monorepo/reports/src/services/classes/
 import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type TStatus = {
+type Status = {
   data: {
     status: boolean
-    message?: TMaybe<string>
-    error?: TMaybe<Error>
+    message?: Maybe<string>
+    error?: Maybe<Error>
   }
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<TStatus>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
   return new Promise<void>(async (resolve, reject) => {
     try {
       const cache = Cache.getInstance()
@@ -20,8 +20,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<TStatu
 
       // Step 2: Query the data
       const cachePromises = ALLOWED_REPORTS.map(async (report) => {
-        const reportData = await dataWarehouse[report.reportName as TReport]()
-        cache.writeApi(report.reportName as TReport, reportData)
+        const reportData = await dataWarehouse[report.reportName as Report]()
+        cache.writeApi(report.reportName as Report, reportData)
       })
       await Promise.all(cachePromises)
 
@@ -30,7 +30,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<TStatu
       resolve()
     } catch (error) {
       console.error('Error: ', error)
-      res.status(500).json({ data: { status: false, error: error as Error } })
+      res.status(500).json({ data: { status: false, error } } as Status)
       reject()
     }
   })

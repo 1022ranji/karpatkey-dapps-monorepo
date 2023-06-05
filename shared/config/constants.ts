@@ -2,128 +2,7 @@ export const TITLE = 'karpatkey'
 
 export const NONE = 'None'
 
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
-
-export const EthereumDAOs: IDAO[] = [
-  {
-    addresses: ['0x849d52316331967b6ff1198e5e32a0eb168d039d'],
-    name: 'Gnosis DAO',
-    keyName: 'GnosisDAO',
-    icon: '/images/protocols/gnosis.svg'
-  },
-  {
-    addresses: ['0x4971dd016127f390a3ef6b956ff944d0e2e1e462'],
-    name: 'Gnosis LTD',
-    keyName: 'Gnosis LTD',
-    icon: '/images/protocols/gnosis.svg'
-  },
-  {
-    addresses: ['0x0efccbb9e2c09ea29551879bd9da32362b32fc89'],
-    name: 'Balancer',
-    keyName: 'BalancerDAO',
-    icon: '/images/protocols/balancer.svg'
-  },
-  {
-    addresses: ['0x4f2083f5fbede34c2714affb3105539775f7fe64'],
-    name: 'ENS',
-    keyName: 'ENS',
-    icon: '/images/protocols/ens.svg'
-  },
-  {
-    addresses: ['0x616de58c011f8736fa20c7ae5352f7f6fb9f0669'],
-    name: 'CoW',
-    keyName: 'CowDAO',
-    icon: '/images/protocols/cow.svg'
-  },
-  {
-    addresses: ['0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c'],
-    name: 'karpatkey',
-    keyName: 'Karpatkey',
-    icon: '/images/protocols/karpatkey.svg'
-  }
-]
-
-export const GnosisDAOs: IDAO[] = [
-  {
-    addresses: ['0x458cd345b4c05e8df39d0a07220feb4ec19f5e6f'],
-    name: 'Gnosis DAO',
-    keyName: 'GnosisDAO',
-    icon: '/images/protocols/gnosis.svg'
-  },
-  {
-    addresses: ['0x10e4597ff93cbee194f4879f8f1d54a370db6969'],
-    name: 'Gnosis LTD',
-    keyName: 'Gnosis LTD',
-    icon: '/images/protocols/gnosis.svg'
-  },
-  {
-    addresses: ['0xde1d6645bdc43cb26958acbfcb5d61acd2c24ac3'],
-    name: 'Gnosis Guild',
-    keyName: 'Gnosis Guild',
-    icon: '/images/protocols/gnosis.svg'
-  }
-]
-
-export const DAOs: { [K in ENetworkIds]: INetwork } = {
-  0: {
-    DAOs: [
-      {
-        addresses: [ZERO_ADDRESS],
-        name: NONE,
-        keyName: NONE,
-        icon: '/images/protocols/default.svg'
-      },
-      ...EthereumDAOs,
-      ...GnosisDAOs
-    ]
-  },
-  1: {
-    DAOs: [
-      {
-        addresses: [ZERO_ADDRESS],
-        name: NONE,
-        keyName: NONE,
-        icon: '/images/protocols/default.svg'
-      },
-      ...EthereumDAOs
-    ]
-  },
-  100: {
-    DAOs: [
-      {
-        addresses: [ZERO_ADDRESS],
-        name: NONE,
-        keyName: NONE,
-        icon: '/images/protocols/default.svg'
-      },
-      ...GnosisDAOs
-    ]
-  }
-}
-
-export const BASIC_NETWORKS = {
-  1: {
-    name: 'Ethereum',
-    icon: '/images/chains/ethereum.svg',
-    explorerURL: 'https://etherscan.io/address/'
-  },
-  100: {
-    name: 'Gnosis',
-    icon: '/images/chains/gnosis.svg',
-    explorerURL: 'https://gnosisscan.io/address/'
-  }
-}
-
-export const NETWORKS = {
-  0: {
-    name: 'All networks',
-    icon: '/images/chains/all.svg',
-    explorerURL: 'https://etherscan.io/address/'
-  },
-  ...BASIC_NETWORKS
-}
-
-export const ALLOWED_REPORTS: { reportName: TReport; fileName: string }[] = [
+export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
   {
     reportName: 'getDailyBalanceReports',
     fileName: 'daily-balance-reports'
@@ -147,5 +26,215 @@ export const ALLOWED_REPORTS: { reportName: TReport; fileName: string }[] = [
   {
     reportName: 'getTreasuryHistoricVariation',
     fileName: 'treasury-historic-variation'
+  }
+]
+
+export type CHAIN = {
+  id: number
+  name: string
+  short: string
+  explorer: string
+  logo: string
+}
+
+export type DAO_ADDRESS = {
+  address: string
+  chainId: number
+}
+
+export interface FILTER_DAO {
+  id: number
+  name: string
+  icon: string
+  keyName: DAO_NAME
+  sinceMonth: number
+  sinceYear: number
+  addresses: DAO_ADDRESS[]
+}
+
+export const CHAINS: CHAIN[] = [
+  {
+    id: 1,
+    name: 'Ethereum',
+    short: 'eth',
+    explorer: 'https://etherscan.io/address',
+    logo: '/images/chains/ethereum.svg'
+  },
+  {
+    id: 100,
+    name: 'Gnosis Chain',
+    short: 'gno',
+    explorer: 'https://gnosisscan.io/address',
+    logo: '/images/chains/gnosis.svg'
+  }
+]
+
+export const enum DAO_NAME_KEY {
+  'Gnosis DAO' = 0,
+  'Gnosis LTD' = 1,
+  'Balancer DAO' = 2,
+  'ENS DAO' = 3,
+  'CoW DAO' = 4,
+  'karpatkey DAO' = 5,
+  'Gnosis Guild' = 6
+}
+
+export const FILTER_DAOS: FILTER_DAO[] = [
+  {
+    id: DAO_NAME_KEY['Gnosis DAO'],
+    name: 'Gnosis DAO',
+    icon: '/images/protocols/gnosis.svg',
+    keyName: 'Gnosis DAO',
+    sinceMonth: 4,
+    sinceYear: 2023,
+    addresses: [
+      {
+        address: '0x849d52316331967b6ff1198e5e32a0eb168d039d',
+        chainId: 1
+      },
+      {
+        address: '0x458cd345b4c05e8df39d0a07220feb4ec19f5e6f',
+        chainId: 100
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['Balancer DAO'],
+    name: 'Balancer',
+    icon: '/images/protocols/balancer.svg',
+    keyName: 'Balancer DAO',
+    sinceMonth: 4,
+    sinceYear: 2023,
+    addresses: [
+      {
+        address: '0x0efccbb9e2c09ea29551879bd9da32362b32fc89',
+        chainId: 1
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['ENS DAO'],
+    name: 'ENS',
+    icon: '/images/protocols/ens.svg',
+    keyName: 'ENS DAO',
+    sinceMonth: 4,
+    sinceYear: 2023,
+    addresses: [
+      {
+        address: '0x4f2083f5fbede34c2714affb3105539775f7fe64',
+        chainId: 1
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['CoW DAO'],
+    name: 'CoW',
+    icon: '/images/protocols/cow.svg',
+    keyName: 'CoW DAO',
+    sinceMonth: 4,
+    sinceYear: 2023,
+    addresses: [
+      {
+        address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
+        chainId: 1
+      },
+      {
+        address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
+        chainId: 100
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['karpatkey DAO'],
+    name: 'karpatkey',
+    icon: '/images/protocols/karpatkey.svg',
+    keyName: 'karpatkey DAO',
+    sinceMonth: 4,
+    sinceYear: 2023,
+    addresses: [
+      {
+        address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
+        chainId: 1
+      },
+      {
+        address: '0x54e191B01aA9C1F61AA5C3BCe8d00956F32D3E71',
+        chainId: 100
+      }
+    ]
+  }
+]
+
+export const TOKEN_COINGECKO_PRICE_URL = [
+  {
+    tokenName: 'DAI',
+    url: 'https://www.coingecko.com/en/coins/dai'
+  },
+  {
+    tokenName: 'WETH',
+    url: 'https://www.coingecko.com/en/coins/weth'
+  },
+  {
+    tokenName: 'GNO',
+    url: 'https://www.coingecko.com/en/coins/gnosis'
+  },
+  {
+    tokenName: 'stETH',
+    url: 'https://www.coingecko.com/en/coins/lido-staked-ether'
+  },
+  {
+    tokenName: 'USDT',
+    url: 'https://www.coingecko.com/en/coins/tether'
+  },
+  {
+    tokenName: 'USDC',
+    url: 'https://www.coingecko.com/en/coins/usd-coin'
+  },
+  {
+    tokenName: 'WBTC',
+    url: 'https://www.coingecko.com/en/coins/wrapped-bitcoin'
+  },
+  {
+    tokenName: 'Aura',
+    url: 'https://www.coingecko.com/en/coins/aura-finance'
+  },
+  {
+    tokenName: 'Cow',
+    url: 'https://www.coingecko.com/en/coins/cow-protocol'
+  },
+  {
+    tokenName: 'Agve',
+    url: 'https://www.coingecko.com/en/coins/agave-token'
+  },
+  {
+    tokenName: 'Bal',
+    url: 'https://www.coingecko.com/en/coins/balancer'
+  },
+  {
+    tokenName: 'ETH',
+    url: 'https://www.coingecko.com/en/coins/ethereum'
+  },
+  {
+    tokenName: 'CRV',
+    url: 'https://www.coingecko.com/en/coins/curve-dao-token'
+  },
+  {
+    tokenName: 'NOTE',
+    url: 'https://www.coingecko.com/en/coins/notional-finance'
+  },
+  {
+    tokenName: 'CVX',
+    url: 'https://www.coingecko.com/en/coins/convex-finance'
+  },
+  {
+    tokenName: 'auraBAL',
+    url: 'https://www.coingecko.com/en/coins/aura-bal'
+  },
+  {
+    tokenName: 'COMP',
+    url: 'https://www.coingecko.com/en/coins/compound'
+  },
+  {
+    tokenName: 'XDAI',
+    url: 'https://www.coingecko.com/en/coins/xdai'
   }
 ]

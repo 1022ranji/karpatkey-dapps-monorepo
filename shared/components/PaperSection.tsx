@@ -1,26 +1,48 @@
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import Paper from '@karpatkey-monorepo/shared/components/Paper'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import { slugify } from '@karpatkey-monorepo/shared/utils'
 import { Divider } from '@mui/material'
 import * as React from 'react'
 
-import BoxWrapperColumn from './BoxWrapperColumn'
-import CustomTypography from './CustomTypography'
-import Paper from './Paper'
-
-interface IPaperSection {
+interface PaperSectionProps {
   title?: string
+  subTitle?: string
+  filter?: React.ReactNode
   children: React.ReactNode
 }
 
-const PaperSection = (props: IPaperSection) => {
-  const { title, children } = props
+const PaperSection = (props: PaperSectionProps) => {
+  const { title, subTitle, filter, children } = props
   return (
     <Paper>
-      {title && (
-        <CustomTypography color="textSecondary" variant="h5" textAlign="left">
-          {title}
-        </CustomTypography>
-      )}
-      <Divider sx={{ marginY: 2 }} />
-      <BoxWrapperColumn>{children}</BoxWrapperColumn>
+      <Divider />
+      <BoxWrapperColumn sx={{ marginX: '30px', marginY: '30px' }} gap={3}>
+        {title ? (
+          <CustomTypography
+            id={slugify(title)}
+            className={'scrollable'}
+            variant="paperSectionTitle"
+            textAlign="left"
+          >
+            {title}
+          </CustomTypography>
+        ) : null}
+        {subTitle || filter ? (
+          <BoxWrapperRow
+            sx={{
+              ...(subTitle ? { justifyContent: 'space-between' } : { justifyContent: 'flex-end' })
+            }}
+          >
+            {subTitle ? (
+              <CustomTypography variant="paperSectionSubtitle">{subTitle}</CustomTypography>
+            ) : null}
+            {filter ? filter : null}
+          </BoxWrapperRow>
+        ) : null}
+        {children}
+      </BoxWrapperColumn>
     </Paper>
   )
 }

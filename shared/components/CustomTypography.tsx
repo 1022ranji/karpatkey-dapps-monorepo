@@ -1,5 +1,6 @@
 import { styled } from '@mui/material'
-import Typography, { TypographyProps } from '@mui/material/Typography'
+import { TypographyProps } from '@mui/material'
+import Typography from '@mui/material/Typography'
 import { FC, memo } from 'react'
 
 export interface CustomTypographyProps extends Omit<TypographyProps, 'fontWeight'> {

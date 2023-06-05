@@ -33,7 +33,7 @@ export const reducerBalancesByTokenCategory = (
   return acc
 }
 
-export type TMapBalancesByTokenCategory = {
+export type MapBalancesByTokenCategory = {
   fill: string
   value: string
   allocation: number
@@ -43,7 +43,7 @@ export type TMapBalancesByTokenCategory = {
 
 export const mapBalancesByTokenCategory = (
   data: { funds: number; price: number }[]
-): TMapBalancesByTokenCategory[] => {
+): MapBalancesByTokenCategory[] => {
   const total = Object.values(data).reduce(
     (accumulator: number, value: { funds: number; price: number }) => accumulator + value.funds,
     0

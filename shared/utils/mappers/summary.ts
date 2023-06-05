@@ -1,5 +1,18 @@
 import randomColor from 'randomcolor'
 
+const COLORS = [
+  '#535353', //OK
+  '#808080', //OK
+  '#B6B6B6', //OK
+  '#DEDEDE', //OK
+  '#C0C0C0',
+  '#A9A9A9',
+  '#5c5c5c',
+  '#383838',
+  '#71797E',
+  '#B2BEB5'
+]
+
 export const getSummaryFundsByTokenCategory = (data: any) => {
   const rows: { funds: number; label: string }[] = data
     .filter((row: any) => {
@@ -23,9 +36,9 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index: number) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -44,10 +57,10 @@ export const getSummaryFundsByType = (data: any) => {
       const metric = obj['metric'].trim()
       const protocol = obj['protocol'].trim()
       const metricKey = metric.includes('unclaimed_rewards')
-        ? 'Unclaimed Rewards'
+        ? 'Unclaimed rewards'
         : metric.includes('balance') && protocol.includes('Wallet')
         ? 'Wallet'
-        : 'Farming Funds'
+        : 'Farming funds'
 
       if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
 
@@ -64,9 +77,9 @@ export const getSummaryFundsByType = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index: number) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -99,9 +112,9 @@ export const getSummaryFundsByBlockchain = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index: number) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -132,9 +145,9 @@ export const getSummaryFundsByProtocol = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string) => {
+    .map((key: string, index) => {
       return {
-        fill: randomColor(),
+        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,

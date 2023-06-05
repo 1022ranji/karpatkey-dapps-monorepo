@@ -20,6 +20,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "react": [ "./node_modules/@types/react" ],
       "@karpatkey-monorepo/reports": [
         "./dapps/reports/*",
         "./dapps/reports/src/"

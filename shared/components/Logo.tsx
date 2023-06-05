@@ -8,11 +8,11 @@ const Logo = () => (
   <Box component={Link} href="/" alignItems="center" display="flex" sx={{ textDecoration: 'none' }}>
     <CustomTypography
       sx={{
-        fontFamily: 'IBM Plex Sans',
+        fontFamily: 'IBM Plex Mono',
         fontStyle: 'normal',
-        fontWeight: 700,
-        fontSize: '20px',
-        lineHeight: '26px',
+        fontWeight: 600,
+        fontSize: '24px',
+        lineHeight: '30px',
         textAlign: 'center',
         color: '#1A1A1A'
       }}

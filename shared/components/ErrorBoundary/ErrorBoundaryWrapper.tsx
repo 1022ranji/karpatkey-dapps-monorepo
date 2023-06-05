@@ -1,6 +1,5 @@
+import ErrorBoundary from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundary'
 import { ComponentProps, ReactElement } from 'react'
-
-import ErrorBoundary from './ErrorBoundary'
 
 const ErrorBoundaryWrapper = (props: ComponentProps<any>): ReactElement => {
   const handleError = () => {
