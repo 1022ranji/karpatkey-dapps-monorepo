@@ -7,7 +7,8 @@ import dynamic from 'next/dynamic'
 import * as React from 'react'
 
 const DynamicTableTokenDetail = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TableTokenDetail'),
+  () =>
+    import('dapps/reports/src/views/sections/TokenDetailItems/TokenDetailItems/TableTokenDetail'),
   {
     loading: () => <Loading />
   }
@@ -101,7 +102,7 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
   )
 
   return (
-    <PaperSection title="Token detail" subTitle="Token detail" filter={filter}>
+    <PaperSection title="Token detail" subTitle="Token detail with price variation" filter={filter}>
       <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
     </PaperSection>
   )

@@ -27,6 +27,7 @@ const CardList = (props: CardListProps) => {
             const data = tokenDetailByPosition[blockchain as any][protocol][position]
             return (
               <CardItem
+                id={index}
                 key={index}
                 blockchain={blockchain}
                 protocol={protocol}
