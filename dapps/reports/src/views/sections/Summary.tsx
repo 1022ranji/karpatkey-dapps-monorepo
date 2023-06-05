@@ -69,12 +69,12 @@ const Summary = (props: SummaryProps) => {
           title="Total funds by token category"
           dataKey="funds"
         />
-        <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
         <DynamicPieChart
           data={fundsByBlockchain}
           title="Total funds by blockchain"
           dataKey="funds"
         />
+        <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
       </BoxWrapperRow>
       <BoxWrapperRow sx={{ justifyContent: 'flex-start' }}>
         <DynamicPieChart
