@@ -37,8 +37,8 @@ if (!report) {
     const dataWarehouse = DataWarehouse.getInstance()
 
     // Step 2: Query the data
-    const reportData = await dataWarehouse[report.reportName as Report]()
-    cache.writeConsole(report.reportName as Report, reportData)
+    const reportData = await dataWarehouse[report.reportName]()
+    cache.writeConsole(report.reportName, reportData)
     console.log(`Success, cache generated!`)
   } catch (e) {
     console.error(e)

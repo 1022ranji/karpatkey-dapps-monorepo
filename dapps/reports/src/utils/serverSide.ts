@@ -38,11 +38,15 @@ export const getCommonServerSideProps = async (params: Filter) => {
 
   // Step 2: Query the data
   const variationMetricsDetail = await cache.getReport(
-    'getTreasuryVariationMetricsDetail' as Report
+    'getTreasuryVariationMetricsDetail' as unknown as Report
   )
-  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as Report)
-  const financialPositions = await cache.getReport('getTreasuryFinancialPositions' as Report)
-  const historicVariation = await cache.getReport('getTreasuryHistoricVariation' as Report)
+  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as unknown as Report)
+  const financialPositions = await cache.getReport(
+    'getTreasuryFinancialPositions' as unknown as Report
+  )
+  const historicVariation = await cache.getReport(
+    'getTreasuryHistoricVariation' as unknown as Report
+  )
 
   if (!dao) {
     throw new Error('DAO not found')

@@ -20,8 +20,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Status
 
       // Step 2: Query the data
       const cachePromises = ALLOWED_REPORTS.map(async (report) => {
-        const reportData = await dataWarehouse[report.reportName as Report]()
-        cache.writeApi(report.reportName as Report, reportData)
+        const reportData = await dataWarehouse[report.reportName]()
+        cache.writeApi(report.reportName, reportData)
       })
       await Promise.all(cachePromises)
 

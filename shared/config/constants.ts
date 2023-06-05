@@ -4,27 +4,27 @@ export const NONE = 'None'
 
 export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
   {
-    reportName: 'getDailyBalanceReports',
+    reportName: 'getDailyBalanceReports' as unknown as Report,
     fileName: 'daily-balance-reports'
   },
   {
-    reportName: 'getTreasuryFinancialMetrics',
+    reportName: 'getTreasuryFinancialMetrics' as unknown as Report,
     fileName: 'treasury-financial-metrics'
   },
   {
-    reportName: 'getTokens',
+    reportName: 'getTokens' as unknown as Report,
     fileName: 'tokens'
   },
   {
-    reportName: 'getTreasuryVariationMetricsDetail',
+    reportName: 'getTreasuryVariationMetricsDetail' as unknown as Report,
     fileName: 'treasury-variation-metrics-detail'
   },
   {
-    reportName: 'getTreasuryFinancialPositions',
+    reportName: 'getTreasuryFinancialPositions' as unknown as Report,
     fileName: 'treasury-financial-positions'
   },
   {
-    reportName: 'getTreasuryHistoricVariation',
+    reportName: 'getTreasuryHistoricVariation' as unknown as Report,
     fileName: 'treasury-historic-variation'
   }
 ]
