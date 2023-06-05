@@ -57,14 +57,14 @@ export const CHAINS: CHAIN[] = [
     id: 1,
     name: 'Ethereum',
     short: 'eth',
-    explorer: 'https://etherscan.io/address/',
+    explorer: 'https://etherscan.io/address',
     logo: '/images/chains/ethereum.svg'
   },
   {
     id: 100,
     name: 'Gnosis Chain',
     short: 'gno',
-    explorer: 'https://gnosisscan.io/address/',
+    explorer: 'https://gnosisscan.io/address',
     logo: '/images/chains/gnosis.svg'
   }
 ]
