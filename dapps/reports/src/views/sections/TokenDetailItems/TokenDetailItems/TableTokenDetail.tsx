@@ -22,73 +22,85 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom align="left">Token symbol</TableHeadCellCustom>
-              <TableHeadCellCustom align="left">Price</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Token balance</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Allocation</TableHeadCellCustom>
-              <TableHeadCellCustom align="right">Price variation</TableHeadCellCustom>
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Token symbol
+              </TableHeadCellCustom>
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Price
+              </TableHeadCellCustom>
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Token balance
+              </TableHeadCellCustom>
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Allocation
+              </TableHeadCellCustom>
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Price variation
+              </TableHeadCellCustom>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredTokenDetails.length === 0 && (
+            {filteredTokenDetails.length === 0 ? (
               <TableRow>
                 <TableCellCustom align="center" colSpan={5}>
                   No data available
                 </TableCellCustom>
               </TableRow>
-            )}
-            {filteredTokenDetails.map((row: any, index: number) => {
-              return (
-                <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                  <TableCellCustom align="left">
-                    <BoxWrapperColumn>
-                      {row.tokenSymbol}
-                      <CustomTypography variant="tableCellSubData">
-                        {row.tokenCategory}
-                      </CustomTypography>
-                    </BoxWrapperColumn>
-                  </TableCellCustom>
-                  <TableCellCustom align="left">
-                    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                      {numbro(row.priceAvg).formatCurrency({
-                        spaceSeparated: false,
-                        mantissa: 0,
-                        thousandSeparated: true
-                      })}
-                      <OpenInNewIcon fontSize={'small'} />
-                    </BoxWrapperRow>
-                  </TableCellCustom>
-                  <TableCellCustom align="right">
-                    {numbro(row.balance).formatCurrency({
-                      spaceSeparated: false,
-                      mantissa: 2,
-                      thousandSeparated: true
-                    })}
-                  </TableCellCustom>
-                  <TableCellCustom align="right">
-                    {numbro(row.allocation).format({
-                      output: 'percent',
-                      spaceSeparated: false,
-                      mantissa: 2
-                    })}
-                  </TableCellCustom>
-                  <TableCellCustom align="right">
-                    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
-                      {numbro(row.priceVariation).format({
-                        output: 'percent',
-                        spaceSeparated: false,
-                        mantissa: 2
-                      })}
-                      {row.priceVariation > 0 ? (
-                        <ArrowUpwardIcon fontSize={'small'} />
-                      ) : (
-                        <ArrowDownwardIcon fontSize={'small'} />
-                      )}
-                    </BoxWrapperRow>
-                  </TableCellCustom>
-                </TableRow>
-              )
-            })}
+            ) : null}
+            {filteredTokenDetails.length > 0
+              ? filteredTokenDetails.map((row: any, index: number) => {
+                  return (
+                    <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        <BoxWrapperColumn>
+                          {row.tokenSymbol}
+                          <CustomTypography variant="tableCellSubData">
+                            {row.tokenCategory}
+                          </CustomTypography>
+                        </BoxWrapperColumn>
+                      </TableCellCustom>
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                          {numbro(row.priceAvg).formatCurrency({
+                            spaceSeparated: false,
+                            mantissa: 0,
+                            thousandSeparated: true
+                          })}
+                          <OpenInNewIcon fontSize={'small'} />
+                        </BoxWrapperRow>
+                      </TableCellCustom>
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        {numbro(row.balance).formatCurrency({
+                          spaceSeparated: false,
+                          mantissa: 2,
+                          thousandSeparated: true
+                        })}
+                      </TableCellCustom>
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        {numbro(row.allocation).format({
+                          output: 'percent',
+                          spaceSeparated: false,
+                          mantissa: 2
+                        })}
+                      </TableCellCustom>
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                          {numbro(row.priceVariation).format({
+                            output: 'percent',
+                            spaceSeparated: false,
+                            mantissa: 2
+                          })}
+                          {row.priceVariation > 0 ? (
+                            <ArrowUpwardIcon fontSize={'small'} />
+                          ) : (
+                            <ArrowDownwardIcon fontSize={'small'} />
+                          )}
+                        </BoxWrapperRow>
+                      </TableCellCustom>
+                    </TableRow>
+                  )
+                })
+              : null}
           </TableBody>
         </Table>
       </TableContainer>
