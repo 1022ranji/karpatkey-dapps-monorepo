@@ -20,7 +20,7 @@ const variant: Variants = {
 
 const AnimatePresenceWrapper = (props: AnimatedSectionWrapperProps & ComponentProps) => {
   const { component = Box, children } = props
-  const AnimatedBox = motion(component)
+  const MotionBox = motion(component)
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2
@@ -29,7 +29,7 @@ const AnimatePresenceWrapper = (props: AnimatedSectionWrapperProps & ComponentPr
   return (
     <Box ref={ref}>
       <AnimatePresence>
-        <AnimatedBox
+        <MotionBox
           initial="initial"
           exit="initial"
           transition={{ duration: 0.5, ease: 'easeInOut' }}
@@ -38,7 +38,7 @@ const AnimatePresenceWrapper = (props: AnimatedSectionWrapperProps & ComponentPr
           viewport={{ amount: 0.7, once: true }}
         >
           {children}
-        </AnimatedBox>
+        </MotionBox>
       </AnimatePresence>
     </Box>
   )

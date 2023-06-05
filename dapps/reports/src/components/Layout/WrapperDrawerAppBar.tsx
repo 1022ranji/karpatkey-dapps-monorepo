@@ -1,6 +1,6 @@
 import Filters from '@karpatkey-monorepo/reports/src/components/Filters/Menu'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import Logo from '@karpatkey-monorepo/shared/components/Logo'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { slugify } from '@karpatkey-monorepo/shared/utils'
 import CircleIcon from '@mui/icons-material/Circle'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'

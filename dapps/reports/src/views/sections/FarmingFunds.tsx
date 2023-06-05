@@ -1,8 +1,7 @@
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
+import FundsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsContainer'
+import ResultsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/ResultsContainer'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
-import FundsContainer from 'dapps/reports/src/views/sections/FarmingFundsItems/FundsContainer'
-import ResultsContainer from 'dapps/reports/src/views/sections/FarmingFundsItems/ResultsContainer'
 import numbro from 'numbro'
 import * as React from 'react'
 
@@ -20,24 +19,19 @@ const FarmingFunds = (props: FarmingFundsProps) => {
   } = props
 
   return (
-    <PaperSection title="Farming funds">
-      <BoxWrapperColumn gap={10}>
-        <FundsContainer {...{ funds }} />
-        <ResultsContainer {...{ fundsDetails }} />
-        <BoxWrapperColumn gap={2}>
-          <CustomTypography variant="balanceOverviewSubtitle">
-            Farming results from Farm-Swaps
-          </CustomTypography>
-          <CustomTypography variant="farmSwapsValue">
-            {numbro(totalFarmSwaps || 0).formatCurrency({
-              spaceSeparated: false,
-              mantissa: 2,
-              thousandSeparated: true
-            })}
-          </CustomTypography>
-        </BoxWrapperColumn>
-      </BoxWrapperColumn>
-    </PaperSection>
+    <>
+      <FundsContainer {...{ funds }} />
+      <ResultsContainer {...{ fundsDetails }} />
+      <PaperSection subTitle="Farming results from Farm-Swaps">
+        <CustomTypography variant="farmSwapsValue">
+          {numbro(totalFarmSwaps || 0).formatCurrency({
+            spaceSeparated: false,
+            mantissa: 2,
+            thousandSeparated: true
+          })}
+        </CustomTypography>
+      </PaperSection>
+    </>
   )
 }
 

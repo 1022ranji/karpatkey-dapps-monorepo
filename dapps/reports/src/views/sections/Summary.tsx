@@ -1,6 +1,6 @@
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import Loading from '@karpatkey-monorepo/shared/components/Loading'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import dynamic from 'next/dynamic'
 import numbro from 'numbro'
 import * as React from 'react'
@@ -37,7 +37,7 @@ const Summary = (props: SummaryProps) => {
 
   return (
     <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
-      <BoxWrapperRow gap={2} sx={{ justifyContent: 'space-between' }}>
+      <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
         <DynamicInfoCard
           title="Total funds"
           value={numbro(totalFunds).formatCurrency({
@@ -63,18 +63,18 @@ const Summary = (props: SummaryProps) => {
           })}
         />
       </BoxWrapperRow>
-      <BoxWrapperRow gap={2} sx={{ justifyContent: 'space-between' }}>
+      <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
         <DynamicPieChart
           data={fundsByTokenCategory}
           title="Total funds by token category"
           dataKey="funds"
         />
-        <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
         <DynamicPieChart
           data={fundsByBlockchain}
           title="Total funds by blockchain"
           dataKey="funds"
         />
+        <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
       </BoxWrapperRow>
       <BoxWrapperRow sx={{ justifyContent: 'flex-start' }}>
         <DynamicPieChart

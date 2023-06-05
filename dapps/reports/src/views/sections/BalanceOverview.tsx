@@ -1,10 +1,8 @@
 import TableBlockchain from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverviewItems/TableBlockchain'
 import TableType from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverviewItems/TableType'
-import TabPanel from '@karpatkey-monorepo/reports/src/views/sections/CommonItems/TabPanel'
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
+import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { BoxProps } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
@@ -22,27 +20,29 @@ const BalanceOverview = (props: BalanceOverview) => {
     setToggleType(value)
   }
 
+  const filter = (
+    <ToggleButtonGroup
+      value={toggleType}
+      exclusive
+      onChange={handleChange}
+      aria-label="Balance overview type"
+    >
+      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
+        Type
+      </ToggleButton>
+      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
+        Blockchain
+      </ToggleButton>
+    </ToggleButtonGroup>
+  )
+
   return (
-    <PaperSection title="Balance overview">
+    <PaperSection
+      title="Balance overview"
+      subTitle="Funds by token category and type/blockchain"
+      filter={filter}
+    >
       <BoxWrapperColumn>
-        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-          <CustomTypography variant="balanceOverviewSubtitle">
-            Funds by token category and type/blockchain
-          </CustomTypography>
-          <ToggleButtonGroup
-            value={toggleType}
-            exclusive
-            onChange={handleChange}
-            aria-label="Balance overview type"
-          >
-            <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
-              Type
-            </ToggleButton>
-            <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
-              Blockchain
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </BoxWrapperRow>
         <TabPanel value={toggleType} index={1}>
           <TableType balanceOverviewType={balanceOverviewType} />
         </TabPanel>

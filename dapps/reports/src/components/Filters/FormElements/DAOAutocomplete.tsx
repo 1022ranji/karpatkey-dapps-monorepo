@@ -1,6 +1,6 @@
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import { CustomAutocomplete } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, TextField } from '@mui/material'

@@ -1,10 +1,8 @@
-import Filter from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/Filter'
-import Form from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/Form'
-import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
+import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import Loading from '@karpatkey-monorepo/shared/components/Loading'
+import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import { getFarmingFundsByProtocolTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
@@ -69,7 +67,8 @@ const FundsContainer = (props: FundsContainerProps) => {
     setAnchorEl(null)
   }
 
-  const onSubmitClose = (blockchain: string, protocol: string) => {
+  const onSubmitClose = (params: any) => {
+    const { blockchain, protocol } = params
     setBlockchainFilter(blockchain)
     setProtocolFilter(protocol)
   }
@@ -91,33 +90,39 @@ const FundsContainer = (props: FundsContainerProps) => {
       }
     : null
 
+  const filter = (
+    <Filter
+      id={id}
+      handleClick={handleClick}
+      handleClose={handleClose}
+      anchorEl={anchorEl}
+      open={open}
+      blockchain={blockchainFilter}
+      protocol={protocolFilter}
+      enableProtocol
+      enableBlockchain
+    >
+      <Form
+        blockchainOptions={blockchainOptions}
+        protocolOptions={protocolOptions}
+        onRequestClose={handleClose}
+        onSubmitClose={onSubmitClose}
+        defaultBlockchainValue={defaultBlockchainValue}
+        defaultProtocolValue={defaultProtocolValue}
+        enableProtocol
+        enableBlockchain
+      />
+    </Filter>
+  )
+
   return (
-    <BoxWrapperColumn gap={4}>
-      <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-        <CustomTypography variant="balanceOverviewSubtitle">
-          Farming funds/results by protocol
-        </CustomTypography>
-        <Filter
-          id={id}
-          handleClick={handleClick}
-          handleClose={handleClose}
-          anchorEl={anchorEl}
-          open={open}
-          blockchain={blockchainFilter}
-          protocol={protocolFilter}
-        >
-          <Form
-            blockchainOptions={blockchainOptions}
-            protocolOptions={protocolOptions}
-            onRequestClose={handleClose}
-            onSubmitClose={onSubmitClose}
-            defaultBlockchainValue={defaultBlockchainValue}
-            defaultProtocolValue={defaultProtocolValue}
-          />
-        </Filter>
-      </BoxWrapperRow>
+    <PaperSection
+      title="Farming funds / results"
+      subTitle={'Farming funds/results by protocol'}
+      filter={filter}
+    >
       <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
-    </BoxWrapperColumn>
+    </PaperSection>
   )
 }
 
