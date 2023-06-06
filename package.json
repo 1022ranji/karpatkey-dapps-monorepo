@@ -5,8 +5,7 @@
     "packages": [
       "dapps/reports",
       "dapps/panic-button",
-      "shared",
-      "tools"
+      "shared"
     ]
   },
   "scripts": {
