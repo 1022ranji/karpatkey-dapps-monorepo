@@ -1,21 +1,22 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
-import { TMapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/mappers'
-import { Box, BoxProps, Grid, List, ListItem } from '@mui/material'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import { MapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/mappers'
+import { Box, BoxProps, List, ListItem } from '@mui/material'
 import numbro from 'numbro'
 import React from 'react'
-import { Cell, Legend, Pie, PieChart as PieRechart } from 'recharts'
+import { Cell, Pie, PieChart as PieRechart } from 'recharts'
 
-const COLORS = ['#808080', '#D0D0D0', '#A9A9A9', '#C0C0C0', '#71797E', '#B2BEB5']
-
-export type TPieChartProps = {
-  data: TMapBalancesByTokenCategory[]
+export type PieChartProps = {
+  data: MapBalancesByTokenCategory[]
   title: string
   dataKey: string
+  alignLegend?: 'bottom' | 'right'
 }
 
 const RADIAN = Math.PI / 180
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.3
+const RenderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.15
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
   const y = cy + radius * Math.sin(-midAngle * RADIAN)
 
@@ -26,7 +27,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
       fill="white"
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
-      fontSize="10px"
+      fontSize="14px"
     >
       {numbro(percent).format({
         output: 'percent',
@@ -39,76 +40,104 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   )
 }
 
-const CustomizedLegend = (props: any) => {
-  const { payload } = props
+const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & PieChartProps) => {
   return (
-    <Box sx={{ width: 180 }}>
-      <List sx={{ marginLeft: 2 }}>
-        {payload.map((entry: any, index: any) => {
-          return (
-            <ListItem key={index}>
-              <Grid container rowSpacing={1} columnSpacing={1} columns={2}>
-                <Grid item>
-                  <Box sx={{ background: entry.color, height: 17, width: 25, maxWidth: 25 }} />
-                </Grid>
-                <Grid item>
-                  <CustomTypography
-                    variant="body2"
-                    sx={{
-                      wordWrap: 'break-word',
-                      width: '6rem'
-                    }}
-                  >
-                    {entry.payload.payload.value}
-                  </CustomTypography>
-                </Grid>
-              </Grid>
-            </ListItem>
-          )
-        })}
-      </List>
-    </Box>
-  )
-}
-const PieChart = ({ data, title, dataKey, ...props }: BoxProps & TPieChartProps) => {
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      {...props}
-      sx={{ paddingY: '20px' }}
-      gap={2}
-    >
-      <CustomTypography variant="h6" color="textSecondary" sx={{ textAlign: 'center' }}>
-        {title}
-      </CustomTypography>
-      <PieRechart width={390} height={210}>
-        <Legend
-          content={<CustomizedLegend />}
-          layout="vertical"
-          verticalAlign="middle"
-          align="right"
-        />
-        <Pie
-          data={data}
-          cx="50%"
-          cy="50%"
-          innerRadius={40}
-          outerRadius={100}
-          fill="#8884d8"
-          dataKey={dataKey}
-          label={renderCustomizedLabel}
-          labelLine={false}
+    <>
+      {alignLegend === 'bottom' ? (
+        <BoxWrapperColumn
+          gap={2}
+          sx={{
+            alignSelf: 'stretch',
+            justifyContent: 'flex-start',
+            minWidth: 'max-content',
+            width: '100%'
+          }}
         >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-      </PieRechart>
-    </Box>
+          <CustomTypography variant="infoCardTitle" textAlign="left">
+            {title}
+          </CustomTypography>
+          <PieRechart width={280} height={320}>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={140}
+              fill="#8884d8"
+              dataKey={dataKey}
+              label={RenderCustomizedLabel}
+              labelLine={false}
+            >
+              {data.map((entry, index) => (
+                <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={entry.fill} />
+              ))}
+            </Pie>
+          </PieRechart>
+          <List>
+            {data.map((entry: any, index: any) => {
+              return (
+                <ListItem key={index}>
+                  <BoxWrapperRow gap={2}>
+                    <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
+                    <CustomTypography variant="pieChartLegendTitle" sx={{ wordWrap: 'break-word' }}>
+                      {entry.label}
+                    </CustomTypography>
+                  </BoxWrapperRow>
+                </ListItem>
+              )
+            })}
+          </List>
+        </BoxWrapperColumn>
+      ) : (
+        <BoxWrapperRow
+          gap={4}
+          sx={{
+            justifyContent: 'flex-start',
+            alignSelf: 'stretch',
+            alignItems: 'center',
+            minWidth: 'max-content',
+            width: '66%'
+          }}
+        >
+          <BoxWrapperColumn width={'50%'} gap={2}>
+            <CustomTypography variant="infoCardTitle" textAlign="left">
+              {title}
+            </CustomTypography>
+            <PieRechart width={280} height={320}>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={140}
+                fill="#8884d8"
+                dataKey={dataKey}
+                label={RenderCustomizedLabel}
+                labelLine={false}
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Pie>
+            </PieRechart>
+          </BoxWrapperColumn>
+          <List>
+            {data.map((entry: any, index: any) => {
+              return (
+                <ListItem key={index}>
+                  <BoxWrapperRow gap={2}>
+                    <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
+                    <CustomTypography variant="pieChartLegendTitle" sx={{ wordWrap: 'break-word' }}>
+                      {entry.label}
+                    </CustomTypography>
+                  </BoxWrapperRow>
+                </ListItem>
+              )
+            })}
+          </List>
+        </BoxWrapperRow>
+      )}
+    </>
   )
 }
-
 export default PieChart

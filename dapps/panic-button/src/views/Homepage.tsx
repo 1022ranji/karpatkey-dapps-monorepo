@@ -1,6 +1,6 @@
-import ContainerWrapper from '@karpatkey-monorepo/shared/components/ContainerWrapper'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
+import ContainerWrapper from '@karpatkey-monorepo/shared/components/Wrappers/ContainerWrapper'
 import React, { FC } from 'react'
 
 const HomepageContent: FC = () => {

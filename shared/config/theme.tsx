@@ -1,7 +1,10 @@
-import { createTheme } from '@mui/material/styles'
+import { ThemeOptions, createTheme } from '@mui/material/styles'
 
 // Create a theme instance.
 const theme = createTheme({
+  zIndex: {
+    drawer: 1200
+  },
   breakpoints: {
     values: {
       xs: 0,
@@ -12,56 +15,193 @@ const theme = createTheme({
     }
   },
   typography: {
-    fontFamily: "'IBM Plex Mono', sans-serif",
+    fontFamily: 'IBM Plex Mono',
     h1: {
-      fontFamily: "'IBM Plex Mono', sans-serif",
+      fontFamily: 'IBM Plex Mono',
       fontSize: '60px',
       lineHeight: '70px',
       fontWeight: '400',
-      color: 'rgba(51, 51, 51, 1)'
+      fontStyle: 'normal'
     },
     h2: {
-      fontFamily: "'IBM Plex Mono', sans-serif",
+      fontFamily: 'IBM Plex Mono',
       fontSize: '48px',
-      lineHeight: '42px',
+      lineHeight: '56px',
       fontWeight: '400',
-      color: 'rgba(51, 51, 51, 1)'
+      fontStyle: 'normal'
     },
     h3: {
-      fontFamily: 'IBM Plex Sans',
-      lineHeight: '1.3',
-      letterSpacing: '3.2px',
-      fontWeight: '300'
+      fontFamily: 'IBM Plex Mono',
+      fontSize: '24px',
+      lineHeight: '28px',
+      fontWeight: '300',
+      fontStyle: 'normal'
     },
     h4: {
-      fontFamily: "'IBM Plex Mono', sans-serif"
+      fontFamily: 'IBM Plex Mono',
+      fontSize: '18px',
+      lineHeight: '22px',
+      fontWeight: '400',
+      fontStyle: 'normal'
     },
     body1: {
-      fontFamily: "'IBM Plex Mono', sans-serif",
+      fontFamily: 'IBM Plex Mono',
       fontSize: '18px',
-      lineHeight: '23px',
-      fontWeight: '400'
+      lineHeight: '22px',
+      fontWeight: '400',
+      fontStyle: 'normal',
+      color: '#1A1A1A'
     },
     body2: {
-      fontFamily: "'IBM Plex Sans', sans-serif",
-      lineHeight: '1.1'
+      fontFamily: 'IBM Plex Mono',
+      fontSize: '16px',
+      lineHeight: '19px',
+      fontWeight: '400',
+      fontStyle: 'normal',
+      color: '#1A1A1A'
     },
     subtitle1: {
-      fontFamily: "'IBM Plex Sans', sans-serif",
-      lineHeight: '2',
-      letterSpacing: '10%',
-      fontWeight: '400'
+      fontFamily: 'IBM Plex Mono',
+      fontSize: '14px',
+      lineHeight: '16px',
+      fontWeight: '400',
+      fontStyle: 'normal',
+      color: '#1A1A1A'
     },
     subtitle2: {
-      fontFamily: "'IBM Plex Sans', sans-serif",
-      lineHeight: '2',
-      letterSpacing: '10%',
-      fontWeight: '400'
+      fontFamily: 'IBM Plex Mono',
+      fontSize: '12px',
+      lineHeight: '14px',
+      fontWeight: '400',
+      fontStyle: 'normal',
+      color: '#1A1A1A'
     },
     button: {
-      fontFamily: "'IBM Plex Sans', sans-serif",
-      lineHeight: '2',
-      fontWeight: '600'
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '700 !important',
+      fontSize: '16px',
+      lineHeight: '18px'
+    },
+    filterTitle: {
+      fontFamily: 'IBM Plex Mono',
+      fontSize: '20px',
+      lineHeight: '30px',
+      fontWeight: '600 !important',
+      fontStyle: 'normal',
+      color: '#1A1A1A'
+    },
+    filterTextOption: {
+      fontFamily: 'IBM Plex Sans',
+      fontSize: '18px',
+      lineHeight: '22px',
+      fontWeight: '400',
+      fontStyle: 'normal',
+      color: '#1A1A1A'
+    },
+    filterTextRenderInput: {
+      fontFamily: 'IBM Plex Sans',
+      fontSize: '18px',
+      lineHeight: '22px',
+      fontWeight: '400 !important',
+      fontStyle: 'normal',
+      color: '#808080'
+    },
+    filterErrorMessage: {
+      fontFamily: 'IBM Plex Sans',
+      fontStyle: 'normal',
+      fontWeight: '400 !important',
+      fontSize: '18px',
+      lineHeight: '22px',
+      color: '#D55353'
+    },
+    paperSectionTitle: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '500 !important',
+      fontSize: '44px',
+      lineHeight: '44px',
+      color: '#1A1A1A'
+    },
+    paperSectionSubtitle: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '700 !important',
+      fontSize: '22px',
+      lineHeight: '24px',
+      color: '#1A1A1A'
+    },
+    heroSectionTitle: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '500 !important',
+      fontSize: '64px',
+      lineHeight: '64px',
+      color: '#222222'
+    },
+    heroSectionSubtitle: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '600 !important',
+      fontSize: '32px',
+      lineHeight: '36px',
+      color: '#222222'
+    },
+    infoCardTitle: {
+      fontFamily: 'IBM Plex Sans',
+      fontStyle: 'normal',
+      fontWeight: '600 !important',
+      fontSize: '18px',
+      lineHeight: '22px',
+      color: '#222222'
+    },
+    infoCardValue: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '600 !important',
+      fontSize: '44px',
+      lineHeight: '30px',
+      color: '#222222'
+    },
+    pieChartLegendTitle: {
+      fontFamily: 'IBM Plex Sans',
+      fontStyle: 'normal',
+      fontWeight: '400 !important',
+      fontSize: '18px',
+      lineHeight: '23px',
+      color: '#1A1A1A'
+    },
+    balanceOverviewSubtitle: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '700 !important',
+      fontSize: '22px',
+      lineHeight: '24px',
+      color: '#1A1A1A'
+    },
+    balanceOverviewOptionType: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '700 !important',
+      fontSize: '20px',
+      lineHeight: '24px',
+      color: '#1A1A1A'
+    },
+    tableCellSubData: {
+      fontFamily: 'IBM Plex Mono',
+      fontStyle: 'normal',
+      fontWeight: '400 !important',
+      fontSize: '14px',
+      lineHeight: '18px',
+      color: '#1A1A1A'
+    },
+    farmSwapsValue: {
+      fontFamily: 'IBM Plex Sans',
+      fontStyle: 'normal',
+      fontWeight: '700 !important',
+      fontSize: '16px',
+      lineHeight: '20px',
+      color: '#1A1A1A'
     }
   },
   palette: {
@@ -90,19 +230,211 @@ const theme = createTheme({
     common: {
       black: '#232323',
       white: '#eeeded'
+    },
+    custom: {
+      black: {
+        primary: '#1A1A1A'
+      },
+      grey: {
+        primary: '#808080',
+        secondary: '#7A7A7A',
+        dark: '#222222',
+        light: '#F5F5F5'
+      },
+      error: '#D55353'
+    }
+  },
+  components: {
+    // Name of the component
+    MuiAutocomplete: {
+      styleOverrides: {
+        input: {
+          fontFamily: 'IBM Plex Sans',
+          fontStyle: 'normal',
+          fontWeight: '400',
+          fontSize: '18px',
+          lineHeight: '22px',
+          color: '#222222'
+        },
+        listbox: {
+          backgroundColor: '#F5F5F5'
+        },
+        option: {
+          fontFamily: 'IBM Plex Sans',
+          fontStyle: 'normal',
+          fontWeight: 400,
+          fontSize: '18px',
+          lineHeight: '22px',
+          color: '#808080',
+          '& img': {
+            opacity: '0.3'
+          },
+          '&[aria-selected="true"]': {
+            fontWeight: 600,
+            color: '#222222',
+            backgroundColor: '#F5F5F5 !important'
+          },
+          '&[aria-selected="true"] img': {
+            opacity: '1'
+          },
+          '&:hover': {
+            fontWeight: 600,
+            color: '#222222'
+          },
+          '&:hover img': {
+            opacity: '1'
+          },
+          '&.Mui-focused': {
+            backgroundColor: '#F5F5F5 !important' // Sadly, this is necessary
+          }
+        }
+      }
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          animation: 'none !important'
+        }
+      }
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          animation: 'none !important',
+          textDecoration: 'none',
+          fontFamily: 'IBM Plex Mono',
+          fontWeight: 600,
+          fontStyle: 'normal',
+          fontSize: '24px',
+          lineHeight: '30px',
+          letterSpacing: '0.25px',
+          color: '#7A7A7A',
+          backgroundColor: '#eeeded'
+        }
+      }
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          cursor: 'pointer',
+          backgroundColor: '#eeeded',
+          ':hover': {
+            backgroundColor: '#eeeded',
+            '& svg': {
+              color: '#1A1A1A'
+            },
+            '& .MuiListItemText-primary': {
+              color: '#1A1A1A'
+            }
+          }
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'IBM Plex Mono',
+          fontStyle: 'normal',
+          fontWeight: 700,
+          fontSize: '16px',
+          lineHeight: '18px',
+          color: '#EEEDED',
+          background: '#1A1A1A',
+          textTransform: 'none',
+          borderRadius: '50px',
+          '&:hover': {
+            background: '#222222'
+          }
+        }
+      }
+    },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        root: {
+          background: '#D8D8D8',
+          border: '1px solid #1A1A1A',
+          borderRadius: '4px',
+          //padding: '9px 16px',
+          button: {
+            fontFamily: 'IBM Plex Sans',
+            fontStyle: 'normal',
+            fontWeight: '400 !important',
+            fontSize: '18px',
+            lineHeight: '22px',
+            color: '#1A1A1A',
+            textTransform: 'none',
+            border: 'none',
+            '&[aria-pressed="true"]': {
+              color: '#7A7A7A'
+            },
+            '&[aria-pressed="false"]': {
+              color: '#1A1A1A',
+              backgroundColor: '#eeeded'
+            }
+          }
+        }
+      }
     }
   }
-})
+} as ThemeOptions)
 
-export const midGrey = '#bdbdbd'
-export const lightGrey = '#d9d9d9'
-export const darkGrey = '#6B6B6B'
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    filterTitle: React.CSSProperties
+    filterTextOption: React.CSSProperties
+    filterTextRenderInput: React.CSSProperties
+    filterErrorMessage: React.CSSProperties
+    paperSectionTitle: React.CSSProperties
+    paperSectionSubtitle: React.CSSProperties
+    heroSectionTitle: React.CSSProperties
+    heroSectionSubtitle: React.CSSProperties
+    infoCardTitle: React.CSSProperties
+    infoCardValue: React.CSSProperties
+    pieChartLegendTitle: React.CSSProperties
+    balanceOverviewSubtitle: React.CSSProperties
+    balanceOverviewOptionType: React.CSSProperties
+    tableCellSubData: React.CSSProperties
+    farmSwapsValue: React.CSSProperties
+  }
 
-export const fontFamily = {
-  primary: " 'IBM Plex Mono', monospace",
-  secondary: "'IBM Plex Sans', sans-serif",
-  tertiary: "'IBM Plex Serif', serif",
-  quaternary: "'Roboto', sans-serif"
+  // allow configuration using `createMuiTheme`
+  interface TypographyVariantsOptions {
+    filterTitle?: React.CSSProperties
+    filterTextOption?: React.CSSProperties
+    filterTextRenderInput?: React.CSSProperties
+    filterErrorMessage?: React.CSSProperties
+    paperSectionTitle?: React.CSSProperties
+    paperSectionSubtitle?: React.CSSProperties
+    heroSectionTitle?: React.CSSProperties
+    heroSectionSubtitle?: React.CSSProperties
+    infoCardTitle?: React.CSSProperties
+    infoCardValue?: React.CSSProperties
+    pieChartLegendTitle?: React.CSSProperties
+    balanceOverviewSubtitle?: React.CSSProperties
+    balanceOverviewOptionType?: React.CSSProperties
+    tableCellSubData?: React.CSSProperties
+    farmSwapsValue?: React.CSSProperties
+  }
+}
+
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    filterTitle: true
+    filterTextOption: true
+    filterTextRenderInput: true
+    filterErrorMessage: true
+    paperSectionTitle: true
+    paperSectionSubtitle: true
+    heroSectionTitle: true
+    heroSectionSubtitle: true
+    infoCardTitle: true
+    infoCardValue: true
+    pieChartLegendTitle: true
+    balanceOverviewSubtitle: true
+    balanceOverviewOptionType: true
+    tableCellSubData: true
+    farmSwapsValue: true
+  }
 }
 
 export default theme

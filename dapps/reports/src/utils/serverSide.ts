@@ -1,24 +1,13 @@
 import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
-import { TReportFilter } from '@karpatkey-monorepo/reports/src/types'
-import {
-  getDAOByDAOName,
-  getDateTypeByPeriodType,
-  getMetricByPeriodType
-} from '@karpatkey-monorepo/shared/utils/'
-import {
-  mapBalancesByTokenCategory,
-  reducerBalancesByTokenCategory
-} from '@karpatkey-monorepo/shared/utils//mappers'
+import { Filter } from '@karpatkey-monorepo/reports/src/types'
+import { getDAO } from '@karpatkey-monorepo/shared/utils'
 import {
   getBalanceOverviewByBlockchain,
   getBalanceOverviewByType
 } from '@karpatkey-monorepo/shared/utils/mappers/balanceOverview'
 import {
   getFarmingFundsByProtocol,
-  getFarmingFundsByProtocolTotals,
-  getFarmingFundsTotal,
   getFarmingResultsDetailsByProtocol,
-  getFarmingResultsDetailsByProtocolTotals,
   getFarmingResultsFarmSwapsTotal
 } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import {
@@ -31,59 +20,74 @@ import {
   getTotalFunds
 } from '@karpatkey-monorepo/shared/utils/mappers/summary'
 import {
+  getTokenDetailByPosition,
+  getTokenDetails,
+  getTokenDetailsGrouped
+} from '@karpatkey-monorepo/shared/utils/mappers/tokenDetails'
+import {
   getTreasuryVariationForThePeriod,
   getTreasuryVariationForThePeriodDetails,
   getTreasuryVariationHistory
 } from '@karpatkey-monorepo/shared/utils/mappers/treasuryVariation'
 
-export const getCommonServerSideProps = async (params: TReportFilter) => {
-  const { periodType, daoName } = params
+export const getCommonServerSideProps = async (params: Filter) => {
+  const { month, year, dao } = params
 
   // Step 1: Create a BigQuery client
   const cache = Cache.getInstance()
 
   // Step 2: Query the data
   const variationMetricsDetail = await cache.getReport(
-    'getTreasuryVariationMetricsDetail' as TReport
+    'getTreasuryVariationMetricsDetail' as unknown as Report
   )
-  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as TReport)
-  const financialPositions = await cache.getReport('getTreasuryFinancialPositions' as TReport)
-  const historicVariation = await cache.getReport('getTreasuryHistoricVariation' as TReport)
+  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as unknown as Report)
+  const financialPositions = await cache.getReport(
+    'getTreasuryFinancialPositions' as unknown as Report
+  )
+  const historicVariation = await cache.getReport(
+    'getTreasuryHistoricVariation' as unknown as Report
+  )
+
+  if (!dao) {
+    throw new Error('DAO not found')
+  }
 
   // Step 3: Get filter data like daoName, periodType and period
-  const { keyName } = getDAOByDAOName(daoName) || {}
-  const metricPeriodType = getMetricByPeriodType(periodType)
-  const dateTypePeriodType = getDateTypeByPeriodType(periodType)
-  const metricPeriod = '2023_3' //getMetricByPeriod(period, periodType)
+  const daoObject = getDAO(dao)
+  const daoKeyName = daoObject?.keyName
+  const metricPeriodType = 'month'
+  const metricPeriod = `${year}_${month}`
 
   // Step 4: Apply filters to the data by common params, like daoName, periodType and period
   const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) => {
     return (
-      row.metric.includes(metricPeriodType) &&
-      row.dao === keyName &&
+      row.date_type === metricPeriodType &&
+      row.dao === daoKeyName &&
       row.year_month === metricPeriod
     )
   })
 
   const financialPositionsFiltered = financialPositions.filter((row: any) => {
     return (
-      row.date_type.includes(dateTypePeriodType) &&
-      row.dao === keyName &&
+      row.date_type === metricPeriodType &&
+      row.dao === daoKeyName &&
       row.year_month === metricPeriod
     )
   })
 
   const historicVariationFiltered = historicVariation.filter((row: any) => {
     return (
-      row.date_type.includes(dateTypePeriodType) &&
-      row.dao === keyName &&
+      row.date_type === metricPeriodType &&
+      row.dao === daoKeyName &&
       row.year_month === metricPeriod
     )
   })
 
   const financialMetricsFiltered = financialMetrics.filter((row: any) => {
     return (
-      row.date_type === dateTypePeriodType && row.dao === keyName && row.year_month === metricPeriod
+      row.date_type === metricPeriodType &&
+      row.dao === daoKeyName &&
+      row.year_month === metricPeriod
     )
   })
 
@@ -127,38 +131,24 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     getTreasuryVariationForThePeriodDetails(financialMetricsFiltered)
 
   // #### Farming Funds / Results
-  // Farming result block
-  const totalFarmingFunds = getFarmingFundsTotal(financialMetricsFiltered)
-
   // Farming funds / Results by protocol
-  const rowsFarmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
-
-  // Farming funds / Results by protocol Totals
-  const rowsFarmingFundsByProtocolTotals = getFarmingFundsByProtocolTotals(
-    rowsFarmingFundsByProtocol
-  )
+  const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
 
   // Farming result from farm swaps
   const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsFiltered)
 
   // Farming results details by protocol
-  const rowsFarmingResultsDetailsByProtocol =
+  const farmingResultsDetailsByProtocol =
     getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
 
-  // Farming results details by protocol Totals
-  const rowsFarmingResultsDetailsByProtocolTotals = getFarmingResultsDetailsByProtocolTotals(
-    rowsFarmingResultsDetailsByProtocol
-  )
+  // Token detail
+  const tokenDetails = getTokenDetails(variationMetricsDetailFiltered)
+  const tokenDetailsGrouped = getTokenDetailsGrouped(variationMetricsDetailFiltered)
 
-  // TODO: delete this two lines after the refactor
-  const variationMetricsDetailFilteredReduced = variationMetricsDetailFiltered.reduce(
-    reducerBalancesByTokenCategory,
-    []
-  )
-  const summary = mapBalancesByTokenCategory(variationMetricsDetailFilteredReduced)
+  // Token detail by position
+  const tokenDetailByPosition = getTokenDetailByPosition(variationMetricsDetailFiltered)
 
   return {
-    summary,
     totalFunds,
     capitalUtilization,
     farmingResults,
@@ -171,11 +161,11 @@ export const getCommonServerSideProps = async (params: TReportFilter) => {
     rowsTreasuryVariation,
     rowsHistoricVariation,
     rowsTreasuryVariationForThePeriodDetail,
-    totalFarmingFunds,
-    rowsFarmingFundsByProtocol,
-    rowsFarmingFundsByProtocolTotals,
+    farmingFundsByProtocol,
+    farmingResultsDetailsByProtocol,
     totalFarmingResultsFarmSwaps,
-    rowsFarmingResultsDetailsByProtocol,
-    rowsFarmingResultsDetailsByProtocolTotals
+    tokenDetails,
+    tokenDetailsGrouped,
+    tokenDetailByPosition
   }
 }

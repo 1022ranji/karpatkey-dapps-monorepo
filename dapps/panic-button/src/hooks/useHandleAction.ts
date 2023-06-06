@@ -3,7 +3,7 @@ import React from 'react'
 export default function useHandleAction(actionURL: string) {
   const [data, setData] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState<TMaybe<Error>>(null)
+  const [error, setError] = React.useState<Maybe<Error>>(null)
 
   const [open, setOpen] = React.useState(false)
 

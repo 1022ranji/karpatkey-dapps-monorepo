@@ -22,7 +22,7 @@ if (!reportName) {
 }
 
 const report = ALLOWED_REPORTS.find(
-  (report: { fileName: string; reportName: TReport }) => report.reportName === reportName
+  (report: { fileName: string; reportName: Report }) => report.reportName === reportName
 )
 if (!report) {
   console.error(`Report name ${reportName} is not allowed`)
@@ -37,8 +37,8 @@ if (!report) {
     const dataWarehouse = DataWarehouse.getInstance()
 
     // Step 2: Query the data
-    const reportData = await dataWarehouse[report.reportName as TReport]()
-    cache.writeConsole(report.reportName as TReport, reportData)
+    const reportData = await dataWarehouse[report.reportName as unknown as keyof DataWarehouse]()
+    cache.writeConsole(report.reportName, reportData)
     console.log(`Success, cache generated!`)
   } catch (e) {
     console.error(e)

@@ -1,5 +1,5 @@
 import ButtonAction from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/ButtonAction'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import TextField from '@mui/material/TextField'
 import React from 'react'
 

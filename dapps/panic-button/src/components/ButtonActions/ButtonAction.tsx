@@ -2,8 +2,8 @@ import SnackbarAction, {
   ESnackStatus
 } from '@karpatkey-monorepo/panic-button/src/components/ButtonActions/SnackbarAction'
 import useHandleAction from '@karpatkey-monorepo/panic-button/src/hooks/useHandleAction'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/BoxWrapperRow'
 import ModalDialog from '@karpatkey-monorepo/shared/components/Modals/ModalDialog'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Button, CircularProgress } from '@mui/material'
 import React from 'react'
 
@@ -13,7 +13,7 @@ interface IButtonActionProps {
   modalDialogTitle: string
   modalDialogDescription: string
 
-  successMessage: TMaybe<string>
+  successMessage: Maybe<string>
   component?: React.ReactNode
   okButtonTitle?: string
   cancelButtonTitle?: string
