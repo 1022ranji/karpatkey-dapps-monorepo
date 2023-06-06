@@ -19,10 +19,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Status
       const dataWarehouse = DataWarehouse.getInstance()
 
       // Step 2: Query the data
-      const cachePromises = ALLOWED_REPORTS.map(async (report) => {
-        const reportData = await dataWarehouse[report.reportName as Report]()
-        cache.writeApi(report.reportName, reportData)
-      })
+      const cachePromises = ALLOWED_REPORTS.map(
+        async (report: { reportName: keyof DataWarehouse; fileName: string }) => {
+          const reportData = await dataWarehouse[report.reportName]()
+          cache.writeApi(report.reportName, reportData)
+        }
+      )
       await Promise.all(cachePromises)
 
       // send data to browser

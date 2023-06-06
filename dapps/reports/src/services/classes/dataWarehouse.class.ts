@@ -62,7 +62,7 @@ export class DataWarehouse {
     return await this.executeCommonJobQuery(viewQuery)
   }
 
-  async executeCommonJobQuery(viewQuery: string) {
+  private async executeCommonJobQuery(viewQuery: string) {
     const options = {
       query: viewQuery,
       // Location must match that of the dataset(s) referenced in the query.

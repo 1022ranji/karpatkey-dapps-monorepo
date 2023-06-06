@@ -22,7 +22,7 @@ export default class Cache {
     fs.writeFileSync(filePath, JSON.stringify(data), 'utf8')
   }
 
-  writeApi(reportName: Report, data: any) {
+  writeApi(reportName: any, data: any) {
     const filePath = `${process.cwd()}/public/cache/${reportName}.json`
     fs.writeFileSync(filePath, JSON.stringify(data), 'utf8')
   }
