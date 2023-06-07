@@ -14,7 +14,7 @@ import {
 } from 'recharts'
 
 export type WaterfallProps = {
-  title: string
+  title?: string
   data: any[]
 }
 
@@ -64,9 +64,11 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
       alignItems="center"
       {...props}
     >
-      <CustomTypography variant="h6" color="textSecondary" sx={{ textAlign: 'center' }}>
-        {title}
-      </CustomTypography>
+      {title ? (
+        <CustomTypography variant="h6" color="textSecondary" sx={{ textAlign: 'center' }}>
+          {title}
+        </CustomTypography>
+      ) : null}
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
           data={data}
