@@ -93,11 +93,13 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
           <YAxis
             fontSize={12}
             tickFormatter={(tick) => {
-              return numbro(tick).formatCurrency({
-                average: true,
-                spaceSeparated: false,
-                mantissa: 2
-              })
+              return numbro(tick)
+                .formatCurrency({
+                  average: true,
+                  spaceSeparated: false,
+                  mantissa: 0
+                })
+                .toUpperCase()
             }}
           />
           <Tooltip wrapperStyle={{ outline: 'none' }} content={<CustomTooltip />} />
