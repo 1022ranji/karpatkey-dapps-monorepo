@@ -142,21 +142,21 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
           metric === 'usd initial balance & UR'
             ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
             : metric === 'non farming price variation'
-            ? { value: 'NonFarm-Price var for in bal', shortedValue: 'NFP', key: 2 }
+            ? { value: 'NonFarm Price variation for initial balance', shortedValue: 'NFP', key: 2 }
             : metric === 'nonfarming_income'
-            ? { value: 'NonFarm-Income', shortedValue: 'NFI', key: 3 }
+            ? { value: 'NonFarm Income', shortedValue: 'NFI', key: 3 }
             : metric === 'nonfarming_outcome'
-            ? { value: 'NonFarm-Outcome', shortedValue: 'NFO', key: 4 }
+            ? { value: 'NonFarm Outcome', shortedValue: 'NFO', key: 4 }
             : metric === 'nonfarming_swap'
-            ? { value: 'NonFarm-Swaps', shortedValue: 'NFS', key: 5 }
+            ? { value: 'NonFarm Swaps', shortedValue: 'NFS', key: 5 }
             : metric === 'nonfarming_bridge'
-            ? { value: 'NonFarm-Bridges', shortedValue: 'NFB', key: 6 }
+            ? { value: 'NonFarm Bridges', shortedValue: 'NFB', key: 6 }
             : metric === 'farming executed only swaps'
-            ? { value: 'Farm-Swaps', shortedValue: 'FS', key: 7 }
+            ? { value: 'Farm Swaps', shortedValue: 'FS', key: 7 }
             : metric === 'farming rewards'
-            ? { value: 'Farm-Rewards', shortedValue: 'FR', key: 8 }
+            ? { value: 'Farm Rewards', shortedValue: 'FR', key: 8 }
             : metric === 'farming token variation'
-            ? { value: 'Farm-Fees/Rebasing/Pool Tkn Var', shortedValue: 'FFRP', key: 9 }
+            ? { value: 'Farm Fees / Rebasing / Pool token variation', shortedValue: 'FFRP', key: 9 }
             : metric === 'farming price variation'
             ? { value: 'Farm-Price Variation in Rew,Fees,TkVar', shortedValue: 'FPVRFT', key: 10 }
             : { value: metric, key: 11 }

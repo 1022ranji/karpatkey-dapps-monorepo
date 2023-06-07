@@ -1,3 +1,4 @@
+import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box, BoxProps, Paper } from '@mui/material'
 import numbro from 'numbro'
@@ -17,6 +18,7 @@ import {
 export type WaterfallProps = {
   title?: string
   data: any[]
+  bottom?: number
 }
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -56,7 +58,7 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null
 }
 
-const renderCustomizedLabel = (props: any) => {
+const RenderCustomizedLabel = (props: any) => {
   const { x, y, width, value, viewBox } = props
   const radius = 10
 
@@ -84,7 +86,32 @@ const renderCustomizedLabel = (props: any) => {
   )
 }
 
-const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
+const CustomizedAxisTick = (props: any) => {
+  const { x, y, payload } = props
+
+  const words = reduceSentenceByLengthInLines(payload.value, 20)
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      {words.map((word: string, i: number) => (
+        <text
+          x={0}
+          y={18}
+          dy={i * 18}
+          key={i}
+          height="auto"
+          textAnchor="middle"
+          fontSize={12}
+          fill="#222222"
+        >
+          {word}
+        </text>
+      ))}
+    </g>
+  )
+}
+
+const Waterfall = ({ title, data, bottom = 20, ...props }: BoxProps & WaterfallProps) => {
   return (
     <Box
       display="flex"
@@ -105,20 +132,11 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
             top: 20,
             right: 30,
             left: 20,
-            bottom: 5
+            bottom: bottom
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey={(obj: any) => {
-              if (data.length > 4) {
-                return obj.shortedValue
-              } else {
-                return obj.value
-              }
-            }}
-            fontSize={12}
-          />
+          <XAxis dataKey={'value'} interval={0} tick={<CustomizedAxisTick />} />
           <YAxis
             fontSize={12}
             tickCount={4}
@@ -135,7 +153,7 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
           <Tooltip wrapperStyle={{ outline: 'none' }} content={<CustomTooltip />} />
           <Bar dataKey="pv" stackId="a" fill="transparent" barSize={60} />
           <Bar dataKey="uv" stackId="a" fill="#232323" barSize={60}>
-            <LabelList dataKey="uv" content={renderCustomizedLabel} />
+            <LabelList dataKey="uv" content={RenderCustomizedLabel} />
             {data.map((item, index) => {
               const color =
                 item.value === 'Initial Balance' || item.value === 'Final Balance'

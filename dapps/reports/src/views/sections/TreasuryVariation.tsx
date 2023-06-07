@@ -3,7 +3,6 @@ import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
 import { FILTER_DAO } from '@karpatkey-monorepo/shared/config/constants'
 import { getDAO } from '@karpatkey-monorepo/shared/utils'
 import HelpIcon from '@mui/icons-material/Help'
-import IconButton from '@mui/material/IconButton'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Tooltip from '@mui/material/Tooltip'
@@ -68,10 +67,8 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
       </ToggleButton>
       <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
         Year to period
-        <Tooltip title={helpText}>
-          <IconButton sx={{ ml: 1 }}>
-            <HelpIcon />
-          </IconButton>
+        <Tooltip title={helpText} sx={{ ml: 1 }}>
+          <HelpIcon />
         </Tooltip>
       </ToggleButton>
     </ToggleButtonGroup>
