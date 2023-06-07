@@ -34,10 +34,10 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
       onChange={handleChange}
       aria-label="Balance overview type"
     >
-      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
+      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
         Selected period
       </ToggleButton>
-      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
+      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
         Year to period
       </ToggleButton>
     </ToggleButtonGroup>
