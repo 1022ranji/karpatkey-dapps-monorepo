@@ -226,7 +226,8 @@ const Form = (props: FormProps) => {
       <Box
         sx={{
           p: '15px',
-          width: '563px',
+          minWidth: 260,
+          width: 'max-content',
           backgroundColor: 'custom.grey.light',
           borderRadius: '4px'
         }}
