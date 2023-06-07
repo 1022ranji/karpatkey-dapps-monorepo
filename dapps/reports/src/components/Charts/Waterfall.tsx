@@ -7,6 +7,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -55,6 +56,33 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null
 }
 
+const renderCustomizedLabel = (props: any) => {
+  const { x, y, width, value, viewBox } = props
+  const radius = 10
+
+  const customY = value > 0 ? y - radius : y - radius + viewBox.height
+  return (
+    <g>
+      <text
+        x={x + width / 2}
+        y={customY}
+        fontSize={12}
+        fill="#222222"
+        textAnchor="middle"
+        dominantBaseline="middle"
+      >
+        {numbro(value)
+          .formatCurrency({
+            average: true,
+            spaceSeparated: false,
+            mantissa: 3
+          })
+          .toUpperCase()}
+      </text>
+    </g>
+  )
+}
+
 const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
   return (
     <Box
@@ -92,6 +120,7 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
           />
           <YAxis
             fontSize={12}
+            tickCount={4}
             tickFormatter={(tick) => {
               return numbro(tick)
                 .formatCurrency({
@@ -105,14 +134,16 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
           <Tooltip wrapperStyle={{ outline: 'none' }} content={<CustomTooltip />} />
           <Bar dataKey="pv" stackId="a" fill="transparent" barSize={60} />
           <Bar dataKey="uv" stackId="a" fill="#232323" barSize={60}>
+            <LabelList dataKey="uv" content={renderCustomizedLabel} />
             {data.map((item, index) => {
-              if (item.uv < 0) {
-                return <Cell key={index} fill="#DF5C64" />
-              }
-              if (item.value === 'Initial Balance' || item.value === 'Final Balance') {
-                return <Cell key={index} fill="#6B6B6B" />
-              }
-              return <Cell key={index} fill="#54B9A1" />
+              const color =
+                item.value === 'Initial Balance' || item.value === 'Final Balance'
+                  ? '#222222'
+                  : item.uv < 0
+                  ? '#DF5C64'
+                  : '#54B9A1'
+
+              return <Cell key={`cell-${index}`} fill={color} />
             })}
           </Bar>
         </BarChart>
