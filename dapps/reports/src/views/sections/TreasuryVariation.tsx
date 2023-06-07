@@ -1,4 +1,3 @@
-import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
 import ToggleButton from '@mui/material/ToggleButton'
@@ -8,10 +7,7 @@ import dynamic from 'next/dynamic'
 import * as React from 'react'
 
 const DynamicWaterfall = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/Waterfall'),
-  {
-    loading: () => <Loading />
-  }
+  () => import('@karpatkey-monorepo/reports/src/components/Charts/Waterfall')
 )
 
 interface TreasuryVariationProps {

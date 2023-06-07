@@ -48,15 +48,11 @@ export const getCommonServerSideProps = async (params: Filter) => {
     'getTreasuryHistoricVariation' as unknown as Report
   )
 
-  if (!dao) {
-    throw new Error('DAO not found')
-  }
-
   // Step 3: Get filter data like daoName, periodType and period
-  const daoObject = getDAO(dao)
-  const daoKeyName = daoObject?.keyName
+  const DAO = getDAO(dao)
+  const daoKeyName = DAO?.keyName
   const metricPeriodType = 'month'
-  const metricPeriod = `${year}_${month}`
+  const metricPeriod = year && month ? `${year}_${month}` : null
 
   // Step 4: Apply filters to the data by common params, like daoName, periodType and period
   const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) => {

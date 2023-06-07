@@ -1,17 +1,13 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
-import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 
 const DynamicTableTokenDetail = dynamic(
   () =>
-    import('dapps/reports/src/views/sections/TokenDetailItems/TokenDetailItems/TableTokenDetail'),
-  {
-    loading: () => <Loading />
-  }
+    import('dapps/reports/src/views/sections/TokenDetailItems/TokenDetailItems/TableTokenDetail')
 )
 
 interface TokenDetailContainerProps {

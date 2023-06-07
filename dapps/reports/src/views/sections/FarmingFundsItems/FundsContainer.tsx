@@ -1,17 +1,13 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
-import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import { getFarmingFundsByProtocolTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 
 const DynamicTableFunds = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableFunds'),
-  {
-    loading: () => <Loading />
-  }
+  () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableFunds')
 )
 
 interface FundsContainerProps {

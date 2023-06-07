@@ -1,4 +1,3 @@
-import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import dynamic from 'next/dynamic'
@@ -6,13 +5,10 @@ import numbro from 'numbro'
 import * as React from 'react'
 
 const DynamicPieChart = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie'),
-  { loading: () => <Loading /> }
+  () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie')
 )
 
-const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/components/InfoCard'), {
-  loading: () => <Loading />
-})
+const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/components/InfoCard'))
 
 interface SummaryProps {
   totalFunds: number

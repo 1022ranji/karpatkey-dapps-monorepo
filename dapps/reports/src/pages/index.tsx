@@ -1,9 +1,7 @@
 import PageLayout from '@karpatkey-monorepo/reports/src/components/Layout/Layout'
-import { DAO_DEFAULT } from '@karpatkey-monorepo/reports/src/config/constants'
 import { Filter, ReportProps } from '@karpatkey-monorepo/reports/src/types'
 import { getCommonServerSideProps } from '@karpatkey-monorepo/reports/src/utils/serverSide'
 import { filterSchemaValidation } from '@karpatkey-monorepo/reports/src/validations'
-import { DateTime } from 'luxon'
 import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import React, { ReactElement } from 'react'
@@ -19,7 +17,7 @@ export default Homepage
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx
-  const { month = DateTime.local().month, year = DateTime.local().year, dao = DAO_DEFAULT } = query
+  const { month = null, year = null, dao = null } = query
 
   const params = { dao, month, year } as Filter
 

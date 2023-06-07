@@ -11,12 +11,19 @@ interface FilterProps {
   handleClose: () => void
   handleClick: (event: any) => void
   children: React.ReactNode
-  blockchain: Maybe<string>
+  blockchain?: Maybe<string>
   protocol?: Maybe<string>
   token?: Maybe<string>
+  DAO?: Maybe<string>
+  year?: Maybe<string>
+  month?: Maybe<string>
   enableProtocol?: boolean
   enableBlockchain?: boolean
   enableToken?: boolean
+  enableDAO?: boolean
+  enableYear?: boolean
+  enableMonth?: boolean
+  position?: 'left' | 'right' | 'middle'
 }
 
 const Filter = (props: FilterProps) => {
@@ -30,9 +37,16 @@ const Filter = (props: FilterProps) => {
     blockchain,
     protocol,
     token,
+    DAO,
+    year,
+    month,
     enableToken,
     enableBlockchain,
-    enableProtocol
+    enableProtocol,
+    enableDAO,
+    enableYear,
+    enableMonth,
+    position = 'middle'
   } = props
 
   return (
@@ -63,13 +77,28 @@ const Filter = (props: FilterProps) => {
             {...(token ? { fontWeight: 'extra-bold' } : {})}
           />
         ) : null}
+        {enableDAO ? (
+          <FilterTextOption title={DAO || 'DAO'} {...(DAO ? { fontWeight: 'extra-bold' } : {})} />
+        ) : null}
+        {enableMonth ? (
+          <FilterTextOption
+            title={month || 'Month'}
+            {...(month ? { fontWeight: 'extra-bold' } : {})}
+          />
+        ) : null}
+        {enableYear ? (
+          <FilterTextOption
+            title={year || 'Year'}
+            {...(year ? { fontWeight: 'extra-bold' } : {})}
+          />
+        ) : null}
       </BoxWrapperRow>
       <CustomPopover
         id={id}
         open={open}
         anchorEl={anchorEl}
         handleClose={handleClose}
-        position={'right'}
+        position={position}
       >
         {children}
       </CustomPopover>

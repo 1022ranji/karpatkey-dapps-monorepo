@@ -1,7 +1,6 @@
+import TokenDetailByPositionContainer from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionContainer'
 import TokenDetailContainer from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailContainer'
 import * as React from 'react'
-
-import TokenDetailByPositionContainer from './TokenDetailItems/TokenDetailByPositionContainer'
 
 interface TokenDetailsProps {
   tokenDetails: any[]
