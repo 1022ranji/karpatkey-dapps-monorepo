@@ -5,7 +5,7 @@ import { MapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/map
 import { Box, BoxProps, List, ListItem } from '@mui/material'
 import numbro from 'numbro'
 import React from 'react'
-import { Cell, Pie, PieChart as PieRechart } from 'recharts'
+import { Cell, Curve, Pie, PieChart as PieRechart } from 'recharts'
 
 export type PieChartProps = {
   data: MapBalancesByTokenCategory[]
@@ -14,30 +14,33 @@ export type PieChartProps = {
   alignLegend?: 'bottom' | 'right'
 }
 
-const RADIAN = Math.PI / 180
 const RenderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.15
+  const RADIAN = Math.PI / 180
+  const radius = 25 + innerRadius + (outerRadius - innerRadius)
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
   const y = cy + radius * Math.sin(-midAngle * RADIAN)
 
-  return percent * 100 > 2 ? (
+  return (
     <text
       x={x}
       y={y}
-      fill="white"
+      fill="#222222"
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
-      fontSize="14px"
     >
-      {numbro(percent).format({
-        output: 'percent',
-        spaceSeparated: false,
-        mantissa: 2
-      })}
+      {numbro(percent).format({ output: 'percent', mantissa: 2 })}
     </text>
-  ) : (
-    <text />
   )
+}
+
+export interface Point {
+  x: number
+  y: number
+}
+
+type CustomizedLabelLineProps = { points?: Array<Point> }
+const RenderLabelLine = (props: CustomizedLabelLineProps) => {
+  return <Curve {...props} stroke="#222222" type="linear" className="recharts-pie-label-line" />
 }
 
 const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & PieChartProps) => {
@@ -56,17 +59,17 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
           <CustomTypography variant="infoCardTitle" textAlign="left">
             {title}
           </CustomTypography>
-          <PieRechart width={280} height={320}>
+          <PieRechart width={420} height={420}>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={60}
-              outerRadius={140}
-              fill="#8884d8"
+              innerRadius={50}
+              outerRadius={120}
+              fill="#222222"
               dataKey={dataKey}
               label={RenderCustomizedLabel}
-              labelLine={false}
+              labelLine={RenderLabelLine}
             >
               {data.map((entry, index) => (
                 <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={entry.fill} />
@@ -103,17 +106,17 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
             <CustomTypography variant="infoCardTitle" textAlign="left">
               {title}
             </CustomTypography>
-            <PieRechart width={280} height={320}>
+            <PieRechart width={420} height={420}>
               <Pie
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={140}
-                fill="#8884d8"
+                innerRadius={50}
+                outerRadius={120}
+                fill="#222222"
                 dataKey={dataKey}
                 label={RenderCustomizedLabel}
-                labelLine={false}
+                labelLine={RenderLabelLine}
               >
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
