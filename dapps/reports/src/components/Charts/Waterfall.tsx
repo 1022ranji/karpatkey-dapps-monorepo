@@ -111,7 +111,7 @@ const CustomizedAxisTick = (props: any) => {
   )
 }
 
-const Waterfall = ({ title, data, bottom = 20, ...props }: BoxProps & WaterfallProps) => {
+const Waterfall = ({ title, data, bottom = 50, ...props }: BoxProps & WaterfallProps) => {
   return (
     <Box
       display="flex"
