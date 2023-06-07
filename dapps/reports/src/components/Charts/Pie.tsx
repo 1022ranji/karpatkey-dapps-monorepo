@@ -27,6 +27,8 @@ const RenderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
       fill="#222222"
       textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
+      fontFamily={'IBM Plex Sans'}
+      fontSize={14}
     >
       {numbro(percent).format({ output: 'percent', mantissa: 2 })}
     </text>
