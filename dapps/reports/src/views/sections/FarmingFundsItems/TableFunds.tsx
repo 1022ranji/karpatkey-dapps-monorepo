@@ -62,7 +62,14 @@ const TableFunds = (props: TableFundsProps) => {
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperColumn>
+                        <BoxWrapperColumn
+                          sx={{
+                            minWidth: 'max-content',
+                            width: '125px',
+                            maxWidth: '100%',
+                            alignItems: 'flex-end'
+                          }}
+                        >
                           {numbro(row.funds).formatCurrency({
                             spaceSeparated: false,
                             mantissa: 2,
