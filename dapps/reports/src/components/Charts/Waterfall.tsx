@@ -67,6 +67,7 @@ const renderCustomizedLabel = (props: any) => {
         x={x + width / 2}
         y={customY}
         fontSize={12}
+        fontWeight="bold"
         fill="#222222"
         textAnchor="middle"
         dominantBaseline="middle"
