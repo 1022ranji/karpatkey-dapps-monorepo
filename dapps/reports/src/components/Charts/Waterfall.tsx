@@ -78,7 +78,7 @@ const RenderCustomizedLabel = (props: any) => {
           .formatCurrency({
             average: true,
             spaceSeparated: false,
-            mantissa: 3
+            mantissa: 2
           })
           .toUpperCase()}
       </text>

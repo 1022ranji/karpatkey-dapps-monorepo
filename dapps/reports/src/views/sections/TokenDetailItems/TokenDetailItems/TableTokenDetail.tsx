@@ -42,7 +42,6 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
           </TableHead>
           <TableBody>
             {filteredTokenDetails.map((row: any, index: number) => {
-              console.log('price', row.priceAvg)
               const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
                 (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
               )
@@ -93,6 +92,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                     >
                       {numbro(row.balance).format({
                         spaceSeparated: false,
+                        thousandSeparated: true,
                         mantissa: 2
                       })}
                       <CustomTypography variant="tableCellSubData">

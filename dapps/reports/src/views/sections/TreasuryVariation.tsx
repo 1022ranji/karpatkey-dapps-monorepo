@@ -96,7 +96,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
           )}
         </TabPanel>
       </PaperSection>
-      <PaperSection subTitle="Treasury variation for the period (detail) ($USD)">
+      <PaperSection subTitle="Treasury variation for the period (detail)">
         {rowsTreasuryVariationForThePeriodDetail.length > 0 ? (
           <DynamicWaterfall data={rowsTreasuryVariationForThePeriodDetail} />
         ) : (
