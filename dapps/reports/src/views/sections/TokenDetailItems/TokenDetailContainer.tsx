@@ -47,6 +47,12 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       const value = result.find((item) => item.id === currentValue['blockchain'])
       if (!value)
         result.push({
+          logo:
+            currentValue['blockchain'] === 'ethereum'
+              ? '/images/chains/ethereum.svg'
+              : currentValue['blockchain'] === 'Gnosis'
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -77,6 +83,12 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
 
   const defaultBlockchainValue = blockchainFilter
     ? {
+        logo:
+          blockchainFilter === 'ethereum'
+            ? '/images/chains/ethereum.svg'
+            : blockchainFilter === 'Gnosis'
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }

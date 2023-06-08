@@ -44,6 +44,12 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
 
   const defaultBlockchainValue = blockchainFilter
     ? {
+        logo:
+          blockchainFilter === 'ethereum'
+            ? '/images/chains/ethereum.svg'
+            : blockchainFilter === 'Gnosis'
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
