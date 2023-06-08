@@ -1,3 +1,4 @@
+import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box, BoxProps, Paper } from '@mui/material'
 import numbro from 'numbro'
@@ -7,6 +8,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -14,8 +16,9 @@ import {
 } from 'recharts'
 
 export type WaterfallProps = {
-  title: string
+  title?: string
   data: any[]
+  bottom?: number
 }
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -55,7 +58,60 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null
 }
 
-const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
+const RenderCustomizedLabel = (props: any) => {
+  const { x, y, width, value, viewBox } = props
+  const radius = 10
+
+  const customY = value > 0 ? y - radius : y - radius + viewBox.height
+  return (
+    <g>
+      <text
+        x={x + width / 2}
+        y={customY}
+        fontSize={12}
+        fontWeight="bold"
+        fill="#222222"
+        textAnchor="middle"
+        dominantBaseline="middle"
+      >
+        {numbro(value)
+          .formatCurrency({
+            average: true,
+            spaceSeparated: false,
+            mantissa: 3
+          })
+          .toUpperCase()}
+      </text>
+    </g>
+  )
+}
+
+const CustomizedAxisTick = (props: any) => {
+  const { x, y, payload } = props
+
+  const words = reduceSentenceByLengthInLines(payload.value, 20)
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      {words.map((word: string, i: number) => (
+        <text
+          x={0}
+          y={18}
+          dy={i * 18}
+          key={i}
+          height="auto"
+          textAnchor="middle"
+          fontSize={12}
+          fill="#222222"
+        >
+          {word}
+        </text>
+      ))}
+    </g>
+  )
+}
+
+const Waterfall = ({ title, data, bottom = 50, ...props }: BoxProps & WaterfallProps) => {
   return (
     <Box
       display="flex"
@@ -64,9 +120,11 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
       alignItems="center"
       {...props}
     >
-      <CustomTypography variant="h6" color="textSecondary" sx={{ textAlign: 'center' }}>
-        {title}
-      </CustomTypography>
+      {title ? (
+        <CustomTypography variant="h6" color="textSecondary" sx={{ textAlign: 'center' }}>
+          {title}
+        </CustomTypography>
+      ) : null}
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
           data={data}
@@ -74,41 +132,37 @@ const Waterfall = ({ title, data, ...props }: BoxProps & WaterfallProps) => {
             top: 20,
             right: 30,
             left: 20,
-            bottom: 5
+            bottom: bottom
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey={(obj: any) => {
-              if (data.length > 4) {
-                return obj.shortedValue
-              } else {
-                return obj.value
-              }
-            }}
-            fontSize={12}
-          />
+          <XAxis dataKey={'value'} interval={0} tick={<CustomizedAxisTick />} />
           <YAxis
             fontSize={12}
+            tickCount={4}
             tickFormatter={(tick) => {
-              return numbro(tick).formatCurrency({
-                average: true,
-                spaceSeparated: false,
-                mantissa: 2
-              })
+              return numbro(tick)
+                .formatCurrency({
+                  average: true,
+                  spaceSeparated: false,
+                  mantissa: 0
+                })
+                .toUpperCase()
             }}
           />
           <Tooltip wrapperStyle={{ outline: 'none' }} content={<CustomTooltip />} />
           <Bar dataKey="pv" stackId="a" fill="transparent" barSize={60} />
           <Bar dataKey="uv" stackId="a" fill="#232323" barSize={60}>
+            <LabelList dataKey="uv" content={RenderCustomizedLabel} />
             {data.map((item, index) => {
-              if (item.uv < 0) {
-                return <Cell key={index} fill="#DF5C64" />
-              }
-              if (item.value === 'Initial Balance' || item.value === 'Final Balance') {
-                return <Cell key={index} fill="#6B6B6B" />
-              }
-              return <Cell key={index} fill="#54B9A1" />
+              const color =
+                item.value === 'Initial Balance' || item.value === 'Final Balance'
+                  ? '#222222'
+                  : item.uv < 0
+                  ? '#DF5C64'
+                  : '#54B9A1'
+
+              return <Cell key={`cell-${index}`} fill={color} />
             })}
           </Bar>
         </BarChart>

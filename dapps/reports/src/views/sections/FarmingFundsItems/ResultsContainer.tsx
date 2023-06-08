@@ -1,17 +1,13 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
-import Loading from '@karpatkey-monorepo/shared/components/Loading'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import { getFarmingResultsDetailsByProtocolTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 
 const DynamicTableResults = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableResults'),
-  {
-    loading: () => <Loading />
-  }
+  () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableResults')
 )
 
 interface ResultsContainerProps {
@@ -67,6 +63,11 @@ const ResultsContainer = (props: ResultsContainerProps) => {
     setAnchorEl(null)
   }
 
+  const handleClear = () => {
+    setBlockchainFilter(null)
+    setProtocolFilter(null)
+  }
+
   const onSubmitClose = (params: any) => {
     const { blockchain, protocol } = params
     setBlockchainFilter(blockchain)
@@ -95,6 +96,7 @@ const ResultsContainer = (props: ResultsContainerProps) => {
       id={id}
       handleClick={handleClick}
       handleClose={handleClose}
+      handleClear={handleClear}
       anchorEl={anchorEl}
       open={open}
       blockchain={blockchainFilter}

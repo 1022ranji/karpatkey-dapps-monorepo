@@ -1,6 +1,7 @@
-import { CustomAutocomplete } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import * as React from 'react'
+
+import { CustomAutocomplete } from '../CustomAutocomplete'
+import CustomTypography from '../CustomTypography'
 
 const getYears = () => {
   const max = new Date().getFullYear()

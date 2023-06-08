@@ -20,17 +20,17 @@ const BalanceOverview = (props: BalanceOverview) => {
     setToggleType(value)
   }
 
-  const filter = (
+  const Filter = (
     <ToggleButtonGroup
       value={toggleType}
       exclusive
       onChange={handleChange}
       aria-label="Balance overview type"
     >
-      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
+      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
         Type
       </ToggleButton>
-      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
+      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
         Blockchain
       </ToggleButton>
     </ToggleButtonGroup>
@@ -40,7 +40,7 @@ const BalanceOverview = (props: BalanceOverview) => {
     <PaperSection
       title="Balance overview"
       subTitle="Funds by token category and type/blockchain"
-      filter={filter}
+      filter={Filter}
     >
       <BoxWrapperColumn>
         <TabPanel value={toggleType} index={1}>

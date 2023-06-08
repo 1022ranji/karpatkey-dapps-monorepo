@@ -354,7 +354,6 @@ const theme = createTheme({
           background: '#D8D8D8',
           border: '1px solid #1A1A1A',
           borderRadius: '4px',
-          //padding: '9px 16px',
           button: {
             fontFamily: 'IBM Plex Sans',
             fontStyle: 'normal',
@@ -365,11 +364,12 @@ const theme = createTheme({
             textTransform: 'none',
             border: 'none',
             '&[aria-pressed="true"]': {
-              color: '#7A7A7A'
+              color: '#1A1A1A',
+              backgroundColor: '#eeeded',
+              fontWeight: '700 !important'
             },
             '&[aria-pressed="false"]': {
-              color: '#1A1A1A',
-              backgroundColor: '#eeeded'
+              color: '#7A7A7A'
             }
           }
         }

@@ -13,8 +13,8 @@ const Hero = () => {
 
   const filter = state.value
 
-  const dao: Maybe<FILTER_DAO> = getDAO(Number(filter.dao)) || null
-  const monthName = filter.month ? getMonthName(Number(filter.month)) : null
+  const dao: Maybe<FILTER_DAO> = getDAO(filter.dao) || null
+  const monthName = filter.month ? getMonthName(filter.month) : null
 
   if (!dao || !monthName) {
     return null

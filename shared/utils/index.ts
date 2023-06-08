@@ -41,9 +41,9 @@ export const getDAOName = (daoKey: number) => {
   return dao?.name || NONE
 }
 
-export const getDAO = (daoKey: number) => {
+export const getDAO = (daoKey: Maybe<number>) => {
   return FILTER_DAOS.find((dao: FILTER_DAO) => {
-    return +dao.id === +daoKey
+    return daoKey && +dao.id === +daoKey
   })
 }
 
