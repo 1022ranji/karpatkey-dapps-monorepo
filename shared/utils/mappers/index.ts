@@ -1,4 +1,4 @@
-import randomColor from 'randomcolor'
+import { COLORS } from './summary'
 
 export const reducerPositionsByProtocolAndAsset = (acc: any, obj: any) => {
   if (!acc['protocol']) acc['protocol'] = {}
@@ -34,7 +34,7 @@ export const reducerBalancesByTokenCategory = (
 }
 
 export type MapBalancesByTokenCategory = {
-  fill: string
+  color: string
   value: string
   allocation: number
   funds: number
@@ -49,19 +49,13 @@ export const mapBalancesByTokenCategory = (
     0
   )
 
-  const colours = randomColor({
-    hue: 'monochrome',
-    count: Object.keys(data).length,
-    luminosity: 'light'
-  })
-
   return Object.keys(data).map((assetName: string, index: number) => {
     const allocation = (+data[assetName as any].funds / +total) * 100
     return {
       ...data[assetName as any],
       value: assetName,
       allocation: allocation,
-      fill: colours[index]
+      color: COLORS[index]
     }
   })
 }

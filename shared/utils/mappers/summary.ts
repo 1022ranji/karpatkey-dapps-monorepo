@@ -1,6 +1,4 @@
-import randomColor from 'randomcolor'
-
-const COLORS = [
+export const COLORS = [
   '#535353', //OK
   '#808080', //OK
   '#B6B6B6', //OK
@@ -36,9 +34,8 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string, index: number) => {
+    .map((key: string) => {
       return {
-        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -46,6 +43,12 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
       }
     })
     .sort((a: any, b: any) => b.funds - a.funds)
+    .map((row: any, index: number) => {
+      return {
+        ...row,
+        color: COLORS[index]
+      }
+    })
 }
 
 export const getSummaryFundsByType = (data: any) => {
@@ -77,9 +80,8 @@ export const getSummaryFundsByType = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string, index: number) => {
+    .map((key: string) => {
       return {
-        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -87,6 +89,12 @@ export const getSummaryFundsByType = (data: any) => {
       }
     })
     .sort((a: any, b: any) => b.funds - a.funds)
+    .map((row: any, index: number) => {
+      return {
+        ...row,
+        color: COLORS[index]
+      }
+    })
 }
 
 export const getSummaryFundsByBlockchain = (data: any) => {
@@ -112,9 +120,8 @@ export const getSummaryFundsByBlockchain = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string, index: number) => {
+    .map((key: string) => {
       return {
-        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -122,6 +129,12 @@ export const getSummaryFundsByBlockchain = (data: any) => {
       }
     })
     .sort((a: any, b: any) => b.funds - a.funds)
+    .map((row: any, index: number) => {
+      return {
+        ...row,
+        color: COLORS[index]
+      }
+    })
 }
 
 export const getSummaryFundsByProtocol = (data: any) => {
@@ -145,9 +158,8 @@ export const getSummaryFundsByProtocol = (data: any) => {
   )
 
   return Object.keys(rows)
-    .map((key: string, index) => {
+    .map((key: string) => {
       return {
-        fill: COLORS[index] ?? randomColor({ hue: 'monochrome', count: 18 }),
         value: key,
         allocation: (rows[key as any].funds / total) * 100,
         funds: rows[key as any].funds,
@@ -155,6 +167,12 @@ export const getSummaryFundsByProtocol = (data: any) => {
       }
     })
     .sort((a: any, b: any) => b.funds - a.funds)
+    .map((row: any, index: number) => {
+      return {
+        ...row,
+        color: COLORS[index]
+      }
+    })
 }
 
 export const getTotalFunds = (data: any) => {

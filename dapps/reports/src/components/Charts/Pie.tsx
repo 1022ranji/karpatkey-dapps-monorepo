@@ -77,7 +77,7 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
                   labelLine={RenderLabelLine}
                 >
                   {data.map((entry, index) => (
-                    <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={entry.fill} />
+                    <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
               </PieRechart>
@@ -86,7 +86,9 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
                   return (
                     <ListItem key={index}>
                       <BoxWrapperRow gap={2}>
-                        <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
+                        <Box
+                          sx={{ background: entry.color, height: 17, width: 25, maxWidth: 25 }}
+                        />
                         <CustomTypography
                           variant="pieChartLegendTitle"
                           sx={{ wordWrap: 'break-word' }}
@@ -132,7 +134,7 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
                   labelLine={RenderLabelLine}
                 >
                   {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                    <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
               </PieRechart>
@@ -146,7 +148,7 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
                 return (
                   <ListItem key={index}>
                     <BoxWrapperRow gap={2}>
-                      <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
+                      <Box sx={{ background: entry.color, height: 17, width: 25, maxWidth: 25 }} />
                       <CustomTypography
                         variant="pieChartLegendTitle"
                         sx={{ wordWrap: 'break-word' }}
