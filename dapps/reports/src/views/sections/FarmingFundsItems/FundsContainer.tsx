@@ -63,6 +63,11 @@ const FundsContainer = (props: FundsContainerProps) => {
     setAnchorEl(null)
   }
 
+  const handleClear = () => {
+    setBlockchainFilter(null)
+    setProtocolFilter(null)
+  }
+
   const onSubmitClose = (params: any) => {
     const { blockchain, protocol } = params
     setBlockchainFilter(blockchain)
@@ -91,6 +96,7 @@ const FundsContainer = (props: FundsContainerProps) => {
       id={id}
       handleClick={handleClick}
       handleClose={handleClose}
+      handleClear={handleClear}
       anchorEl={anchorEl}
       open={open}
       blockchain={blockchainFilter}

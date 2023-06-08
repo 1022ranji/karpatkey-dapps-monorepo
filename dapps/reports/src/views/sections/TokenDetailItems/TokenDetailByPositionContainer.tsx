@@ -25,6 +25,12 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     setAnchorEl(null)
   }
 
+  const handleClear = () => {
+    setBlockchainFilter(null)
+    setProtocolFilter(null)
+    setTokenFilter(null)
+  }
+
   const onSubmitClose = (params: any) => {
     const { blockchain, protocol, token } = params
     setBlockchainFilter(blockchain)
@@ -61,6 +67,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       id={id}
       handleClick={handleClick}
       handleClose={handleClose}
+      handleClear={handleClear}
       anchorEl={anchorEl}
       open={open}
       blockchain={blockchainFilter}

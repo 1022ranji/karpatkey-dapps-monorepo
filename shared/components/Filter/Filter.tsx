@@ -2,6 +2,7 @@ import CustomPopover from '@karpatkey-monorepo/shared/components/CustomPopover'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import FilterTextOption from '@karpatkey-monorepo/shared/components/Filter/FilterTextOption'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import * as React from 'react'
 
 interface FilterProps {
@@ -9,6 +10,7 @@ interface FilterProps {
   open: boolean
   anchorEl: any
   handleClose: () => void
+  handleClear: () => void
   handleClick: (event: any) => void
   children: React.ReactNode
   blockchain?: Maybe<string>
@@ -34,6 +36,7 @@ const Filter = (props: FilterProps) => {
     handleClose,
     children,
     handleClick,
+    handleClear,
     blockchain,
     protocol,
     token,
@@ -49,8 +52,32 @@ const Filter = (props: FilterProps) => {
     position = 'middle'
   } = props
 
+  const isClearButtonEnabled = React.useMemo(() => {
+    return (
+      (enableBlockchain && blockchain) ||
+      (enableProtocol && protocol) ||
+      (enableToken && token) ||
+      (enableDAO && DAO) ||
+      (enableYear && year) ||
+      (enableMonth && month)
+    )
+  }, [
+    blockchain,
+    DAO,
+    enableBlockchain,
+    enableDAO,
+    enableMonth,
+    enableProtocol,
+    enableToken,
+    enableYear,
+    month,
+    protocol,
+    token,
+    year
+  ])
+
   return (
-    <BoxWrapperRow gap={4}>
+    <BoxWrapperRow gap={2}>
       <CustomTypography variant="filterTitle">Filters</CustomTypography>
       <BoxWrapperRow
         component={'span'}
@@ -93,6 +120,22 @@ const Filter = (props: FilterProps) => {
           />
         ) : null}
       </BoxWrapperRow>
+      <HighlightOffIcon
+        sx={{
+          ...(isClearButtonEnabled
+            ? { color: 'custom.black.primary' }
+            : { color: 'custom.grey.secondary' }),
+          cursor: 'pointer',
+          width: 48,
+          height: 48
+        }}
+        onClick={() => {
+          if (isClearButtonEnabled) {
+            handleClear()
+          }
+        }}
+        fontSize={'small'}
+      />
       <CustomPopover
         id={id}
         open={open}

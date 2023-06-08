@@ -26,6 +26,18 @@ const Menu = () => {
     setAnchorEl(null)
   }
 
+  const handleClear = () => {
+    dispatch({
+      type: ActionKind.UPDATE,
+      payload: {
+        value: { month: null, dao: null, year: null },
+        error: null
+      }
+    })
+    const href = '/'
+    router.push(href)
+  }
+
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
@@ -73,6 +85,7 @@ const Menu = () => {
       id={id}
       handleClick={handleClick}
       handleClose={handleClose}
+      handleClear={handleClear}
       anchorEl={anchorEl}
       open={open}
       enableDAO
@@ -97,13 +110,7 @@ const Menu = () => {
 
   return (
     <BoxWrapperRow gap={2}>
-      <BoxWrapperRow
-        component={'span'}
-        onClick={handleClick}
-        id={id || ''}
-        aria-describedby={id}
-        gap={2}
-      >
+      <BoxWrapperRow component={'span'} id={id || ''} aria-describedby={id} gap={2}>
         {filterElement}
         <Share {...filter} />
       </BoxWrapperRow>
