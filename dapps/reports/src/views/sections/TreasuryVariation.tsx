@@ -83,14 +83,14 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
       >
         <TabPanel value={toggleType} index={0}>
           {rowsTreasuryVariation.length > 0 ? (
-            <DynamicWaterfall data={rowsTreasuryVariation} />
+            <DynamicWaterfall data={rowsTreasuryVariation} barSize={150} />
           ) : (
             <EmptyData />
           )}
         </TabPanel>
         <TabPanel value={toggleType} index={1}>
           {rowsHistoricVariation.length > 0 ? (
-            <DynamicWaterfall data={rowsHistoricVariation} />
+            <DynamicWaterfall data={rowsHistoricVariation} barSize={150} />
           ) : (
             <EmptyData />
           )}
