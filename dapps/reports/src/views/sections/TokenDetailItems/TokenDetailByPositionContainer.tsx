@@ -42,7 +42,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  const filteredTokenDetailByPosition = Object.keys(tokenDetailByPosition).reduce(
+  const filteredDataByBlockchain = Object.keys(tokenDetailByPosition).reduce(
     (acc: any, key: string) => {
       if (blockchainFilter) {
         if (key.toLowerCase() === blockchainFilter.toLowerCase()) {
@@ -53,6 +53,34 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
         return acc
       } else {
         return tokenDetailByPosition
+      }
+    },
+    []
+  )
+
+  const filteredDataByProtocol = Object.keys(filteredDataByBlockchain).reduce(
+    (acc: any, key: string) => {
+      const protocols = Object.keys(
+        tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
+      )
+      const filteredProtocols = protocols.reduce((acc: any, protocol) => {
+        if (protocolFilter) {
+          if (protocol.toLowerCase() === protocolFilter.toLowerCase()) {
+            return {
+              [protocol]:
+                tokenDetailByPosition[key as keyof typeof tokenDetailByPosition][
+                  protocol as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]
+                ]
+            }
+          }
+          return acc
+        } else {
+          return tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
+        }
+      }, [])
+      return {
+        ...acc,
+        [key]: filteredProtocols
       }
     },
     []
@@ -100,6 +128,22 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     })
     .sort((a, b) => a.label.localeCompare(b.label))
 
+  const protocolOptions = Object.keys(tokenDetailByPosition)
+    .reduce((acc: any, key: string) => {
+      const protocols = Object.keys(
+        tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
+      )
+      const protocolOptions = protocols.map((protocol) => {
+        return {
+          label: protocol,
+          id: protocol
+        }
+      })
+
+      return [...acc, ...protocolOptions]
+    }, [])
+    .sort((a, b) => a.label.localeCompare(b.label))
+
   const filter = (
     <Filter
       id={id}
@@ -117,7 +161,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     >
       <Form
         blockchainOptions={blockchainOptions}
-        protocolOptions={[]}
+        protocolOptions={protocolOptions}
         tokenOptions={[]}
         onRequestClose={handleClose}
         onSubmitClose={onSubmitClose}
@@ -133,8 +177,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
 
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
-      {Object.keys(filteredTokenDetailByPosition).length > 0 ? (
-        <CardList tokenDetailByPosition={filteredTokenDetailByPosition} />
+      {Object.keys(filteredDataByProtocol).length > 0 ? (
+        <CardList tokenDetailByPosition={filteredDataByProtocol} />
       ) : (
         <EmptyData />
       )}

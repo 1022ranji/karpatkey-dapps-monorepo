@@ -42,6 +42,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
           </TableHead>
           <TableBody>
             {filteredTokenDetails.map((row: any, index: number) => {
+              console.log('price', row.priceAvg)
               const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
                 (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
               )
@@ -62,10 +63,14 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                     </BoxWrapperColumn>
                   </TableCellCustom>
                   <TableCellCustom sx={{ width: '20%' }} align="left">
-                    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                    <BoxWrapperRow
+                      gap={1}
+                      sx={{ justifyContent: 'flex-start' }}
+                      title={row.priceAvg}
+                    >
                       {numbro(row.priceAvg).formatCurrency({
                         spaceSeparated: false,
-                        mantissa: 0,
+                        mantissa: row.priceAvg < 0.9995 ? 3 : 2,
                         thousandSeparated: true
                       })}
                       {TOKEN && (
