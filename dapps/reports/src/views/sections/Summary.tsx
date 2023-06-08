@@ -31,8 +31,6 @@ const Summary = (props: SummaryProps) => {
     fundsByProtocol
   } = props
 
-  console.log(fundsByTokenCategory)
-
   return (
     <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
       <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
