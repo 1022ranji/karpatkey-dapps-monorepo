@@ -44,7 +44,7 @@ const CardItem = (props: CardItemProps) => {
   return (
     <BoxWrapperColumn
       sx={{
-        minWidth: '340px',
+        maxWidth: '340px',
         minHeight: '450px',
         height: 'content-fit',
         padding: '8px 8px',

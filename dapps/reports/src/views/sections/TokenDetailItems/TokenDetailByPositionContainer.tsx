@@ -42,6 +42,22 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
+  const filteredTokenDetailByPosition = Object.keys(tokenDetailByPosition).reduce(
+    (acc: any, key: string) => {
+      if (blockchainFilter) {
+        if (key.toLowerCase() === blockchainFilter.toLowerCase()) {
+          return {
+            [key]: tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
+          }
+        }
+        return acc
+      } else {
+        return tokenDetailByPosition
+      }
+    },
+    []
+  )
+
   const defaultBlockchainValue = blockchainFilter
     ? {
         logo:
@@ -69,6 +85,21 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       }
     : null
 
+  const blockchainOptions = Object.keys(tokenDetailByPosition)
+    .map((key) => {
+      return {
+        logo:
+          key === 'Ethereum'
+            ? '/images/chains/ethereum.svg'
+            : key === 'Gnosis'
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
+        label: key,
+        id: key
+      }
+    })
+    .sort((a, b) => a.label.localeCompare(b.label))
+
   const filter = (
     <Filter
       id={id}
@@ -85,7 +116,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       enableToken
     >
       <Form
-        blockchainOptions={[]}
+        blockchainOptions={blockchainOptions}
         protocolOptions={[]}
         tokenOptions={[]}
         onRequestClose={handleClose}
@@ -102,8 +133,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
 
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
-      {Object.keys(tokenDetailByPosition).length > 0 ? (
-        <CardList tokenDetailByPosition={tokenDetailByPosition} />
+      {Object.keys(filteredTokenDetailByPosition).length > 0 ? (
+        <CardList tokenDetailByPosition={filteredTokenDetailByPosition} />
       ) : (
         <EmptyData />
       )}
