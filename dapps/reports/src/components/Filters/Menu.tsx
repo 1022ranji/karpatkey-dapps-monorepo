@@ -1,5 +1,5 @@
 import Share from '@karpatkey-monorepo/reports//src/components/Share'
-import { ActionKind, useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
+import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form, { SubmitValues } from '@karpatkey-monorepo/shared/components/Filter/Form'
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 
 const Menu = () => {
-  const { state, dispatch } = useFilter()
+  const { state } = useFilter()
   const router = useRouter()
 
   const filter = state.value
@@ -27,15 +27,7 @@ const Menu = () => {
   }
 
   const handleClear = () => {
-    dispatch({
-      type: ActionKind.UPDATE,
-      payload: {
-        value: { month: null, dao: null, year: null },
-        error: null
-      }
-    })
-    const href = '/'
-    router.push(href)
+    router.push('/')
   }
 
   const open = Boolean(anchorEl)
@@ -69,14 +61,12 @@ const Menu = () => {
 
     if (month === undefined || dao === undefined || year === undefined) return
 
-    dispatch({
-      type: ActionKind.UPDATE,
-      payload: {
-        value: { month: Number(month), dao: Number(dao), year: Number(year) },
-        error: null
-      }
-    })
-    const href = `/?dao=${dao}&month=${month}&year=${year}`
+    const query = new URLSearchParams()
+    if (dao) query.append('dao', dao + '')
+    if (month) query.append('month', month + '')
+    if (year) query.append('year', year + '')
+
+    const href = `/?${query.toString()}`
     router.push(href)
   }
 

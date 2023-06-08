@@ -280,7 +280,11 @@ const Form = (props: FormProps) => {
                   <WarningIcon sx={{ color: 'custom.error' }} />
                   <CustomTypography
                     variant="filterErrorMessage"
-                    sx={{ '::first-letter': { textTransform: 'capitalize' } }}
+                    sx={{
+                      '::first-letter': { textTransform: 'capitalize' },
+                      wordBreak: 'break-word',
+                      maxWidth: '350px'
+                    }}
                   >
                     {Object.values(errors)[0].message}
                   </CustomTypography>
