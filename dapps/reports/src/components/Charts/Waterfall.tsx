@@ -75,10 +75,9 @@ const RenderCustomizedLabel = (props: any) => {
         dominantBaseline="middle"
       >
         {numbro(value)
-          .formatCurrency({
+          .format({
             average: true,
-            spaceSeparated: false,
-            mantissa: 2
+            totalLength: 3
           })
           .toUpperCase()}
       </text>
