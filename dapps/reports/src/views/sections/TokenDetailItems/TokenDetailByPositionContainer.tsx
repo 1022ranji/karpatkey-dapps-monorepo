@@ -1,4 +1,5 @@
 import CardList from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/CardList'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -95,7 +96,11 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
 
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
-      <CardList tokenDetailByPosition={tokenDetailByPosition} />
+      {Object.keys(tokenDetailByPosition).length > 0 ? (
+        <CardList tokenDetailByPosition={tokenDetailByPosition} />
+      ) : (
+        <EmptyData />
+      )}
     </PaperSection>
   )
 }

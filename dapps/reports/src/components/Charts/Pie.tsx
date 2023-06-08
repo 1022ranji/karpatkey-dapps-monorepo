@@ -1,4 +1,5 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { MapBalancesByTokenCategory } from '@karpatkey-monorepo/shared/utils/mappers'
@@ -61,37 +62,46 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
           <CustomTypography variant="infoCardTitle" textAlign="left">
             {title}
           </CustomTypography>
-          <PieRechart width={420} height={420}>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              innerRadius={50}
-              outerRadius={120}
-              fill="#222222"
-              dataKey={dataKey}
-              label={RenderCustomizedLabel}
-              labelLine={RenderLabelLine}
-            >
-              {data.map((entry, index) => (
-                <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Pie>
-          </PieRechart>
-          <List>
-            {data.map((entry: any, index: any) => {
-              return (
-                <ListItem key={index}>
-                  <BoxWrapperRow gap={2}>
-                    <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
-                    <CustomTypography variant="pieChartLegendTitle" sx={{ wordWrap: 'break-word' }}>
-                      {entry.label}
-                    </CustomTypography>
-                  </BoxWrapperRow>
-                </ListItem>
-              )
-            })}
-          </List>
+          {data.length > 0 ? (
+            <>
+              <PieRechart width={420} height={420}>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={120}
+                  fill="#222222"
+                  dataKey={dataKey}
+                  label={RenderCustomizedLabel}
+                  labelLine={RenderLabelLine}
+                >
+                  {data.map((entry, index) => (
+                    <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Pie>
+              </PieRechart>
+              <List>
+                {data.map((entry: any, index: any) => {
+                  return (
+                    <ListItem key={index}>
+                      <BoxWrapperRow gap={2}>
+                        <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
+                        <CustomTypography
+                          variant="pieChartLegendTitle"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {entry.label}
+                        </CustomTypography>
+                      </BoxWrapperRow>
+                    </ListItem>
+                  )
+                })}
+              </List>
+            </>
+          ) : (
+            <EmptyData />
+          )}
         </BoxWrapperColumn>
       ) : (
         <BoxWrapperRow
@@ -108,38 +118,47 @@ const PieChart = ({ data, title, dataKey, alignLegend = 'bottom' }: BoxProps & P
             <CustomTypography variant="infoCardTitle" textAlign="left">
               {title}
             </CustomTypography>
-            <PieRechart width={420} height={420}>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                innerRadius={50}
-                outerRadius={120}
-                fill="#222222"
-                dataKey={dataKey}
-                label={RenderCustomizedLabel}
-                labelLine={RenderLabelLine}
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
-                ))}
-              </Pie>
-            </PieRechart>
+            {data.length > 0 ? (
+              <PieRechart width={420} height={420}>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={120}
+                  fill="#222222"
+                  dataKey={dataKey}
+                  label={RenderCustomizedLabel}
+                  labelLine={RenderLabelLine}
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Pie>
+              </PieRechart>
+            ) : (
+              <EmptyData />
+            )}
           </BoxWrapperColumn>
-          <List>
-            {data.map((entry: any, index: any) => {
-              return (
-                <ListItem key={index}>
-                  <BoxWrapperRow gap={2}>
-                    <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
-                    <CustomTypography variant="pieChartLegendTitle" sx={{ wordWrap: 'break-word' }}>
-                      {entry.label}
-                    </CustomTypography>
-                  </BoxWrapperRow>
-                </ListItem>
-              )
-            })}
-          </List>
+          {data.length > 0 ? (
+            <List>
+              {data.map((entry: any, index: any) => {
+                return (
+                  <ListItem key={index}>
+                    <BoxWrapperRow gap={2}>
+                      <Box sx={{ background: entry.fill, height: 17, width: 25, maxWidth: 25 }} />
+                      <CustomTypography
+                        variant="pieChartLegendTitle"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
+                        {entry.label}
+                      </CustomTypography>
+                    </BoxWrapperRow>
+                  </ListItem>
+                )
+              })}
+            </List>
+          ) : null}
         </BoxWrapperRow>
       )}
     </>

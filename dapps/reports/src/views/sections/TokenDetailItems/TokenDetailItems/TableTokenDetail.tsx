@@ -41,97 +41,88 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredTokenDetails.length === 0 ? (
-              <TableRow>
-                <TableCellCustom align="center" colSpan={5}>
-                  No data available
-                </TableCellCustom>
-              </TableRow>
-            ) : null}
-            {filteredTokenDetails.length > 0
-              ? filteredTokenDetails.map((row: any, index: number) => {
-                  const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
-                    (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
-                  )
-                  const onClick = () => {
-                    if (TOKEN) {
-                      window.open(TOKEN.url, '_blank')
-                    }
-                  }
+            {filteredTokenDetails.map((row: any, index: number) => {
+              const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
+                (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
+              )
+              const onClick = () => {
+                if (TOKEN) {
+                  window.open(TOKEN.url, '_blank')
+                }
+              }
 
-                  return (
-                    <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperColumn>
-                          {row.tokenSymbol}
-                          <CustomTypography variant="tableCellSubData">
-                            {row.tokenCategory}
-                          </CustomTypography>
-                        </BoxWrapperColumn>
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                          {numbro(row.priceAvg).formatCurrency({
-                            spaceSeparated: false,
-                            mantissa: 0,
-                            thousandSeparated: true
-                          })}
-                          {TOKEN && (
-                            <OpenInNewIcon
-                              onClick={onClick}
-                              fontSize={'small'}
-                              sx={{ cursor: 'pointer' }}
-                            />
-                          )}
-                        </BoxWrapperRow>
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperColumn
-                          sx={{
-                            minWidth: 'max-content',
-                            width: '125px',
-                            maxWidth: '100%',
-                            alignItems: 'flex-end'
-                          }}
-                        >
-                          {numbro(row.balance).format({
-                            spaceSeparated: false,
-                            mantissa: 2
-                          })}
-                          <CustomTypography variant="tableCellSubData">
-                            {numbro(row.usdValue).formatCurrency({
-                              spaceSeparated: false,
-                              mantissa: 2,
-                              thousandSeparated: true
-                            })}
-                          </CustomTypography>
-                        </BoxWrapperColumn>
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {numbro(row.allocation).format({
-                          output: 'percent',
+              return (
+                <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
+                  <TableCellCustom sx={{ width: '20%' }} align="left">
+                    <BoxWrapperColumn>
+                      {row.tokenSymbol}
+                      <CustomTypography variant="tableCellSubData">
+                        {row.tokenCategory}
+                      </CustomTypography>
+                    </BoxWrapperColumn>
+                  </TableCellCustom>
+                  <TableCellCustom sx={{ width: '20%' }} align="left">
+                    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                      {numbro(row.priceAvg).formatCurrency({
+                        spaceSeparated: false,
+                        mantissa: 0,
+                        thousandSeparated: true
+                      })}
+                      {TOKEN && (
+                        <OpenInNewIcon
+                          onClick={onClick}
+                          fontSize={'small'}
+                          sx={{ cursor: 'pointer' }}
+                        />
+                      )}
+                    </BoxWrapperRow>
+                  </TableCellCustom>
+                  <TableCellCustom sx={{ width: '20%' }} align="left">
+                    <BoxWrapperColumn
+                      sx={{
+                        minWidth: 'max-content',
+                        width: '125px',
+                        maxWidth: '100%',
+                        alignItems: 'flex-end'
+                      }}
+                    >
+                      {numbro(row.balance).format({
+                        spaceSeparated: false,
+                        mantissa: 2
+                      })}
+                      <CustomTypography variant="tableCellSubData">
+                        {numbro(row.usdValue).formatCurrency({
                           spaceSeparated: false,
-                          mantissa: 2
+                          mantissa: 2,
+                          thousandSeparated: true
                         })}
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                          {numbro(row.priceVariation).format({
-                            output: 'percent',
-                            spaceSeparated: false,
-                            mantissa: 2
-                          })}
-                          {row.priceVariation > 0 ? (
-                            <ArrowUpwardIcon fontSize={'small'} />
-                          ) : (
-                            <ArrowDownwardIcon fontSize={'small'} />
-                          )}
-                        </BoxWrapperRow>
-                      </TableCellCustom>
-                    </TableRow>
-                  )
-                })
-              : null}
+                      </CustomTypography>
+                    </BoxWrapperColumn>
+                  </TableCellCustom>
+                  <TableCellCustom sx={{ width: '20%' }} align="left">
+                    {numbro(row.allocation).format({
+                      output: 'percent',
+                      spaceSeparated: false,
+                      mantissa: 2
+                    })}
+                  </TableCellCustom>
+                  <TableCellCustom sx={{ width: '20%' }} align="left">
+                    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                      {numbro(row.priceVariation).format({
+                        output: 'percent',
+                        spaceSeparated: false,
+                        mantissa: 2
+                      })}
+                      {row.priceVariation > 0 ? (
+                        <ArrowUpwardIcon fontSize={'small'} />
+                      ) : (
+                        <ArrowDownwardIcon fontSize={'small'} />
+                      )}
+                    </BoxWrapperRow>
+                  </TableCellCustom>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

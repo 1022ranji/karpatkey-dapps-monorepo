@@ -39,93 +39,79 @@ const TableResults = (props: TableResultsProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {fundsDetails.length === 0 ? (
-            <TableRow>
-              <TableCellCustom align="center" colSpan={5}>
-                No data available
-              </TableCellCustom>
-            </TableRow>
-          ) : null}
-          {fundsDetails.length > 0
-            ? fundsDetails.map((row: any, index: number) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {row.blockchain}
-                    </TableCellCustom>
-                    <TableCellCustom sx={{ width: '20%' }} align="left">
-                      <BoxWrapperColumn>
-                        {row.position}
-                        <CustomTypography variant="tableCellSubData">
-                          {row.protocol}
-                        </CustomTypography>
-                      </BoxWrapperColumn>
-                    </TableCellCustom>
-                    <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {numbro(row['rewards']).formatCurrency({
-                        spaceSeparated: false,
-                        mantissa: 2,
-                        thousandSeparated: true
-                      })}
-                    </TableCellCustom>
-                    <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {numbro(row['fees']).formatCurrency({
-                        spaceSeparated: false,
-                        mantissa: 2,
-                        thousandSeparated: true
-                      })}
-                    </TableCellCustom>
-                    <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {numbro(row['total']).formatCurrency({
-                        spaceSeparated: false,
-                        mantissa: 2,
-                        thousandSeparated: true
-                      })}
-                    </TableCellCustom>
-                  </TableRow>
-                )
-              })
-            : null}
-          {fundsDetails.length > 0 ? (
-            <>
-              <TableRow>
-                <TableEmptyCellCustom />
-                <TableEmptyCellCustom />
-                <TableEmptyCellCustom />
-                <TableEmptyCellCustom />
-                <TableEmptyCellCustom />
+          {fundsDetails.map((row: any, index: number) => {
+            return (
+              <TableRow key={index}>
+                <TableCellCustom sx={{ width: '20%' }} align="left">
+                  {row.blockchain}
+                </TableCellCustom>
+                <TableCellCustom sx={{ width: '20%' }} align="left">
+                  <BoxWrapperColumn>
+                    {row.position}
+                    <CustomTypography variant="tableCellSubData">{row.protocol}</CustomTypography>
+                  </BoxWrapperColumn>
+                </TableCellCustom>
+                <TableCellCustom sx={{ width: '20%' }} align="left">
+                  {numbro(row['rewards']).formatCurrency({
+                    spaceSeparated: false,
+                    mantissa: 2,
+                    thousandSeparated: true
+                  })}
+                </TableCellCustom>
+                <TableCellCustom sx={{ width: '20%' }} align="left">
+                  {numbro(row['fees']).formatCurrency({
+                    spaceSeparated: false,
+                    mantissa: 2,
+                    thousandSeparated: true
+                  })}
+                </TableCellCustom>
+                <TableCellCustom sx={{ width: '20%' }} align="left">
+                  {numbro(row['total']).formatCurrency({
+                    spaceSeparated: false,
+                    mantissa: 2,
+                    thousandSeparated: true
+                  })}
+                </TableCellCustom>
               </TableRow>
-              <TableRow>
-                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                  Grand total
-                </TableFooterCellCustom>
-                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                  {' '}
-                </TableFooterCellCustom>
-                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                  {numbro(totals?.rewardsTotal || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
-                </TableFooterCellCustom>
-                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                  {numbro(totals?.feesTotal || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
-                </TableFooterCellCustom>
-                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                  {numbro(totals?.total || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
-                </TableFooterCellCustom>
-              </TableRow>
-            </>
-          ) : null}
+            )
+          })}
+
+          <TableRow>
+            <TableEmptyCellCustom />
+            <TableEmptyCellCustom />
+            <TableEmptyCellCustom />
+            <TableEmptyCellCustom />
+            <TableEmptyCellCustom />
+          </TableRow>
+          <TableRow>
+            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+              Grand total
+            </TableFooterCellCustom>
+            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+              {' '}
+            </TableFooterCellCustom>
+            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+              {numbro(totals?.rewardsTotal || 0).formatCurrency({
+                spaceSeparated: false,
+                mantissa: 2,
+                thousandSeparated: true
+              })}
+            </TableFooterCellCustom>
+            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+              {numbro(totals?.feesTotal || 0).formatCurrency({
+                spaceSeparated: false,
+                mantissa: 2,
+                thousandSeparated: true
+              })}
+            </TableFooterCellCustom>
+            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+              {numbro(totals?.total || 0).formatCurrency({
+                spaceSeparated: false,
+                mantissa: 2,
+                thousandSeparated: true
+              })}
+            </TableFooterCellCustom>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

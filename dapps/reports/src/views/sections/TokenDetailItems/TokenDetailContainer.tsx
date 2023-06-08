@@ -1,4 +1,5 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -104,7 +105,11 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
 
   return (
     <PaperSection title="Token detail" subTitle="Token detail with price variation" filter={filter}>
-      <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
+      {filteredTokenDetails.length > 0 ? (
+        <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
+      ) : (
+        <EmptyData />
+      )}
     </PaperSection>
   )
 }

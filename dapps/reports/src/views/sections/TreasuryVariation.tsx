@@ -1,3 +1,5 @@
+import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
 import { FILTER_DAO } from '@karpatkey-monorepo/shared/config/constants'
@@ -8,8 +10,6 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Tooltip from '@mui/material/Tooltip'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
-
-import { useFilter } from '../../contexts/filter.context'
 
 const DynamicWaterfall = dynamic(
   () => import('@karpatkey-monorepo/reports/src/components/Charts/Waterfall')
@@ -82,14 +82,26 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
         filter={filter}
       >
         <TabPanel value={toggleType} index={0}>
-          <DynamicWaterfall data={rowsTreasuryVariation} />
+          {rowsTreasuryVariation.length > 0 ? (
+            <DynamicWaterfall data={rowsTreasuryVariation} />
+          ) : (
+            <EmptyData />
+          )}
         </TabPanel>
         <TabPanel value={toggleType} index={1}>
-          <DynamicWaterfall data={rowsHistoricVariation} />
+          {rowsHistoricVariation.length > 0 ? (
+            <DynamicWaterfall data={rowsHistoricVariation} />
+          ) : (
+            <EmptyData />
+          )}
         </TabPanel>
       </PaperSection>
       <PaperSection subTitle="Treasury variation for the period (detail) ($USD)">
-        <DynamicWaterfall data={rowsTreasuryVariationForThePeriodDetail} />
+        {rowsTreasuryVariationForThePeriodDetail.length > 0 ? (
+          <DynamicWaterfall data={rowsTreasuryVariationForThePeriodDetail} />
+        ) : (
+          <EmptyData />
+        )}
       </PaperSection>
     </>
   )

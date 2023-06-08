@@ -103,14 +103,15 @@ export const getTreasuryVariationHistory = (data: any) => {
     0
   )
 
-  rows.push({
-    funds: total,
-    value: 'Final Balance',
-    key: 4,
-    uv: total,
-    pv: 0
-  })
-
+  if (rows.length > 0) {
+    rows.push({
+      funds: total,
+      value: 'Final Balance',
+      key: 4,
+      uv: total,
+      pv: 0
+    })
+  }
   return rows
 }
 
@@ -196,14 +197,16 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
     0
   )
 
-  rows.push({
-    funds: total,
-    value: 'Final Balance',
-    shortedValue: 'FB',
-    key: 12,
-    uv: total,
-    pv: 0
-  })
+  if (rows.length > 0) {
+    rows.push({
+      funds: total,
+      value: 'Final Balance',
+      shortedValue: 'FB',
+      key: 12,
+      uv: total,
+      pv: 0
+    })
+  }
 
   return rows
 }

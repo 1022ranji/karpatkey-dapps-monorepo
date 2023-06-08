@@ -1,4 +1,5 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -123,7 +124,11 @@ const FundsContainer = (props: FundsContainerProps) => {
       subTitle={'Farming funds/results by protocol'}
       filter={filter}
     >
-      <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
+      {filteredFunds.length > 0 ? (
+        <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
+      ) : (
+        <EmptyData />
+      )}
     </PaperSection>
   )
 }
