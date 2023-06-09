@@ -48,9 +48,9 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       if (!value)
         result.push({
           logo:
-            currentValue['blockchain'] === 'ethereum'
+            currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
-              : currentValue['blockchain'] === 'Gnosis'
+              : currentValue['blockchain'].toLowerCase() === 'gnosis'
               ? '/images/chains/gnosis.svg'
               : '/images/chains/all.svg',
           label: currentValue['blockchain'],

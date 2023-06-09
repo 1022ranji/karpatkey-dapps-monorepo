@@ -36,9 +36,9 @@ const FundsContainer = (props: FundsContainerProps) => {
       if (!value)
         result.push({
           logo:
-            currentValue['blockchain'] === 'ethereum'
+            currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
-              : currentValue['blockchain'] === 'Gnosis'
+              : currentValue['blockchain'].toLowerCase() === 'gnosis'
               ? '/images/chains/gnosis.svg'
               : '/images/chains/all.svg',
           label: currentValue['blockchain'],
@@ -87,9 +87,9 @@ const FundsContainer = (props: FundsContainerProps) => {
   const defaultBlockchainValue = blockchainFilter
     ? {
         logo:
-          blockchainFilter === 'ethereum'
+          blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
-            : blockchainFilter === 'Gnosis'
+            : blockchainFilter.toLowerCase() === 'gnosis'
             ? '/images/chains/gnosis.svg'
             : '/images/chains/all.svg',
         label: blockchainFilter,

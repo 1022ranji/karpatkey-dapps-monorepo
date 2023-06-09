@@ -89,9 +89,9 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
   const defaultBlockchainValue = blockchainFilter
     ? {
         logo:
-          blockchainFilter === 'ethereum'
+          blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
-            : blockchainFilter === 'Gnosis'
+            : blockchainFilter.toLowerCase() === 'gnosis'
             ? '/images/chains/gnosis.svg'
             : '/images/chains/all.svg',
         label: blockchainFilter,
@@ -117,9 +117,9 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     .map((key) => {
       return {
         logo:
-          key === 'Ethereum'
+          key.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
-            : key === 'Gnosis'
+            : key.toLowerCase() === 'gnosis'
             ? '/images/chains/gnosis.svg'
             : '/images/chains/all.svg',
         label: key,
