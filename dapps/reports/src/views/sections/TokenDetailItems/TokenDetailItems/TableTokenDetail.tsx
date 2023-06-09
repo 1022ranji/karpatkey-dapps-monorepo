@@ -55,6 +55,8 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                 }
               }
 
+              console.log('row', row)
+
               return (
                 <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
                   <TableCellCustom sx={{ width: '20%' }} align="left">
@@ -62,6 +64,9 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                       {row.tokenSymbol}
                       <CustomTypography variant="tableCellSubData">
                         {row.tokenCategory}
+                      </CustomTypography>
+                      <CustomTypography variant="tableCellSubData">
+                        {row.blockchain}
                       </CustomTypography>
                     </BoxWrapperColumn>
                   </TableCellCustom>
