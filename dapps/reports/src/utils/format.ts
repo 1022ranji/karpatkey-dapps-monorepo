@@ -16,10 +16,10 @@ export const formatPercentage = (value: number) => {
   })
 }
 
-export const formatNumber = (value: number) => {
+export const formatNumber = (value: number, mantissa = 2) => {
   return numbro(value).format({
     spaceSeparated: false,
     thousandSeparated: true,
-    mantissa: 2
+    mantissa
   })
 }

@@ -1,9 +1,9 @@
+import { formatCurrency, formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
 import ItemText from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/ItemText'
 import ItemUSD from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/ItemUSD'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Divider } from '@mui/material'
-import numbro from 'numbro'
 import * as React from 'react'
 
 interface ListItemsProps {
@@ -25,16 +25,13 @@ const ListItems = ({ title, tokens }: ListItemsProps) => {
       </BoxWrapperColumn>
       {Object.keys(tokens).map((token: string, index: number) => {
         const tokenData = tokens[token]
-        const usdValue = numbro(tokenData.usdValue).formatCurrency({
-          spaceSeparated: false,
-          thousandSeparated: true,
-          mantissa: 0
-        })
+        const usdValue = formatCurrency(tokenData.usdValue, 2)
+        const tokenBalance = formatNumber(tokenData.tokenBalance)
         return (
           <BoxWrapperColumn key={index} gap={1}>
             <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
               <ItemText itemText={token} />
-              <ItemText itemText={tokenData.tokenBalance.toFixed(2)} />
+              <ItemText itemText={tokenBalance} />
             </BoxWrapperRow>
             <ItemUSD itemUsd={usdValue} />
             <Divider />
