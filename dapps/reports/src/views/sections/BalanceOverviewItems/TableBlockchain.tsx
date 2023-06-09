@@ -1,10 +1,10 @@
+import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import Box from '@mui/material/Box'
-import numbro from 'numbro'
 import * as React from 'react'
 
 type TableBlockchainProps = { balanceOverviewBlockchain: any } & BoxProps
@@ -46,25 +46,13 @@ const TableBlockchain = (props: TableBlockchainProps) => {
                   {row['Token Category'] || 0}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {numbro(row['Ethereum'] || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
+                  {formatCurrency(row['Ethereum'] || 0)}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {numbro(row['Gnosis'] || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
+                  {formatCurrency(row['Gnosis'] || 0)}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {numbro(row['Total'] || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
+                  {formatCurrency(row['Total'] || 0)}
                 </TableCellCustom>
               </TableRow>
             )
@@ -82,25 +70,13 @@ const TableBlockchain = (props: TableBlockchainProps) => {
               Grand total
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              {numbro(dataFooterBlockchain['Ethereum'] || 0).formatCurrency({
-                spaceSeparated: false,
-                mantissa: 2,
-                thousandSeparated: true
-              })}
+              {formatCurrency(dataFooterBlockchain['Ethereum'] || 0)}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              {numbro(dataFooterBlockchain['Gnosis'] || 0).formatCurrency({
-                spaceSeparated: false,
-                mantissa: 2,
-                thousandSeparated: true
-              })}
+              {formatCurrency(dataFooterBlockchain['Gnosis'] || 0)}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              {numbro(dataFooterBlockchain['Total'] || 0).formatCurrency({
-                spaceSeparated: false,
-                mantissa: 2,
-                thousandSeparated: true
-              })}
+              {formatCurrency(dataFooterBlockchain['Total'] || 0)}
             </TableFooterCellCustom>
           </TableRow>
         </TableBody>

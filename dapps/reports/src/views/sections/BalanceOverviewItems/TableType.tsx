@@ -1,10 +1,10 @@
+import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import Box from '@mui/material/Box'
-import numbro from 'numbro'
 import * as React from 'react'
 
 type TableTypeProps = { balanceOverviewType: any } & BoxProps
@@ -49,32 +49,16 @@ const TableType = (props: TableTypeProps) => {
                   {row['Token Category']}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {numbro(row['Farming Funds'] || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
+                  {formatCurrency(row['Farming Funds'] || 0)}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {numbro(row['Unclaimed Rewards'] || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
+                  {formatCurrency(row['Unclaimed Rewards'] || 0)}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {numbro(row['Wallet'] || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
+                  {formatCurrency(row['Wallet'] || 0)}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {numbro(row['Total'] || 0).formatCurrency({
-                    spaceSeparated: false,
-                    mantissa: 2,
-                    thousandSeparated: true
-                  })}
+                  {formatCurrency(row['Total'] || 0)}
                 </TableCellCustom>
               </TableRow>
             )
@@ -91,32 +75,16 @@ const TableType = (props: TableTypeProps) => {
               Grand total
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {numbro(dataFooterType['Farming Funds']).formatCurrency({
-                spaceSeparated: false,
-                mantissa: 2,
-                thousandSeparated: true
-              })}
+              {formatCurrency(dataFooterType['Farming Funds'] || 0)}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {numbro(dataFooterType['Unclaimed Rewards'] || 0).formatCurrency({
-                spaceSeparated: false,
-                mantissa: 2,
-                thousandSeparated: true
-              })}
+              {formatCurrency(dataFooterType['Unclaimed Rewards'] || 0)}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {numbro(dataFooterType['Wallet'] || 0).formatCurrency({
-                spaceSeparated: false,
-                mantissa: 2,
-                thousandSeparated: true
-              })}
+              {formatCurrency(dataFooterType['Wallet'] || 0)}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {numbro(dataFooterType['Total'] || 0).formatCurrency({
-                spaceSeparated: false,
-                mantissa: 2,
-                thousandSeparated: true
-              })}
+              {formatCurrency(dataFooterType['Total'] || 0)}
             </TableFooterCellCustom>
           </TableRow>
         </TableBody>

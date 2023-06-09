@@ -1,3 +1,4 @@
+import { formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
@@ -90,11 +91,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                         alignItems: 'flex-end'
                       }}
                     >
-                      {numbro(row.balance).format({
-                        spaceSeparated: false,
-                        thousandSeparated: true,
-                        mantissa: 2
-                      })}
+                      {formatNumber(row.balance)}
                       <CustomTypography variant="tableCellSubData">
                         {numbro(row.usdValue).formatCurrency({
                           spaceSeparated: false,

@@ -26,7 +26,7 @@ const FarmingFunds = (props: FarmingFundsProps) => {
         <CustomTypography variant="farmSwapsValue">
           {numbro(totalFarmSwaps || 0).formatCurrency({
             spaceSeparated: false,
-            mantissa: 2,
+            mantissa: 0,
             thousandSeparated: true
           })}
         </CustomTypography>
