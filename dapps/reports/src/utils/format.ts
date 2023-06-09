@@ -23,3 +23,19 @@ export const formatNumber = (value: number, mantissa = 2) => {
     mantissa
   })
 }
+
+export const formatCurrencyWithPrecision = (value: number) => {
+  if (value > 1) {
+    return numbro(value).formatCurrency({
+      spaceSeparated: false,
+      thousandSeparated: true,
+      mantissa: 2
+    })
+  } else {
+    const valueWithPrecision = value.toPrecision(3)
+    return numbro(valueWithPrecision).formatCurrency({
+      spaceSeparated: false,
+      thousandSeparated: true
+    })
+  }
+}

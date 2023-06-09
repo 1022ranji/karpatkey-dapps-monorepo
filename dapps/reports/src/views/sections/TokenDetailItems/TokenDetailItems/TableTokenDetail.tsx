@@ -1,5 +1,6 @@
 import {
   formatCurrency,
+  formatCurrencyWithPrecision,
   formatNumber,
   formatPercentage
 } from '@karpatkey-monorepo/reports/src/utils/format'
@@ -55,8 +56,6 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                 }
               }
 
-              console.log('row', row)
-
               return (
                 <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
                   <TableCellCustom sx={{ width: '20%' }} align="left">
@@ -76,7 +75,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                       sx={{ justifyContent: 'flex-start' }}
                       title={row.priceAvg}
                     >
-                      {formatCurrency(row.priceAvg, 3)}
+                      {formatCurrencyWithPrecision(row.priceAvg)}
                       {TOKEN && (
                         <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
                           <OpenInNewIcon
