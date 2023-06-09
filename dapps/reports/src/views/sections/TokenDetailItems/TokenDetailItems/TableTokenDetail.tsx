@@ -1,4 +1,8 @@
-import { formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
@@ -8,8 +12,7 @@ import { TOKEN_COINGECKO_PRICE_URL } from '@karpatkey-monorepo/shared/config/con
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
-import numbro from 'numbro'
+import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import * as React from 'react'
 
 interface TableTokenDetailProps {
@@ -68,17 +71,15 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                       sx={{ justifyContent: 'flex-start' }}
                       title={row.priceAvg}
                     >
-                      {numbro(row.priceAvg).formatCurrency({
-                        spaceSeparated: false,
-                        mantissa: row.priceAvg < 0.9995 ? 3 : 2,
-                        thousandSeparated: true
-                      })}
+                      {formatCurrency(row.priceAvg, 3)}
                       {TOKEN && (
-                        <OpenInNewIcon
-                          onClick={onClick}
-                          fontSize={'small'}
-                          sx={{ cursor: 'pointer' }}
-                        />
+                        <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
+                          <OpenInNewIcon
+                            onClick={onClick}
+                            fontSize={'small'}
+                            sx={{ cursor: 'pointer' }}
+                          />
+                        </Tooltip>
                       )}
                     </BoxWrapperRow>
                   </TableCellCustom>
@@ -93,28 +94,16 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                     >
                       {formatNumber(row.balance)}
                       <CustomTypography variant="tableCellSubData">
-                        {numbro(row.usdValue).formatCurrency({
-                          spaceSeparated: false,
-                          mantissa: 2,
-                          thousandSeparated: true
-                        })}
+                        {formatCurrency(row.usdValue, 2)}
                       </CustomTypography>
                     </BoxWrapperColumn>
                   </TableCellCustom>
                   <TableCellCustom sx={{ width: '20%' }} align="left">
-                    {numbro(row.allocation).format({
-                      output: 'percent',
-                      spaceSeparated: false,
-                      mantissa: 2
-                    })}
+                    {formatPercentage(row.allocation)}
                   </TableCellCustom>
                   <TableCellCustom sx={{ width: '20%' }} align="left">
                     <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                      {numbro(row.priceVariation).format({
-                        output: 'percent',
-                        spaceSeparated: false,
-                        mantissa: 2
-                      })}
+                      {formatPercentage(row.priceVariation)}
                       {row.priceVariation > 0 ? (
                         <ArrowUpwardIcon fontSize={'small'} />
                       ) : (
