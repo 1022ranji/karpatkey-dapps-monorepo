@@ -39,6 +39,7 @@ const BalanceOverview = (props: BalanceOverview) => {
 
   return (
     <PaperSection
+      id="Balance overview"
       title="Balance overview"
       subTitle="Funds by token category and type/blockchain"
       filter={Filter}

@@ -27,7 +27,7 @@ const Menu = () => {
   }
 
   const handleClear = () => {
-    router.push('/')
+    window.open('/', '_self')
   }
 
   const open = Boolean(anchorEl)

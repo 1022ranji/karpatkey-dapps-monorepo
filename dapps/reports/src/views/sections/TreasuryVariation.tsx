@@ -77,6 +77,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
   return (
     <>
       <PaperSection
+        id="Treasury variation"
         title="Treasury variation"
         subTitle="Treasury variation summary"
         filter={filter}

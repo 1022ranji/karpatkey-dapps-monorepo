@@ -116,7 +116,12 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
   )
 
   return (
-    <PaperSection title="Token detail" subTitle="Token detail with price variation" filter={filter}>
+    <PaperSection
+      id="Token details"
+      title="Token detail"
+      subTitle="Token detail with price variation"
+      filter={filter}
+    >
       {filteredTokenDetails.length > 0 ? (
         <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
       ) : (
