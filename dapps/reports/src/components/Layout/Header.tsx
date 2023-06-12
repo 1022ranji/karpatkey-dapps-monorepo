@@ -11,7 +11,7 @@ const Header = () => {
       sx={{
         backgroundColor: 'background.default',
         justifyContent: 'space-between',
-        marginX: '48px',
+        paddingX: '48px',
         height: HEADER_HEIGHT
       }}
     >
