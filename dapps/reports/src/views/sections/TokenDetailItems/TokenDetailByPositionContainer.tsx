@@ -58,7 +58,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     []
   )
 
-  const filteredDataByProtocol = Object.keys(filteredDataByBlockchain).reduce(
+  const filteredDataByBlockchainAndProtocol = Object.keys(filteredDataByBlockchain).reduce(
     (acc: any, key: string) => {
       const protocols = Object.keys(
         tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
@@ -175,10 +175,18 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     </Filter>
   )
 
+  const haveDataFilteredByBlockchainAndProtocol = Object.keys(
+    filteredDataByBlockchainAndProtocol
+  ).some((key) => {
+    return Object.keys(
+      filteredDataByBlockchainAndProtocol[key as keyof typeof filteredDataByBlockchainAndProtocol]
+    ).length
+  })
+
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
-      {Object.keys(filteredDataByProtocol).length > 0 ? (
-        <CardList tokenDetailByPosition={filteredDataByProtocol} />
+      {haveDataFilteredByBlockchainAndProtocol ? (
+        <CardList tokenDetailByPosition={filteredDataByBlockchainAndProtocol} />
       ) : (
         <EmptyData />
       )}
