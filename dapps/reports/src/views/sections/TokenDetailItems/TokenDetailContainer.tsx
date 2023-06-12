@@ -115,6 +115,8 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
     </Filter>
   )
 
+  const isFilterApplied = blockchainFilter !== null
+
   return (
     <PaperSection
       id="Token details"
@@ -122,10 +124,10 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       subTitle="Token detail with price variation"
       filter={filter}
     >
-      {filteredTokenDetails.length > 0 ? (
-        <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
-      ) : (
+      {filteredTokenDetails.length === 0 && !isFilterApplied ? (
         <EmptyData />
+      ) : (
+        <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
       )}
     </PaperSection>
   )

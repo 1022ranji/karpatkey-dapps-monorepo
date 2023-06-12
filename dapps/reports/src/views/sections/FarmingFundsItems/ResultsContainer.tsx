@@ -130,12 +130,14 @@ const ResultsContainer = (props: ResultsContainerProps) => {
     </Filter>
   )
 
+  const isFilterActive = blockchainFilter || protocolFilter
+
   return (
     <PaperSection subTitle={'Farming results details by protocol'} filter={filter}>
-      {filteredFundsDetails.length > 0 ? (
-        <DynamicTableResults {...{ fundsDetails: filteredFundsDetails, totals }} />
-      ) : (
+      {fundsDetails.length === 0 && !isFilterActive ? (
         <EmptyData />
+      ) : (
+        <DynamicTableResults {...{ fundsDetails: filteredFundsDetails, totals }} />
       )}
     </PaperSection>
   )

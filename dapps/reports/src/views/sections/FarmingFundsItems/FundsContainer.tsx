@@ -130,6 +130,8 @@ const FundsContainer = (props: FundsContainerProps) => {
     </Filter>
   )
 
+  const isFilterActive = blockchainFilter || protocolFilter
+
   return (
     <PaperSection
       id="Farming funds"
@@ -137,10 +139,10 @@ const FundsContainer = (props: FundsContainerProps) => {
       subTitle={'Farming funds/results by protocol'}
       filter={filter}
     >
-      {filteredFunds.length > 0 ? (
-        <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
-      ) : (
+      {filteredFunds.length === 0 && !isFilterActive ? (
         <EmptyData />
+      ) : (
+        <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
       )}
     </PaperSection>
   )

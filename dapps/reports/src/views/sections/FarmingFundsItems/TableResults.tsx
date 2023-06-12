@@ -1,5 +1,6 @@
 import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
@@ -39,55 +40,67 @@ const TableResults = (props: TableResultsProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {fundsDetails.map((row: any, index: number) => {
-            return (
-              <TableRow key={index}>
-                <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {row.blockchain}
-                </TableCellCustom>
-                <TableCellCustom sx={{ width: '20%' }} align="left">
-                  <BoxWrapperColumn>
-                    {row.position}
-                    <CustomTypography variant="tableCellSubData">{row.protocol}</CustomTypography>
-                  </BoxWrapperColumn>
-                </TableCellCustom>
-                <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(row['rewards'] || 0)}
-                </TableCellCustom>
-                <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(row['fees']) || 0}
-                </TableCellCustom>
-                <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(row['total'] || 0)}
-                </TableCellCustom>
-              </TableRow>
-            )
-          })}
+          {fundsDetails.length === 0 ? (
+            <TableRow>
+              <TableEmptyCellCustom colSpan={5}>
+                <EmptyData />
+              </TableEmptyCellCustom>
+            </TableRow>
+          ) : (
+            <>
+              {fundsDetails.map((row: any, index: number) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCellCustom sx={{ width: '20%' }} align="left">
+                      {row.blockchain}
+                    </TableCellCustom>
+                    <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <BoxWrapperColumn>
+                        {row.position}
+                        <CustomTypography variant="tableCellSubData">
+                          {row.protocol}
+                        </CustomTypography>
+                      </BoxWrapperColumn>
+                    </TableCellCustom>
+                    <TableCellCustom sx={{ width: '20%' }} align="left">
+                      {formatCurrency(row['rewards'] || 0)}
+                    </TableCellCustom>
+                    <TableCellCustom sx={{ width: '20%' }} align="left">
+                      {formatCurrency(row['fees']) || 0}
+                    </TableCellCustom>
+                    <TableCellCustom sx={{ width: '20%' }} align="left">
+                      {formatCurrency(row['total'] || 0)}
+                    </TableCellCustom>
+                  </TableRow>
+                )
+              })}
 
-          <TableRow>
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-          </TableRow>
-          <TableRow>
-            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              Grand total
-            </TableFooterCellCustom>
-            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {' '}
-            </TableFooterCellCustom>
-            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {formatCurrency(totals?.rewardsTotal || 0)}
-            </TableFooterCellCustom>
-            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {formatCurrency(totals?.feesTotal || 0)}
-            </TableFooterCellCustom>
-            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {formatCurrency(totals?.total || 0)}
-            </TableFooterCellCustom>
-          </TableRow>
+              <TableRow>
+                <TableEmptyCellCustom />
+                <TableEmptyCellCustom />
+                <TableEmptyCellCustom />
+                <TableEmptyCellCustom />
+                <TableEmptyCellCustom />
+              </TableRow>
+              <TableRow>
+                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  Grand total
+                </TableFooterCellCustom>
+                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  {' '}
+                </TableFooterCellCustom>
+                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  {formatCurrency(totals?.rewardsTotal || 0)}
+                </TableFooterCellCustom>
+                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  {formatCurrency(totals?.feesTotal || 0)}
+                </TableFooterCellCustom>
+                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  {formatCurrency(totals?.total || 0)}
+                </TableFooterCellCustom>
+              </TableRow>
+            </>
+          )}
         </TableBody>
       </Table>
     </TableContainer>
