@@ -1,7 +1,7 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box } from '@mui/material'
+import Lottie from 'lottie-react'
 import React from 'react'
-import Lottie from 'react-lottie'
 
 const Welcome = () => {
   const [lottieFile, setLottieFile] = React.useState<Maybe<any>>(null)
@@ -16,24 +16,18 @@ const Welcome = () => {
     })()
   }, [])
 
+  const style = {
+    height: 500,
+    width: 700,
+    margin: 'auto'
+  }
+
   return (
     <Box>
       <CustomTypography variant="h1" textAlign="center" sx={{ marginY: 8 }}>
         karpatkey&aposs DAO treasury reports
       </CustomTypography>
-      <Lottie
-        width={700}
-        height={500}
-        isClickToPauseDisabled={true}
-        options={{
-          rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-          },
-          loop: false,
-          autoplay: true,
-          animationData: lottieFile
-        }}
-      />
+      <Lottie style={style} loop={false} animationData={lottieFile} />
     </Box>
   )
 }
