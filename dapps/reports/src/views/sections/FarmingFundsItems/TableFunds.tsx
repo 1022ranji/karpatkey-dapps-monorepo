@@ -1,11 +1,12 @@
+import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
-import numbro from 'numbro'
 import * as React from 'react'
 
 interface TableFundsProps {
@@ -41,13 +42,13 @@ const TableFunds = (props: TableFundsProps) => {
           <TableBody>
             {funds.length === 0 ? (
               <TableRow>
-                <TableCellCustom align="center" colSpan={5}>
-                  No data available
-                </TableCellCustom>
+                <TableEmptyCellCustom colSpan={5}>
+                  <EmptyData />
+                </TableEmptyCellCustom>
               </TableRow>
-            ) : null}
-            {funds.length > 0
-              ? funds.map((row: any, index: number) => {
+            ) : (
+              <>
+                {funds.map((row: any, index: number) => {
                   return (
                     <TableRow key={index}>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
@@ -70,40 +71,22 @@ const TableFunds = (props: TableFundsProps) => {
                             alignItems: 'flex-end'
                           }}
                         >
-                          {numbro(row.funds).formatCurrency({
-                            spaceSeparated: false,
-                            mantissa: 2,
-                            thousandSeparated: true
-                          })}
+                          {formatCurrency(row.funds || 0)}
                           <CustomTypography variant="tableCellSubData">
-                            {numbro(row.allocation / 100).format({
-                              output: 'percent',
-                              spaceSeparated: false,
-                              mantissa: 2
-                            })}
+                            {formatPercentage(row.allocation / 100)}
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {numbro(row.unclaimed).formatCurrency({
-                          spaceSeparated: false,
-                          mantissa: 2,
-                          thousandSeparated: true
-                        })}
+                        {formatCurrency(row.unclaimed) || 0}
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {numbro(row.results).formatCurrency({
-                          spaceSeparated: false,
-                          mantissa: 2,
-                          thousandSeparated: true
-                        })}
+                        {formatCurrency(row.results) || 0}
                       </TableCellCustom>
                     </TableRow>
                   )
-                })
-              : null}
-            {funds.length > 0 ? (
-              <>
+                })}
+
                 <TableRow>
                   <TableEmptyCellCustom />
                   <TableEmptyCellCustom />
@@ -119,29 +102,17 @@ const TableFunds = (props: TableFundsProps) => {
                     {' '}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {numbro(totals?.fundsTotal || 0).formatCurrency({
-                      spaceSeparated: false,
-                      mantissa: 2,
-                      thousandSeparated: true
-                    })}
+                    {formatCurrency(totals?.fundsTotal || 0)}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {numbro(totals?.unclaimedTotal || 0).formatCurrency({
-                      spaceSeparated: false,
-                      mantissa: 2,
-                      thousandSeparated: true
-                    })}
+                    {formatCurrency(totals?.unclaimedTotal || 0)}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {numbro(totals?.resultsTotal || 0).formatCurrency({
-                      spaceSeparated: false,
-                      mantissa: 2,
-                      thousandSeparated: true
-                    })}
+                    {formatCurrency(totals?.resultsTotal || 0)}
                   </TableFooterCellCustom>
                 </TableRow>
               </>
-            ) : null}
+            )}
           </TableBody>
         </Table>
       </TableContainer>

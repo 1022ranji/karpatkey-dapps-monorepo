@@ -1,4 +1,5 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -34,6 +35,12 @@ const FundsContainer = (props: FundsContainerProps) => {
       const value = result.find((item) => item.id === currentValue['blockchain'])
       if (!value)
         result.push({
+          logo:
+            currentValue['blockchain'].toLowerCase() === 'ethereum'
+              ? '/images/chains/ethereum.svg'
+              : currentValue['blockchain'].toLowerCase() === 'gnosis'
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -79,6 +86,12 @@ const FundsContainer = (props: FundsContainerProps) => {
 
   const defaultBlockchainValue = blockchainFilter
     ? {
+        logo:
+          blockchainFilter.toLowerCase() === 'ethereum'
+            ? '/images/chains/ethereum.svg'
+            : blockchainFilter.toLowerCase() === 'gnosis'
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -117,13 +130,20 @@ const FundsContainer = (props: FundsContainerProps) => {
     </Filter>
   )
 
+  const isFilterActive = blockchainFilter || protocolFilter
+
   return (
     <PaperSection
+      id="Farming funds"
       title="Farming funds / results"
       subTitle={'Farming funds/results by protocol'}
       filter={filter}
     >
-      <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
+      {filteredFunds.length === 0 && !isFilterActive ? (
+        <EmptyData />
+      ) : (
+        <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
+      )}
     </PaperSection>
   )
 }

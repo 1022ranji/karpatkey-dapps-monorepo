@@ -19,6 +19,7 @@ export type WaterfallProps = {
   title?: string
   data: any[]
   bottom?: number
+  barSize?: number
 }
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -75,10 +76,9 @@ const RenderCustomizedLabel = (props: any) => {
         dominantBaseline="middle"
       >
         {numbro(value)
-          .formatCurrency({
+          .format({
             average: true,
-            spaceSeparated: false,
-            mantissa: 3
+            totalLength: 3
           })
           .toUpperCase()}
       </text>
@@ -111,7 +111,13 @@ const CustomizedAxisTick = (props: any) => {
   )
 }
 
-const Waterfall = ({ title, data, bottom = 50, ...props }: BoxProps & WaterfallProps) => {
+const Waterfall = ({
+  title,
+  data,
+  bottom = 50,
+  barSize = 60,
+  ...props
+}: BoxProps & WaterfallProps) => {
   return (
     <Box
       display="flex"
@@ -151,8 +157,8 @@ const Waterfall = ({ title, data, bottom = 50, ...props }: BoxProps & WaterfallP
             }}
           />
           <Tooltip wrapperStyle={{ outline: 'none' }} content={<CustomTooltip />} />
-          <Bar dataKey="pv" stackId="a" fill="transparent" barSize={60} />
-          <Bar dataKey="uv" stackId="a" fill="#232323" barSize={60}>
+          <Bar dataKey="pv" stackId="a" fill="transparent" barSize={barSize} />
+          <Bar dataKey="uv" stackId="a" fill="#232323" barSize={barSize}>
             <LabelList dataKey="uv" content={RenderCustomizedLabel} />
             {data.map((item, index) => {
               const color =

@@ -1,29 +1,21 @@
-import Filters from '@karpatkey-monorepo/reports/src/components/Filters/Menu'
-import Logo from '@karpatkey-monorepo/shared/components/Logo'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { slugify } from '@karpatkey-monorepo/shared/utils'
 import CircleIcon from '@mui/icons-material/Circle'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
 import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  ListItemTextProps,
-  Toolbar
+  ListItemTextProps
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { ReactElement } from 'react'
+import React from 'react'
 
-const DRAWER_WIDTH = 290
-const HEADER_HEIGHT = 100
+export const SIDEBAR_WIDTH = 290
 
 type Section =
   | 'Summary'
@@ -46,22 +38,12 @@ const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>(() => ({
   }
 }))
 
-const HeaderWrapper = styled(Box)(({ theme }: any) => ({
-  display: 'flex',
-  backgroundColor: theme.palette.background.default
-}))
-
-interface WrapperDrawerAppBarProps {
-  window?: () => Window
-  children: React.ReactElement
-}
-
-const WrapperDrawerAppBar = (props: WrapperDrawerAppBarProps): ReactElement => {
+const Sidebar = () => {
   const router = useRouter()
   const [, hash = 'summary'] = router.asPath.split('#')
 
-  const drawer = (
-    <Box sx={{ padding: '10px 10px' }}>
+  return (
+    <BoxWrapperColumn sx={{ padding: '10px 10px', width: SIDEBAR_WIDTH, height: '100%' }}>
       <List>
         {SECTIONS.map((text: Section, index: number) => {
           const isActive = hash === slugify(text)
@@ -96,53 +78,8 @@ const WrapperDrawerAppBar = (props: WrapperDrawerAppBarProps): ReactElement => {
           )
         })}
       </List>
-    </Box>
-  )
-
-  return (
-    <HeaderWrapper>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundColor: 'background.default',
-          boxShadow: 'none',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          zIndex: (theme) => theme.zIndex.drawer + 1
-        }}
-      >
-        <Toolbar
-          disableGutters
-          sx={{
-            marginX: '56px',
-            height: HEADER_HEIGHT
-          }}
-        >
-          <BoxWrapperRow sx={{ width: '100%', justifyContent: 'space-between' }}>
-            <Logo />
-            <Filters />
-          </BoxWrapperRow>
-        </Toolbar>
-      </AppBar>
-
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: DRAWER_WIDTH,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWER_WIDTH }
-        }}
-      >
-        <Toolbar sx={{ height: HEADER_HEIGHT }} />
-        {drawer}
-      </Drawer>
-
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        <Toolbar sx={{ height: HEADER_HEIGHT }} />
-        {props.children}
-      </Box>
-    </HeaderWrapper>
+    </BoxWrapperColumn>
   )
 }
 
-export default WrapperDrawerAppBar
+export default Sidebar

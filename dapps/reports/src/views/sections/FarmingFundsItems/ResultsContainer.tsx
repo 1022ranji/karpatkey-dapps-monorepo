@@ -1,4 +1,5 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -32,6 +33,12 @@ const ResultsContainer = (props: ResultsContainerProps) => {
       const value = result.find((item) => item.id === currentValue['blockchain'])
       if (!value)
         result.push({
+          logo:
+            currentValue['blockchain'].toLowerCase() === 'ethereum'
+              ? '/images/chains/ethereum.svg'
+              : currentValue['blockchain'].toLowerCase() === 'gnosis'
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -79,6 +86,12 @@ const ResultsContainer = (props: ResultsContainerProps) => {
 
   const defaultBlockchainValue = blockchainFilter
     ? {
+        logo:
+          blockchainFilter.toLowerCase() === 'ethereum'
+            ? '/images/chains/ethereum.svg'
+            : blockchainFilter.toLowerCase() === 'gnosis'
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -117,9 +130,15 @@ const ResultsContainer = (props: ResultsContainerProps) => {
     </Filter>
   )
 
+  const isFilterActive = blockchainFilter || protocolFilter
+
   return (
     <PaperSection subTitle={'Farming results details by protocol'} filter={filter}>
-      <DynamicTableResults {...{ fundsDetails: filteredFundsDetails, totals }} />
+      {fundsDetails.length === 0 && !isFilterActive ? (
+        <EmptyData />
+      ) : (
+        <DynamicTableResults {...{ fundsDetails: filteredFundsDetails, totals }} />
+      )}
     </PaperSection>
   )
 }

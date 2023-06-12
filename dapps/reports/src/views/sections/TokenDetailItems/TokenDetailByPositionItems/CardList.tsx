@@ -13,10 +13,10 @@ const CardList = (props: CardListProps) => {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'auto auto auto auto',
+        gridTemplateColumns: 'repeat(4, minmax(240px, auto))',
         gridAutoRows: 'minMax(440px, auto)',
         alignItems: 'stretch',
-        gap: '10px 10px'
+        gap: '20px 20px'
       }}
     >
       {Object.keys(tokenDetailByPosition).map((blockchain: string) => {

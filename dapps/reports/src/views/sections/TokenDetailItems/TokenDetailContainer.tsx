@@ -1,4 +1,5 @@
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -46,6 +47,12 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       const value = result.find((item) => item.id === currentValue['blockchain'])
       if (!value)
         result.push({
+          logo:
+            currentValue['blockchain'].toLowerCase() === 'ethereum'
+              ? '/images/chains/ethereum.svg'
+              : currentValue['blockchain'].toLowerCase() === 'gnosis'
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -76,6 +83,12 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
 
   const defaultBlockchainValue = blockchainFilter
     ? {
+        logo:
+          blockchainFilter === 'ethereum'
+            ? '/images/chains/ethereum.svg'
+            : blockchainFilter === 'Gnosis'
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -102,9 +115,20 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
     </Filter>
   )
 
+  const isFilterApplied = blockchainFilter !== null
+
   return (
-    <PaperSection title="Token detail" subTitle="Token detail with price variation" filter={filter}>
-      <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
+    <PaperSection
+      id="Token details"
+      title="Token detail"
+      subTitle="Token detail with price variation"
+      filter={filter}
+    >
+      {filteredTokenDetails.length === 0 && !isFilterApplied ? (
+        <EmptyData />
+      ) : (
+        <DynamicTableTokenDetail filteredTokenDetails={filteredTokenDetails} />
+      )}
     </PaperSection>
   )
 }

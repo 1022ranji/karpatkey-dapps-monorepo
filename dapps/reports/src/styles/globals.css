@@ -3,5 +3,12 @@ html {
 }
 
 .scrollable {
-  scroll-margin-top: 180px;
+  scroll-margin-top: 100px;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -250px;
+  visibility: hidden;
 }

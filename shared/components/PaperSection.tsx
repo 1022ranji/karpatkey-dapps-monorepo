@@ -7,6 +7,7 @@ import { Divider } from '@mui/material'
 import * as React from 'react'
 
 interface PaperSectionProps {
+  id?: string
   title?: string
   subTitle?: string
   filter?: React.ReactNode
@@ -14,18 +15,13 @@ interface PaperSectionProps {
 }
 
 const PaperSection = (props: PaperSectionProps) => {
-  const { title, subTitle, filter, children } = props
+  const { id, title, subTitle, filter, children } = props
   return (
-    <Paper>
+    <Paper className={'scrollable'} {...(id ? { id: slugify(id) } : {})}>
       <Divider />
       <BoxWrapperColumn sx={{ marginX: '30px', marginY: '30px' }} gap={3}>
         {title ? (
-          <CustomTypography
-            id={slugify(title)}
-            className={'scrollable'}
-            variant="paperSectionTitle"
-            textAlign="left"
-          >
+          <CustomTypography className={'scrollable'} variant="paperSectionTitle" textAlign="left">
             {title}
           </CustomTypography>
         ) : null}

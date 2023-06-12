@@ -12,8 +12,6 @@ export const getTokenDetails = (data: any) => {
       priceItemsQuantity: number
       balance: number
       usdValue: number
-      allocation: number
-      variation: number
       nextPeriodFirstPrice: number
       periodFirstPrice: number
       tokenCategory: string
@@ -32,8 +30,6 @@ export const getTokenDetails = (data: any) => {
           priceItemsQuantity: 0,
           balance: 0,
           usdValue: 0,
-          allocation: 0,
-          variation: 0,
           nextPeriodFirstPrice: 0,
           periodFirstPrice: 0,
           tokenCategory,
@@ -98,10 +94,9 @@ export const getTokenDetailsGrouped = (data: any) => {
       priceItemsQuantity: number
       balance: number
       usdValue: number
-      allocation: number
-      variation: number
       nextPeriodFirstPrice: number
       periodFirstPrice: number
+      blockchain: string[]
       tokenCategory: string
       tokenSymbol: string
     }[][] => {
@@ -115,10 +110,9 @@ export const getTokenDetailsGrouped = (data: any) => {
           priceItemsQuantity: 0,
           balance: 0,
           usdValue: 0,
-          allocation: 0,
-          variation: 0,
           nextPeriodFirstPrice: 0,
           periodFirstPrice: 0,
+          blockchain: [],
           tokenCategory,
           tokenSymbol
         }
@@ -140,6 +134,9 @@ export const getTokenDetailsGrouped = (data: any) => {
         acc[tokenCategory][tokenSymbol].periodFirstPrice +
         (obj['period_first_price'] ? obj['period_first_price'] : 0)
 
+      if (!acc[tokenCategory][tokenSymbol].blockchain.includes(obj['blockchain']))
+        acc[tokenCategory][tokenSymbol].blockchain.push(obj['blockchain'])
+
       return acc
     },
     []
@@ -156,6 +153,7 @@ export const getTokenDetailsGrouped = (data: any) => {
   return rowsFlat.map((row: any) => {
     return {
       ...row,
+      blockchain: row.blockchain.join('|'),
       price: row.price,
       priceAvg: row.price / row.priceItemsQuantity,
       priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1

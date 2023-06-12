@@ -6,7 +6,8 @@ const StyledLayout = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flex: 'auto',
-  flexDirection: 'column'
+  flexDirection: 'column',
+  justifyContent: 'space-between'
 }))
 
 const LayoutWrapper: FC<ContainerProps> = (props) => <StyledLayout {...props} />

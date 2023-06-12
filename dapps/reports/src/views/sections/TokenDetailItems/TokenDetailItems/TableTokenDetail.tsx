@@ -1,5 +1,13 @@
+import {
+  formatCurrency,
+  formatCurrencyWithPrecision,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
+import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
@@ -7,8 +15,7 @@ import { TOKEN_COINGECKO_PRICE_URL } from '@karpatkey-monorepo/shared/config/con
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
-import numbro from 'numbro'
+import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import * as React from 'react'
 
 interface TableTokenDetailProps {
@@ -43,13 +50,13 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
           <TableBody>
             {filteredTokenDetails.length === 0 ? (
               <TableRow>
-                <TableCellCustom align="center" colSpan={5}>
-                  No data available
-                </TableCellCustom>
+                <TableEmptyCellCustom colSpan={5}>
+                  <EmptyData />
+                </TableEmptyCellCustom>
               </TableRow>
-            ) : null}
-            {filteredTokenDetails.length > 0
-              ? filteredTokenDetails.map((row: any, index: number) => {
+            ) : (
+              <>
+                {filteredTokenDetails.map((row: any, index: number) => {
                   const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
                     (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
                   )
@@ -67,21 +74,26 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                           <CustomTypography variant="tableCellSubData">
                             {row.tokenCategory}
                           </CustomTypography>
+                          <CustomTypography variant="tableCellSubData">
+                            {row.blockchain}
+                          </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                          {numbro(row.priceAvg).formatCurrency({
-                            spaceSeparated: false,
-                            mantissa: 0,
-                            thousandSeparated: true
-                          })}
+                        <BoxWrapperRow
+                          gap={1}
+                          sx={{ justifyContent: 'flex-start' }}
+                          title={row.priceAvg}
+                        >
+                          {formatCurrencyWithPrecision(row.priceAvg)}
                           {TOKEN && (
-                            <OpenInNewIcon
-                              onClick={onClick}
-                              fontSize={'small'}
-                              sx={{ cursor: 'pointer' }}
-                            />
+                            <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
+                              <OpenInNewIcon
+                                onClick={onClick}
+                                fontSize={'small'}
+                                sx={{ cursor: 'pointer' }}
+                              />
+                            </Tooltip>
                           )}
                         </BoxWrapperRow>
                       </TableCellCustom>
@@ -94,33 +106,18 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                             alignItems: 'flex-end'
                           }}
                         >
-                          {numbro(row.balance).format({
-                            spaceSeparated: false,
-                            mantissa: 2
-                          })}
+                          {formatNumber(row.balance)}
                           <CustomTypography variant="tableCellSubData">
-                            {numbro(row.usdValue).formatCurrency({
-                              spaceSeparated: false,
-                              mantissa: 2,
-                              thousandSeparated: true
-                            })}
+                            {formatCurrency(row.usdValue, 2)}
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {numbro(row.allocation).format({
-                          output: 'percent',
-                          spaceSeparated: false,
-                          mantissa: 2
-                        })}
+                        {formatPercentage(row.allocation)}
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                          {numbro(row.priceVariation).format({
-                            output: 'percent',
-                            spaceSeparated: false,
-                            mantissa: 2
-                          })}
+                          {formatPercentage(row.priceVariation)}
                           {row.priceVariation > 0 ? (
                             <ArrowUpwardIcon fontSize={'small'} />
                           ) : (
@@ -130,8 +127,9 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                       </TableCellCustom>
                     </TableRow>
                   )
-                })
-              : null}
+                })}
+              </>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

@@ -12,7 +12,7 @@ const ItemUSD = ({ itemUsd }: ItemUSDProps) => {
         fontFamily: 'IBM Plex Mono',
         fontStyle: 'normal',
         fontWeight: 400,
-        fontSize: '11px',
+        fontSize: '14px',
         lineHeight: '14px',
         color: 'custom.grey.dark',
         letterSpacing: '-0.02em',
