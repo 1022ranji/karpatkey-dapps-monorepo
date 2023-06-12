@@ -43,7 +43,7 @@ const Sidebar = () => {
   const [, hash = 'summary'] = router.asPath.split('#')
 
   return (
-    <BoxWrapperColumn sx={{ padding: '10px 10px', width: SIDEBAR_WIDTH }}>
+    <BoxWrapperColumn sx={{ padding: '10px 10px', width: SIDEBAR_WIDTH, height: '100%' }}>
       <List>
         {SECTIONS.map((text: Section, index: number) => {
           const isActive = hash === slugify(text)

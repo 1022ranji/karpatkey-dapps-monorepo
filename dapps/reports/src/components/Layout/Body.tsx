@@ -6,7 +6,11 @@ interface BodyProps {
 }
 
 const Body = (props: BodyProps): ReactElement => {
-  return <Box component="main">{props.children}</Box>
+  return (
+    <Box component="main" sx={{ width: '100%' }}>
+      {props.children}
+    </Box>
+  )
 }
 
 export default Body
