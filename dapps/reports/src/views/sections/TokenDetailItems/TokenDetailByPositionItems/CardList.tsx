@@ -13,7 +13,7 @@ const CardList = (props: CardListProps) => {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+        gridTemplateColumns: 'repeat(4, minmax(240px, auto))',
         gridAutoRows: 'minMax(440px, auto)',
         alignItems: 'stretch',
         gap: '20px 20px'

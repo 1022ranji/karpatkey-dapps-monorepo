@@ -4,7 +4,7 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { FILTER_DAO } from '@karpatkey-monorepo/shared/config/constants'
-import { getDAO, getMonthName, slugify } from '@karpatkey-monorepo/shared/utils'
+import { getDAO, getMonthName } from '@karpatkey-monorepo/shared/utils'
 import Image from 'next/image'
 import * as React from 'react'
 
@@ -21,13 +21,9 @@ const Hero = () => {
   }
 
   return (
-    <BoxWrapperColumn
-      sx={{ margin: '30px 30px', alignItems: 'flex-start' }}
-      id={slugify('summary')}
-      className={'scrollable'}
-      gap={4}
-    >
+    <BoxWrapperColumn sx={{ margin: '30px 30px', alignItems: 'flex-start' }} gap={4}>
       <BoxWrapperRow gap={4}>
+        <a className="anchor" id="summary" />
         <Image src={dao.icon} alt={dao.name} width={116} height={116} />
         <BoxWrapperColumn
           sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
