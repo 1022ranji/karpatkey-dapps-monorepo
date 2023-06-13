@@ -170,7 +170,7 @@ export const getSummaryFundsByProtocol = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }

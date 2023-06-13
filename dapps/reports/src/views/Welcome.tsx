@@ -25,7 +25,7 @@ const Welcome = () => {
   return (
     <Box>
       <CustomTypography variant="h1" textAlign="center" sx={{ marginY: 8 }}>
-        karpatkey&aposs DAO treasury reports
+        karpatkey's DAO treasury reports
       </CustomTypography>
       <Lottie style={style} loop={false} animationData={lottieFile} />
     </Box>

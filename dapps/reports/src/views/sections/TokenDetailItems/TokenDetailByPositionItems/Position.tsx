@@ -17,7 +17,9 @@ const Position = ({ position }: PositionProps) => {
           fontWeight: 700,
           fontSize: '22px',
           lineHeight: '24px',
-          color: 'custom.grey.dark'
+          color: 'custom.grey.dark',
+          maxWidth: '88%',
+          overflowWrap: 'anywhere'
         }}
       >
         {position}
