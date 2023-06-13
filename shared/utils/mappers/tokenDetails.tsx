@@ -221,3 +221,46 @@ export const getTokenDetailByPosition = (data: any) => {
 
   return rowSortedByBlockchain
 }
+
+export const getWalletTokenDetails = (data: any) => {
+  const rowsFiltered = data.filter((row: any) => {
+    return (
+      (row.metric.includes('balances') || row.metric.includes('unclaim')) &&
+      !row.protocol.includes('Wallet') &&
+      row.bal_1 > 0
+    )
+  })
+
+  const rows = rowsFiltered.reduce((acc: any, obj: any): any => {
+    const blockchain = obj['blockchain'].trim()
+    const tokenSymbol = obj['token_symbol'].trim()
+
+    if (!acc[blockchain]) acc[blockchain] = {}
+    if (!acc[blockchain][tokenSymbol]) acc[blockchain][tokenSymbol] = {}
+
+    acc[blockchain][tokenSymbol] = {
+      tokenBalance: 0,
+      usdValue: 0,
+      blockchain,
+      tokenSymbol
+    }
+
+    acc[blockchain][tokenSymbol].tokenBalance =
+      acc[blockchain][tokenSymbol].tokenBalance + (obj['bal_1'] ? obj['bal_1'] : 0)
+
+    acc[blockchain][tokenSymbol].usdValue =
+      acc[blockchain][tokenSymbol].usdValue +
+      ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+
+    return acc
+  }, {})
+
+  const rowsFlat: any = []
+  for (const blockchain in rows) {
+    for (const tokenSymbol in rows[blockchain]) {
+      rowsFlat.push(rows[blockchain][tokenSymbol])
+    }
+  }
+
+  return rowsFlat
+}

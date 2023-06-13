@@ -46,7 +46,7 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -92,7 +92,7 @@ export const getSummaryFundsByType = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -132,7 +132,7 @@ export const getSummaryFundsByBlockchain = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
