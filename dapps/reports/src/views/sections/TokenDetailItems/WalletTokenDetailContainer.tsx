@@ -134,7 +134,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
   )
   const filteredWalletTokenDetailForPieChartWithColorsAndOthers =
     filteredWalletTokenDetailForPieChartWithColors.reduce((result: any, currentValue: any) => {
-      if (currentValue.allocation * 100 > 3) {
+      if (currentValue.allocation * 100 > 3 && result.length < 5) {
         result.push(currentValue)
       } else {
         const other = result.find((item: any) => item.label === 'Other')
