@@ -153,11 +153,6 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
       return result
     }, [])
 
-  console.log(
-    'filteredWalletTokenDetailForPieChartWithColorsAndOthers',
-    filteredWalletTokenDetailForPieChartWithColorsAndOthers
-  )
-
   return (
     <PaperSection subTitle="Wallet token detail" filter={filter} {...moreProps}>
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
