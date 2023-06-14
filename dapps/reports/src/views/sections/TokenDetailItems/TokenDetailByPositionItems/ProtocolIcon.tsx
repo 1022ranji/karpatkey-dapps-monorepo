@@ -1,5 +1,6 @@
 import Agave from '@karpatkey-monorepo/shared/components/Icons/Protocols/Agave'
 import Aura from '@karpatkey-monorepo/shared/components/Icons/Protocols/Aura'
+import Balancer from '@karpatkey-monorepo/shared/components/Icons/Protocols/Balancer'
 import Compound from '@karpatkey-monorepo/shared/components/Icons/Protocols/Compound'
 import Convex from '@karpatkey-monorepo/shared/components/Icons/Protocols/Convex'
 import Default from '@karpatkey-monorepo/shared/components/Icons/Protocols/Default'
@@ -21,6 +22,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Aura':
       icon = <Aura width={24} height={24} />
+      break
+    case 'Balancer':
+      icon = <Balancer width={24} height={24} />
       break
     case 'Compound V2':
       icon = <Compound width={24} height={24} />
