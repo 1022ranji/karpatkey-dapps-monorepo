@@ -4,3 +4,4 @@ getTreasuryFinancialMetrics.json
 getTreasuryVariationMetricsDetail.json
 getTreasuryFinancialPositions.json
 getTreasuryHistoricVariation.json
+getFinancialMetricAndVarDetail.json

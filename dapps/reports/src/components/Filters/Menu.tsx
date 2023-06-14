@@ -62,9 +62,9 @@ const Menu = () => {
     if (month === undefined || dao === undefined || year === undefined) return
 
     const query = new URLSearchParams()
-    if (dao) query.append('dao', dao + '')
-    if (month) query.append('month', month + '')
-    if (year) query.append('year', year + '')
+    if (dao !== null && dao !== undefined) query.append('dao', dao + '')
+    if (month !== null && month !== undefined) query.append('month', month + '')
+    if (year !== null && year !== undefined) query.append('year', year + '')
 
     const href = `/?${query.toString()}`
     router.push(href)

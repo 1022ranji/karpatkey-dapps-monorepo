@@ -24,6 +24,7 @@ export type ReportData = {
   tokenDetails: any[]
   tokenDetailsGrouped: any[]
   tokenDetailByPosition: any[]
+  walletTokenDetail: any[]
 }
 
 export type ReportProps = ReportData & Filter

@@ -1,4 +1,4 @@
-import { COLORS } from './summary'
+import { COLORS } from '@karpatkey-monorepo/shared/utils/mappers/summary'
 
 export const reducerPositionsByProtocolAndAsset = (acc: any, obj: any) => {
   if (!acc['protocol']) acc['protocol'] = {}

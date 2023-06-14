@@ -55,7 +55,7 @@ const TableFunds = (props: TableFundsProps) => {
                         {row.blockchain}
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperColumn>
+                        <BoxWrapperColumn sx={{ width: '90%', overflowWrap: 'anywhere' }}>
                           {row.position}
                           <CustomTypography variant="tableCellSubData">
                             {row.protocol}

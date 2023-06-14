@@ -46,7 +46,7 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -92,7 +92,7 @@ export const getSummaryFundsByType = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -132,7 +132,7 @@ export const getSummaryFundsByBlockchain = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -157,7 +157,7 @@ export const getSummaryFundsByProtocol = (data: any) => {
     0
   )
 
-  return Object.keys(rows)
+  const filteredFundsByProtocol = Object.keys(rows)
     .map((key: string) => {
       return {
         value: key,
@@ -170,9 +170,35 @@ export const getSummaryFundsByProtocol = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index]
+        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
+
+  const filteredFundsByProtocolWithOthers = filteredFundsByProtocol.reduce(
+    (result: any, currentValue: any) => {
+      if (currentValue.allocation * 100 > 5 && result.length < 5) {
+        result.push(currentValue)
+      } else {
+        const other = result.find((item: any) => item.label === 'Others')
+        if (other) {
+          other.funds = other.funds + currentValue.funds
+          other.allocation = other.allocation + currentValue.allocation
+        } else {
+          result.push({
+            value: 'Others',
+            allocation: currentValue.allocation,
+            funds: currentValue.funds,
+            label: 'Others',
+            color: COLORS[5]
+          })
+        }
+      }
+      return result
+    },
+    []
+  )
+
+  return filteredFundsByProtocolWithOthers
 }
 
 export const getTotalFunds = (data: any) => {
