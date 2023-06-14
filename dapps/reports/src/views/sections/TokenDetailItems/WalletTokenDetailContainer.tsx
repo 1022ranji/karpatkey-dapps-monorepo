@@ -137,7 +137,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
       if (currentValue.allocation * 100 > 3 && result.length < 5) {
         result.push(currentValue)
       } else {
-        const other = result.find((item: any) => item.label === 'Other')
+        const other = result.find((item: any) => item.label === 'Others')
         if (other) {
           other.value += currentValue.value
           other.allocation += currentValue.allocation
@@ -145,7 +145,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
           result.push({
             allocation: currentValue.allocation,
             color: currentValue.color,
-            label: 'Other',
+            label: 'Others',
             value: currentValue.value
           })
         }
