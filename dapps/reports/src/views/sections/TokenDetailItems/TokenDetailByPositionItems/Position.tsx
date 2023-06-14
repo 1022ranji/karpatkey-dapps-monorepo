@@ -9,7 +9,7 @@ interface PositionProps {
 
 const Position = ({ position }: PositionProps) => {
   return (
-    <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+    <BoxWrapperRow gap={'2px'} sx={{ justifyContent: 'flex-start' }}>
       <CustomTypography
         sx={{
           fontFamily: 'IBM Plex Mono',
@@ -18,8 +18,7 @@ const Position = ({ position }: PositionProps) => {
           fontSize: '22px',
           lineHeight: '24px',
           color: 'custom.grey.dark',
-          maxWidth: '88%',
-          overflowWrap: 'anywhere'
+          wordBreak: 'break-all'
         }}
       >
         {position}
