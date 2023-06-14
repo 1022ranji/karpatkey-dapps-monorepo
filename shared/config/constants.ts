@@ -4,10 +4,6 @@ export const NONE = 'None'
 
 export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
   {
-    reportName: 'getDailyBalanceReports' as unknown as Report,
-    fileName: 'daily-balance-reports'
-  },
-  {
     reportName: 'getTreasuryFinancialMetrics' as unknown as Report,
     fileName: 'treasury-financial-metrics'
   },
@@ -26,6 +22,10 @@ export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
   {
     reportName: 'getTreasuryHistoricVariation' as unknown as Report,
     fileName: 'treasury-historic-variation'
+  },
+  {
+    reportName: 'getFinancialMetricAndVarDetail' as unknown as Report,
+    fileName: 'financial-metric-and-var-detail'
   }
 ]
 

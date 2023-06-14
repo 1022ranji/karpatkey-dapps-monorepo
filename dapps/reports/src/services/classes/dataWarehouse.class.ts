@@ -21,43 +21,51 @@ export class DataWarehouse {
   }
 
   async getDailyBalanceReports() {
-    const dataset = this.bigQuery.dataset('reports')
+    const dataset = this.bigQuery.dataset('reports_production')
     const [view] = await dataset.table('vw_last_daily_balance_reports').get()
     const viewQuery = view.metadata.view.query
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
+  // DONE
   async getTreasuryFinancialMetrics() {
-    const dataset = this.bigQuery.dataset('reports')
-    const [view] = await dataset.table('vw_treasury_financial_metrics').get()
-    const viewQuery = view.metadata.view.query
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_financial_metrics\``
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
+  // DONE
   async getTokens() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports.lk_tokens\``
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_tokens\``
 
     return await this.executeCommonJobQuery(viewQuery)
   }
 
+  // DONE
   async getTreasuryVariationMetricsDetail() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports.dm_treasury_variation_metrics_detail\``
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_variation_metrics_detail\``
 
     return await this.executeCommonJobQuery(viewQuery)
   }
 
+  // DONE
   async getTreasuryFinancialPositions() {
-    const dataset = this.bigQuery.dataset('reports')
-    const [view] = await dataset.table('vw_treasury_financial_positions').get()
-    const viewQuery = view.metadata.view.query
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_financial_positions\``
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
+  // DONE
   async getTreasuryHistoricVariation() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports.dm_treasury_historic_variation\``
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_historic_variation\``
+
+    return await this.executeCommonJobQuery(viewQuery)
+  }
+
+  // DONE
+  async getFinancialMetricAndVarDetail() {
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports.vw_financial_metric_and_var_detail\``
 
     return await this.executeCommonJobQuery(viewQuery)
   }
