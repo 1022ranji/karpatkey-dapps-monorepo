@@ -10,10 +10,13 @@ import Connext from '@karpatkey-monorepo/shared/components/Icons/Protocols/Conne
 import Convex from '@karpatkey-monorepo/shared/components/Icons/Protocols/Convex'
 import Curve from '@karpatkey-monorepo/shared/components/Icons/Protocols/Curve'
 import Default from '@karpatkey-monorepo/shared/components/Icons/Protocols/Default'
+import Element from '@karpatkey-monorepo/shared/components/Icons/Protocols/Element'
 import HoneySwap from '@karpatkey-monorepo/shared/components/Icons/Protocols/HoneySwap'
+import Idle from '@karpatkey-monorepo/shared/components/Icons/Protocols/Idle'
 import Lido from '@karpatkey-monorepo/shared/components/Icons/Protocols/Lido'
 import Maker from '@karpatkey-monorepo/shared/components/Icons/Protocols/Maker'
 import Notional from '@karpatkey-monorepo/shared/components/Icons/Protocols/Notional'
+import StakeWise from '@karpatkey-monorepo/shared/components/Icons/Protocols/StakeWise'
 import SushiSwap from '@karpatkey-monorepo/shared/components/Icons/Protocols/SushiSwap'
 import Swapr from '@karpatkey-monorepo/shared/components/Icons/Protocols/Swapr'
 import UniswapV3 from '@karpatkey-monorepo/shared/components/Icons/Protocols/UniswapV3'
@@ -48,6 +51,12 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Balancer':
       icon = <Balancer width={24} height={24} />
+      break
+    case 'Idle':
+      icon = <Idle width={24} height={24} />
+      break
+    case 'Element':
+      icon = <Element width={24} height={24} />
       break
     case 'Bancor':
       icon = <Bancor width={24} height={24} />
@@ -84,6 +93,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'SushiSwap':
       icon = <SushiSwap width={24} height={24} />
+      break
+    case 'Stakewise':
+      icon = <StakeWise width={24} height={24} />
       break
     case 'Validators (GC)':
       icon = <Validators width={24} height={24} />
