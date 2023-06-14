@@ -7,3 +7,5 @@ export const GOOGLE_CREDS = {
   project_id: GOOGLE_PROJECT_ID,
   private_key: process.env?.REACT_GOOGLE_PRIVATE_KEY?.replace(new RegExp('\\\\n', 'g'), '\n')
 }
+
+export const DATA_WAREHOUSE_ENV = process.env.REACT_DATA_WAREHOUSE_ENV || 'production'

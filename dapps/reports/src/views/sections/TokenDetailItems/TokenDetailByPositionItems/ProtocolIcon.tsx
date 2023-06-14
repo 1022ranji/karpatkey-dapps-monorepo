@@ -20,7 +20,7 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
   const { protocol } = props
 
   let icon: Maybe<React.ReactElement> = null
-  console.log(protocol)
+
   switch (protocol) {
     case 'Aave':
       icon = <Aave width={24} height={24} />

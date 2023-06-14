@@ -1,5 +1,27 @@
 import { BigQuery } from '@google-cloud/bigquery'
 import { GOOGLE_CREDS, GOOGLE_PROJECT_ID } from '@karpatkey-monorepo/reports/src/config/constants'
+import { DATA_WAREHOUSE_ENV } from '@karpatkey-monorepo/reports/src/config/constants'
+
+type DataWarehouseEnvironment = 'production' | 'development'
+
+const REPORTS_DATASET = {
+  development: {
+    getTreasuryFinancialMetrics: 'reports.vw_treasury_financial_metrics',
+    getTokens: 'reports.lk_tokens',
+    getTreasuryVariationMetricsDetail: 'reports.dm_treasury_variation_metrics_detail',
+    getTreasuryFinancialPositions: 'reports.vw_treasury_financial_positions',
+    getTreasuryHistoricVariation: 'reports.dm_treasury_historic_variation',
+    getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail'
+  },
+  production: {
+    getTreasuryFinancialMetrics: 'reports_production.prod_treasury_financial_metrics',
+    getTokens: 'reports_production.prod_tokens',
+    getTreasuryVariationMetricsDetail: 'reports_production.prod_treasury_variation_metrics_detail',
+    getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions',
+    getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation',
+    getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail'
+  }
+}
 
 export class DataWarehouse {
   private static instance: DataWarehouse
@@ -20,52 +42,66 @@ export class DataWarehouse {
     return DataWarehouse.instance
   }
 
-  async getDailyBalanceReports() {
-    const dataset = this.bigQuery.dataset('reports_production')
-    const [view] = await dataset.table('vw_last_daily_balance_reports').get()
-    const viewQuery = view.metadata.view.query
-
-    return this.executeCommonJobQuery(viewQuery)
-  }
-
   // DONE
   async getTreasuryFinancialMetrics() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_financial_metrics\``
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getTreasuryFinancialMetrics'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
   async getTokens() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_tokens\``
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment]['getTokens']
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
 
     return await this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
   async getTreasuryVariationMetricsDetail() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_variation_metrics_detail\``
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getTreasuryVariationMetricsDetail'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
 
     return await this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
   async getTreasuryFinancialPositions() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_financial_positions\``
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getTreasuryFinancialPositions'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
   async getTreasuryHistoricVariation() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports_production.prod_treasury_historic_variation\``
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getTreasuryHistoricVariation'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
 
     return await this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
   async getFinancialMetricAndVarDetail() {
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.reports.vw_financial_metric_and_var_detail\``
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getFinancialMetricAndVarDetail'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
 
     return await this.executeCommonJobQuery(viewQuery)
   }
