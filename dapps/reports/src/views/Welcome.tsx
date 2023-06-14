@@ -1,4 +1,5 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { Box } from '@mui/material'
 import Lottie from 'lottie-react'
 import React from 'react'
@@ -17,18 +18,34 @@ const Welcome = () => {
   }, [])
 
   const style = {
-    height: 500,
-    width: 700,
-    margin: 'auto'
+    display: 'block',
+    alignItems: 'auto',
+    marginTop: '-50px',
+    zIndex: '-1',
+    width: '100%',
+    height: '100%'
   }
 
   return (
-    <Box>
-      <CustomTypography variant="h1" textAlign="center" sx={{ marginY: 8 }}>
-        karpatkey's DAO treasury reports
+    <BoxWrapperColumn sx={{ alignItems: 'center' }}>
+      <CustomTypography variant="h1" textAlign="center" sx={{ marginY: 10 }}>
+        View our DAO treasury reports
       </CustomTypography>
-      <Lottie style={style} loop={false} animationData={lottieFile} />
-    </Box>
+      <Box
+        sx={{
+          width: '1180px',
+          maxWidth: '100%',
+          height: '100%',
+          maxHeight: '800px',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Lottie style={style} loop={false} animationData={lottieFile} />
+      </Box>
+    </BoxWrapperColumn>
   )
 }
 
