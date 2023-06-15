@@ -30,50 +30,12 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // We validate the params here to avoid any errors in the page
   await filterSchemaValidation.validate(params)
 
-  const {
-    totalFunds = 0,
-    capitalUtilization = 0,
-    farmingResults = 0,
-    fundsByTokenCategory = [],
-    fundsByType = [],
-    fundsByBlockchain = [],
-    fundsByProtocol = [],
-    balanceOverviewType = [],
-    balanceOverviewBlockchain = [],
-    rowsTreasuryVariation = [],
-    rowsHistoricVariation = [],
-    rowsTreasuryVariationForThePeriodDetail = [],
-    farmingFundsByProtocol,
-    farmingResultsDetailsByProtocol,
-    totalFarmingResultsFarmSwaps,
-    tokenDetails,
-    tokenDetailsGrouped,
-    tokenDetailByPosition,
-    walletTokenDetail
-  } = await getCommonServerSideProps(params)
+  const serverSideProps = await getCommonServerSideProps(params)
 
   // Pass data to the page via props
   return {
     props: {
-      totalFunds,
-      capitalUtilization,
-      farmingResults,
-      fundsByTokenCategory,
-      fundsByType,
-      fundsByBlockchain,
-      fundsByProtocol,
-      balanceOverviewType,
-      balanceOverviewBlockchain,
-      rowsTreasuryVariation,
-      rowsHistoricVariation,
-      rowsTreasuryVariationForThePeriodDetail,
-      farmingFundsByProtocol,
-      farmingResultsDetailsByProtocol,
-      totalFarmingResultsFarmSwaps,
-      tokenDetails,
-      tokenDetailsGrouped,
-      tokenDetailByPosition,
-      walletTokenDetail,
+      ...serverSideProps,
       ...params
     }
   }

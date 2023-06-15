@@ -49,6 +49,10 @@ export const getCommonServerSideProps = async (params: Filter) => {
     'getTreasuryHistoricVariation' as unknown as Report
   )
 
+  const financialMetricAndVarDetail = await cache.getReport(
+    'getFinancialMetricAndVarDetail' as unknown as Report
+  )
+
   // Step 3: Get filter data like daoName, periodType and period
   const DAO = getDAO(dao)
   const daoKeyName = DAO?.keyName
@@ -81,6 +85,14 @@ export const getCommonServerSideProps = async (params: Filter) => {
   })
 
   const financialMetricsFiltered = financialMetrics.filter((row: any) => {
+    return (
+      row.date_type === metricPeriodType &&
+      row.dao === daoKeyName &&
+      row.year_month === metricPeriod
+    )
+  })
+
+  const financialMetricAndVarDetailFiltered = financialMetricAndVarDetail.filter((row: any) => {
     return (
       row.date_type === metricPeriodType &&
       row.dao === daoKeyName &&
@@ -143,7 +155,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const tokenDetailsGrouped = getTokenDetailsGrouped(variationMetricsDetailFiltered)
 
   // Token detail by position
-  const tokenDetailByPosition = getTokenDetailByPosition(variationMetricsDetailFiltered)
+  const tokenDetailByPosition = getTokenDetailByPosition(financialMetricAndVarDetailFiltered)
 
   // Wallet token detail
   const walletTokenDetail = getWalletTokenDetails(variationMetricsDetailFiltered)

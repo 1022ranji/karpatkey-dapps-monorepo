@@ -164,47 +164,106 @@ export const getTokenDetailsGrouped = (data: any) => {
 export const getTokenDetailByPosition = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
     return (
-      (row.metric.includes('balances') || row.metric.includes('unclaim')) &&
-      !row.protocol.includes('Wallet') &&
-      row.bal_1 > 0
+      ((row.metric.includes('balances') || row.metric.includes('unclaim')) &&
+        !row.protocol.includes('Wallet') &&
+        row.bal_1 > 0) ||
+      row.metric_code === 'm21' ||
+      row.metric_code === 'm22' ||
+      row.metric_code === 'm23' ||
+      row.metric_code === 'm24' ||
+      (row.metric_code === 'm06' &&
+        (row.lptoken_name.includes('Debt') || row.lptoken_name.includes('Collateral')))
     )
   })
 
+  // Patch because ... I don't know why human being do this
   const rows = rowsFiltered.reduce((acc: any, obj: any): any => {
     const blockchain = obj['blockchain'].trim()
     const protocol = obj['protocol'].trim()
+    const position = obj['lptoken_name']
+      .replace('-A-Lend&Borrow Debt', '')
+      .replace('-A-Lend&Borrow Collateral', '')
+      .replace('-Lend&Borrow Collateral', '')
+      .replace('-Lend&Borrow Debt', '')
+      .replace('-15APR22', '')
+      .replace('-28JAN222', '')
+      .replace('-A', '')
+      .replace('-Staked', '')
+      .replace('-Unstaked', '')
+      .replace('(v1)-1099511627778', '')
+      .replace('-28JAN22', '')
+      .replace('(old)', '')
+      .trim()
 
-    const position =
-      obj['lptoken_name'].trim() === 'Delegated MKR-Lend&Borrow Collateral'
-        ? 'Delegated MKR'
-        : obj['lptoken_name'].trim()
-    const positionType = obj['metric'].includes('unclaim')
-      ? 'Unclaimed Rewards'
-      : obj['metric'].includes('balance') && obj['protocol'].includes('Wallet')
-      ? 'Wallet'
-      : 'Farming Funds'
-    const tokenSymbol = obj['token_symbol'].trim()
+    let positionType = 'Farming Funds'
+    if (obj['metric'] && obj['metric'].includes('unclaim')) {
+      positionType = 'Unclaimed Rewards'
+    }
+    if (
+      obj['metric'] &&
+      obj['metric'].includes('balance') &&
+      obj['protocol'] &&
+      obj['protocol'].includes('Wallet')
+    ) {
+      positionType = 'Wallet'
+    }
+
+    if (
+      (obj.metric_code === 'm06' &&
+        (obj.lptoken_name?.includes('Debt') || obj.lptoken_name?.includes('Collateral'))) ||
+      obj.metric_code === 'm24' ||
+      obj.metric_code === 'm23' ||
+      obj.metric_code === 'm22' ||
+      obj.metric_code === 'm21'
+    ) {
+      positionType = 'Metrics'
+    }
+
+    let categorize = obj['token_symbol'] && obj['token_symbol'].trim()
+    if (!obj['token_symbol'] && obj['metric_code'] === 'm24') {
+      categorize = 'Price to drop liquidation'
+    }
+    if (!obj['token_symbol'] && obj['metric_code'] === 'm23') {
+      categorize = 'Liquidation Price'
+    }
+    if (!obj['token_symbol'] && obj['metric_code'] === 'm22') {
+      categorize = 'Minimum Collateral Ratio'
+    }
+    if (!obj['token_symbol'] && obj['metric_code'] === 'm21') {
+      categorize = 'Collateral Ratio'
+    }
+    if (!categorize && obj.metric_code === 'm06' && obj.lptoken_name.includes('Debt')) {
+      categorize = 'Debt'
+    }
+    if (!categorize && obj.metric_code === 'm06' && obj.lptoken_name.includes('Collateral')) {
+      categorize = 'Collateral'
+    }
 
     if (!acc[blockchain]) acc[blockchain] = {}
     if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
     if (!acc[blockchain][protocol][position]) acc[blockchain][protocol][position] = {}
     if (!acc[blockchain][protocol][position][positionType])
       acc[blockchain][protocol][position][positionType] = {}
-    if (!acc[blockchain][protocol][position][positionType][tokenSymbol])
-      acc[blockchain][protocol][position][positionType][tokenSymbol] = {}
+    if (!acc[blockchain][protocol][position][positionType][categorize])
+      acc[blockchain][protocol][position][positionType][categorize] = {}
 
-    acc[blockchain][protocol][position][positionType][tokenSymbol] = {
+    acc[blockchain][protocol][position][positionType][categorize] = {
       tokenBalance: 0,
-      usdValue: 0
+      usdValue: 0,
+      metricValue: 0
     }
 
-    acc[blockchain][protocol][position][positionType][tokenSymbol].tokenBalance =
-      acc[blockchain][protocol][position][positionType][tokenSymbol].tokenBalance +
+    acc[blockchain][protocol][position][positionType][categorize].metricValue =
+      acc[blockchain][protocol][position][positionType][categorize].metricValue +
+      (obj['metric_value'] ? obj['metric_value'] : 0)
+    acc[blockchain][protocol][position][positionType][categorize].tokenBalance =
+      acc[blockchain][protocol][position][positionType][categorize].tokenBalance +
       (obj['bal_1'] ? obj['bal_1'] : 0)
 
-    acc[blockchain][protocol][position][positionType][tokenSymbol].usdValue =
-      acc[blockchain][protocol][position][positionType][tokenSymbol].usdValue +
-      ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
+    acc[blockchain][protocol][position][positionType][categorize].usdValue =
+      acc[blockchain][protocol][position][positionType][categorize].usdValue +
+      (obj['bal_1'] ? obj['bal_1'] : 0) *
+        (obj['next_period_first_price'] ? obj['next_period_first_price'] : 0)
 
     return acc
   }, {})

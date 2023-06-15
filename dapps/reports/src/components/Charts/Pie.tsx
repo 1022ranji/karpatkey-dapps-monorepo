@@ -82,7 +82,7 @@ interface RenderPieChartProps {
 }
 
 const RenderPieChart = (props: RenderPieChartProps) => {
-  const { data, dataKey, showLegend = true, width = 420, height = 420 } = props
+  const { data, dataKey, showLegend = true, width = 420, height = 360 } = props
   return (
     <PieRechart width={width} height={height}>
       <Pie
@@ -157,7 +157,7 @@ const PieChart = (props: BoxProps & PieChartProps) => {
       </BoxWrapperColumn>
     ) : (
       <BoxWrapperRow
-        gap={10}
+        gap={15}
         sx={{
           justifyContent: 'flex-start',
           alignSelf: 'stretch',
@@ -201,6 +201,6 @@ const PieChart = (props: BoxProps & PieChartProps) => {
       )}
     </BoxWrapperColumn>
   )
-  return <>{showLegend === true ? renderWithLegend : renderWithoutLegend}</>
+  return <>{showLegend ? renderWithLegend : renderWithoutLegend}</>
 }
 export default PieChart
