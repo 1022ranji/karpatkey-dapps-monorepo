@@ -153,7 +153,7 @@ export const getTokenDetailsGrouped = (data: any) => {
   return rowsFlat.map((row: any) => {
     return {
       ...row,
-      blockchain: row.blockchain.join('|'),
+      blockchain: row.blockchain.sort((a: any, b: any) => a.localeCompare(b)).join('|'),
       price: row.price,
       priceAvg: row.price / row.priceItemsQuantity,
       priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1
