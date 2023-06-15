@@ -3,9 +3,10 @@ import * as React from 'react'
 
 interface ItemTextProps {
   itemText: string
+  maxWidth?: string
 }
 
-const ItemText = ({ itemText }: ItemTextProps) => {
+const ItemText = ({ itemText, maxWidth = '120px' }: ItemTextProps) => {
   return (
     <CustomTypography
       sx={{
@@ -14,7 +15,9 @@ const ItemText = ({ itemText }: ItemTextProps) => {
         fontWeight: 700,
         fontSize: '16px',
         lineHeight: '20px',
-        color: 'custom.grey.dark'
+        color: 'custom.grey.dark',
+        maxWidth,
+        wordBreak: 'break-word'
       }}
     >
       {itemText}

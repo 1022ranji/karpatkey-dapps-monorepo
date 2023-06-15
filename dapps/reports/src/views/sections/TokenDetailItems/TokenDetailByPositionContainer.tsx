@@ -263,6 +263,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     return acc || haveDataFilteredByProtocolAndToken
   }, false)
 
+  console.log(filteredDataByBlockchainAndProtocolAndToken)
+
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
       {haveDataFilteredByBlockchainAndProtocolAndToken ? (

@@ -1,6 +1,7 @@
-import CardItem from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/CardItem'
 import { Box } from '@mui/material'
 import * as React from 'react'
+
+import Card from './Card/Card'
 
 interface CardListProps {
   tokenDetailByPosition: any[]
@@ -26,7 +27,7 @@ const CardList = (props: CardListProps) => {
           return positions.map((position: string, index: number) => {
             const data = tokenDetailByPosition[blockchain as any][protocol][position]
             return (
-              <CardItem
+              <Card
                 id={index}
                 key={index}
                 blockchain={blockchain}

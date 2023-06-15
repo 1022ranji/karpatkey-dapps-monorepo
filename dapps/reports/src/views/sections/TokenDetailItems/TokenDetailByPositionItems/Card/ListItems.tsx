@@ -1,10 +1,11 @@
-import { formatCurrency, formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
-import ItemText from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/ItemText'
-import ItemUSD from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/ItemUSD'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Divider } from '@mui/material'
 import * as React from 'react'
+
+import { formatCurrency, formatNumber } from '../../../../../utils/format'
+import ItemText from './ItemText'
+import ItemUSD from './ItemUSD'
 
 interface ListItemsProps {
   title: string
