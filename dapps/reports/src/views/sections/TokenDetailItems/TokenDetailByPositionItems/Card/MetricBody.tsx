@@ -32,13 +32,13 @@ const MetricBody = ({ metrics }: MetricBodyProps) => {
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
         <ItemText itemText={'Collateral ratio'} />
         <ItemText
-          itemText={formatPercentage(metrics['Collateral Ratio'].metricValue / 100)}
+          itemText={formatPercentage(metrics['Collateral Ratio'].metricValue, 0)}
           maxWidth={'140px'}
         />
       </BoxWrapperRow>
       <Divider />
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-        <ItemText itemText={'Min collateral ratio'} />
+        <ItemText itemText={'Minimun collateral ratio'} />
         <ItemText
           itemText={formatPercentage(metrics['Minimum Collateral Ratio'].metricValue / 100)}
           maxWidth={'140px'}
@@ -48,15 +48,15 @@ const MetricBody = ({ metrics }: MetricBodyProps) => {
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
         <ItemText itemText={'Liquidation price'} />
         <ItemText
-          itemText={formatCurrency(metrics['Liquidation Price'].metricValue)}
+          itemText={formatCurrency(metrics['Liquidation Price'].metricValue, 0)}
           maxWidth={'140px'}
         />
       </BoxWrapperRow>
       <Divider />
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-        <ItemText itemText={'Price to drop liquidation'} />
+        <ItemText itemText={'Price drop to liquidation'} />
         <ItemText
-          itemText={formatPercentage(metrics['Price to drop liquidation'].metricValue / 100)}
+          itemText={formatPercentage(metrics['Price to drop liquidation'].metricValue)}
           maxWidth={'140px'}
         />
       </BoxWrapperRow>

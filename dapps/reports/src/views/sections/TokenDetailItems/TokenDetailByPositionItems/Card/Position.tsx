@@ -18,7 +18,7 @@ const Position = ({ position }: PositionProps) => {
           fontSize: '22px',
           lineHeight: '24px',
           color: 'custom.grey.dark',
-          wordBreak: 'break-all'
+          wordBreak: 'break-word'
         }}
       >
         {position}
