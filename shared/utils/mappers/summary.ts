@@ -1,17 +1,5 @@
 import { OTHERS_CAP } from '@karpatkey-monorepo/shared/config/constants'
-
-export const COLORS = [
-  '#535353', //OK
-  '#808080', //OK
-  '#B6B6B6', //OK
-  '#DEDEDE', //OK
-  '#C0C0C0',
-  '#A9A9A9',
-  '#5c5c5c',
-  '#383838',
-  '#71797E',
-  '#B2BEB5'
-]
+import { COLORS } from '@karpatkey-monorepo/shared/config/theme'
 
 export const getSummaryFundsByTokenCategory = (data: any) => {
   const rows: { funds: number; label: string }[] = data

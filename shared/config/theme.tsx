@@ -437,4 +437,16 @@ declare module '@mui/material/Typography' {
   }
 }
 
+export const COLORS = [
+  '#383838',
+  '#696969',
+  '#989898',
+  '#B0B0B0',
+  '#C0C0C0',
+  '#DEDEDE',
+  '#E0E0E0',
+  '#F0F0F0',
+  '#F8F8F8'
+]
+
 export default theme
