@@ -180,20 +180,7 @@ export const getTokenDetailByPosition = (data: any) => {
   const rows = rowsFiltered.reduce((acc: any, obj: any): any => {
     const blockchain = obj['blockchain'].trim()
     const protocol = obj['protocol'].trim()
-    const position = obj['lptoken_name']
-      .replace('-A-Lend&Borrow Debt', '')
-      .replace('-A-Lend&Borrow Collateral', '')
-      .replace('-Lend&Borrow Collateral', '')
-      .replace('-Lend&Borrow Debt', '')
-      .replace('-15APR22', '')
-      .replace('-28JAN222', '')
-      .replace('-A', '')
-      .replace('-Staked', '')
-      .replace('-Unstaked', '')
-      .replace('(v1)-1099511627778', '')
-      .replace('-28JAN22', '')
-      .replace('(old)', '')
-      .trim()
+    const position = obj['lptoken_name'].trim()
 
     let positionType = 'Farming Funds'
     if (obj['metric'] && obj['metric'].includes('unclaim')) {
