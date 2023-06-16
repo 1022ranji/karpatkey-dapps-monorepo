@@ -1,5 +1,4 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import * as React from 'react'
 
@@ -9,22 +8,23 @@ interface PositionProps {
 
 const Position = ({ position }: PositionProps) => {
   return (
-    <BoxWrapperRow gap={'2px'} sx={{ justifyContent: 'flex-start' }}>
-      <CustomTypography
-        sx={{
-          fontFamily: 'IBM Plex Mono',
-          fontStyle: 'normal',
-          fontWeight: 700,
-          fontSize: '22px',
-          lineHeight: '24px',
-          color: 'custom.grey.dark',
-          wordBreak: 'break-all'
-        }}
-      >
-        {position}
-      </CustomTypography>
+    <CustomTypography
+      sx={{
+        fontFamily: 'IBM Plex Mono',
+        fontStyle: 'normal',
+        fontWeight: 700,
+        fontSize: '22px',
+        lineHeight: '24px',
+        color: 'custom.grey.dark',
+        wordBreak: 'break-word',
+        alignItems: 'center',
+        display: 'flex'
+      }}
+      gap={1}
+    >
+      {position}
       <OpenInNewIcon fontSize={'small'} />
-    </BoxWrapperRow>
+    </CustomTypography>
   )
 }
 

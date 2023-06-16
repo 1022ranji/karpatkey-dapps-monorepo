@@ -8,11 +8,11 @@ export const formatCurrency = (value: number, mantissa = 0) => {
   })
 }
 
-export const formatPercentage = (value: number) => {
+export const formatPercentage = (value: number, mantissa = 2) => {
   return numbro(value).format({
     output: 'percent',
     spaceSeparated: false,
-    mantissa: 2
+    mantissa
   })
 }
 
