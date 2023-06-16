@@ -4,6 +4,7 @@ import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import { OTHERS_CAP } from '@karpatkey-monorepo/shared/config/constants'
 import { COLORS } from '@karpatkey-monorepo/shared/utils/mappers/summary'
 import { PaperProps } from '@mui/material'
 import dynamic from 'next/dynamic'
@@ -134,7 +135,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
   )
   const filteredWalletTokenDetailForPieChartWithColorsAndOthers =
     filteredWalletTokenDetailForPieChartWithColors.reduce((result: any, currentValue: any) => {
-      if (currentValue.allocation * 100 > 3 && result.length < 5) {
+      if (currentValue.allocation * 100 > OTHERS_CAP && result.length < 5) {
         result.push(currentValue)
       } else {
         const other = result.find((item: any) => item.label === 'Others')

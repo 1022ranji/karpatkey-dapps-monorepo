@@ -10,14 +10,14 @@ const Idle = (props: any) => (
   >
     <rect width="800" height="800" />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M381.818 120V570L200 570V229.091L381.818 120Z"
       fill="#1B1E27"
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M418.182 680L418.182 227.273H600V232.444V570.91L418.182 680Z"
       fill="#1B1E27"
     />

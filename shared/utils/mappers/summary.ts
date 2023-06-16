@@ -1,3 +1,5 @@
+import { OTHERS_CAP } from '@karpatkey-monorepo/shared/config/constants'
+
 export const COLORS = [
   '#535353', //OK
   '#808080', //OK
@@ -176,7 +178,7 @@ export const getSummaryFundsByProtocol = (data: any) => {
 
   const filteredFundsByProtocolWithOthers = filteredFundsByProtocol.reduce(
     (result: any, currentValue: any) => {
-      if (currentValue.allocation * 100 > 5 && result.length < 5) {
+      if (currentValue.allocation * 100 > OTHERS_CAP && result.length < 5) {
         result.push(currentValue)
       } else {
         const other = result.find((item: any) => item.label === 'Others')

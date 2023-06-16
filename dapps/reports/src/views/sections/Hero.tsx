@@ -22,7 +22,7 @@ const Hero = () => {
   }
 
   return (
-    <BoxWrapperColumn sx={{ margin: '30px 30px', alignItems: 'flex-start' }} gap={4}>
+    <BoxWrapperColumn data-section sx={{ margin: '30px 30px', alignItems: 'flex-start' }} gap={4}>
       <BoxWrapperRow gap={4}>
         <Box>
           <a className="anchor" id="summary" />

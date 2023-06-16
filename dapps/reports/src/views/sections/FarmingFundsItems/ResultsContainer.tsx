@@ -133,7 +133,7 @@ const ResultsContainer = (props: ResultsContainerProps) => {
   const isFilterActive = blockchainFilter || protocolFilter
 
   return (
-    <PaperSection subTitle={'Farming results details by protocol'} filter={filter}>
+    <PaperSection subTitle={'Farming results detail by protocol'} filter={filter}>
       {fundsDetails.length === 0 && !isFilterActive ? (
         <EmptyData />
       ) : (

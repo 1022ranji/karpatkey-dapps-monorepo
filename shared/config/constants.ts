@@ -85,7 +85,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Gnosis DAO',
     icon: '/images/protocols/gnosis.svg',
     keyName: 'Gnosis DAO',
-    sinceMonth: 4,
+    sinceMonth: 1,
     sinceYear: 2023,
     addresses: [
       {
@@ -103,7 +103,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Balancer',
     icon: '/images/protocols/balancer.svg',
     keyName: 'Balancer DAO',
-    sinceMonth: 4,
+    sinceMonth: 2,
     sinceYear: 2023,
     addresses: [
       {
@@ -117,7 +117,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'ENS',
     icon: '/images/protocols/ens.svg',
     keyName: 'ENS DAO',
-    sinceMonth: 4,
+    sinceMonth: 3,
     sinceYear: 2023,
     addresses: [
       {
@@ -131,7 +131,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'CoW',
     icon: '/images/protocols/cow.svg',
     keyName: 'CoW DAO',
-    sinceMonth: 4,
+    sinceMonth: 2,
     sinceYear: 2023,
     addresses: [
       {
@@ -149,7 +149,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'karpatkey',
     icon: '/images/protocols/karpatkey.svg',
     keyName: 'karpatkey DAO',
-    sinceMonth: 4,
+    sinceMonth: 1,
     sinceYear: 2023,
     addresses: [
       {
@@ -238,3 +238,5 @@ export const TOKEN_COINGECKO_PRICE_URL = [
     url: 'https://www.coingecko.com/en/coins/xdai'
   }
 ]
+
+export const OTHERS_CAP = 2

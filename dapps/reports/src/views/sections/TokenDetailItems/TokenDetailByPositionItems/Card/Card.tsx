@@ -61,7 +61,9 @@ const Card = (props: CardItemProps) => {
       </BoxWrapperRow>
       <BoxWrapperColumn gap={1}>
         <Position position={position} />
-        {!isMetricsCard ? <ItemText itemText={formatCurrency(totalUSDValue, 2)} /> : null}
+        {!isMetricsCard ? (
+          <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUSDValue, 2)} />
+        ) : null}
       </BoxWrapperColumn>
       {!isMetricsCard
         ? Object.keys(data)
