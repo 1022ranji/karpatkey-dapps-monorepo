@@ -37,7 +37,7 @@
     "commander": "^10.0.1",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.8",
-    "dotenv": "^16.2.0",
+    "dotenv": "^16.3.1",
     "framer-motion": "^10.12.16",
     "lottie-react": "^2.4.0",
     "luxon": "^3.3.0",
