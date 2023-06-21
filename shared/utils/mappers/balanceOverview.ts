@@ -59,17 +59,13 @@ export const getBalanceOverviewByBlockchain = (data: any) => {
       return acc
     }, [])
 
-  return Object.keys(rows)
-    .map((key: string) => {
-      const ethereum = rows[key as any]['Ethereum' as any]?.funds ?? 0
-      const gnosis = rows[key as any]['Gnosis' as any]?.funds ?? 0
-      const total = ethereum + gnosis
-      return {
-        'Token Category': key,
-        Ethereum: ethereum,
-        Gnosis: gnosis,
-        Total: total
-      }
+  const flatRows = Object.keys(rows).reduce((acc: any, key: string) => {
+    const row = rows[key as any]
+    Object.keys(row).forEach((key: string) => {
+      acc.push(row[key])
     })
-    .sort((a: any, b: any) => b.Total - a.Total)
+    return acc
+  }, [])
+
+  return flatRows
 }

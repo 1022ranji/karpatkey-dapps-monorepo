@@ -7,12 +7,37 @@ import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from 
 import Box from '@mui/material/Box'
 import * as React from 'react'
 
-type TableBlockchainProps = { balanceOverviewBlockchain: any } & BoxProps
+type TableBlockchainProps = {
+  balanceOverviewBlockchain: { funds: number; row: string; column: string }[]
+} & BoxProps
 
 const TableBlockchain = (props: TableBlockchainProps) => {
   const { balanceOverviewBlockchain = [] } = props
 
-  const dataFooterBlockchain = {} as any
+  const columnsSorted = balanceOverviewBlockchain
+    .reduce((acc: any, cur: any) => {
+      if (!acc.includes(cur.column)) {
+        acc.push(cur.column)
+      }
+      return acc
+    }, [])
+    .sort((a: any, b: any) => a.localeCompare(b))
+
+  const rowsFlatByColumns = balanceOverviewBlockchain.reduce((acc: any, cur: any) => {
+    acc[cur.row] = acc[cur.row] || {}
+    acc[cur.row][cur.column] = cur.funds
+    return acc
+  }, {})
+
+  let total = 0
+
+  const rowGrandTotals = Object.keys(rowsFlatByColumns).reduce((acc: any, cur: any) => {
+    Object.keys(rowsFlatByColumns[cur]).forEach((column: any) => {
+      acc[column] = acc[column] || 0
+      acc[column] += rowsFlatByColumns[cur][column]
+    })
+    return acc
+  }, {})
 
   return (
     <TableContainer component={Box}>
@@ -22,37 +47,42 @@ const TableBlockchain = (props: TableBlockchainProps) => {
             <TableHeadCellCustom sx={{ width: '25%' }} align="left">
               Token Category
             </TableHeadCellCustom>
-            <TableHeadCellCustom sx={{ width: '25%' }} align="left">
-              Ethereum
-            </TableHeadCellCustom>
-            <TableHeadCellCustom sx={{ width: '25%' }} align="left">
-              Gnosis
-            </TableHeadCellCustom>
+            {columnsSorted.map((blockchainName: any, index: number) => (
+              <TableHeadCellCustom
+                key={index}
+                sx={{ width: `${50 / columnsSorted.length}%` }}
+                align="left"
+              >
+                {blockchainName}
+              </TableHeadCellCustom>
+            ))}
             <TableHeadCellCustom sx={{ width: '25%' }} align="left">
               Grand total
             </TableHeadCellCustom>
           </TableRow>
         </TableHead>
         <TableBody>
-          {balanceOverviewBlockchain.map((row: any, index: number) => {
-            dataFooterBlockchain['Ethereum'] =
-              (dataFooterBlockchain['Ethereum'] || 0) + row['Ethereum']
-            dataFooterBlockchain['Gnosis'] = (dataFooterBlockchain['Gnosis'] || 0) + row['Gnosis']
-            dataFooterBlockchain['Total'] = (dataFooterBlockchain['Total'] || 0) + row['Total']
-
+          {Object.keys(rowsFlatByColumns).map((category: any, index: number) => {
+            let rowTotal = 0
             return (
               <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {row['Token Category'] || 0}
+                  {category}
                 </TableCellCustom>
+                {columnsSorted.map((blockchainName: any, index: number) => {
+                  rowTotal += rowsFlatByColumns[category][blockchainName] || 0
+                  return (
+                    <TableHeadCellCustom
+                      key={index}
+                      sx={{ width: `${50 / columnsSorted.length}%` }}
+                      align="left"
+                    >
+                      {formatCurrency(rowsFlatByColumns[category][blockchainName] || 0)}
+                    </TableHeadCellCustom>
+                  )
+                })}
                 <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {formatCurrency(row['Ethereum'] || 0)}
-                </TableCellCustom>
-                <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {formatCurrency(row['Gnosis'] || 0)}
-                </TableCellCustom>
-                <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {formatCurrency(row['Total'] || 0)}
+                  {formatCurrency(rowTotal, 0)}
                 </TableCellCustom>
               </TableRow>
             )
@@ -69,14 +99,20 @@ const TableBlockchain = (props: TableBlockchainProps) => {
             <TableFooterCellCustom sx={{ width: '25%' }} align="left">
               Grand total
             </TableFooterCellCustom>
+            {columnsSorted.map((blockchainName: any, index: number) => {
+              total += rowGrandTotals[blockchainName]
+              return (
+                <TableFooterCellCustom
+                  key={index}
+                  sx={{ width: `${50 / Object.keys(rowGrandTotals).length}%` }}
+                  align="left"
+                >
+                  {formatCurrency(rowGrandTotals[blockchainName])}
+                </TableFooterCellCustom>
+              )
+            })}
             <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              {formatCurrency(dataFooterBlockchain['Ethereum'] || 0)}
-            </TableFooterCellCustom>
-            <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              {formatCurrency(dataFooterBlockchain['Gnosis'] || 0)}
-            </TableFooterCellCustom>
-            <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              {formatCurrency(dataFooterBlockchain['Total'] || 0)}
+              {formatCurrency(total || 0)}
             </TableFooterCellCustom>
           </TableRow>
         </TableBody>
