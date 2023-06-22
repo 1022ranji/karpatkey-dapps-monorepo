@@ -20,24 +20,8 @@ const CardList = (props: CardListProps) => {
         gap: '20px 20px'
       }}
     >
-      {Object.keys(tokenDetailByPosition).map((blockchain: string) => {
-        const protocols = Object.keys(tokenDetailByPosition[blockchain as any])
-        return protocols.map((protocol: string) => {
-          const positions = Object.keys(tokenDetailByPosition[blockchain as any][protocol])
-          return positions.map((position: string, index: number) => {
-            const data = tokenDetailByPosition[blockchain as any][protocol][position]
-            return (
-              <Card
-                id={index}
-                key={index}
-                blockchain={blockchain}
-                protocol={protocol}
-                position={position}
-                data={data}
-              />
-            )
-          })
-        })
+      {tokenDetailByPosition.map((card: any, index: number) => {
+        return <Card id={index} key={index} card={card} />
       })}
     </Box>
   )
