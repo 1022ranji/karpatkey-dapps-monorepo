@@ -33,7 +33,7 @@ const Summary = (props: SummaryProps) => {
 
   return (
     <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
-      <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
+      <BoxWrapperRow id="summary" gap={4} sx={{ justifyContent: 'space-between' }}>
         <DynamicInfoCard
           title="Total funds"
           value={numbro(totalFunds).formatCurrency({

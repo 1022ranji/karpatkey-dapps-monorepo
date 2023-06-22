@@ -33,30 +33,8 @@ const LayoutWithoutSidebarWrapper = styled(Box)(() => ({
 const Layout = ({ children }: LayoutProps): ReactElement => {
   const { state } = useFilter()
   const { dao, year, month } = state.value
+
   const isSidebarVisible = !!(dao && year && month)
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const id = entry.target.getAttribute('id')
-        if (entry.intersectionRatio > 0) {
-          console.log('add active class', id)
-        } else {
-          console.log('remove active class', id)
-        }
-      })
-    })
-
-    // Track all sections that have an `id` applied
-    console.log(
-      'document.querySelectorAll([data-section])',
-      document.querySelectorAll('[data-section]')
-    )
-
-    document.querySelectorAll('[data-section]').forEach((section) => {
-      observer.observe(section)
-    })
-  }, [])
 
   return isSidebarVisible ? (
     <LayoutWithSidebarWrapper>
