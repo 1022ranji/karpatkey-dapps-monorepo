@@ -76,7 +76,7 @@ const Sidebar = () => {
   useObserveAnchors({
     inView,
     setSectionVisible,
-    threshold: 0.2,
+    threshold: 0.1,
     anchors: ['farming-funds', 'token-details']
   })
 
