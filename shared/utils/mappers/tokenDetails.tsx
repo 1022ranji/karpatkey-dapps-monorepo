@@ -171,12 +171,11 @@ export const getTokenDetailByPosition = (data: any) => {
       row.metric_code === 'm22' ||
       row.metric_code === 'm23' ||
       row.metric_code === 'm24' ||
-      (row.metric_code === 'm06' &&
-        (row.lptoken_name.includes('Debt') || row.lptoken_name.includes('Collateral')))
+      row.metric_code === 'm25' ||
+      row.metric_code === 'm26'
     )
   })
 
-  // Patch because ... I don't know why human being do this
   const rows = rowsFiltered.reduce((acc: any, obj: any): any => {
     const blockchain = obj['blockchain'].trim()
     const protocol = obj['protocol'].trim()
@@ -196,17 +195,23 @@ export const getTokenDetailByPosition = (data: any) => {
     }
 
     if (
-      (obj.metric_code === 'm06' &&
-        (obj.lptoken_name?.includes('Debt') || obj.lptoken_name?.includes('Collateral'))) ||
       obj.metric_code === 'm24' ||
       obj.metric_code === 'm23' ||
       obj.metric_code === 'm22' ||
-      obj.metric_code === 'm21'
+      obj.metric_code === 'm21' ||
+      obj.metric_code === 'm25' ||
+      obj.metric_code === 'm26'
     ) {
       positionType = 'Metrics'
     }
 
     let categorize = obj['token_symbol'] && obj['token_symbol'].trim()
+    if (!obj['token_symbol'] && obj['metric_code'] === 'm26') {
+      categorize = 'Debt'
+    }
+    if (!obj['token_symbol'] && obj['metric_code'] === 'm25') {
+      categorize = 'Collateral'
+    }
     if (!obj['token_symbol'] && obj['metric_code'] === 'm24') {
       categorize = 'Price to drop liquidation'
     }
@@ -218,12 +223,6 @@ export const getTokenDetailByPosition = (data: any) => {
     }
     if (!obj['token_symbol'] && obj['metric_code'] === 'm21') {
       categorize = 'Collateral Ratio'
-    }
-    if (!categorize && obj.metric_code === 'm06' && obj.lptoken_name.includes('Debt')) {
-      categorize = 'Debt'
-    }
-    if (!categorize && obj.metric_code === 'm06' && obj.lptoken_name.includes('Collateral')) {
-      categorize = 'Collateral'
     }
 
     if (!acc[blockchain]) acc[blockchain] = {}
@@ -255,17 +254,67 @@ export const getTokenDetailByPosition = (data: any) => {
     return acc
   }, {})
 
-  const rowSortedByBlockchain = Object.keys(rows)
-    .sort()
-    .reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: rows[key]
-      }),
-      {}
-    )
+  const cards: any[] = []
+  Object.keys(rows).forEach((blockchain: string) => {
+    Object.keys(rows[blockchain]).forEach((protocol: string) => {
+      Object.keys(rows[blockchain][protocol]).forEach((position: string) => {
+        const isMetricCard = Object.keys(rows[blockchain][protocol][position]).includes('Metrics')
 
-  return rowSortedByBlockchain
+        let totalUSDValue = 0
+        if (!isMetricCard) {
+          totalUSDValue = Object.keys(rows[blockchain][protocol][position]).reduce(
+            (acc: number, metric: string) => {
+              if (metric !== 'Metrics') {
+                Object.keys(rows[blockchain][protocol][position][metric]).forEach(
+                  (categorize: string) => {
+                    acc = acc + rows[blockchain][protocol][position][metric][categorize].usdValue
+                  }
+                )
+              }
+              return acc
+            },
+            0
+          )
+        } else {
+          totalUSDValue = Object.keys(rows[blockchain][protocol][position]).reduce(
+            (acc: number, metric: string) => {
+              if (metric === 'Metrics') {
+                Object.keys(rows[blockchain][protocol][position][metric]).forEach(
+                  (categorize: string) => {
+                    if (categorize === 'Collateral' || categorize === 'Debt') {
+                      acc =
+                        acc + rows[blockchain][protocol][position][metric][categorize].metricValue
+                    }
+                  }
+                )
+              }
+              return acc
+            },
+            0
+          )
+        }
+
+        const card = {
+          blockchain,
+          protocol,
+          position,
+          totalUSDValue,
+          isMetricCard,
+          values: {
+            ...rows[blockchain][protocol][position]
+          }
+        }
+
+        cards.push(card)
+      })
+    })
+  })
+
+  const cardsSortedByTotalUsdValue = cards.sort((a: any, b: any) => {
+    return b.totalUSDValue - a.totalUSDValue
+  })
+
+  return cardsSortedByTotalUsdValue
 }
 
 export const getWalletTokenDetails = (data: any) => {

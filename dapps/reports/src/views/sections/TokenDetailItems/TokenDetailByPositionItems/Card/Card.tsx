@@ -12,33 +12,12 @@ import MetricBody from './MetricBody'
 
 interface CardItemProps {
   id: number
-  blockchain: string
-  protocol: string
-  position: string
-  data: {
-    [key: string]: {
-      [key: string]: {
-        tokenBalance: number
-        usdValue: number
-        metricValue: number
-      }
-    }
-  }
+  card: any
 }
 
 const Card = (props: CardItemProps) => {
-  const { blockchain, protocol, position, data } = props
-
-  const totalUSDValue = Object.keys(data).reduce((acc: any, cur: any) => {
-    const tokens = data[cur]
-    const total = Object.keys(tokens).reduce((acc: any, cur: any) => {
-      const tokenData = tokens[cur]
-      return acc + tokenData.usdValue
-    }, 0)
-    return acc + total
-  }, 0)
-
-  const isMetricsCard = Object.keys(data).includes('Metrics')
+  const { card } = props
+  const { blockchain, protocol, position, totalUSDValue, isMetricCard, values } = card
 
   return (
     <BoxWrapperColumn
@@ -61,25 +40,19 @@ const Card = (props: CardItemProps) => {
       </BoxWrapperRow>
       <BoxWrapperColumn gap={1}>
         <Position position={position} />
-        {!isMetricsCard ? (
-          <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUSDValue, 2)} />
-        ) : null}
+        <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUSDValue, 2)} />
       </BoxWrapperColumn>
-      {!isMetricsCard
-        ? Object.keys(data)
-            .sort((a: string, b: string) => a.localeCompare(b))
-            .map((title: string, index: number) => {
-              const tokens = data[title as any]
-              return <ListItems key={index} title={title} tokens={tokens} />
-            })
+      {!isMetricCard
+        ? Object.keys(values).map((title: any, index: number) => {
+            const tokens = values[title]
+            return <ListItems key={index} title={title} tokens={tokens} />
+          })
         : null}
-      {isMetricsCard
-        ? Object.keys(data)
-            .filter((title: string) => title === 'Metrics')
-            .map((title: string, index: number) => {
-              const metrics = data[title as any]
-              return <MetricBody key={index} metrics={metrics} />
-            })
+      {isMetricCard
+        ? Object.keys(values).map((title: any, index: number) => {
+            const metrics = values[title]
+            return <MetricBody key={index} metrics={metrics} />
+          })
         : null}
     </BoxWrapperColumn>
   )

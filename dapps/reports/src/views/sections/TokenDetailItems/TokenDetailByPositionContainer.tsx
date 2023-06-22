@@ -42,91 +42,17 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  const filteredDataByBlockchain = Object.keys(tokenDetailByPosition).reduce(
-    (acc: any, key: string) => {
-      if (blockchainFilter) {
-        if (key.toLowerCase() === blockchainFilter.toLowerCase()) {
-          return {
-            [key]: tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
-          }
-        }
-        return acc
-      } else {
-        return tokenDetailByPosition
-      }
-    },
-    []
-  )
-
-  const filteredDataByBlockchainAndProtocol = Object.keys(filteredDataByBlockchain).reduce(
-    (acc: any, key: string) => {
-      const protocols = Object.keys(
-        tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
-      )
-      const filteredProtocols = protocols.reduce((acc: any, protocol) => {
-        if (protocolFilter) {
-          if (protocol.toLowerCase() === protocolFilter.toLowerCase()) {
-            return {
-              [protocol]:
-                filteredDataByBlockchain[key as keyof typeof tokenDetailByPosition][
-                  protocol as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]
-                ]
-            }
-          }
-          return acc
-        } else {
-          return filteredDataByBlockchain[key as keyof typeof tokenDetailByPosition]
-        }
-      }, [])
-      return {
-        ...acc,
-        [key]: filteredProtocols
-      }
-    },
-    []
-  )
-
-  const filteredDataByBlockchainAndProtocolAndToken = Object.keys(
-    filteredDataByBlockchainAndProtocol
-  ).reduce((acc: any, key: string) => {
-    const protocols = Object.keys(
-      filteredDataByBlockchainAndProtocol[key as keyof typeof tokenDetailByPosition]
-    )
-    const filteredProtocols = protocols.reduce((acc: any, protocol) => {
-      const tokens = Object.keys(
-        filteredDataByBlockchainAndProtocol[key as keyof typeof tokenDetailByPosition][
-          protocol as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]
-        ]
-      )
-      const filteredTokens = tokens.reduce((acc: any, token) => {
-        if (tokenFilter) {
-          if (token.toLowerCase() === tokenFilter.toLowerCase()) {
-            return {
-              [token]:
-                filteredDataByBlockchainAndProtocol[key as keyof typeof tokenDetailByPosition][
-                  protocol as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]
-                ][
-                  token as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition][keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]]
-                ]
-            }
-          }
-          return acc
-        } else {
-          return filteredDataByBlockchainAndProtocol[key as keyof typeof tokenDetailByPosition][
-            protocol as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]
-          ]
-        }
-      }, [])
-      return {
-        ...acc,
-        [protocol]: filteredTokens
-      }
-    }, [])
-    return {
-      ...acc,
-      [key]: filteredProtocols
+  const filteredDataByBlockchainAndProtocol = tokenDetailByPosition.filter((item: any) => {
+    if (blockchainFilter && protocolFilter) {
+      return item.blockchain === blockchainFilter && item.protocol === protocolFilter
+    } else if (blockchainFilter) {
+      return item.blockchain === blockchainFilter
+    } else if (protocolFilter) {
+      return item.protocol === protocolFilter
+    } else {
+      return true
     }
-  }, [])
+  })
 
   const defaultBlockchainValue = blockchainFilter
     ? {
@@ -155,8 +81,15 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       }
     : null
 
-  const blockchainOptions = Object.keys(tokenDetailByPosition)
-    .map((key) => {
+  const blockchainOptions = tokenDetailByPosition
+    .reduce((acc: any, item: any) => {
+      const { blockchain } = item
+      if (!acc.includes(blockchain)) {
+        acc.push(blockchain)
+      }
+      return acc
+    }, [])
+    .map((key: string) => {
       return {
         logo:
           key.toLowerCase() === 'ethereum'
@@ -168,49 +101,25 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
         id: key
       }
     })
-    .sort((a, b) => a.label.localeCompare(b.label))
+    .sort((a: any, b: any) => a.label.localeCompare(b.label))
 
-  const protocolOptions = Object.keys(tokenDetailByPosition)
-    .reduce((acc: any, key: string) => {
-      const protocols = Object.keys(
-        tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
-      )
-      const protocolOptions = protocols.map((protocol) => {
-        return {
-          label: protocol,
-          id: protocol
-        }
-      })
-
-      return [...acc, ...protocolOptions]
+  const protocolOptions = tokenDetailByPosition
+    .reduce((acc: any, item: any) => {
+      const { protocol } = item
+      if (!acc.includes(protocol)) {
+        acc.push(protocol)
+      }
+      return acc
     }, [])
-    .sort((a, b) => a.label.localeCompare(b.label))
-
-  const tokenOptions = Object.keys(tokenDetailByPosition)
-    .reduce((acc: any, key: string) => {
-      const protocols = Object.keys(
-        tokenDetailByPosition[key as keyof typeof tokenDetailByPosition]
-      )
-
-      const tokenOptions = protocols.reduce((acc: any, protocol) => {
-        const tokens = Object.keys(
-          tokenDetailByPosition[key as keyof typeof tokenDetailByPosition][
-            protocol as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]
-          ]
-        )
-
-        const tokenOptions = tokens.map((token) => {
-          return {
-            label: token,
-            id: token
-          }
-        })
-        return [...acc, ...tokenOptions]
-      }, [])
-      return [...acc, ...tokenOptions]
+    .map((key: string) => {
+      return {
+        label: key,
+        id: key
+      }
     }, [])
-    .filter((token, index, self) => self.findIndex((t) => t.label === token.label) === index)
-    .sort((a, b) => a.label.localeCompare(b.label))
+    .sort((a: any, b: any) => a.label.localeCompare(b.label))
+
+  const tokenOptions: any[] = []
 
   const filter = (
     <Filter
@@ -243,30 +152,10 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     </Filter>
   )
 
-  const haveDataFilteredByBlockchainAndProtocolAndToken = Object.keys(
-    filteredDataByBlockchainAndProtocolAndToken
-  ).reduce((acc: any, key: string) => {
-    const protocols = Object.keys(
-      filteredDataByBlockchainAndProtocolAndToken[key as keyof typeof tokenDetailByPosition]
-    )
-    const haveDataFilteredByProtocolAndToken = protocols.reduce((acc: any, protocol) => {
-      const tokens = Object.keys(
-        filteredDataByBlockchainAndProtocolAndToken[key as keyof typeof tokenDetailByPosition][
-          protocol as keyof (typeof tokenDetailByPosition)[keyof typeof tokenDetailByPosition]
-        ]
-      )
-      const haveDataFilteredByToken = tokens.reduce((acc: any, token) => {
-        return acc || filteredDataByBlockchainAndProtocolAndToken[key][protocol][token]
-      }, false)
-      return acc || haveDataFilteredByToken
-    }, false)
-    return acc || haveDataFilteredByProtocolAndToken
-  }, false)
-
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
-      {haveDataFilteredByBlockchainAndProtocolAndToken ? (
-        <CardList tokenDetailByPosition={filteredDataByBlockchainAndProtocolAndToken} />
+      {filteredDataByBlockchainAndProtocol && filteredDataByBlockchainAndProtocol.length > 0 ? (
+        <CardList tokenDetailByPosition={filteredDataByBlockchainAndProtocol} />
       ) : (
         <EmptyData />
       )}
