@@ -76,10 +76,12 @@ const RenderCustomizedLabel = (props: any) => {
         dominantBaseline="middle"
       >
         {numbro(value)
-          .format({
+          .formatCurrency({
             average: true,
-            totalLength: 3
+            totalLength: 3,
+            currencySymbol: ' '
           })
+          .replace(' ', '')
           .toUpperCase()}
       </text>
     </g>
