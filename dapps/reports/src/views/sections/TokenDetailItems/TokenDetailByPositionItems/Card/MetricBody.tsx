@@ -17,8 +17,6 @@ interface MetricBodyProps {
 }
 
 const MetricBody = ({ metrics }: MetricBodyProps) => {
-  console.log(metrics)
-
   return (
     <BoxWrapperColumn sx={{ gap: 1 }}>
       {metrics['Collateral'] ? (

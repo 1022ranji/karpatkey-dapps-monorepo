@@ -5,7 +5,6 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { DAO_ADDRESS, FILTER_DAO } from '@karpatkey-monorepo/shared/config/constants'
 import { getDAO, getMonthName } from '@karpatkey-monorepo/shared/utils'
-import { Box } from '@mui/material'
 import Image from 'next/image'
 import * as React from 'react'
 
@@ -22,12 +21,10 @@ const Hero = () => {
   }
 
   return (
-    <BoxWrapperColumn sx={{ margin: '30px 30px', alignItems: 'flex-start' }} gap={4}>
-      <BoxWrapperRow gap={4}>
-        <Box>
-          <a className="anchor" id="summary" />
-          <Image src={dao.icon} alt={dao.name} width={116} height={116} />
-        </Box>
+    <BoxWrapperColumn sx={{ margin: '30px 30px 30px 30px', alignItems: 'flex-start' }} gap={4}>
+      <BoxWrapperRow gap={2}>
+        <Image src={dao.icon} alt={dao.name} width={116} height={116} />
+        <a className="anchor" id="summary" />
         <BoxWrapperColumn
           sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
         >

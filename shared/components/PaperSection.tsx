@@ -21,7 +21,7 @@ const PaperSection = (props: PaperSectionProps) => {
       <Divider />
       <BoxWrapperColumn sx={{ marginX: '30px', marginY: '30px' }} gap={3}>
         {title ? (
-          <CustomTypography className={'scrollable'} variant="paperSectionTitle" textAlign="left">
+          <CustomTypography variant="paperSectionTitle" textAlign="left">
             {title}
           </CustomTypography>
         ) : null}

@@ -33,6 +33,7 @@ const LayoutWithoutSidebarWrapper = styled(Box)(() => ({
 const Layout = ({ children }: LayoutProps): ReactElement => {
   const { state } = useFilter()
   const { dao, year, month } = state.value
+
   const isSidebarVisible = !!(dao && year && month)
 
   return isSidebarVisible ? (

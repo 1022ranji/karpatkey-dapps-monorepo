@@ -1,8 +1,10 @@
+import useObserveAnchors from '@karpatkey-monorepo/reports/src/hooks/useObserveAnchors'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { slugify } from '@karpatkey-monorepo/shared/utils'
 import CircleIcon from '@mui/icons-material/Circle'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
 import {
+  Box,
   List,
   ListItem,
   ListItemButton,
@@ -11,9 +13,9 @@ import {
   ListItemTextProps
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useInView } from 'react-intersection-observer'
 
 export const SIDEBAR_WIDTH = 290
 
@@ -42,14 +44,53 @@ const Sidebar = () => {
   const router = useRouter()
   const [, hash = 'summary'] = router.asPath.split('#')
 
+  const [sectionVisible, setSectionVisible] = React.useState<Maybe<string>>()
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+    trackVisibility: true,
+    delay: 3000
+  })
+
+  React.useEffect(() => {
+    if (inView) {
+      setSectionVisible(hash)
+    }
+  }, [inView, hash])
+
+  useObserveAnchors({
+    inView,
+    setSectionVisible,
+    threshold: 1,
+    anchors: ['balance-overview', 'treasury-variation']
+  })
+
+  useObserveAnchors({
+    inView,
+    setSectionVisible,
+    threshold: 0.5,
+    anchors: ['summary']
+  })
+
+  useObserveAnchors({
+    inView,
+    setSectionVisible,
+    threshold: 0.2,
+    anchors: ['farming-funds', 'token-details']
+  })
+
   return (
     <BoxWrapperColumn sx={{ padding: '10px 10px', width: SIDEBAR_WIDTH, height: '100%' }}>
-      <List>
+      <List ref={ref}>
         {SECTIONS.map((text: Section, index: number) => {
-          const isActive = hash === slugify(text)
+          const isActive = sectionVisible === slugify(text)
           return (
-            <Link
-              href={`#${slugify(text)}`}
+            <Box
+              onClick={() => {
+                setSectionVisible(slugify(text))
+                router.push(`#${slugify(text)}`)
+              }}
               key={index}
               style={{ textDecoration: 'none', color: 'black' }}
             >
@@ -74,7 +115,7 @@ const Sidebar = () => {
                   />
                 </ListItemButton>
               </ListItem>
-            </Link>
+            </Box>
           )
         })}
       </List>
