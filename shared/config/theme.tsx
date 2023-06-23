@@ -437,7 +437,7 @@ declare module '@mui/material/Typography' {
   }
 }
 
-export const COLORS = [
+export const SUMMARY_COLORS = [
   '#383838',
   '#696969',
   '#989898',
@@ -447,6 +447,23 @@ export const COLORS = [
   '#E0E0E0',
   '#F0F0F0',
   '#F8F8F8'
+]
+
+export const WALLET_COLORS = [
+  '#111111',
+  '#222222',
+  '#333333',
+  '#444444',
+  '#555555',
+  '#666666',
+  '#777777',
+  '#888888',
+  '#999999',
+  '#aaaaaa',
+  '#bbbbbb',
+  '#cccccc',
+  '#dddddd',
+  '#eeeeee'
 ]
 
 export default theme

@@ -79,18 +79,28 @@ interface RenderPieChartProps {
   showLegend?: boolean
   width?: number
   height?: number
+  innerRadius?: number
+  outerRadius?: number
 }
 
 const RenderPieChart = (props: RenderPieChartProps) => {
-  const { data, dataKey, showLegend = true, width = 420, height = 360 } = props
+  const {
+    data,
+    dataKey,
+    showLegend = true,
+    width = 420,
+    height = 360,
+    innerRadius = 50,
+    outerRadius = 120
+  } = props
   return (
     <PieRechart width={width} height={height}>
       <Pie
         data={data}
         cx="50%"
         cy="50%"
-        innerRadius={50}
-        outerRadius={120}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
         fill="#222222"
         dataKey={dataKey}
         label={(props) => RenderCustomizedLabel({ ...props, showLegend })}
@@ -129,10 +139,22 @@ export type PieChartProps = {
   alignLegend?: 'bottom' | 'right'
   width?: number
   height?: number
+  innerRadius?: number
+  outerRadius?: number
 }
 
 const PieChart = (props: BoxProps & PieChartProps) => {
-  const { data, title, dataKey, alignLegend = 'bottom', showLegend = true, width, height } = props
+  const {
+    data,
+    title,
+    dataKey,
+    alignLegend = 'bottom',
+    showLegend = true,
+    width,
+    height,
+    innerRadius,
+    outerRadius
+  } = props
 
   const renderWithLegend =
     alignLegend === 'bottom' ? (
@@ -148,7 +170,14 @@ const PieChart = (props: BoxProps & PieChartProps) => {
         {title ? <PieChartTitle title={title} /> : null}
         {data.length > 0 ? (
           <>
-            <RenderPieChart data={data} dataKey={dataKey} width={width} height={height} />
+            <RenderPieChart
+              data={data}
+              dataKey={dataKey}
+              width={width}
+              height={height}
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
+            />
             <RenderLegend data={data} />
           </>
         ) : (
@@ -169,7 +198,14 @@ const PieChart = (props: BoxProps & PieChartProps) => {
         <BoxWrapperColumn width={'50%'} gap={2}>
           {title ? <PieChartTitle title={title} /> : null}
           {data.length > 0 ? (
-            <RenderPieChart data={data} dataKey={dataKey} width={width} height={height} />
+            <RenderPieChart
+              data={data}
+              dataKey={dataKey}
+              width={width}
+              height={height}
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
+            />
           ) : (
             <EmptyData />
           )}
@@ -195,6 +231,8 @@ const PieChart = (props: BoxProps & PieChartProps) => {
           showLegend={showLegend}
           width={width}
           height={height}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
         />
       ) : (
         <EmptyData />

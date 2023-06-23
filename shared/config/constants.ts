@@ -239,4 +239,6 @@ export const TOKEN_COINGECKO_PRICE_URL = [
   }
 ]
 
-export const OTHERS_CAP = 2
+export const OTHERS_SUMMARY_LIMIT = 2
+
+export const OTHERS_WALLET_LIMIT = 3

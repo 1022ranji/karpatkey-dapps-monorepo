@@ -1,5 +1,5 @@
-import { OTHERS_CAP } from '@karpatkey-monorepo/shared/config/constants'
-import { COLORS } from '@karpatkey-monorepo/shared/config/theme'
+import { OTHERS_SUMMARY_LIMIT } from '@karpatkey-monorepo/shared/config/constants'
+import { SUMMARY_COLORS } from '@karpatkey-monorepo/shared/config/theme'
 
 export const getSummaryFundsByTokenCategory = (data: any) => {
   const rows: { funds: number; label: string }[] = data
@@ -36,7 +36,9 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
+        color: SUMMARY_COLORS[index]
+          ? SUMMARY_COLORS[index]
+          : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -82,7 +84,9 @@ export const getSummaryFundsByType = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
+        color: SUMMARY_COLORS[index]
+          ? SUMMARY_COLORS[index]
+          : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -122,7 +126,9 @@ export const getSummaryFundsByBlockchain = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
+        color: SUMMARY_COLORS[index]
+          ? SUMMARY_COLORS[index]
+          : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 }
@@ -160,13 +166,15 @@ export const getSummaryFundsByProtocol = (data: any) => {
     .map((row: any, index: number) => {
       return {
         ...row,
-        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0]
+        color: SUMMARY_COLORS[index]
+          ? SUMMARY_COLORS[index]
+          : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
 
   const filteredFundsByProtocolWithOthers = filteredFundsByProtocol.reduce(
     (result: any, currentValue: any) => {
-      if (currentValue.allocation * 100 > OTHERS_CAP && result.length < 5) {
+      if (currentValue.allocation * 100 > OTHERS_SUMMARY_LIMIT && result.length < 5) {
         result.push(currentValue)
       } else {
         const other = result.find((item: any) => item.label === 'Others')
@@ -179,7 +187,7 @@ export const getSummaryFundsByProtocol = (data: any) => {
             allocation: currentValue.allocation,
             funds: currentValue.funds,
             label: 'Others',
-            color: COLORS[5]
+            color: SUMMARY_COLORS[5]
           })
         }
       }
