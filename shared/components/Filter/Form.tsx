@@ -86,7 +86,7 @@ const useYupValidationResolver = (validationSchema: any, shouldCheckDAOFilter: b
             errors = {
               inner: {
                 type: 'REPORT_NOT_AVAILABLE_FOR_THE_PERIOD',
-                message: `Report not available for the period. Should be greater than ${dao.sinceMonth}/${dao.sinceYear}`
+                message: `Report not available for the period. Should be since ${dao.sinceMonth}/${dao.sinceYear}`
               }
             }
           }

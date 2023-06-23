@@ -22,18 +22,18 @@ interface TreasuryVariationProps {
 }
 
 const MONTH_SHORT = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
+  'January',
+  'February',
+  'March',
+  'April',
   'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec'
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
 ]
 
 const TreasuryVariation = (props: TreasuryVariationProps) => {
@@ -51,9 +51,8 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
     setToggleType(value)
   }
 
-  const helpText = DAO
-    ? `Treasury variation since ${MONTH_SHORT[DAO.sinceMonth]}-${DAO.sinceYear} ($USD)`
-    : ''
+  const DAO_MONTH = MONTH_SHORT.find((month, index) => index + 1 === DAO?.sinceMonth)
+  const helpText = DAO ? `Treasury variation since ${DAO_MONTH}-${DAO.sinceYear}` : ''
 
   const filter = (
     <ToggleButtonGroup

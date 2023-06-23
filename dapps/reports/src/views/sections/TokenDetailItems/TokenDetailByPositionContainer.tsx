@@ -119,7 +119,27 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     }, [])
     .sort((a: any, b: any) => a.label.localeCompare(b.label))
 
-  const tokenOptions: any[] = []
+  const tokenOptions: any[] = tokenDetailByPosition
+    .reduce((acc: any, item: any) => {
+      if (!item.isMetricCard) {
+        Object.keys(item.values).forEach((key: string) => {
+          const tokens = Object.keys(item.values[key])
+          tokens.forEach((token: string) => {
+            if (!acc.includes(token)) {
+              acc.push(token)
+            }
+          })
+        })
+      }
+      return acc
+    }, [])
+    .map((key: string) => {
+      return {
+        label: key,
+        id: key
+      }
+    })
+    .sort((a: any, b: any) => a.label.localeCompare(b.label))
 
   const filter = (
     <Filter

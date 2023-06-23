@@ -27,9 +27,12 @@ const Welcome = () => {
   }
 
   return (
-    <BoxWrapperColumn sx={{ alignItems: 'center' }}>
-      <CustomTypography variant="h1" textAlign="center" sx={{ marginY: 10 }}>
+    <BoxWrapperColumn sx={{ alignItems: 'center', marginTop: 10 }} gap={10}>
+      <CustomTypography variant="h1" textAlign="center">
         View our DAO treasury reports
+      </CustomTypography>
+      <CustomTypography variant="h3" textAlign="center">
+        Select filters above
       </CustomTypography>
       <Box
         sx={{
