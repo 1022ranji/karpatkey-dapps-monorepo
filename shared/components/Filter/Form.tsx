@@ -9,6 +9,7 @@ import YearAutocomplete from '@karpatkey-monorepo/shared/components/Form/YearAut
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
+import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import WarningIcon from '@mui/icons-material/Warning'
 import { Box, Button, ClickAwayListener, styled } from '@mui/material'
 import Stack from '@mui/material/Stack'
@@ -83,10 +84,14 @@ const useYupValidationResolver = (validationSchema: any, shouldCheckDAOFilter: b
           }
 
           if (dao && (values?.month?.id < dao.sinceMonth || values?.year?.id < dao.sinceYear)) {
+            const month = MONTHS.find((option: AutocompleteOption) => {
+              return +option.id === +dao.sinceMonth
+            })
+
             errors = {
               inner: {
                 type: 'REPORT_NOT_AVAILABLE_FOR_THE_PERIOD',
-                message: `Report not available for the period. Should be since ${dao.sinceMonth}/${dao.sinceYear}`
+                message: `Report not available for the period. Should be since ${month?.label}/${dao.sinceYear}`
               }
             }
           }
