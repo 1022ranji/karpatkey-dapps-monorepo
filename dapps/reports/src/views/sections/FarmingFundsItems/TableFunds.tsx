@@ -6,6 +6,7 @@ import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/Ta
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import * as React from 'react'
 
@@ -16,6 +17,8 @@ interface TableFundsProps {
 
 const TableFunds = (props: TableFundsProps) => {
   const { funds, totals } = props
+  const [displayAll, setDisplayAll] = React.useState(false)
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
@@ -49,6 +52,8 @@ const TableFunds = (props: TableFundsProps) => {
             ) : (
               <>
                 {funds.map((row: any, index: number) => {
+                  if (!displayAll && index > 4) return null
+
                   return (
                     <TableRow key={index}>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
@@ -88,11 +93,31 @@ const TableFunds = (props: TableFundsProps) => {
                 })}
 
                 <TableRow>
-                  <TableEmptyCellCustom />
-                  <TableEmptyCellCustom />
-                  <TableEmptyCellCustom />
-                  <TableEmptyCellCustom />
-                  <TableEmptyCellCustom />
+                  <TableCellCustom colSpan={5} align="center">
+                    <BoxWrapperRow gap={1}>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{ cursor: 'pointer', align: 'center' }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {!displayAll
+                          ? `${funds.length > 4 ? 5 : funds.length} of ${funds.length}`
+                          : `${funds.length} of ${funds.length}`}
+                      </CustomTypography>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{
+                          cursor: 'pointer',
+                          textDecoration: 'underline',
+                          align: 'center',
+                          fontWeight: '700 !important'
+                        }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {displayAll ? 'Show less' : 'Show all'}
+                      </CustomTypography>
+                    </BoxWrapperRow>
+                  </TableCellCustom>
                 </TableRow>
                 <TableRow>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
