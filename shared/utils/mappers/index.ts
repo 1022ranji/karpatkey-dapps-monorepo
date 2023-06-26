@@ -1,4 +1,4 @@
-import { COLORS } from '@karpatkey-monorepo/shared/config/theme'
+import { SUMMARY_COLORS } from '@karpatkey-monorepo/shared/config/theme'
 
 export const reducerPositionsByProtocolAndAsset = (acc: any, obj: any) => {
   if (!acc['protocol']) acc['protocol'] = {}
@@ -55,7 +55,7 @@ export const mapBalancesByTokenCategory = (
       ...data[assetName as any],
       value: assetName,
       allocation: allocation,
-      color: COLORS[index]
+      color: SUMMARY_COLORS[index]
     }
   })
 }

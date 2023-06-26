@@ -24,6 +24,8 @@ interface TableTokenDetailProps {
 
 const TableTokenDetail = (props: TableTokenDetailProps) => {
   const { filteredTokenDetails } = props
+  const [displayAll, setDisplayAll] = React.useState(false)
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
@@ -57,6 +59,8 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
             ) : (
               <>
                 {filteredTokenDetails.map((row: any, index: number) => {
+                  if (!displayAll && index > 4) return null
+
                   const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
                     (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
                   )
@@ -128,6 +132,33 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                     </TableRow>
                   )
                 })}
+                <TableCellCustom colSpan={5} align="center">
+                  <BoxWrapperRow gap={1}>
+                    <CustomTypography
+                      variant="tableCellSubData"
+                      sx={{ cursor: 'pointer', align: 'center' }}
+                      onClick={() => setDisplayAll(!displayAll)}
+                    >
+                      {!displayAll
+                        ? `${
+                            filteredTokenDetails.length > 4 ? 5 : filteredTokenDetails.length
+                          } of ${filteredTokenDetails.length}`
+                        : `${filteredTokenDetails.length} of ${filteredTokenDetails.length}`}
+                    </CustomTypography>
+                    <CustomTypography
+                      variant="tableCellSubData"
+                      sx={{
+                        cursor: 'pointer',
+                        textDecoration: 'underline',
+                        align: 'center',
+                        fontWeight: '700 !important'
+                      }}
+                      onClick={() => setDisplayAll(!displayAll)}
+                    >
+                      {displayAll ? 'Show less' : 'Show all'}
+                    </CustomTypography>
+                  </BoxWrapperRow>
+                </TableCellCustom>
               </>
             )}
           </TableBody>

@@ -1,6 +1,5 @@
 import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import ItemText from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/ItemText'
-import ListItems from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/ListItems'
 import Position from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/Position'
 import ProtocolIcon from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/ProtocolIcon'
 import Title from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/Title'
@@ -8,7 +7,8 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import * as React from 'react'
 
-import MetricBody from './MetricBody'
+import Common from './Common'
+import Ratios from './Ratios'
 
 interface CardItemProps {
   id: number
@@ -42,18 +42,18 @@ const Card = (props: CardItemProps) => {
         <Position position={position} />
         <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUSDValue, 2)} />
       </BoxWrapperColumn>
-      {!isMetricCard
-        ? Object.keys(values).map((title: any, index: number) => {
-            const tokens = values[title]
-            return <ListItems key={index} title={title} tokens={tokens} />
-          })
-        : null}
-      {isMetricCard
-        ? Object.keys(values).map((title: any, index: number) => {
-            const metrics = values[title]
-            return <MetricBody key={index} metrics={metrics} />
-          })
-        : null}
+      {!isMetricCard &&
+        Object.keys(values)
+          .sort((a, b) => a.localeCompare(b))
+          .map((title: any, index: number) => {
+            return <Common key={index} title={title} values={values[title]} />
+          })}
+      {isMetricCard &&
+        Object.keys(values)
+          .sort((a, b) => a.localeCompare(b))
+          .map((title: any, index: number) => {
+            return <Ratios key={index} title={title} values={values[title]} />
+          })}
     </BoxWrapperColumn>
   )
 }

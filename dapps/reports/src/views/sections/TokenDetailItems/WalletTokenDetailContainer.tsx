@@ -4,8 +4,8 @@ import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { OTHERS_CAP } from '@karpatkey-monorepo/shared/config/constants'
-import { COLORS } from '@karpatkey-monorepo/shared/config/theme'
+import { OTHERS_WALLET_LIMIT } from '@karpatkey-monorepo/shared/config/constants'
+import { WALLET_COLORS } from '@karpatkey-monorepo/shared/config/theme'
 import { PaperProps } from '@mui/material'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
@@ -127,7 +127,9 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
     (item, index) => {
       return {
         allocation: item.allocation,
-        color: COLORS[index] ? COLORS[index] : COLORS[Math.floor(Math.random() * 9) + 0],
+        color: WALLET_COLORS[index]
+          ? WALLET_COLORS[index]
+          : WALLET_COLORS[Math.floor(Math.random() * 9) + 0],
         label: item.tokenSymbol,
         value: item.usdValue
       }
@@ -135,7 +137,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
   )
   const filteredWalletTokenDetailForPieChartWithColorsAndOthers =
     filteredWalletTokenDetailForPieChartWithColors.reduce((result: any, currentValue: any) => {
-      if (currentValue.allocation * 100 > OTHERS_CAP && result.length < 5) {
+      if (currentValue.allocation * 100 > OTHERS_WALLET_LIMIT) {
         result.push(currentValue)
       } else {
         const other = result.find((item: any) => item.label === 'Others')
@@ -166,6 +168,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
             showLegend={false}
             width={450}
             height={400}
+            innerRadius={80}
+            outerRadius={150}
           />
           <DynamicTableWalletTokenDetail
             filteredWalletTokenDetail={filteredWalletTokenDetail}

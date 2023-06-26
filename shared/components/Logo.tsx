@@ -1,11 +1,17 @@
 import { Box } from '@mui/material'
-import Link from 'next/link'
 import React from 'react'
 
 import CustomTypography from './CustomTypography'
 
 const Logo = () => (
-  <Box component={Link} href="/" alignItems="center" display="flex" sx={{ textDecoration: 'none' }}>
+  <Box
+    onClick={() => {
+      window.open('/', '_self')
+    }}
+    alignItems="center"
+    display="flex"
+    sx={{ textDecoration: 'none', cursor: 'pointer' }}
+  >
     <CustomTypography
       sx={{
         fontFamily: 'IBM Plex Mono',
