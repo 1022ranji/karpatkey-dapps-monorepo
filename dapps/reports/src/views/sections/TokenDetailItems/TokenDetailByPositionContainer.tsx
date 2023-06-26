@@ -42,16 +42,41 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  const filteredDataByBlockchainAndProtocol = tokenDetailByPosition.filter((item: any) => {
-    if (blockchainFilter && protocolFilter) {
-      return item.blockchain === blockchainFilter && item.protocol === protocolFilter
-    } else if (blockchainFilter) {
+  const filteredDataByBlockchainAndProtocolAndToken = tokenDetailByPosition.filter((item: any) => {
+    if (!blockchainFilter && !protocolFilter && !tokenFilter) return true
+    if (blockchainFilter && !protocolFilter && !tokenFilter)
       return item.blockchain === blockchainFilter
-    } else if (protocolFilter) {
-      return item.protocol === protocolFilter
-    } else {
-      return true
-    }
+    if (blockchainFilter && protocolFilter && !tokenFilter)
+      return item.blockchain === blockchainFilter && item.protocol === protocolFilter
+    if (blockchainFilter && protocolFilter && tokenFilter)
+      return (
+        item.blockchain === blockchainFilter &&
+        item.protocol === protocolFilter &&
+        Object.keys(item.values).find((key: string) => {
+          return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
+        })
+      )
+
+    if (blockchainFilter && !protocolFilter && tokenFilter)
+      return (
+        item.blockchain === blockchainFilter &&
+        Object.keys(item.values).find((key: string) => {
+          return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
+        })
+      )
+    if (!blockchainFilter && protocolFilter && !tokenFilter) return item.protocol === protocolFilter
+    if (!blockchainFilter && protocolFilter && tokenFilter)
+      return (
+        item.protocol === protocolFilter &&
+        Object.keys(item.values).find((key: string) => {
+          return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
+        })
+      )
+    if (!blockchainFilter && !protocolFilter && tokenFilter)
+      return Object.keys(item.values).find((key: string) => {
+        return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
+      })
+    return true
   })
 
   const defaultBlockchainValue = blockchainFilter
@@ -174,8 +199,9 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
 
   return (
     <PaperSection subTitle="Token detail by position" filter={filter}>
-      {filteredDataByBlockchainAndProtocol && filteredDataByBlockchainAndProtocol.length > 0 ? (
-        <CardList tokenDetailByPosition={filteredDataByBlockchainAndProtocol} />
+      {filteredDataByBlockchainAndProtocolAndToken &&
+      filteredDataByBlockchainAndProtocolAndToken.length > 0 ? (
+        <CardList tokenDetailByPosition={filteredDataByBlockchainAndProtocolAndToken} />
       ) : (
         <EmptyData />
       )}
