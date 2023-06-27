@@ -81,35 +81,37 @@ const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxProps) =
                     </TableRow>
                   )
                 })}
-                <TableCellCustom colSpan={3} align="center">
-                  <BoxWrapperRow gap={1}>
-                    <CustomTypography
-                      variant="tableCellSubData"
-                      sx={{ cursor: 'pointer', align: 'center' }}
-                      onClick={() => setDisplayAll(!displayAll)}
-                    >
-                      {!displayAll
-                        ? `${
-                            filteredWalletTokenDetail.length > 4
-                              ? 5
-                              : filteredWalletTokenDetail.length
-                          } of ${filteredWalletTokenDetail.length}`
-                        : `${filteredWalletTokenDetail.length} of ${filteredWalletTokenDetail.length}`}
-                    </CustomTypography>
-                    <CustomTypography
-                      variant="tableCellSubData"
-                      sx={{
-                        cursor: 'pointer',
-                        textDecoration: 'underline',
-                        align: 'center',
-                        fontWeight: '700 !important'
-                      }}
-                      onClick={() => setDisplayAll(!displayAll)}
-                    >
-                      {displayAll ? 'Show less' : 'Show all'}
-                    </CustomTypography>
-                  </BoxWrapperRow>
-                </TableCellCustom>
+                <TableRow>
+                  <TableCellCustom colSpan={3} align="center">
+                    <BoxWrapperRow gap={1}>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{ cursor: 'pointer', align: 'center' }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {!displayAll
+                          ? `${
+                              filteredWalletTokenDetail.length > 4
+                                ? 5
+                                : filteredWalletTokenDetail.length
+                            } of ${filteredWalletTokenDetail.length}`
+                          : `${filteredWalletTokenDetail.length} of ${filteredWalletTokenDetail.length}`}
+                      </CustomTypography>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{
+                          cursor: 'pointer',
+                          textDecoration: 'underline',
+                          align: 'center',
+                          fontWeight: '700 !important'
+                        }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {displayAll ? 'Show less' : 'Show all'}
+                      </CustomTypography>
+                    </BoxWrapperRow>
+                  </TableCellCustom>
+                </TableRow>
               </>
             )}
           </TableBody>

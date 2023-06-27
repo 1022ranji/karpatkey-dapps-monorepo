@@ -5,13 +5,12 @@ import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBou
 import { TITLE } from '@karpatkey-monorepo/shared/config/constants'
 import createEmotionCache from '@karpatkey-monorepo/shared/config/createEmotionCache'
 import theme from '@karpatkey-monorepo/shared/config/theme'
-import { Box, CircularProgress, CssBaseline, NoSsr } from '@mui/material'
+import { CssBaseline, NoSsr } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import Router from 'next/router'
 import * as React from 'react'
 
 import '../styles/globals.css'
@@ -25,27 +24,6 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
-
-  const [loading, setLoading] = React.useState(false)
-
-  React.useEffect(() => {
-    const start = () => {
-      console.log('start')
-      setLoading(true)
-    }
-    const end = () => {
-      console.log('finished')
-      setLoading(false)
-    }
-    Router.events.on('routeChangeStart', start)
-    Router.events.on('routeChangeComplete', end)
-    Router.events.on('routeChangeError', end)
-    return () => {
-      Router.events.off('routeChangeStart', start)
-      Router.events.off('routeChangeComplete', end)
-      Router.events.off('routeChangeError', end)
-    }
-  }, [])
 
   return (
     <CacheProvider value={emotionCache}>
@@ -61,19 +39,7 @@ export default function MyApp(props: MyAppProps) {
               <CssBaseline />
               <NoSsr>
                 <Layout>
-                  {loading ? (
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      flexDirection="column"
-                      alignItems="center"
-                      sx={{ minHeight: 'calc(100vh - 160px)' }}
-                    >
-                      <CircularProgress color="primary" />
-                    </Box>
-                  ) : (
-                    <Component {...pageProps} />
-                  )}
+                  <Component {...pageProps} />
                 </Layout>
               </NoSsr>
             </FilterProvider>

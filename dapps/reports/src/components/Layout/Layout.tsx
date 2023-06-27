@@ -45,7 +45,8 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           position: 'fixed',
           top: 0,
           borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          zIndex: 1000
+          zIndex: 1000,
+          minHeight: HEADER_HEIGHT
         }}
       >
         <Header />
@@ -57,7 +58,8 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           position: 'fixed',
           top: HEADER_HEIGHT,
           borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-          zIndex: 900
+          zIndex: 900,
+          minWidth: SIDEBAR_WIDTH
         }}
       >
         <Sidebar />
@@ -69,7 +71,8 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           top: HEADER_HEIGHT,
           borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
           overflow: 'auto',
-          zIndex: 800
+          zIndex: 800,
+          minHeight: '100vh'
         }}
       >
         <Body>{children}</Body>

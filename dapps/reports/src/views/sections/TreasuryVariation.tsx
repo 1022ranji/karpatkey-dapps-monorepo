@@ -1,4 +1,5 @@
 import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
+import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
@@ -75,34 +76,38 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
 
   return (
     <>
-      <PaperSection
-        id="Treasury variation"
-        title="Treasury variation"
-        subTitle="Treasury variation summary"
-        filter={filter}
-      >
-        <TabPanel value={toggleType} index={0}>
-          {rowsTreasuryVariation.length > 0 ? (
-            <DynamicWaterfall data={rowsTreasuryVariation} barSize={150} />
+      <AnimatePresenceWrapper>
+        <PaperSection
+          id="Treasury variation"
+          title="Treasury variation"
+          subTitle="Treasury variation summary"
+          filter={filter}
+        >
+          <TabPanel value={toggleType} index={0}>
+            {rowsTreasuryVariation.length > 0 ? (
+              <DynamicWaterfall data={rowsTreasuryVariation} barSize={150} />
+            ) : (
+              <EmptyData />
+            )}
+          </TabPanel>
+          <TabPanel value={toggleType} index={1}>
+            {rowsHistoricVariation.length > 0 ? (
+              <DynamicWaterfall data={rowsHistoricVariation} barSize={150} />
+            ) : (
+              <EmptyData />
+            )}
+          </TabPanel>
+        </PaperSection>
+      </AnimatePresenceWrapper>
+      <AnimatePresenceWrapper>
+        <PaperSection subTitle="Treasury variation for the period (detail)">
+          {rowsTreasuryVariationForThePeriodDetail.length > 0 ? (
+            <DynamicWaterfall data={rowsTreasuryVariationForThePeriodDetail} />
           ) : (
             <EmptyData />
           )}
-        </TabPanel>
-        <TabPanel value={toggleType} index={1}>
-          {rowsHistoricVariation.length > 0 ? (
-            <DynamicWaterfall data={rowsHistoricVariation} barSize={150} />
-          ) : (
-            <EmptyData />
-          )}
-        </TabPanel>
-      </PaperSection>
-      <PaperSection subTitle="Treasury variation for the period (detail)">
-        {rowsTreasuryVariationForThePeriodDetail.length > 0 ? (
-          <DynamicWaterfall data={rowsTreasuryVariationForThePeriodDetail} />
-        ) : (
-          <EmptyData />
-        )}
-      </PaperSection>
+        </PaperSection>
+      </AnimatePresenceWrapper>
     </>
   )
 }

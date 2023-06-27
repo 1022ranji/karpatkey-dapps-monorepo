@@ -20,17 +20,7 @@ const Card = (props: CardItemProps) => {
   const { blockchain, protocol, position, totalUSDValue, isMetricCard, values } = card
 
   return (
-    <BoxWrapperColumn
-      sx={{
-        maxWidth: '340px',
-        minHeight: '450px',
-        height: 'content-fit',
-        padding: '8px 8px',
-        border: '1px solid #B6B6B6',
-        background: 'background.paper'
-      }}
-      gap={4}
-    >
+    <BoxWrapperColumn gap={4}>
       <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
         <Title title={blockchain} />
         <BoxWrapperRow gap={1}>
