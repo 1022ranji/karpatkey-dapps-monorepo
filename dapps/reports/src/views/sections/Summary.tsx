@@ -1,3 +1,4 @@
+import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import dynamic from 'next/dynamic'
@@ -32,55 +33,57 @@ const Summary = (props: SummaryProps) => {
   } = props
 
   return (
-    <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
-      <BoxWrapperRow id="summary" gap={4} sx={{ justifyContent: 'space-between' }}>
-        <DynamicInfoCard
-          title="Total funds"
-          value={numbro(totalFunds).formatCurrency({
-            spaceSeparated: false,
-            thousandSeparated: true,
-            mantissa: 0
-          })}
-        />
-        <DynamicInfoCard
-          title="Capital utilization"
-          value={numbro(capitalUtilization).format({
-            output: 'percent',
-            spaceSeparated: false,
-            mantissa: 2
-          })}
-        />
-        <DynamicInfoCard
-          title="Farming results"
-          value={numbro(farmingResults).formatCurrency({
-            spaceSeparated: false,
-            thousandSeparated: true,
-            mantissa: 0
-          })}
-        />
-      </BoxWrapperRow>
-      <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
-        <DynamicPieChart
-          data={fundsByTokenCategory}
-          title="Total funds by token category"
-          dataKey="funds"
-        />
-        <DynamicPieChart
-          data={fundsByBlockchain}
-          title="Total funds by blockchain"
-          dataKey="funds"
-        />
-        <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
-      </BoxWrapperRow>
-      <BoxWrapperRow sx={{ justifyContent: 'flex-start' }}>
-        <DynamicPieChart
-          data={fundsByProtocol}
-          title="Farming funds by protocol"
-          dataKey="allocation"
-          alignLegend={'right'}
-        />
-      </BoxWrapperRow>
-    </BoxWrapperColumn>
+    <AnimatePresenceWrapper>
+      <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
+        <BoxWrapperRow id="summary" gap={4} sx={{ justifyContent: 'space-between' }}>
+          <DynamicInfoCard
+            title="Total funds"
+            value={numbro(totalFunds).formatCurrency({
+              spaceSeparated: false,
+              thousandSeparated: true,
+              mantissa: 0
+            })}
+          />
+          <DynamicInfoCard
+            title="Capital utilization"
+            value={numbro(capitalUtilization).format({
+              output: 'percent',
+              spaceSeparated: false,
+              mantissa: 2
+            })}
+          />
+          <DynamicInfoCard
+            title="Farming results"
+            value={numbro(farmingResults).formatCurrency({
+              spaceSeparated: false,
+              thousandSeparated: true,
+              mantissa: 0
+            })}
+          />
+        </BoxWrapperRow>
+        <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
+          <DynamicPieChart
+            data={fundsByTokenCategory}
+            title="Total funds by token category"
+            dataKey="funds"
+          />
+          <DynamicPieChart
+            data={fundsByBlockchain}
+            title="Total funds by blockchain"
+            dataKey="funds"
+          />
+          <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
+        </BoxWrapperRow>
+        <BoxWrapperRow sx={{ justifyContent: 'flex-start' }}>
+          <DynamicPieChart
+            data={fundsByProtocol}
+            title="Farming funds by protocol"
+            dataKey="allocation"
+            alignLegend={'right'}
+          />
+        </BoxWrapperRow>
+      </BoxWrapperColumn>
+    </AnimatePresenceWrapper>
   )
 }
 

@@ -1,5 +1,6 @@
 import TableBlockchain from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverviewItems/TableBlockchain'
 import TableType from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverviewItems/TableType'
+import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
@@ -38,29 +39,31 @@ const BalanceOverview = (props: BalanceOverview) => {
   )
 
   return (
-    <PaperSection
-      id="Balance overview"
-      title="Balance overview"
-      subTitle="Funds by token category and type/blockchain"
-      filter={Filter}
-    >
-      <BoxWrapperColumn>
-        <TabPanel value={toggleType} index={1}>
-          {balanceOverviewType.length > 0 ? (
-            <TableType balanceOverviewType={balanceOverviewType} />
-          ) : (
-            <EmptyData />
-          )}
-        </TabPanel>
-        <TabPanel value={toggleType} index={0}>
-          {balanceOverviewBlockchain.length > 0 ? (
-            <TableBlockchain balanceOverviewBlockchain={balanceOverviewBlockchain} />
-          ) : (
-            <EmptyData />
-          )}
-        </TabPanel>
-      </BoxWrapperColumn>
-    </PaperSection>
+    <AnimatePresenceWrapper>
+      <PaperSection
+        id="Balance overview"
+        title="Balance overview"
+        subTitle="Funds by token category and type/blockchain"
+        filter={Filter}
+      >
+        <BoxWrapperColumn>
+          <TabPanel value={toggleType} index={1}>
+            {balanceOverviewType.length > 0 ? (
+              <TableType balanceOverviewType={balanceOverviewType} />
+            ) : (
+              <EmptyData />
+            )}
+          </TabPanel>
+          <TabPanel value={toggleType} index={0}>
+            {balanceOverviewBlockchain.length > 0 ? (
+              <TableBlockchain balanceOverviewBlockchain={balanceOverviewBlockchain} />
+            ) : (
+              <EmptyData />
+            )}
+          </TabPanel>
+        </BoxWrapperColumn>
+      </PaperSection>
+    </AnimatePresenceWrapper>
   )
 }
 
