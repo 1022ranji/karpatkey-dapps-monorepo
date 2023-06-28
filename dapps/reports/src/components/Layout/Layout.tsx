@@ -90,7 +90,8 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           position: 'fixed',
           top: 0,
           borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          zIndex: 1000
+          zIndex: 1000,
+          minHeight: HEADER_HEIGHT
         }}
       >
         <Header />
@@ -101,7 +102,8 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           width: '100%',
           top: HEADER_HEIGHT,
           overflow: 'scroll',
-          zIndex: 900
+          zIndex: 900,
+          minHeight: '100vh'
         }}
       >
         <Body>{children}</Body>
