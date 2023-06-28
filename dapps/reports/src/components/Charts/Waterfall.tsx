@@ -146,8 +146,15 @@ const Waterfall = ({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey={'value'} interval={0} tick={<CustomizedAxisTick />} />
           <YAxis
+            type={'number'}
+            domain={([dataMin, dataMax]) => {
+              const absMin = Math.abs(dataMax) / 2
+              const absMax = Math.max(Math.abs(dataMin), Math.abs(dataMax))
+              return [absMin, absMax]
+            }}
+            interval={4}
             fontSize={12}
-            tickCount={4}
+            tickCount={12}
             tickFormatter={(tick) => {
               return numbro(tick)
                 .formatCurrency({
