@@ -34,6 +34,26 @@ docker run -p 3000:3000 dharmendrakariya/reports:test
 
 - App will be up and running on http://localhost:3000/
 
+## Docker reports dev
+Follow below commands to get the app up and running in docker container, before add the proper
+args configuration to the command.
+
+Build the image
+```bash
+docker build -f Dockerfile.reports.dev -t reports:dev --build-arg REACT_DATA_WAREHOUSE_ENV=...
+```
+
+Execute the image
+```bash
+docker run -dp 127.0.0.1:3000:3000 reports:dev
+```
+
+Check that everything is working fine
+```bash
+docker exec -it CONTAINER_ID /bin/sh
+```
+
+
 ## Roadmap
 - Create report dApp. *In progress*
 - Integrate new design. *In progress*
