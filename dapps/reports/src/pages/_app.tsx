@@ -11,6 +11,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import * as React from 'react'
 
 import '../styles/globals.css'
@@ -25,6 +26,9 @@ interface MyAppProps extends AppProps {
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
+  const router = useRouter()
+  const isPasswordProtected = router.asPath.includes('/password-protect')
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -38,9 +42,12 @@ export default function MyApp(props: MyAppProps) {
               {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
               <CssBaseline />
               <NoSsr>
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
+                {isPasswordProtected ? <Component {...pageProps} /> : null}
+                {!isPasswordProtected ? (
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                ) : null}
               </NoSsr>
             </FilterProvider>
           </ErrorBoundaryWrapper>
