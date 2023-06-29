@@ -15,9 +15,8 @@ COPY package.json /app/package.json
 
 RUN yarn install
 
-WORKDIR /app
 # add app
-COPY . ./app
+COPY . .
 
 # expose port
 EXPOSE 3000
