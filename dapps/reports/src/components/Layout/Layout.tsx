@@ -70,9 +70,10 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           width: '100%',
           top: HEADER_HEIGHT,
           borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-          overflow: 'auto',
           zIndex: 800,
-          minHeight: '100vh'
+          minHeight: '100vh',
+          overflowX: 'hidden',
+          overflowY: 'hidden'
         }}
       >
         <Body>{children}</Body>
@@ -101,9 +102,10 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           gridArea: 'body',
           width: '100%',
           top: HEADER_HEIGHT,
-          overflow: 'scroll',
           zIndex: 900,
-          minHeight: '100vh'
+          minHeight: '100vh',
+          overflowX: 'hidden',
+          overflowY: 'hidden'
         }}
       >
         <Body>{children}</Body>
