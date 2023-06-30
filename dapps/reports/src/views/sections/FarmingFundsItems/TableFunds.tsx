@@ -120,7 +120,11 @@ const TableFunds = (props: TableFundsProps) => {
                       </BoxWrapperRow>
                     </TableCellCustom>
                   </TableRow>
-                ) : null}
+                ) : (
+                  <TableRow>
+                    <TableEmptyCellCustom colSpan={5} />
+                  </TableRow>
+                )}
 
                 <TableRow>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">

@@ -1,3 +1,4 @@
+import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
@@ -14,21 +15,27 @@ const RenderCustomizedLabel = (props: any) => {
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
   const y = cy + radius * Math.sin(-midAngle * RADIAN)
 
+  const words = reduceSentenceByLengthInLines(label, 12)
+  const labels = +percent * 100 < 1 ? words.reverse() : words
+
   return (
     <g>
-      {!showLegend ? (
-        <text
-          x={x}
-          y={y + 15}
-          fill="#222222"
-          textAnchor={x > cx ? 'start' : 'end'}
-          dominantBaseline="central"
-          fontFamily={'IBM Plex Sans'}
-          fontSize={14}
-        >
-          {label}
-        </text>
-      ) : null}
+      {!showLegend && labels.length > 0
+        ? labels.map((word: string, i: number) => (
+            <text
+              x={x}
+              y={+percent * 100 < 1 ? y - 15 * (i + 1) : y + 15 * (i + 1)}
+              key={i}
+              textAnchor={x > cx ? 'start' : 'end'}
+              dominantBaseline="central"
+              fontFamily={'IBM Plex Sans'}
+              fontSize={13}
+              fill="#222222"
+            >
+              {word}
+            </text>
+          ))
+        : null}
       <text
         x={x}
         y={y}
@@ -36,7 +43,7 @@ const RenderCustomizedLabel = (props: any) => {
         textAnchor={x > cx ? 'start' : 'end'}
         dominantBaseline="central"
         fontFamily={'IBM Plex Sans'}
-        fontSize={14}
+        fontSize={13}
       >
         {numbro(percent).format({ output: 'percent', mantissa: 2 })}
       </text>

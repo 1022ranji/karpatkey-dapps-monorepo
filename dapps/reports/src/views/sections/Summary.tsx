@@ -61,25 +61,40 @@ const Summary = (props: SummaryProps) => {
             })}
           />
         </BoxWrapperRow>
-        <BoxWrapperRow gap={4} sx={{ justifyContent: 'space-between' }}>
+        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <DynamicPieChart
             data={fundsByTokenCategory}
             title="Total funds by token category"
             dataKey="funds"
+            showLegend={false}
+            width={450}
+            height={400}
           />
           <DynamicPieChart
             data={fundsByBlockchain}
             title="Total funds by blockchain"
             dataKey="funds"
+            showLegend={false}
+            width={450}
+            height={400}
           />
-          <DynamicPieChart data={fundsByType} title="Total funds by type" dataKey="funds" />
         </BoxWrapperRow>
-        <BoxWrapperRow sx={{ justifyContent: 'flex-start' }}>
+        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
+          <DynamicPieChart
+            data={fundsByType}
+            title="Total funds by type"
+            dataKey="funds"
+            showLegend={false}
+            width={450}
+            height={400}
+          />
           <DynamicPieChart
             data={fundsByProtocol}
             title="Farming funds by protocol"
             dataKey="allocation"
-            alignLegend={'right'}
+            showLegend={false}
+            width={450}
+            height={400}
           />
         </BoxWrapperRow>
       </BoxWrapperColumn>

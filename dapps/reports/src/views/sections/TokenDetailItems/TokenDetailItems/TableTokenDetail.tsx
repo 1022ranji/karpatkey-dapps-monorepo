@@ -163,7 +163,11 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                       </BoxWrapperRow>
                     </TableCellCustom>
                   </TableRow>
-                ) : null}
+                ) : (
+                  <TableRow>
+                    <TableEmptyCellCustom colSpan={5} />
+                  </TableRow>
+                )}
               </>
             )}
           </TableBody>
