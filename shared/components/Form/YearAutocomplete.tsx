@@ -5,7 +5,7 @@ import CustomTypography from '../CustomTypography'
 
 const getYears = () => {
   const max = new Date().getFullYear()
-  const min = max - 4
+  const min = 2023
   const years = []
 
   for (let i = max; i >= min; i--) {

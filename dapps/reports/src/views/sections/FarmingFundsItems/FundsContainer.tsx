@@ -134,8 +134,8 @@ const FundsContainer = (props: FundsContainerProps) => {
 
   return (
     <PaperSection
-      id="Farming funds"
-      title="Farming funds / results"
+      id="Farming funds and results"
+      title="Farming funds and results"
       subTitle={'Farming funds/results by protocol'}
       filter={filter}
     >

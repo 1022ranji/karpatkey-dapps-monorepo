@@ -23,7 +23,7 @@ interface WalletTokenDetailContainerProps {
 }
 
 const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & PaperProps) => {
-  const { walletTokenDetail = [], ...moreProps } = props
+  const { walletTokenDetail = [] } = props
   const [blockchainFilter, setBlockchainFilter] = React.useState<Maybe<string>>(null)
 
   const filteredWalletTokenDetailWithoutAllocation = blockchainFilter
@@ -157,7 +157,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
     }, [])
 
   return (
-    <PaperSection subTitle="Wallet token detail" filter={filter} {...moreProps}>
+    <PaperSection subTitle="Wallet token detail" filter={filter}>
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
         <EmptyData />
       ) : (
