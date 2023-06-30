@@ -23,19 +23,19 @@ import { useInView } from 'react-intersection-observer'
 
 export const SIDEBAR_WIDTH = 290
 
-type Section =
+export type Section =
   | 'Summary'
   | 'Balance overview'
   | 'Treasury variation'
-  | 'Farming funds'
-  | 'Token details'
+  | 'Farming funds and results'
+  | 'Token detail'
 
 const SECTIONS: Section[] = [
   'Summary',
   'Balance overview',
   'Treasury variation',
-  'Farming funds',
-  'Token details'
+  'Farming funds and results',
+  'Token detail'
 ]
 
 const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>(() => ({
@@ -46,14 +46,14 @@ const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>(() => ({
 
 const SidebarSkeletonLoading = () => {
   return (
-    <BoxWrapperColumn sx={{ padding: '10px 10px', width: SIDEBAR_WIDTH, height: '100%' }}>
+    <BoxWrapperColumn sx={{ padding: '10px 10px', width: SIDEBAR_WIDTH, height: '100%' }} gap={2}>
       <List>
         {SECTIONS.map((_text, index) => {
           return (
-            <ListItem key={index}>
+            <ListItem key={index} sx={{ marginY: '20px' }}>
               <BoxWrapperRow gap={2}>
-                <Skeleton variant="circular" width={40} height={40} />
-                <Skeleton variant="rectangular" width={200} height={40} />
+                <Skeleton variant="circular" width={30} height={30} />
+                <Skeleton variant="rectangular" width={190} height={30} />
               </BoxWrapperRow>
             </ListItem>
           )
@@ -99,8 +99,8 @@ const Sidebar = () => {
   useObserveAnchors({
     inView,
     setSectionVisible,
-    threshold: 0.1,
-    anchors: ['farming-funds', 'token-details']
+    threshold: 0.15,
+    anchors: ['farming-funds-and-results', 'token-detail']
   })
 
   const isLoading = useIsLoading()

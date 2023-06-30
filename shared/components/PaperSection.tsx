@@ -1,3 +1,4 @@
+import { Section } from '@karpatkey-monorepo/reports/src/components/Layout/Sidebar'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
@@ -7,8 +8,8 @@ import { Divider } from '@mui/material'
 import * as React from 'react'
 
 interface PaperSectionProps {
-  id?: string
-  title?: string
+  id?: Section
+  title?: Section
   subTitle?: string
   filter?: React.ReactNode
   children: React.ReactNode

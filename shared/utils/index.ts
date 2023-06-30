@@ -1,5 +1,7 @@
 import { getAddress } from '@ethersproject/address'
-import { FILTER_DAO, FILTER_DAOS, NONE } from '@karpatkey-monorepo/shared/config/constants'
+import { FILTER_DAO, FILTER_DAOS, MONTHS, NONE } from '@karpatkey-monorepo/shared/config/constants'
+
+import { AutocompleteOption } from '../components/CustomAutocomplete'
 
 export function isAddress(value: any): string | false {
   try {
@@ -26,12 +28,11 @@ export const slugify = (str: string) =>
     .replace(/^-+|-+$/g, '')
 
 export const getMonthName = (monthNumber: number) => {
-  const date = new Date()
-  date.setMonth(monthNumber - 1)
-
-  return date.toLocaleString([], {
-    month: 'long'
+  const month = MONTHS.find((option: AutocompleteOption) => {
+    return +option.id === +monthNumber
   })
+
+  return month?.label
 }
 
 export const getDAOName = (daoKey: number) => {

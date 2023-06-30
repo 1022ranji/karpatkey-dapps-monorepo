@@ -79,35 +79,37 @@ const TableResults = (props: TableResultsProps) => {
                 )
               })}
 
-              <TableRow>
-                <TableCellCustom colSpan={5} align="center">
-                  <BoxWrapperRow gap={1}>
-                    <CustomTypography
-                      variant="tableCellSubData"
-                      sx={{ cursor: 'pointer', align: 'center' }}
-                      onClick={() => setDisplayAll(!displayAll)}
-                    >
-                      {!displayAll
-                        ? `${fundsDetails.length > 4 ? 5 : fundsDetails.length} of ${
-                            fundsDetails.length
-                          }`
-                        : `${fundsDetails.length} of ${fundsDetails.length}`}
-                    </CustomTypography>
-                    <CustomTypography
-                      variant="tableCellSubData"
-                      sx={{
-                        cursor: 'pointer',
-                        textDecoration: 'underline',
-                        align: 'center',
-                        fontWeight: '700 !important'
-                      }}
-                      onClick={() => setDisplayAll(!displayAll)}
-                    >
-                      {displayAll ? 'Show less' : 'Show all'}
-                    </CustomTypography>
-                  </BoxWrapperRow>
-                </TableCellCustom>
-              </TableRow>
+              {fundsDetails.length > 5 ? (
+                <TableRow>
+                  <TableCellCustom colSpan={5} align="center">
+                    <BoxWrapperRow gap={1}>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{ cursor: 'pointer', align: 'center' }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {!displayAll
+                          ? `${fundsDetails.length > 4 ? 5 : fundsDetails.length} of ${
+                              fundsDetails.length
+                            }`
+                          : `${fundsDetails.length} of ${fundsDetails.length}`}
+                      </CustomTypography>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{
+                          cursor: 'pointer',
+                          textDecoration: 'underline',
+                          align: 'center',
+                          fontWeight: '700 !important'
+                        }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {displayAll ? 'View less' : 'View all'}
+                      </CustomTypography>
+                    </BoxWrapperRow>
+                  </TableCellCustom>
+                </TableRow>
+              ) : null}
               <TableRow>
                 <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                   Grand total

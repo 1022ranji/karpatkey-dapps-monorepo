@@ -119,7 +119,7 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
 
   return (
     <PaperSection
-      id="Token details"
+      id="Token detail"
       title="Token detail"
       subTitle="Token detail with price variation"
       filter={filter}
