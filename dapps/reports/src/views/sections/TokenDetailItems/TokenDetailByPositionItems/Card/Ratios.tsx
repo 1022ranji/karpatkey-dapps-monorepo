@@ -19,6 +19,13 @@ interface RatiosProps {
   }
 }
 
+const sortOrder = [
+  'Collateral Ratio',
+  'Minimum Collateral Ratio',
+  'Liquidation Price',
+  'Price to drop liquidation'
+]
+
 const Ratios = ({ title, values }: RatiosProps) => {
   return (
     <BoxWrapperColumn sx={{ gap: 2 }}>
@@ -27,7 +34,7 @@ const Ratios = ({ title, values }: RatiosProps) => {
         <Divider sx={{ borderBottomWidth: 5 }} />
       </BoxWrapperColumn>
       {Object.keys(values)
-        .sort((a, b) => a.localeCompare(b))
+        .sort((a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b))
         .map((item: string, index: number) => {
           const { metricValue } = values[item]
           let value = ''
