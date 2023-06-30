@@ -20,6 +20,8 @@ interface RatiosProps {
 }
 
 const sortOrder = [
+  'Collateral',
+  'Debt',
   'Collateral Ratio',
   'Minimum Collateral Ratio',
   'Liquidation Price',
@@ -39,16 +41,16 @@ const Ratios = ({ title, values }: RatiosProps) => {
           const { metricValue } = values[item]
           let value = ''
           if (item === 'Collateral Ratio' || item === 'Price to drop liquidation') {
-            value = metricValue ? formatPercentage(metricValue, 0) : ''
+            value = formatPercentage(metricValue || 0, 0)
           }
           if (item === 'Minimum Collateral Ratio') {
-            value = metricValue ? formatPercentage(metricValue / 100, 0) : ''
+            value = formatPercentage((metricValue || 0) / 100, 0)
           }
           if (item === 'Collateral' || item === 'Debt') {
-            value = metricValue ? formatNumber(metricValue) : ''
+            value = formatNumber(metricValue || 0)
           }
           if (item === 'Liquidation Price') {
-            value = metricValue ? formatCurrency(metricValue, 0) : ''
+            value = formatCurrency(metricValue || 0, 0)
           }
           return (
             <BoxWrapperColumn key={index} gap={1}>
