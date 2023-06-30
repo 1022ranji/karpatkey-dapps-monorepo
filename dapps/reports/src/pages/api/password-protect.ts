@@ -1,3 +1,4 @@
+import { PASSWORD_PROTECT } from '@karpatkey-monorepo/reports/src/config/constants'
 import { serialize } from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -6,7 +7,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(405).send('Method Not Allowed')
   }
   const password = req.body.password
-  if (process.env.REACT_PASSWORD_PROTECT === password) {
+
+  if (PASSWORD_PROTECT === password) {
     const cookie = serialize('login', 'true', {
       path: '/',
       httpOnly: true
