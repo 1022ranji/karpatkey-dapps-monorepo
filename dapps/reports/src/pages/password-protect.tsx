@@ -28,7 +28,7 @@ const PasswordProtect = () => {
           <CustomTypography variant={'h3'}>Enter Password:</CustomTypography>
           <BoxWrapperRow gap={2}>
             <Input type="password" name="password" />
-            <ButtonStyled>Login</ButtonStyled>
+            <ButtonStyled type={'submit'}>Login</ButtonStyled>
           </BoxWrapperRow>
           {error && (
             <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
