@@ -1,41 +1,22 @@
+import Waterfall from '@karpatkey-monorepo/reports/src/components/Charts/Waterfall'
 import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
-import { FILTER_DAO } from '@karpatkey-monorepo/shared/config/constants'
+import { FILTER_DAO, MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import { getDAO } from '@karpatkey-monorepo/shared/utils'
 import HelpIcon from '@mui/icons-material/Help'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Tooltip from '@mui/material/Tooltip'
-import dynamic from 'next/dynamic'
 import * as React from 'react'
-
-const DynamicWaterfall = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/Waterfall')
-)
 
 interface TreasuryVariationProps {
   rowsTreasuryVariation: any[]
   rowsHistoricVariation: any[]
   rowsTreasuryVariationForThePeriodDetail: any[]
 }
-
-const MONTH_SHORT = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
 
 const TreasuryVariation = (props: TreasuryVariationProps) => {
   const { rowsTreasuryVariation, rowsHistoricVariation, rowsTreasuryVariationForThePeriodDetail } =
@@ -52,8 +33,8 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
     setToggleType(value)
   }
 
-  const DAO_MONTH = MONTH_SHORT.find((month, index) => index + 1 === DAO?.sinceMonth)
-  const helpText = DAO ? `Treasury variation since ${DAO_MONTH}-${DAO.sinceYear}` : ''
+  const DAO_MONTH = MONTHS.find((month) => month.id === DAO?.sinceMonth)
+  const helpText = DAO ? `Treasury variation since ${DAO_MONTH?.label}-${DAO.sinceYear}` : ''
 
   const filter = (
     <ToggleButtonGroup
@@ -85,14 +66,14 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
         >
           <TabPanel value={toggleType} index={0}>
             {rowsTreasuryVariation.length > 0 ? (
-              <DynamicWaterfall data={rowsTreasuryVariation} barSize={150} />
+              <Waterfall data={rowsTreasuryVariation} barSize={150} />
             ) : (
               <EmptyData />
             )}
           </TabPanel>
           <TabPanel value={toggleType} index={1}>
             {rowsHistoricVariation.length > 0 ? (
-              <DynamicWaterfall data={rowsHistoricVariation} barSize={150} />
+              <Waterfall data={rowsHistoricVariation} barSize={150} />
             ) : (
               <EmptyData />
             )}
@@ -102,7 +83,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
       <AnimatePresenceWrapper>
         <PaperSection subTitle="Treasury variation for the period (detail)">
           {rowsTreasuryVariationForThePeriodDetail.length > 0 ? (
-            <DynamicWaterfall data={rowsTreasuryVariationForThePeriodDetail} />
+            <Waterfall data={rowsTreasuryVariationForThePeriodDetail} />
           ) : (
             <EmptyData />
           )}

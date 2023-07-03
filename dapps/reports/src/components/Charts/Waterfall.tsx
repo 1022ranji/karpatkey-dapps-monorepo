@@ -1,3 +1,4 @@
+import { RoundToCeilNearest, RoundToFloorNearest } from '@karpatkey-monorepo/reports/src/utils/math'
 import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box, BoxProps, Paper } from '@mui/material'
@@ -120,6 +121,20 @@ const Waterfall = ({
   barSize = 60,
   ...props
 }: BoxProps & WaterfallProps) => {
+  const initialBalanceFunds = data.find((item) => item.value === 'Initial Balance')?.uv
+  const finalBalanceFunds = data.find((item) => item.value === 'Final Balance')?.uv
+
+  const minBalanceFund = Math.min(initialBalanceFunds, finalBalanceFunds)
+  const maxValueUV = data.reduce((acc, item) => {
+    if (item.value !== 'Final Balance') {
+      return acc + item.uv
+    }
+    return acc
+  }, 0)
+
+  const domainDataMinFloor = RoundToFloorNearest(minBalanceFund * 0.98)
+  const domainDataMaxCeil = RoundToCeilNearest(maxValueUV * (data.length > 4 ? 1.05 : 1.01))
+
   return (
     <Box
       display="flex"
@@ -147,20 +162,18 @@ const Waterfall = ({
           <XAxis dataKey={'value'} interval={0} tick={<CustomizedAxisTick />} />
           <YAxis
             type={'number'}
-            domain={([dataMin, dataMax]) => {
-              const absMin = Math.abs(dataMax) / 2
-              const absMax = Math.max(Math.abs(dataMin), Math.abs(dataMax))
-              return [absMin, absMax]
+            domain={() => {
+              return [domainDataMinFloor, domainDataMaxCeil]
             }}
-            interval={4}
+            interval={0}
+            tickCount={6}
             fontSize={12}
-            tickCount={12}
             tickFormatter={(tick) => {
               return numbro(tick)
                 .formatCurrency({
                   average: true,
                   spaceSeparated: false,
-                  mantissa: 0
+                  mantissa: 1
                 })
                 .toUpperCase()
             }}
