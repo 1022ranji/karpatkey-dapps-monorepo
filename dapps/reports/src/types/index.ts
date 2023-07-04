@@ -9,6 +9,7 @@ export type ReportData = {
   totalFunds: number
   capitalUtilization: number
   farmingResults: number
+  globalROI: number
   fundsByTokenCategory: any[]
   fundsByType: any[]
   fundsByBlockchain: any[]

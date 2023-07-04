@@ -66,14 +66,14 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
           filter={filter}
         >
           <TabPanel value={toggleType} index={0}>
-            {treasuryVariationData.length > 0 ? (
+            {treasuryVariationData?.length > 0 ? (
               <Waterfall data={treasuryVariationData} barSize={150} />
             ) : (
               <EmptyData />
             )}
           </TabPanel>
           <TabPanel value={toggleType} index={1}>
-            {historicVariationData.length > 0 ? (
+            {historicVariationData?.length > 0 ? (
               <Waterfall data={historicVariationData} barSize={150} />
             ) : (
               <EmptyData />
@@ -83,7 +83,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
       </AnimatePresenceWrapper>
       <AnimatePresenceWrapper>
         <PaperSection subTitle="Treasury variation for the period (detail)">
-          {treasuryVariationForThePeriodDetailData.length > 0 ? (
+          {treasuryVariationForThePeriodDetailData?.length > 0 ? (
             <Waterfall data={treasuryVariationForThePeriodDetailData} />
           ) : (
             <EmptyData />

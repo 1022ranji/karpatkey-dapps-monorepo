@@ -1,8 +1,8 @@
+import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import dynamic from 'next/dynamic'
-import numbro from 'numbro'
 import * as React from 'react'
 
 const DynamicPieChart = dynamic(
@@ -14,6 +14,7 @@ const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/compone
 interface SummaryProps {
   totalFunds: number
   capitalUtilization: number
+  globalROI: number
   farmingResults: number
   fundsByTokenCategory: any[]
   fundsByType: any[]
@@ -25,6 +26,7 @@ const Summary = (props: SummaryProps) => {
   const {
     totalFunds,
     capitalUtilization,
+    globalROI,
     farmingResults,
     fundsByTokenCategory,
     fundsByType,
@@ -36,30 +38,13 @@ const Summary = (props: SummaryProps) => {
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
         <BoxWrapperRow id="summary" gap={4} sx={{ justifyContent: 'space-between' }}>
-          <DynamicInfoCard
-            title="Total funds"
-            value={numbro(totalFunds).formatCurrency({
-              spaceSeparated: false,
-              thousandSeparated: true,
-              mantissa: 0
-            })}
-          />
+          <DynamicInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
           <DynamicInfoCard
             title="Capital utilization"
-            value={numbro(capitalUtilization).format({
-              output: 'percent',
-              spaceSeparated: false,
-              mantissa: 2
-            })}
+            value={formatPercentage(capitalUtilization)}
           />
-          <DynamicInfoCard
-            title="Farming results"
-            value={numbro(farmingResults).formatCurrency({
-              spaceSeparated: false,
-              thousandSeparated: true,
-              mantissa: 0
-            })}
-          />
+          <DynamicInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
+          <DynamicInfoCard title="Global ROI" value={formatPercentage(globalROI)} />
         </BoxWrapperRow>
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <DynamicPieChart

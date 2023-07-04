@@ -17,6 +17,7 @@ const HomepageContent = (props: ReportProps) => {
     totalFunds,
     capitalUtilization,
     farmingResults,
+    globalROI,
     fundsByTokenCategory,
     fundsByType,
     fundsByBlockchain,
@@ -60,6 +61,7 @@ const HomepageContent = (props: ReportProps) => {
       <Summary
         totalFunds={totalFunds}
         capitalUtilization={capitalUtilization}
+        globalROI={globalROI}
         farmingResults={farmingResults}
         fundsByTokenCategory={fundsByTokenCategory}
         fundsByType={fundsByType}
