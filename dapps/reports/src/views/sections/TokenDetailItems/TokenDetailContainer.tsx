@@ -122,6 +122,7 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       id="Token detail"
       title="Token detail"
       subTitle="Token detail with price variation"
+      helpInfo="Token balances, price variations, detail by position and wallet"
       filter={filter}
     >
       {filteredTokenDetails.length === 0 && !isFilterApplied ? (
