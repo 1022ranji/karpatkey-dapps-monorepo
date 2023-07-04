@@ -23,7 +23,7 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
     0
   )
 
-  return Object.keys(rows)
+  const fundsByTokenCategory = Object.keys(rows)
     .map((key: string) => {
       return {
         value: key,
@@ -41,6 +41,11 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
           : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
+    .filter((row: any) => {
+      return row.allocation >= 0.009
+    })
+
+  return fundsByTokenCategory
 }
 
 export const getSummaryFundsByType = (data: any) => {
@@ -71,7 +76,7 @@ export const getSummaryFundsByType = (data: any) => {
     0
   )
 
-  return Object.keys(rows)
+  const fundsByType = Object.keys(rows)
     .map((key: string) => {
       return {
         value: key,
@@ -89,6 +94,11 @@ export const getSummaryFundsByType = (data: any) => {
           : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
+    .filter((row: any) => {
+      return row.allocation >= 0.009
+    })
+
+  return fundsByType
 }
 
 export const getSummaryFundsByBlockchain = (data: any) => {
@@ -113,7 +123,7 @@ export const getSummaryFundsByBlockchain = (data: any) => {
     0
   )
 
-  return Object.keys(rows)
+  const fundsByBlockchain = Object.keys(rows)
     .map((key: string) => {
       return {
         value: key,
@@ -131,6 +141,11 @@ export const getSummaryFundsByBlockchain = (data: any) => {
           : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
     })
+    .filter((row: any) => {
+      return row.allocation >= 0.009
+    })
+
+  return fundsByBlockchain
 }
 
 export const getSummaryFundsByProtocol = (data: any) => {
@@ -170,6 +185,9 @@ export const getSummaryFundsByProtocol = (data: any) => {
           ? SUMMARY_COLORS[index]
           : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
+    })
+    .filter((row: any) => {
+      return row.allocation >= 0.009
     })
 
   const filteredFundsByProtocolWithOthers = filteredFundsByProtocol.reduce(
