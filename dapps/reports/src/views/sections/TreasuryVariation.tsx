@@ -13,13 +13,13 @@ import Tooltip from '@mui/material/Tooltip'
 import * as React from 'react'
 
 interface TreasuryVariationProps {
-  rowsTreasuryVariation: any[]
-  rowsHistoricVariation: any[]
-  rowsTreasuryVariationForThePeriodDetail: any[]
+  treasuryVariationData: any[]
+  historicVariationData: any[]
+  treasuryVariationForThePeriodDetailData: any[]
 }
 
 const TreasuryVariation = (props: TreasuryVariationProps) => {
-  const { rowsTreasuryVariation, rowsHistoricVariation, rowsTreasuryVariationForThePeriodDetail } =
+  const { treasuryVariationData, historicVariationData, treasuryVariationForThePeriodDetailData } =
     props
 
   const { state } = useFilter()
@@ -65,15 +65,15 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
           filter={filter}
         >
           <TabPanel value={toggleType} index={0}>
-            {rowsTreasuryVariation.length > 0 ? (
-              <Waterfall data={rowsTreasuryVariation} barSize={150} />
+            {treasuryVariationData.length > 0 ? (
+              <Waterfall data={treasuryVariationData} barSize={150} />
             ) : (
               <EmptyData />
             )}
           </TabPanel>
           <TabPanel value={toggleType} index={1}>
-            {rowsHistoricVariation.length > 0 ? (
-              <Waterfall data={rowsHistoricVariation} barSize={150} />
+            {historicVariationData.length > 0 ? (
+              <Waterfall data={historicVariationData} barSize={150} />
             ) : (
               <EmptyData />
             )}
@@ -82,8 +82,8 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
       </AnimatePresenceWrapper>
       <AnimatePresenceWrapper>
         <PaperSection subTitle="Treasury variation for the period (detail)">
-          {rowsTreasuryVariationForThePeriodDetail.length > 0 ? (
-            <Waterfall data={rowsTreasuryVariationForThePeriodDetail} />
+          {treasuryVariationForThePeriodDetailData.length > 0 ? (
+            <Waterfall data={treasuryVariationForThePeriodDetailData} />
           ) : (
             <EmptyData />
           )}

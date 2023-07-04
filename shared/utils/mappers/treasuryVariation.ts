@@ -3,10 +3,10 @@ export const getTreasuryVariationForThePeriod = (data: any) => {
   return data
     .filter((row: any) => {
       return (
-        row.metric === 'total farming' ||
-        row.metric === 'non farming ops' ||
-        row.metric === 'usd initial balance & UR' ||
-        row.metric === 'usd final balance'
+        row.metric_code === 'm07' ||
+        row.metric_code === 'm08' ||
+        row.metric_code === 'm09' ||
+        row.metric_code === 'm10'
       )
     })
     .reduce((acc: any, obj: any): { funds: number; value: string; key: number }[] => {
@@ -19,13 +19,14 @@ export const getTreasuryVariationForThePeriod = (data: any) => {
           ? { value: 'NonFarming Results', key: 2 }
           : metricCode === 'm09'
           ? { value: 'Farming Results', key: 3 }
-          : metricCode === 'm06' // TODO should be m08 ? URI
+          : metricCode === 'm08'
           ? { value: 'Final Balance', key: 4 }
           : { value: metric, key: 5 }
 
       if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
 
-      acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + (obj['metric_value'] ?? 0)
+      const value = obj['metric_value'] ? obj['metric_value'] : 0
+      acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + value
       acc[metricKey.key - 1] = {
         ...acc[metricKey.key - 1],
         ...metricKey

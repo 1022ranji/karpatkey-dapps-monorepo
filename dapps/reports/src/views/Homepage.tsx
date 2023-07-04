@@ -23,9 +23,9 @@ const HomepageContent = (props: ReportProps) => {
     fundsByProtocol,
     balanceOverviewType,
     balanceOverviewBlockchain,
-    rowsTreasuryVariation,
-    rowsHistoricVariation,
-    rowsTreasuryVariationForThePeriodDetail,
+    treasuryVariationData,
+    historicVariationData,
+    treasuryVariationForThePeriodDetailData,
     totalFarmingResultsFarmSwaps,
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
@@ -48,6 +48,12 @@ const HomepageContent = (props: ReportProps) => {
     farmingResultsDetailsByProtocol
   }
 
+  const treasuryVariationProps = {
+    treasuryVariationData,
+    historicVariationData,
+    treasuryVariationForThePeriodDetailData
+  }
+
   return (
     <BoxContainerWrapper>
       <Hero />
@@ -64,11 +70,7 @@ const HomepageContent = (props: ReportProps) => {
         balanceOverviewType={balanceOverviewType}
         balanceOverviewBlockchain={balanceOverviewBlockchain}
       />
-      <TreasuryVariation
-        rowsTreasuryVariation={rowsTreasuryVariation}
-        rowsHistoricVariation={rowsHistoricVariation}
-        rowsTreasuryVariationForThePeriodDetail={rowsTreasuryVariationForThePeriodDetail}
-      />
+      <TreasuryVariation {...treasuryVariationProps} />
       <FarmingFunds {...farmingFundsResultsProps} />
       <TokenDetails
         tokenDetails={tokenDetails}
