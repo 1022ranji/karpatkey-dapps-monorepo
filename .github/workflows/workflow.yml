@@ -56,3 +56,13 @@ jobs:
           file: ./Dockerfile
           build-args: |
             "SSH_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}"
+
+  update-deployment:
+    needs: docker
+    runs-on: self-hosted
+    timeout-minutes: 10
+    steps:
+    - uses: tale/kubectl-action@v1
+      with:
+        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+    - run: kubectl delete pod -n karpatkey-dapps-monorepo -l app=karpatkey-dapps-monorepo --force
