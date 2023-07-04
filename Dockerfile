@@ -1,4 +1,5 @@
-FROM node:lts-alpine as runner
+
+FROM node:lts-alpine as builder
 
 RUN apk update && \
     apk add git && \
@@ -7,22 +8,21 @@ RUN apk update && \
 
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /app/package.json
-
-COPY yarn.lock /app/yarn.lock
+COPY . .
 
 RUN yarn install
 
-# add app
-COPY . .
+# Production image
+FROM node:lts-alpine
 
-# expose port
+WORKDIR /app
+
+# Copy built files from the builder stage for reports app
+COPY --from=builder ./app/ ./
+
+# Expose the necessary ports
 EXPOSE 3000
 EXPOSE 3001
 
-# start app
-CMD yarn dev
+# Start the reports app
+CMD ["yarn", "dev"]
