@@ -37,14 +37,18 @@ const Summary = (props: SummaryProps) => {
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
-        <BoxWrapperRow id="summary" gap={4} sx={{ justifyContent: 'space-between' }}>
+        <BoxWrapperRow id="summary" gap={8} sx={{ justifyContent: 'space-between' }}>
           <DynamicInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
           <DynamicInfoCard
             title="Capital utilization"
             value={formatPercentage(capitalUtilization)}
           />
           <DynamicInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
-          <DynamicInfoCard title="Global ROI" value={formatPercentage(globalROI)} />
+          <DynamicInfoCard
+            title="Global ROI"
+            value={formatPercentage(globalROI)}
+            helpInfo="This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1."
+          />
         </BoxWrapperRow>
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <DynamicPieChart
