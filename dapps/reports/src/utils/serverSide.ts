@@ -13,6 +13,7 @@ import {
 import {
   getCapitalUtilization,
   getFarmingResults,
+  getGlobalROI,
   getSummaryFundsByBlockchain,
   getSummaryFundsByProtocol,
   getSummaryFundsByTokenCategory,
@@ -120,6 +121,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const totalFunds = getTotalFunds(variationMetricsDetailFiltered)
   const capitalUtilization = getCapitalUtilization(financialMetricsFiltered)
   const farmingResults = getFarmingResults(financialMetricsFiltered)
+  const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
 
   // #### Balance Overview block ####
   // Funds by token category / Type
@@ -164,6 +166,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     totalFunds,
     capitalUtilization,
     farmingResults,
+    globalROI,
     fundsByTokenCategory,
     fundsByType,
     fundsByBlockchain,

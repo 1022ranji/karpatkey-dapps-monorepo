@@ -14,6 +14,7 @@ const DynamicInfoCard = dynamic(() => import('@karpatkey-monorepo/shared/compone
 interface SummaryProps {
   totalFunds: number
   capitalUtilization: number
+  globalROI: number
   farmingResults: number
   fundsByTokenCategory: any[]
   fundsByType: any[]
@@ -25,6 +26,7 @@ const Summary = (props: SummaryProps) => {
   const {
     totalFunds,
     capitalUtilization,
+    globalROI,
     farmingResults,
     fundsByTokenCategory,
     fundsByType,
@@ -42,7 +44,7 @@ const Summary = (props: SummaryProps) => {
             value={formatPercentage(capitalUtilization)}
           />
           <DynamicInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
-          <DynamicInfoCard title="Global ROI" value={formatPercentage(0)} />
+          <DynamicInfoCard title="Global ROI" value={formatPercentage(globalROI)} />
         </BoxWrapperRow>
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <DynamicPieChart
