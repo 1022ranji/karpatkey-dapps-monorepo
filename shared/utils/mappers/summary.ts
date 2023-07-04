@@ -243,3 +243,11 @@ export const getFarmingResults = (data: any) => {
     return acc
   }, 0)
 }
+
+export const getGlobalROI = (data: any) => {
+  return data.reduce((acc: any, obj: any): number => {
+    const value = obj['metric_code'] === 'm02' ? obj['metric_value'] : 0
+    acc = acc + value
+    return acc
+  }, 0)
+}
