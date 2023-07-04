@@ -15,9 +15,9 @@ export type ReportData = {
   fundsByProtocol: any[]
   balanceOverviewType: any[]
   balanceOverviewBlockchain: any[]
-  rowsTreasuryVariation: any[]
-  rowsHistoricVariation: any[]
-  rowsTreasuryVariationForThePeriodDetail: any[]
+  treasuryVariationData: any[]
+  historicVariationData: any[]
+  treasuryVariationForThePeriodDetailData: any[]
   totalFarmingResultsFarmSwaps: number
   farmingFundsByProtocol: any[]
   farmingResultsDetailsByProtocol: any[]

@@ -130,13 +130,13 @@ export const getCommonServerSideProps = async (params: Filter) => {
 
   // #### Treasury variation ####
   // For the period
-  const rowsTreasuryVariation = getTreasuryVariationForThePeriod(financialMetricsFiltered)
+  const treasuryVariationData = getTreasuryVariationForThePeriod(financialMetricsFiltered)
 
   // In this year
-  const rowsHistoricVariation = getTreasuryVariationHistory(historicVariationFiltered)
+  const historicVariationData = getTreasuryVariationHistory(historicVariationFiltered)
 
   // For the period, detail
-  const rowsTreasuryVariationForThePeriodDetail =
+  const treasuryVariationForThePeriodDetailData =
     getTreasuryVariationForThePeriodDetails(financialMetricsFiltered)
 
   // #### Farming Funds / Results
@@ -170,9 +170,9 @@ export const getCommonServerSideProps = async (params: Filter) => {
     fundsByProtocol,
     balanceOverviewType,
     balanceOverviewBlockchain,
-    rowsTreasuryVariation,
-    rowsHistoricVariation,
-    rowsTreasuryVariationForThePeriodDetail,
+    treasuryVariationData,
+    historicVariationData,
+    treasuryVariationForThePeriodDetailData,
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
     totalFarmingResultsFarmSwaps,
