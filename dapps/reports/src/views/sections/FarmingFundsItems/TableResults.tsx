@@ -116,7 +116,7 @@ const TableResults = (props: TableResultsProps) => {
               )}
               <TableRow>
                 <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                  Grand total
+                  Total
                 </TableFooterCellCustom>
                 <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                   {' '}
