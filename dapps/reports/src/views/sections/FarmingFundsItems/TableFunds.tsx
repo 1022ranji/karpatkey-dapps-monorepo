@@ -7,13 +7,20 @@ import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/T
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material'
 import * as React from 'react'
 
 interface TableFundsProps {
   funds: any
   totals: any
 }
+
+const BoxWrapper = styled(BoxWrapperColumn)({
+  minWidth: 'max-content',
+  width: '125px',
+  maxWidth: '100%',
+  alignItems: 'flex-end'
+})
 
 const TableFunds = (props: TableFundsProps) => {
   const { funds, totals } = props
@@ -68,19 +75,12 @@ const TableFunds = (props: TableFundsProps) => {
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperColumn
-                          sx={{
-                            minWidth: 'max-content',
-                            width: '125px',
-                            maxWidth: '100%',
-                            alignItems: 'flex-end'
-                          }}
-                        >
+                        <BoxWrapper>
                           {formatCurrency(Math.round(row.funds || 0))}
                           <CustomTypography variant="tableCellSubData">
                             {formatPercentage(row.allocation / 100)}
                           </CustomTypography>
-                        </BoxWrapperColumn>
+                        </BoxWrapper>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         {formatCurrency(Math.round(row.unclaimed || 0))}
@@ -131,16 +131,7 @@ const TableFunds = (props: TableFundsProps) => {
                     Total
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    <BoxWrapperColumn
-                      sx={{
-                        minWidth: 'max-content',
-                        width: '125px',
-                        maxWidth: '100%',
-                        alignItems: 'flex-end'
-                      }}
-                    >
-                      {formatCurrency(Math.round(totals?.fundsTotal || 0))}
-                    </BoxWrapperColumn>
+                    <BoxWrapper>{formatCurrency(Math.round(totals?.fundsTotal || 0))}</BoxWrapper>
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                     {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
