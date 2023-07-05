@@ -12,7 +12,7 @@ interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
 }
 
-const FundsContainer = (props: FundsByProtocolContainerProps) => {
+const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
   const { fundsByProtocol } = props
 
   return (
@@ -41,4 +41,4 @@ const FundsContainer = (props: FundsByProtocolContainerProps) => {
   )
 }
 
-export default FundsContainer
+export default FundsByProtocolContainer
