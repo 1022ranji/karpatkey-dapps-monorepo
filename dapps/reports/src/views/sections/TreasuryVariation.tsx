@@ -6,7 +6,7 @@ import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
 import { FILTER_DAO, MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import { getDAO } from '@karpatkey-monorepo/shared/utils'
-import HelpIcon from '@mui/icons-material/Help'
+import HelpCenterIcon from '@mui/icons-material/HelpCenter'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Tooltip from '@mui/material/Tooltip'
@@ -49,7 +49,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
       <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
         Year to period
         <Tooltip title={helpText} sx={{ ml: 1 }}>
-          <HelpIcon />
+          <HelpCenterIcon />
         </Tooltip>
       </ToggleButton>
     </ToggleButtonGroup>
@@ -62,6 +62,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
           id="Treasury variation"
           title="Treasury variation"
           subTitle="Treasury variation summary"
+          helpInfo="USD balance variation for the period (also year to period), results separated into Non Farming and Farming Results."
           filter={filter}
         >
           <TabPanel value={toggleType} index={0}>

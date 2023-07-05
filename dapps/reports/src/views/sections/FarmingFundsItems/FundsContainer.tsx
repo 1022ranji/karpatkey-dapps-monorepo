@@ -136,7 +136,8 @@ const FundsContainer = (props: FundsContainerProps) => {
     <PaperSection
       id="Farming funds and results"
       title="Farming funds and results"
-      subTitle={'Farming funds/results by protocol'}
+      subTitle="Farming funds/results by protocol"
+      helpInfo="Farming funds, % allocation and results per position.  Detail by rewards and fees/rebasing/pool token variation. Swap results."
       filter={filter}
     >
       {filteredFunds.length === 0 && !isFilterActive ? (
