@@ -19,7 +19,6 @@ interface SummaryProps {
   fundsByTokenCategory: any[]
   fundsByType: any[]
   fundsByBlockchain: any[]
-  fundsByProtocol: any[]
 }
 
 const Summary = (props: SummaryProps) => {
@@ -30,8 +29,7 @@ const Summary = (props: SummaryProps) => {
     farmingResults,
     fundsByTokenCategory,
     fundsByType,
-    fundsByBlockchain,
-    fundsByProtocol
+    fundsByBlockchain
   } = props
 
   return (
@@ -45,7 +43,7 @@ const Summary = (props: SummaryProps) => {
           />
           <DynamicInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
           <DynamicInfoCard
-            title="Global APY"
+            title="APY"
             value={formatPercentage(globalROI)}
             helpInfo="This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1."
           />
@@ -67,20 +65,10 @@ const Summary = (props: SummaryProps) => {
             width={450}
             height={400}
           />
-        </BoxWrapperRow>
-        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <DynamicPieChart
             data={fundsByType}
             title="Total funds by type"
             dataKey="funds"
-            showLegend={false}
-            width={450}
-            height={400}
-          />
-          <DynamicPieChart
-            data={fundsByProtocol}
-            title="Farming funds by protocol"
-            dataKey="allocation"
             showLegend={false}
             width={450}
             height={400}

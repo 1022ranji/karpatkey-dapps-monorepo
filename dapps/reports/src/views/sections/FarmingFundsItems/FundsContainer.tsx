@@ -135,9 +135,7 @@ const FundsContainer = (props: FundsContainerProps) => {
   return (
     <PaperSection
       id="Farming funds and results"
-      title="Farming funds and results"
       subTitle="Farming funds/results by position"
-      helpInfo="Farming funds, % allocation and results per position.  Detail by rewards and fees/rebasing/pool token variation. Swap results."
       filter={filter}
     >
       {filteredFunds.length === 0 && !isFilterActive ? (
