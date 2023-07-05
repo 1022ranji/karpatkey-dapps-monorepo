@@ -46,7 +46,8 @@ const HomepageContent = (props: ReportProps) => {
   const farmingFundsResultsProps = {
     totalFarmingResultsFarmSwaps,
     farmingFundsByProtocol,
-    farmingResultsDetailsByProtocol
+    farmingResultsDetailsByProtocol,
+    fundsByProtocol
   }
 
   const treasuryVariationProps = {
@@ -66,7 +67,6 @@ const HomepageContent = (props: ReportProps) => {
         fundsByTokenCategory={fundsByTokenCategory}
         fundsByType={fundsByType}
         fundsByBlockchain={fundsByBlockchain}
-        fundsByProtocol={fundsByProtocol}
       />
       <BalanceOverview
         balanceOverviewType={balanceOverviewType}

@@ -1,4 +1,5 @@
 import FundsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsContainer'
+import FundsByProtocolContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsByProtocolContainer'
 import ResultsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/ResultsContainer'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
@@ -10,17 +11,22 @@ interface FarmingFundsProps {
   totalFarmingResultsFarmSwaps: number
   farmingFundsByProtocol: any[]
   farmingResultsDetailsByProtocol: any[]
+  fundsByProtocol: any[]
 }
 
 const FarmingFunds = (props: FarmingFundsProps) => {
   const {
     farmingFundsByProtocol: funds,
     farmingResultsDetailsByProtocol: fundsDetails,
-    totalFarmingResultsFarmSwaps: totalFarmSwaps
+    totalFarmingResultsFarmSwaps: totalFarmSwaps,
+    fundsByProtocol
   } = props
 
   return (
     <>
+      <AnimatePresenceWrapper>
+        <FundsByProtocolContainer {...{ fundsByProtocol }} />
+      </AnimatePresenceWrapper>
       <AnimatePresenceWrapper>
         <FundsContainer {...{ funds }} />
       </AnimatePresenceWrapper>
