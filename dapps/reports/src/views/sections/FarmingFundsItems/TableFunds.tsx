@@ -127,14 +127,20 @@ const TableFunds = (props: TableFundsProps) => {
                 )}
 
                 <TableRow>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  <TableFooterCellCustom colSpan={2} align="left">
                     Total
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {' '}
-                  </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(Math.round(totals?.fundsTotal || 0))}
+                    <BoxWrapperColumn
+                      sx={{
+                        minWidth: 'max-content',
+                        width: '125px',
+                        maxWidth: '100%',
+                        alignItems: 'flex-end'
+                      }}
+                    >
+                      {formatCurrency(Math.round(totals?.fundsTotal || 0))}
+                    </BoxWrapperColumn>
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                     {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
