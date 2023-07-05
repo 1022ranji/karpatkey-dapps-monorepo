@@ -31,7 +31,28 @@ const Welcome = () => {
       <CustomTypography variant="h1" textAlign="center">
         View our DAO treasury reports
       </CustomTypography>
-      <CustomTypography variant="h3" textAlign="center">
+      <CustomTypography
+        textAlign="center"
+        sx={{
+          fontFamily: 'IBM Plex Mono',
+          fontSize: '30px',
+          lineHeight: '28px',
+          fontWeight: '300',
+          fontStyle: 'normal'
+        }}
+      >
+        Desktop site, Mobile coming soon
+      </CustomTypography>
+      <CustomTypography
+        textAlign="center"
+        sx={{
+          fontFamily: 'IBM Plex Mono',
+          fontSize: '24px',
+          lineHeight: '28px',
+          fontWeight: '300',
+          fontStyle: 'normal'
+        }}
+      >
         Select filters above
       </CustomTypography>
       <Box
