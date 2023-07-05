@@ -76,17 +76,17 @@ const TableFunds = (props: TableFundsProps) => {
                             alignItems: 'flex-end'
                           }}
                         >
-                          {formatCurrency(row.funds || 0)}
+                          {formatCurrency(Math.round(row.funds || 0))}
                           <CustomTypography variant="tableCellSubData">
                             {formatPercentage(row.allocation / 100)}
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {formatCurrency(row.unclaimed) || 0}
+                        {formatCurrency(Math.round(row.unclaimed || 0))}
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {formatCurrency(row.results) || 0}
+                        {formatCurrency(Math.round(row.results || 0))}
                       </TableCellCustom>
                     </TableRow>
                   )
@@ -128,19 +128,19 @@ const TableFunds = (props: TableFundsProps) => {
 
                 <TableRow>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    Grand total
+                    Total
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                     {' '}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(totals?.fundsTotal || 0)}
+                    {formatCurrency(Math.round(totals?.fundsTotal || 0))}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(totals?.unclaimedTotal || 0)}
+                    {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(totals?.resultsTotal || 0)}
+                    {formatCurrency(Math.round(totals?.resultsTotal || 0))}
                   </TableFooterCellCustom>
                 </TableRow>
               </>

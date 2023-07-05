@@ -14,7 +14,7 @@ type TableBlockchainProps = {
 const TableBlockchain = (props: TableBlockchainProps) => {
   const { balanceOverviewBlockchain = [] } = props
 
-  const columnsSorted = balanceOverviewBlockchain
+  const balanceOverviewBlockchainSorted = balanceOverviewBlockchain
     .reduce((acc: any, cur: any) => {
       if (!acc.includes(cur.column)) {
         acc.push(cur.column)
@@ -23,96 +23,105 @@ const TableBlockchain = (props: TableBlockchainProps) => {
     }, [])
     .sort((a: any, b: any) => a.localeCompare(b))
 
-  const rowsFlatByColumns = balanceOverviewBlockchain.reduce((acc: any, cur: any) => {
-    acc[cur.row] = acc[cur.row] || {}
-    acc[cur.row][cur.column] = cur.funds
-    return acc
-  }, {})
+  const balanceOverviewBlockchainFlattened = balanceOverviewBlockchain.reduce(
+    (acc: any, cur: any) => {
+      const category = cur.row
+      const blockchain = cur.column
+      const itemFound = acc.find((item: any) => item.category === cur.row)
 
-  let total = 0
+      if (itemFound) {
+        itemFound[blockchain] = cur?.funds ?? 0
+        itemFound.total += cur?.funds ?? 0
+        return acc
+      }
 
-  const rowGrandTotals = Object.keys(rowsFlatByColumns).reduce((acc: any, cur: any) => {
-    Object.keys(rowsFlatByColumns[cur]).forEach((column: any) => {
-      acc[column] = acc[column] || 0
-      acc[column] += rowsFlatByColumns[cur][column]
+      acc.push({
+        category,
+        [blockchain]: cur?.funds ?? 0,
+        total: cur?.funds ?? 0
+      })
+
+      return acc
+    },
+    []
+  )
+
+  const balanceOverviewBlockchainFlattenedAndSortedByTotal =
+    balanceOverviewBlockchainFlattened.sort((a: any, b: any) => b.total - a.total)
+
+  const totals = balanceOverviewBlockchainFlattenedAndSortedByTotal.reduce((acc: any, cur: any) => {
+    Object.keys(cur).forEach((column: any) => {
+      if (column !== 'category') {
+        acc[column] = acc[column] || 0
+        acc[column] += cur[column]
+      }
     })
     return acc
   }, {})
+
+  const columnWidthPercentage = 100 / ((balanceOverviewBlockchainSorted?.length ?? 0) + 2) + '%'
 
   return (
     <TableContainer component={Box}>
       <Table sx={{ width: '100%' }}>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: '25%' }} align="left">
-              Token Category
+            <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
+              Token category
             </TableHeadCellCustom>
-            {columnsSorted.map((blockchainName: any, index: number) => (
-              <TableHeadCellCustom
-                key={index}
-                sx={{ width: `${50 / columnsSorted.length}%` }}
-                align="left"
-              >
+            {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => (
+              <TableHeadCellCustom key={index} sx={{ width: columnWidthPercentage }} align="left">
                 {blockchainName}
               </TableHeadCellCustom>
             ))}
-            <TableHeadCellCustom sx={{ width: '25%' }} align="left">
-              Grand total
+            <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
+              Total
             </TableHeadCellCustom>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(rowsFlatByColumns).map((category: any, index: number) => {
-            let rowTotal = 0
+          {balanceOverviewBlockchainFlattenedAndSortedByTotal.map((item: any, index: number) => {
+            const { category, total = 0 } = item
             return (
-              <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCellCustom sx={{ width: '25%' }} align="left">
+              <TableRow key={index}>
+                <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
                   {category}
                 </TableCellCustom>
-                {columnsSorted.map((blockchainName: any, index: number) => {
-                  rowTotal += rowsFlatByColumns[category][blockchainName] || 0
+                {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => {
+                  const value = item[blockchainName] ?? 0
                   return (
-                    <TableHeadCellCustom
-                      key={index}
-                      sx={{ width: `${50 / columnsSorted.length}%` }}
-                      align="left"
-                    >
-                      {formatCurrency(rowsFlatByColumns[category][blockchainName] || 0)}
-                    </TableHeadCellCustom>
+                    <TableCellCustom key={index} sx={{ width: columnWidthPercentage }} align="left">
+                      {formatCurrency(Math.round(value))}
+                    </TableCellCustom>
                   )
                 })}
-                <TableCellCustom sx={{ width: '25%' }} align="left">
-                  {formatCurrency(rowTotal, 0)}
+                <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
+                  {formatCurrency(Math.round(total || 0))}
                 </TableCellCustom>
               </TableRow>
             )
           })}
-
           <TableRow>
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
+            <TableEmptyCellCustom colSpan={2 + balanceOverviewBlockchainSorted?.length ?? 0} />
           </TableRow>
           <TableRow>
-            <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              Grand total
+            <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
+              Total
             </TableFooterCellCustom>
-            {columnsSorted.map((blockchainName: any, index: number) => {
-              total += rowGrandTotals[blockchainName]
+            {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => {
+              const total = totals[blockchainName] ?? 0
               return (
                 <TableFooterCellCustom
                   key={index}
-                  sx={{ width: `${50 / Object.keys(rowGrandTotals).length}%` }}
+                  sx={{ width: columnWidthPercentage }}
                   align="left"
                 >
-                  {formatCurrency(rowGrandTotals[blockchainName])}
+                  {formatCurrency(Math.round(total))}
                 </TableFooterCellCustom>
               )
             })}
-            <TableFooterCellCustom sx={{ width: '25%' }} align="left">
-              {formatCurrency(total || 0)}
+            <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
+              {formatCurrency(totals['total'] || 0)}
             </TableFooterCellCustom>
           </TableRow>
         </TableBody>
