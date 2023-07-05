@@ -4,7 +4,7 @@ import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { slugify } from '@karpatkey-monorepo/shared/utils'
-import HelpCenterIcon from '@mui/icons-material/HelpCenter'
+import InfoIcon from '@mui/icons-material/Info'
 import { Divider } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import * as React from 'react'
@@ -38,7 +38,7 @@ const PaperSection = (props: PaperSectionProps) => {
                 }
                 sx={{ ml: 1, cursor: 'pointer' }}
               >
-                <HelpCenterIcon sx={{ fontSize: 40 }} />
+                <InfoIcon sx={{ fontSize: 40, cursor: 'pointer' }} />
               </Tooltip>
             ) : null}
           </BoxWrapperRow>

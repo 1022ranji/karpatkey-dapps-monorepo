@@ -2,7 +2,7 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import Paper from '@karpatkey-monorepo/shared/components/Paper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import HelpCenterIcon from '@mui/icons-material/HelpCenter'
+import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
 import React from 'react'
 
@@ -32,7 +32,7 @@ const InfoCard = ({ title, value, helpInfo }: InfoCardProps) => {
               }
               sx={{ ml: 1, cursor: 'pointer' }}
             >
-              <HelpCenterIcon sx={{ fontSize: 24 }} />
+              <InfoIcon sx={{ fontSize: 24, cursor: 'pointer' }} />
             </Tooltip>
           ) : null}
         </BoxWrapperRow>
