@@ -1,6 +1,8 @@
 import numbro from 'numbro'
 
 export const formatCurrency = (value: number, mantissa = 0) => {
+  if (value === 0) return '-'
+
   return numbro(value).formatCurrency({
     spaceSeparated: false,
     mantissa,

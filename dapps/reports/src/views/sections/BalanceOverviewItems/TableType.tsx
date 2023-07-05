@@ -31,7 +31,7 @@ const TableType = (props: TableTypeProps) => {
               Wallet
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-              Grand total
+              Total
             </TableHeadCellCustom>
           </TableRow>
         </TableHead>
@@ -49,42 +49,38 @@ const TableType = (props: TableTypeProps) => {
                   {row['Token Category']}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(row['Farming Funds'] || 0)}
+                  {formatCurrency(Math.round(row['Farming Funds'] || 0))}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(row['Unclaimed Rewards'] || 0)}
+                  {formatCurrency(Math.round(row['Unclaimed Rewards'] || 0))}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(row['Wallet'] || 0)}
+                  {formatCurrency(Math.round(row['Wallet'] || 0))}
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(row['Total'] || 0)}
+                  {formatCurrency(Math.round(row['Total'] || 0))}
                 </TableCellCustom>
               </TableRow>
             )
           })}
           <TableRow>
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
-            <TableEmptyCellCustom />
+            <TableEmptyCellCustom colSpan={5} />
           </TableRow>
           <TableRow>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              Grand total
+              Total
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {formatCurrency(dataFooterType['Farming Funds'] || 0)}
+              {formatCurrency(Math.round(dataFooterType['Farming Funds'] || 0))}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {formatCurrency(dataFooterType['Unclaimed Rewards'] || 0)}
+              {formatCurrency(Math.round(dataFooterType['Unclaimed Rewards'] || 0))}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {formatCurrency(dataFooterType['Wallet'] || 0)}
+              {formatCurrency(Math.round(dataFooterType['Wallet'] || 0))}
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-              {formatCurrency(dataFooterType['Total'] || 0)}
+              {formatCurrency(Math.round(dataFooterType['Total'] || 0))}
             </TableFooterCellCustom>
           </TableRow>
         </TableBody>

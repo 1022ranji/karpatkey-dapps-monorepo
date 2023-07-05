@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (PASSWORD_PROTECT === password) {
     const cookie = serialize('login', 'true', {
       path: '/',
+      expires: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
       httpOnly: true
     })
     res.setHeader('Set-Cookie', cookie)

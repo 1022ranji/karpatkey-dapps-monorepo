@@ -41,11 +41,11 @@ const Summary = (props: SummaryProps) => {
           <DynamicInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
           <DynamicInfoCard
             title="Capital utilization"
-            value={formatPercentage(capitalUtilization)}
+            value={formatPercentage(capitalUtilization, 1)}
           />
           <DynamicInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
           <DynamicInfoCard
-            title="Global ROI"
+            title="Global APY"
             value={formatPercentage(globalROI)}
             helpInfo="This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1."
           />
