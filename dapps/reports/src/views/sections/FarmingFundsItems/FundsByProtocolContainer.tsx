@@ -29,9 +29,8 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
           <DynamicPieChart
             data={fundsByProtocol}
             dataKey="allocation"
-            showLegend={false}
             width={450}
-            height={400}
+            height={450}
             innerRadius={80}
             outerRadius={150}
           />

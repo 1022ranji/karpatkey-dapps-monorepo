@@ -86,6 +86,9 @@ export const getSummaryFundsByType = (data: any) => {
       }
     })
     .sort((a: any, b: any) => b.funds - a.funds)
+    .filter((row: any) => {
+      return row.allocation >= 0.009
+    })
     .map((row: any, index: number) => {
       return {
         ...row,
@@ -93,9 +96,6 @@ export const getSummaryFundsByType = (data: any) => {
           ? SUMMARY_COLORS[index]
           : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0]
       }
-    })
-    .filter((row: any) => {
-      return row.allocation >= 0.009
     })
 
   return fundsByType
