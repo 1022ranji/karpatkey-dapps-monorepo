@@ -21,13 +21,13 @@ const CardList = (props: CardListProps) => {
     } else {
       controls.stop()
     }
-  }, [inView, controls])
+  }, [inView, controls, tokenDetailByPosition])
 
   const containerVariants: Variants = {
     hidden: {},
     visible: {
       transition: {
-        delayChildren: 0.3,
+        delayChildren: 0.2,
         staggerChildren: 0.05
       }
     }
@@ -43,7 +43,7 @@ const CardList = (props: CardListProps) => {
       opacity: 1,
       transition: {
         type: 'ease-in-out',
-        delay: 0.3 * index
+        delay: 0.15 * index
       }
     })
   }
