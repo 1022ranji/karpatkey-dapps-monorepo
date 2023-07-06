@@ -1,6 +1,6 @@
 export const getTreasuryVariationForThePeriod = (data: any) => {
   const valuesForThePeriod: any[] = []
-  return data
+  const rows = data
     .filter((row: any) => {
       return (
         row.metric_code === 'm07' ||
@@ -50,6 +50,22 @@ export const getTreasuryVariationForThePeriod = (data: any) => {
             : valuesForThePeriod[index - 1].pv + valuesForThePeriod[index - 1].uv
       }
     })
+  if (rows.length > 0) {
+    const total = rows.reduce(
+      (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+      0
+    )
+
+    rows.push({
+      funds: total,
+      value: 'Final Balance',
+      key: 4,
+      uv: total,
+      pv: 0
+    })
+  }
+
+  return rows
 }
 
 export const getTreasuryVariationHistory = (data: any) => {
@@ -99,12 +115,12 @@ export const getTreasuryVariationHistory = (data: any) => {
       }
     })
 
-  const total = rows.reduce(
-    (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
-    0
-  )
-
   if (rows.length > 0) {
+    const total = rows.reduce(
+      (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+      0
+    )
+
     rows.push({
       funds: total,
       value: 'Final Balance',
@@ -193,12 +209,12 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
       }
     })
 
-  const total = rows.reduce(
-    (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
-    0
-  )
-
   if (rows.length > 0) {
+    const total = rows.reduce(
+      (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+      0
+    )
+
     rows.push({
       funds: total,
       value: 'Final Balance',
