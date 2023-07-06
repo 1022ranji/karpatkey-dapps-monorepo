@@ -77,9 +77,11 @@ const TableFunds = (props: TableFundsProps) => {
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapper>
                           {formatCurrency(Math.round(row.funds || 0))}
-                          <CustomTypography variant="tableCellSubData">
-                            {formatPercentage(row.allocation / 100)}
-                          </CustomTypography>
+                          {row?.allocation > 0 ? (
+                            <CustomTypography variant="tableCellSubData">
+                              {formatPercentage(row.allocation / 100)}
+                            </CustomTypography>
+                          ) : null}
                         </BoxWrapper>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">

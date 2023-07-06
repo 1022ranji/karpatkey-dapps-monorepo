@@ -12,7 +12,7 @@ interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
 }
 
-const FundsContainer = (props: FundsByProtocolContainerProps) => {
+const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
   const { fundsByProtocol } = props
 
   return (
@@ -29,9 +29,8 @@ const FundsContainer = (props: FundsByProtocolContainerProps) => {
           <DynamicPieChart
             data={fundsByProtocol}
             dataKey="allocation"
-            showLegend={false}
-            width={450}
-            height={400}
+            width={550}
+            height={450}
             innerRadius={80}
             outerRadius={150}
           />
@@ -41,4 +40,4 @@ const FundsContainer = (props: FundsByProtocolContainerProps) => {
   )
 }
 
-export default FundsContainer
+export default FundsByProtocolContainer

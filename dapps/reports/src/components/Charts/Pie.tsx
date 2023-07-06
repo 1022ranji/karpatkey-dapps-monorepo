@@ -1,52 +1,72 @@
-import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { Box, BoxProps, List, ListItem } from '@mui/material'
+import { BoxProps } from '@mui/material'
 import numbro from 'numbro'
 import React from 'react'
-import { Cell, Curve, Pie, PieChart as PieRechart } from 'recharts'
+import { Cell, Pie, PieChart as PieRechart } from 'recharts'
+import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
 
 const RenderCustomizedLabel = (props: any) => {
-  const { cx, cy, midAngle, innerRadius, outerRadius, percent, label, showLegend = true } = props
+  const { cx, cy, midAngle, outerRadius, fontSize, index, percent, label } = props
+
   const RADIAN = Math.PI / 180
-  const radius = 25 + innerRadius + (outerRadius - innerRadius)
-  const x = cx + radius * Math.cos(-midAngle * RADIAN)
-  const y = cy + radius * Math.sin(-midAngle * RADIAN)
+  const sin = Math.sin(RADIAN * midAngle)
+  const cos = Math.cos(RADIAN * midAngle)
+  const startX = cx + outerRadius * cos
+  const startY = cy + outerRadius * -sin
+  const middleY = cy + (outerRadius + 50 * Math.abs(sin)) * -sin
+
+  let endX = startX + (cos >= 0 ? 1 : -1) * 30
+  let textAnchor = cos >= 0 ? 'start' : 'end'
+  const mirrorNeeded = midAngle > -270 && midAngle < -210 && percent < 0.04 && index % 2 === 1
+  if (mirrorNeeded) {
+    endX = startX + outerRadius * -cos * 2 + 100
+    textAnchor = 'start'
+  }
 
   const words = reduceSentenceByLengthInLines(label, 12)
-  const labels = +percent * 100 < 1 ? words.reverse() : words
+  const labels = +percent < 0.01 ? words.reverse() : words
 
   return (
     <g>
-      {!showLegend && labels.length > 0
-        ? labels.map((word: string, i: number) => (
-            <text
-              x={x}
-              y={+percent * 100 < 1 ? y - 15 * (i + 1) : y + 15 * (i + 1)}
-              key={i}
-              textAnchor={x > cx ? 'start' : 'end'}
-              dominantBaseline="central"
-              fontFamily={'IBM Plex Sans'}
-              fontSize={13}
-              fill="#222222"
-            >
-              {word}
-            </text>
-          ))
-        : null}
+      <path
+        d={`M${startX},${startY}L${startX},${middleY}L${endX},${middleY}`}
+        fill="none"
+        stroke="#000"
+        strokeWidth={1}
+      />
       <text
-        x={x}
-        y={y}
-        fill="#222222"
-        textAnchor={x > cx ? 'start' : 'end'}
+        x={endX + (cos >= 0 || mirrorNeeded ? 1 : -1) * 12}
+        y={middleY + fontSize / 2}
+        textAnchor={textAnchor}
         dominantBaseline="central"
         fontFamily={'IBM Plex Sans'}
-        fontSize={13}
+        fontSize={fontSize}
+        fill="#222222"
       >
         {numbro(percent).format({ output: 'percent', mantissa: 2 })}
       </text>
+      {labels &&
+        labels.length > 0 &&
+        labels.map((word: string, i: number) => (
+          <text
+            x={endX + (cos >= 0 || mirrorNeeded ? 1 : -1) * 12}
+            y={
+              +percent < 0.01
+                ? middleY + fontSize / 2 - (i + 1) * fontSize
+                : middleY + fontSize / 2 + (i + 1) * fontSize
+            }
+            key={i}
+            textAnchor={textAnchor}
+            dominantBaseline="central"
+            fontFamily={'IBM Plex Sans'}
+            fontSize={fontSize}
+            fill="#222222"
+          >
+            {word}
+          </text>
+        ))}
     </g>
   )
 }
@@ -56,34 +76,9 @@ export interface Point {
   y: number
 }
 
-type CustomizedLabelLineProps = { points?: Array<Point> }
-const RenderLabelLine = (props: CustomizedLabelLineProps) => {
-  return <Curve {...props} stroke="#222222" type="linear" className="recharts-pie-label-line" />
-}
-
-const RenderLegend = ({ data }: any) => {
-  return (
-    <List>
-      {data.map((entry: any, index: any) => {
-        return (
-          <ListItem key={index}>
-            <BoxWrapperRow gap={2}>
-              <Box sx={{ background: entry.color, height: 17, width: 25, maxWidth: 25 }} />
-              <CustomTypography variant="pieChartLegendTitle" sx={{ wordWrap: 'break-word' }}>
-                {entry.label}
-              </CustomTypography>
-            </BoxWrapperRow>
-          </ListItem>
-        )
-      })}
-    </List>
-  )
-}
-
 interface RenderPieChartProps {
   data: any
   dataKey: string
-  showLegend?: boolean
   width?: number
   height?: number
   innerRadius?: number
@@ -91,15 +86,15 @@ interface RenderPieChartProps {
 }
 
 const RenderPieChart = (props: RenderPieChartProps) => {
-  const {
-    data,
-    dataKey,
-    showLegend = true,
-    width = 420,
-    height = 360,
-    innerRadius = 50,
-    outerRadius = 120
-  } = props
+  const { data, dataKey, width = 420, height = 360, innerRadius = 50, outerRadius = 120 } = props
+
+  const isPaddingAngleNeeded = data.reduce((acc: number, curr: any) => {
+    if (curr.allocation < 0.03) {
+      return acc + 1
+    }
+    return acc
+  }, 0)
+
   return (
     <PieRechart width={width} height={height}>
       <Pie
@@ -108,13 +103,19 @@ const RenderPieChart = (props: RenderPieChartProps) => {
         cy="50%"
         innerRadius={innerRadius}
         outerRadius={outerRadius}
-        fill="#222222"
+        fontSize={12}
         dataKey={dataKey}
-        label={(props) => RenderCustomizedLabel({ ...props, showLegend })}
-        labelLine={RenderLabelLine}
+        label={RenderCustomizedLabel}
+        labelLine={false}
+        {...(isPaddingAngleNeeded > 1 ? { paddingAngle: 15 } : {})}
       >
         {data.map((entry: any, index: number) => (
-          <Cell style={{ outline: 'none' }} key={`cell-${index}`} fill={entry.color} />
+          <Cell
+            style={{ outline: 'none' }}
+            key={`cell-${index}`}
+            fill={entry.color}
+            stroke={entry.fill}
+          />
         ))}
       </Pie>
     </PieRechart>
@@ -142,8 +143,6 @@ export type PieChartProps = {
   }[]
   title?: string
   dataKey: string
-  showLegend?: boolean
-  alignLegend?: 'bottom' | 'right'
   width?: number
   height?: number
   innerRadius?: number
@@ -151,77 +150,9 @@ export type PieChartProps = {
 }
 
 const PieChart = (props: BoxProps & PieChartProps) => {
-  const {
-    data,
-    title,
-    dataKey,
-    alignLegend = 'bottom',
-    showLegend = true,
-    width,
-    height,
-    innerRadius,
-    outerRadius
-  } = props
+  const { data, title, dataKey, width, height, innerRadius, outerRadius } = props
 
-  const renderWithLegend =
-    alignLegend === 'bottom' ? (
-      <BoxWrapperColumn
-        gap={2}
-        sx={{
-          alignSelf: 'stretch',
-          justifyContent: 'flex-start',
-          minWidth: 'max-content',
-          width: '100%'
-        }}
-      >
-        {title ? <PieChartTitle title={title} /> : null}
-        {data.length > 0 ? (
-          <>
-            <RenderPieChart
-              data={data}
-              dataKey={dataKey}
-              width={width}
-              height={height}
-              innerRadius={innerRadius}
-              outerRadius={outerRadius}
-            />
-            <RenderLegend data={data} />
-          </>
-        ) : (
-          <EmptyData />
-        )}
-      </BoxWrapperColumn>
-    ) : (
-      <BoxWrapperRow
-        gap={15}
-        sx={{
-          justifyContent: 'flex-start',
-          alignSelf: 'stretch',
-          alignItems: 'center',
-          minWidth: 'max-content',
-          width: '66%'
-        }}
-      >
-        <BoxWrapperColumn width={'50%'} gap={2}>
-          {title ? <PieChartTitle title={title} /> : null}
-          {data.length > 0 ? (
-            <RenderPieChart
-              data={data}
-              dataKey={dataKey}
-              width={width}
-              height={height}
-              innerRadius={innerRadius}
-              outerRadius={outerRadius}
-            />
-          ) : (
-            <EmptyData />
-          )}
-        </BoxWrapperColumn>
-        {data.length > 0 ? <RenderLegend data={data} /> : null}
-      </BoxWrapperRow>
-    )
-
-  const renderWithoutLegend = (
+  return (
     <BoxWrapperColumn
       gap={2}
       sx={{
@@ -235,7 +166,6 @@ const PieChart = (props: BoxProps & PieChartProps) => {
         <RenderPieChart
           data={data}
           dataKey={dataKey}
-          showLegend={showLegend}
           width={width}
           height={height}
           innerRadius={innerRadius}
@@ -246,6 +176,5 @@ const PieChart = (props: BoxProps & PieChartProps) => {
       )}
     </BoxWrapperColumn>
   )
-  return <>{showLegend ? renderWithLegend : renderWithoutLegend}</>
 }
 export default PieChart

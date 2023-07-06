@@ -170,9 +170,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
           <DynamicPieChart
             data={filteredWalletTokenDetailForPieChartWithColorsAndOthers}
             dataKey="value"
-            showLegend={false}
-            width={450}
-            height={400}
+            width={550}
+            height={450}
             innerRadius={80}
             outerRadius={150}
           />

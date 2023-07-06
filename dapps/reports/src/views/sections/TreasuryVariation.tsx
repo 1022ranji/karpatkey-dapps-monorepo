@@ -28,9 +28,10 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
 
   const [toggleType, setToggleType] = React.useState(0)
 
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
-    const value = newToggleType !== null ? newToggleType : toggleType === 0 ? 1 : 0
-    setToggleType(value)
+  const handleToggleOnChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
+    if (newToggleType === null) return
+    if (newToggleType === toggleType) return
+    setToggleType(newToggleType)
   }
 
   const DAO_MONTH = MONTHS.find((month) => month.id === DAO?.sinceMonth)
@@ -40,7 +41,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
     <ToggleButtonGroup
       value={toggleType}
       exclusive
-      onChange={handleChange}
+      onChange={handleToggleOnChange}
       aria-label="Balance overview type"
     >
       <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>

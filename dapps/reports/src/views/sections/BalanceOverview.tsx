@@ -17,16 +17,17 @@ const BalanceOverview = (props: BalanceOverview) => {
 
   const [toggleType, setToggleType] = React.useState(1)
 
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
-    const value = newToggleType !== null ? newToggleType : toggleType === 0 ? 1 : 0
-    setToggleType(value)
+  const handleToggleOnChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
+    if (newToggleType === null) return
+    if (newToggleType === toggleType) return
+    setToggleType(newToggleType)
   }
 
   const Filter = (
     <ToggleButtonGroup
       value={toggleType}
       exclusive
-      onChange={handleChange}
+      onChange={handleToggleOnChange}
       aria-label="Balance overview type"
     >
       <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
