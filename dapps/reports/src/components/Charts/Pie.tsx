@@ -26,7 +26,7 @@ const RenderCustomizedLabel = (props: any) => {
   }
 
   const words = reduceSentenceByLengthInLines(label, 12)
-  const labels = +percent * 100 < 0.5 ? words.reverse() : words
+  const labels = +percent < 0.01 ? words.reverse() : words
 
   return (
     <g>
@@ -53,7 +53,7 @@ const RenderCustomizedLabel = (props: any) => {
           <text
             x={endX + (cos >= 0 || mirrorNeeded ? 1 : -1) * 12}
             y={
-              +percent * 100 < 0.5
+              +percent < 0.01
                 ? middleY + fontSize / 2 - (i + 1) * fontSize
                 : middleY + fontSize / 2 + (i + 1) * fontSize
             }
@@ -88,6 +88,13 @@ interface RenderPieChartProps {
 const RenderPieChart = (props: RenderPieChartProps) => {
   const { data, dataKey, width = 420, height = 360, innerRadius = 50, outerRadius = 120 } = props
 
+  const isPaddingAngleNeeded = data.reduce((acc: number, curr: any) => {
+    if (curr.allocation < 0.03) {
+      return acc + 1
+    }
+    return acc
+  }, 0)
+
   return (
     <PieRechart width={width} height={height}>
       <Pie
@@ -100,7 +107,7 @@ const RenderPieChart = (props: RenderPieChartProps) => {
         dataKey={dataKey}
         label={RenderCustomizedLabel}
         labelLine={false}
-        {...(data.length > 1 ? { paddingAngle: 10 } : {})}
+        {...(isPaddingAngleNeeded > 1 ? { paddingAngle: 15 } : {})}
       >
         {data.map((entry: any, index: number) => (
           <Cell
