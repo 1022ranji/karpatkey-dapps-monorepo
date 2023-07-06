@@ -97,10 +97,10 @@ const RenderPieChart = (props: RenderPieChartProps) => {
         innerRadius={innerRadius}
         outerRadius={outerRadius}
         fontSize={12}
-        paddingAngle={data.length > 1 ? 10 : 1}
         dataKey={dataKey}
         label={RenderCustomizedLabel}
         labelLine={false}
+        {...(data.length > 1 ? { paddingAngle: 10 } : {})}
       >
         {data.map((entry: any, index: number) => (
           <Cell
