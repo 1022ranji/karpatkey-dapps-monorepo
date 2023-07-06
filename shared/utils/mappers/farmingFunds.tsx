@@ -89,7 +89,7 @@ export const getFarmingResultsDetailsByProtocol = (data: any) => {
       const blockchain = obj['blockchain'].trim()
       const protocol = obj['protocol'].trim()
       const position = obj['lptoken_name'].trim()
-      const metric = obj['metric'].trim()
+      const metric_code = obj['metric_code'].trim()
 
       if (!acc[blockchain]) acc[blockchain] = {}
       if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
@@ -103,8 +103,8 @@ export const getFarmingResultsDetailsByProtocol = (data: any) => {
           position
         }
 
-      const rewards = metric === 'farming rewards' ? obj['metric_value'] : 0
-      const fees = metric === 'farming token variation' ? obj['metric_value'] : 0
+      const rewards = metric_code === 'm14' ? obj['metric_value'] : 0
+      const fees = metric_code === 'm15' ? obj['metric_value'] : 0
 
       acc[blockchain][protocol][position].rewards += rewards
       acc[blockchain][protocol][position].fees += fees
@@ -118,7 +118,9 @@ export const getFarmingResultsDetailsByProtocol = (data: any) => {
   for (const blockchain in rows) {
     for (const protocol in rows[blockchain]) {
       for (const position in rows[blockchain][protocol]) {
-        rowsFlat.push(rows[blockchain][protocol][position])
+        if (blockchain && protocol) {
+          rowsFlat.push(rows[blockchain][protocol][position])
+        }
       }
     }
   }
