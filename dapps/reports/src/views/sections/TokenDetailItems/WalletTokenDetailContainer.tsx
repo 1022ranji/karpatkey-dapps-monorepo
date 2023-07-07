@@ -137,29 +137,25 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
   )
 
   const filteredWalletTokenDetailForPieChartWithColorsAndOthers =
-    filteredWalletTokenDetailForPieChartWithColors
-      .reduce((result: any, currentValue: any) => {
-        if (currentValue.allocation * 100 > OTHERS_WALLET_LIMIT) {
-          result.push(currentValue)
+    filteredWalletTokenDetailForPieChartWithColors.reduce((result: any, currentValue: any) => {
+      if (currentValue.allocation * 100 > OTHERS_WALLET_LIMIT) {
+        result.push(currentValue)
+      } else {
+        const other = result.find((item: any) => item.label === 'Others')
+        if (other) {
+          other.value += currentValue.value
+          other.allocation += currentValue.allocation
         } else {
-          const other = result.find((item: any) => item.label === 'Others')
-          if (other) {
-            other.value += currentValue.value
-            other.allocation += currentValue.allocation
-          } else {
-            result.push({
-              allocation: currentValue.allocation,
-              color: currentValue.color,
-              label: 'Others',
-              value: currentValue.value
-            })
-          }
+          result.push({
+            allocation: currentValue.allocation,
+            color: currentValue.color,
+            label: 'Others',
+            value: currentValue.value
+          })
         }
-        return result
-      }, [])
-      .filter((row: any) => {
-        return row.allocation >= 0.009
-      })
+      }
+      return result
+    }, [])
 
   return (
     <PaperSection subTitle="Wallet token detail" filter={filter}>

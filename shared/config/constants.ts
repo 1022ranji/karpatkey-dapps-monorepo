@@ -257,3 +257,5 @@ export const MONTHS = [
   { label: 'November', id: 11 },
   { label: 'December', id: 12 }
 ]
+
+export const MIN_ALLOWED_ALLOCATION = 0.00009
