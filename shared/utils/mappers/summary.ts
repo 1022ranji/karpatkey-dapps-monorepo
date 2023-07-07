@@ -1,4 +1,7 @@
-import { OTHERS_SUMMARY_LIMIT } from '@karpatkey-monorepo/shared/config/constants'
+import {
+  MIN_ALLOWED_ALLOCATION,
+  OTHERS_SUMMARY_LIMIT
+} from '@karpatkey-monorepo/shared/config/constants'
 import { SUMMARY_COLORS } from '@karpatkey-monorepo/shared/config/theme'
 
 export const getSummaryFundsByTokenCategory = (data: any) => {
@@ -34,7 +37,7 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
     })
     .sort((a: any, b: any) => b.funds - a.funds)
     .filter((row: any) => {
-      return row.allocation >= 0.0009
+      return row.allocation >= MIN_ALLOWED_ALLOCATION
     })
     .map((row: any, index: number) => {
       return {
@@ -87,7 +90,7 @@ export const getSummaryFundsByType = (data: any) => {
     })
     .sort((a: any, b: any) => b.funds - a.funds)
     .filter((row: any) => {
-      return row.allocation >= 0.00009
+      return row.allocation >= MIN_ALLOWED_ALLOCATION
     })
     .map((row: any, index: number) => {
       return {
@@ -134,7 +137,7 @@ export const getSummaryFundsByBlockchain = (data: any) => {
     })
     .sort((a: any, b: any) => b.funds - a.funds)
     .filter((row: any) => {
-      return row.allocation >= 0.00009
+      return row.allocation >= MIN_ALLOWED_ALLOCATION
     })
     .map((row: any, index: number) => {
       return {
@@ -179,7 +182,7 @@ export const getSummaryFundsByProtocol = (data: any) => {
     })
     .sort((a: any, b: any) => b.funds - a.funds)
     .filter((row: any) => {
-      return row.allocation >= 0.00009
+      return row.allocation >= MIN_ALLOWED_ALLOCATION
     })
     .map((row: any, index: number) => {
       return {
