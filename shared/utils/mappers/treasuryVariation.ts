@@ -50,7 +50,9 @@ export const getTreasuryVariationForThePeriod = (data: any) => {
             : valuesForThePeriod[index - 1].pv + valuesForThePeriod[index - 1].uv
       }
     })
-  if (rows.length > 0) {
+
+  const haveValueFinalBalance = rows.find((row: any) => row.key === 4)
+  if (!haveValueFinalBalance) {
     const total = rows.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
       0
