@@ -4,6 +4,7 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 
 const DynamicPieChart = dynamic(
   () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie')
@@ -19,6 +20,7 @@ interface SummaryProps {
   fundsByTokenCategory: any[]
   fundsByType: any[]
   fundsByBlockchain: any[]
+  balanceOverviewType: any[]
 }
 
 const Summary = (props: SummaryProps) => {
@@ -29,8 +31,11 @@ const Summary = (props: SummaryProps) => {
     farmingResults,
     fundsByTokenCategory,
     fundsByType,
-    fundsByBlockchain
+    fundsByBlockchain,
+    balanceOverviewType
   } = props
+
+  const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
 
   return (
     <AnimatePresenceWrapper>
@@ -49,13 +54,24 @@ const Summary = (props: SummaryProps) => {
           />
         </BoxWrapperRow>
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-          <DynamicPieChart
-            data={fundsByTokenCategory}
-            title="Total funds by token category"
-            dataKey="funds"
-            width={450}
-            height={400}
-          />
+          <BoxWrapperColumn sx={{ alignItems: 'center' }} gap={4}>
+            <DynamicPieChart
+              data={fundsByTokenCategory}
+              title="Total funds by token category"
+              dataKey="funds"
+              width={450}
+              height={400}
+            />
+            {negativeTotalValue && (
+              <CustomTypography
+                variant={'body2'}
+                color="textSecondary"
+                sx={{ fontFamily: 'IBM Plex Sans', fontSize: 12, fontStyle: 'italic' }}
+              >
+                Negative balance = {formatCurrency(negativeTotalValue?.Total)}
+              </CustomTypography>
+            )}
+          </BoxWrapperColumn>
           <DynamicPieChart
             data={fundsByBlockchain}
             title="Total funds by blockchain"

@@ -52,7 +52,7 @@ export const getTreasuryVariationForThePeriod = (data: any) => {
     })
 
   const haveValueFinalBalance = rows.find((row: any) => row.key === 4)
-  if (!haveValueFinalBalance) {
+  if (!haveValueFinalBalance && rows.length > 0) {
     const total = rows.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
       0
