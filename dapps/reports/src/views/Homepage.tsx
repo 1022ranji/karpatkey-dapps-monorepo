@@ -67,6 +67,7 @@ const HomepageContent = (props: ReportProps) => {
         fundsByTokenCategory={fundsByTokenCategory}
         fundsByType={fundsByType}
         fundsByBlockchain={fundsByBlockchain}
+        balanceOverviewType={balanceOverviewType}
       />
       <BalanceOverview
         balanceOverviewType={balanceOverviewType}
