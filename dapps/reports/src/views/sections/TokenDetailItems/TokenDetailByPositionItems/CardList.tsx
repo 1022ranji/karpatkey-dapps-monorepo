@@ -64,6 +64,7 @@ const CardList = (props: CardListProps) => {
       }}
     >
       {tokenDetailByPosition.map((card: any, index: number) => {
+        console.log('card', card)
         return (
           <Box
             component={motion.div}

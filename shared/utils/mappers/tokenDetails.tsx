@@ -234,6 +234,10 @@ export const getTokenDetailByPosition = (data: any) => {
     if (!acc[blockchain][protocol][position][positionType][categorize])
       acc[blockchain][protocol][position][positionType][categorize] = {}
 
+    if (position === 'Vault GNO-A') {
+      console.log('obj', obj)
+    }
+
     acc[blockchain][protocol][position][positionType][categorize] = {
       tokenBalance: 0,
       usdValue: 0,
