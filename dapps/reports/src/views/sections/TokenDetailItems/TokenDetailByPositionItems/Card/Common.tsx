@@ -24,7 +24,7 @@ const Common = ({ title, tokens }: ListItemsProps) => {
   return (
     <BoxWrapperColumn sx={{ gap: 2 }}>
       <BoxWrapperColumn gap={1}>
-        <ItemText itemText={title} />
+        <ItemText itemText={title} maxWidth={'fit-content'} />
         <Divider sx={{ borderBottomWidth: 5 }} />
       </BoxWrapperColumn>
       {tokens
