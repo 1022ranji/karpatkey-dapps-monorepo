@@ -42,42 +42,25 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  const filteredDataByBlockchainAndProtocolAndToken = tokenDetailByPosition.filter((item: any) => {
-    if (!blockchainFilter && !protocolFilter && !tokenFilter) return true
-    if (blockchainFilter && !protocolFilter && !tokenFilter)
-      return item.blockchain === blockchainFilter
-    if (blockchainFilter && protocolFilter && !tokenFilter)
-      return item.blockchain === blockchainFilter && item.protocol === protocolFilter
-    if (blockchainFilter && protocolFilter && tokenFilter)
-      return (
-        item.blockchain === blockchainFilter &&
-        item.protocol === protocolFilter &&
-        Object.keys(item.values).find((key: string) => {
-          return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
-        })
-      )
+  const filteredDataByBlockchainAndProtocolAndToken = React.useMemo(() => {
+    return tokenDetailByPosition.filter((item: any) => {
+      const { blockchain, protocol, categories = [] } = item
+      const isBlockchainFilter = blockchainFilter ? blockchainFilter === blockchain : true
+      const isProtocolFilter = protocolFilter ? protocolFilter === protocol : true
 
-    if (blockchainFilter && !protocolFilter && tokenFilter)
-      return (
-        item.blockchain === blockchainFilter &&
-        Object.keys(item.values).find((key: string) => {
-          return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
-        })
-      )
-    if (!blockchainFilter && protocolFilter && !tokenFilter) return item.protocol === protocolFilter
-    if (!blockchainFilter && protocolFilter && tokenFilter)
-      return (
-        item.protocol === protocolFilter &&
-        Object.keys(item.values).find((key: string) => {
-          return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
-        })
-      )
-    if (!blockchainFilter && !protocolFilter && tokenFilter)
-      return Object.keys(item.values).find((key: string) => {
-        return Object.keys(item.values[key]).find((token: string) => token === tokenFilter)
-      })
-    return true
-  })
+      const isTokenFilter = categories.reduce((acc: boolean, category: any) => {
+        const { tokens = [] } = category
+        const isToken = tokens.reduce((acc: boolean, token: any) => {
+          const { symbol } = token
+          const isSymbol = tokenFilter ? symbol === tokenFilter : true
+          return acc || isSymbol
+        }, false)
+        return acc || isToken
+      }, false)
+
+      return isBlockchainFilter && isProtocolFilter && isTokenFilter
+    })
+  }, [blockchainFilter, protocolFilter, tokenFilter, tokenDetailByPosition])
 
   const defaultBlockchainValue = blockchainFilter
     ? {
@@ -146,12 +129,12 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
 
   const tokenOptions: any[] = tokenDetailByPosition
     .reduce((acc: any, item: any) => {
-      if (!item.isMetricCard) {
-        Object.keys(item.values).forEach((key: string) => {
-          const tokens = Object.keys(item.values[key])
-          tokens.forEach((token: string) => {
-            if (!acc.includes(token)) {
-              acc.push(token)
+      const { categories } = item
+      if (categories && categories.length > 0) {
+        categories.forEach(({ tokens }: any) => {
+          tokens?.forEach(({ symbol }: any) => {
+            if (!acc.includes(symbol)) {
+              acc.push(symbol)
             }
           })
         })

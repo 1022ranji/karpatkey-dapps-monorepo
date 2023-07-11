@@ -9,34 +9,37 @@ import ItemUSD from './ItemUSD'
 
 interface ListItemsProps {
   title: string
-  values: {
-    [key: string]: {
-      tokenBalance?: number
-      usdValue?: number
-    }
-  }
+  tokens: Maybe<
+    [
+      {
+        symbol: string
+        balance?: number
+        usdValue?: number
+      }
+    ]
+  >
 }
 
-const Common = ({ title, values }: ListItemsProps) => {
+const Common = ({ title, tokens }: ListItemsProps) => {
   return (
     <BoxWrapperColumn sx={{ gap: 2 }}>
       <BoxWrapperColumn gap={1}>
         <ItemText itemText={title} />
         <Divider sx={{ borderBottomWidth: 5 }} />
       </BoxWrapperColumn>
-      {Object.keys(values)
-        .sort((a, b) => a.localeCompare(b))
-        .map((item: string, index: number) => {
-          const { usdValue, tokenBalance } = values[item]
-          const value = usdValue ? formatCurrency(usdValue, 2) : ''
-          const balance = tokenBalance ? formatNumber(tokenBalance) : ''
+      {tokens
+        ?.sort((a: { symbol: string }, b: { symbol: string }) => a.symbol.localeCompare(b.symbol))
+        .map((token: { symbol: string; balance?: number; usdValue?: number }, index: number) => {
+          const { symbol, usdValue, balance } = token
+          const formatUsdValue = usdValue ? formatCurrency(usdValue, 2) : ''
+          const formatBalance = balance ? formatNumber(balance) : ''
           return (
             <BoxWrapperColumn key={index} gap={1}>
               <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-                <ItemText itemText={item} />
-                <ItemText itemText={balance} />
+                <ItemText itemText={symbol} />
+                <ItemText itemText={formatBalance} />
               </BoxWrapperRow>
-              <ItemUSD itemUsd={value} />
+              <ItemUSD itemUsd={formatUsdValue} />
               <Divider />
             </BoxWrapperColumn>
           )

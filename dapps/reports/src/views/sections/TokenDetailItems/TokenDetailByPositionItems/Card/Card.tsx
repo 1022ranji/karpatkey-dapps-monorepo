@@ -17,7 +17,7 @@ interface CardItemProps {
 
 const Card = (props: CardItemProps) => {
   const { card } = props
-  const { blockchain, protocol, position, totalUSDValue, isMetricCard, values } = card
+  const { blockchain, protocol, position, totalUsdValue, cardType, categories } = card
 
   return (
     <BoxWrapperColumn gap={4}>
@@ -30,19 +30,37 @@ const Card = (props: CardItemProps) => {
       </BoxWrapperRow>
       <BoxWrapperColumn gap={1}>
         <Position position={position} />
-        <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUSDValue, 2)} />
+        <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUsdValue || 0, 2)} />
       </BoxWrapperColumn>
-      {!isMetricCard &&
-        Object.keys(values)
-          .sort((a, b) => a.localeCompare(b))
-          .map((title: any, index: number) => {
-            return <Common key={index} title={title} values={values[title]} />
+      {cardType === 'common' &&
+        categories
+          .sort((a: any, b: any) => a.name.localeCompare(b.name))
+          .map((category: any, index: number) => {
+            const { name, tokens } = category
+            if (tokens && tokens.length > 0) {
+              return <Common key={index} title={name} tokens={tokens} />
+            } else {
+              return null
+            }
           })}
-      {isMetricCard &&
-        Object.keys(values)
-          .sort((a, b) => a.localeCompare(b))
-          .map((title: any, index: number) => {
-            return <Ratios key={index} title={title} values={values[title]} />
+      {cardType === 'metrics' &&
+        categories
+          .sort((a: any, b: any) => a.name.localeCompare(b.name))
+          .map((category: any, index: number) => {
+            const { name, tokens, ratios } = category
+            if (name === 'Ratios') {
+              if (ratios && ratios.length > 0) {
+                return <Ratios key={index} title={name} ratios={ratios} />
+              } else {
+                return null
+              }
+            } else {
+              if (tokens && tokens.length > 0) {
+                return <Common key={index} title={name} tokens={tokens} />
+              } else {
+                return null
+              }
+            }
           })}
     </BoxWrapperColumn>
   )

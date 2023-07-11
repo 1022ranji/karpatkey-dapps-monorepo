@@ -1,8 +1,4 @@
-import {
-  formatCurrency,
-  formatNumber,
-  formatPercentage
-} from '@karpatkey-monorepo/reports/src/utils/format'
+import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Divider } from '@mui/material'
@@ -12,11 +8,14 @@ import ItemText from './ItemText'
 
 interface RatiosProps {
   title: string
-  values: {
-    [key: string]: {
-      metricValue?: number
-    }
-  }
+  ratios: Maybe<
+    [
+      {
+        name: string
+        value?: number
+      }
+    ]
+  >
 }
 
 const sortOrder = [
@@ -28,39 +27,36 @@ const sortOrder = [
   'Price to drop liquidation'
 ]
 
-const Ratios = ({ title, values }: RatiosProps) => {
+const Ratios = ({ title, ratios }: RatiosProps) => {
   return (
     <BoxWrapperColumn sx={{ gap: 2 }}>
       <BoxWrapperColumn gap={1}>
         <ItemText itemText={title} />
         <Divider sx={{ borderBottomWidth: 5 }} />
       </BoxWrapperColumn>
-      {Object.keys(values)
-        .sort((a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b))
-        .map((item: string, index: number) => {
-          const { metricValue } = values[item]
-          let value = ''
-          if (item === 'Collateral Ratio' || item === 'Price to drop liquidation') {
-            value = formatPercentage(metricValue || 0, 0)
+      {ratios
+        ?.sort((a, b) => sortOrder.indexOf(a.name) - sortOrder.indexOf(b.name))
+        .map(({ name, value }, index: number) => {
+          let formatValue = ''
+          if (name === 'Collateral Ratio' || name === 'Price to drop liquidation') {
+            formatValue = formatPercentage(value || 0, 0)
           }
-          if (item === 'Minimum Collateral Ratio') {
-            value = formatPercentage((metricValue || 0) / 100, 0)
+          if (name === 'Minimum Collateral Ratio') {
+            formatValue = formatPercentage((value || 0) / 100, 0)
           }
-          if (item === 'Collateral' || item === 'Debt') {
-            value = formatNumber(metricValue || 0)
-          }
-          if (item === 'Liquidation Price') {
-            value = formatCurrency(metricValue || 0, 0)
+          if (name === 'Liquidation Price') {
+            formatValue = formatCurrency(value || 0, 0)
           }
           return (
             <BoxWrapperColumn key={index} gap={1}>
               <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-                <ItemText itemText={item} />
-                <ItemText itemText={value} maxWidth={'140px'} />
+                <ItemText itemText={name} />
+                <ItemText itemText={formatValue} maxWidth={'140px'} />
               </BoxWrapperRow>
               <Divider />
             </BoxWrapperColumn>
           )
+          return null
         })}
     </BoxWrapperColumn>
   )
