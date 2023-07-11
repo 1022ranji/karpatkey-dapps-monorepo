@@ -175,85 +175,52 @@ export const getTokenDetailByPosition = (data: any) => {
     )
   })
 
-  const commonCards = rowsFiltered.reduce((acc: any, obj: any): any => {
-    const tokenSymbol = obj.token_symbol && obj.token_symbol.trim()
-    const position = obj.lptoken_name.trim()
+  const commonCards = rowsFiltered
+    .reduce((acc: any, obj: any): any => {
+      const tokenSymbol = obj.token_symbol && obj.token_symbol.trim()
+      const position = obj.lptoken_name.trim()
 
-    if (!tokenSymbol || position.includes('Vault')) {
-      return acc
-    }
+      if (!tokenSymbol || position.includes('Vault')) {
+        return acc
+      }
 
-    const blockchain = obj.blockchain.trim()
-    const protocol = obj.protocol.trim()
+      const blockchain = obj.blockchain.trim()
+      const protocol = obj.protocol.trim()
 
-    let categoryName = 'Farming Funds'
-    if (obj.metric && obj.metric.includes('unclaim')) {
-      categoryName = 'Unclaimed Rewards'
-    }
-    if (
-      obj.metric &&
-      obj.metric.includes('balance') &&
-      obj.protocol &&
-      obj.protocol.includes('Wallet')
-    ) {
-      categoryName = 'Wallet'
-    }
+      let categoryName = 'Farming Funds'
+      if (obj.metric && obj.metric.includes('unclaim')) {
+        categoryName = 'Unclaimed Rewards'
+      }
+      if (
+        obj.metric &&
+        obj.metric.includes('balance') &&
+        obj.protocol &&
+        obj.protocol.includes('Wallet')
+      ) {
+        categoryName = 'Wallet'
+      }
 
-    const cardFound = acc.find((card: any) => {
-      return (
-        card.blockchain === blockchain && card.protocol === protocol && card.position === position
-      )
-    })
-
-    if (cardFound) {
-      const categoryFound = cardFound?.categories.find((category: any) => {
-        return category.name === categoryName
+      const cardFound = acc.find((card: any) => {
+        return (
+          card.blockchain === blockchain && card.protocol === protocol && card.position === position
+        )
       })
 
-      if (categoryFound) {
-        categoryFound.tokens.push({
-          symbol: tokenSymbol,
-          balance: obj.bal_1 ? obj.bal_1 : 0,
-          usdValue:
-            (obj.bal_1 ? obj.bal_1 : 0) *
-            (obj.next_period_first_price ? obj.next_period_first_price : 0)
+      if (cardFound) {
+        const categoryFound = cardFound?.categories.find((category: any) => {
+          return category.name === categoryName
         })
-        cardFound.totalUsdValue = categoryFound.tokens.reduce((acc: any, obj: any) => {
-          return acc + obj.usdValue
-        }, 0)
-      } else {
-        cardFound.categories.push({
-          name: categoryName,
-          tokens: [
-            {
-              symbol: tokenSymbol,
-              balance: obj.bal_1 ? obj.bal_1 : 0,
-              usdValue:
-                (obj.bal_1 ? obj.bal_1 : 0) *
-                (obj.next_period_first_price ? obj.next_period_first_price : 0)
-            }
-          ]
-        })
-        cardFound.totalUsdValue = cardFound.categories.reduce((acc: any, obj: any) => {
-          return (
-            acc +
-            obj.tokens.reduce((acc: any, obj: any) => {
-              return acc + obj.usdValue
-            }, 0)
-          )
-        }, 0)
-      }
-    } else {
-      acc.push({
-        blockchain,
-        protocol,
-        position,
-        totalUsdValue:
-          (obj.bal_1 ? obj.bal_1 : 0) *
-          (obj.next_period_first_price ? obj.next_period_first_price : 0),
-        cardType: 'common',
-        categories: [
-          {
+
+        if (categoryFound) {
+          categoryFound.tokens.push({
+            symbol: tokenSymbol,
+            balance: obj.bal_1 ? obj.bal_1 : 0,
+            usdValue:
+              (obj.bal_1 ? obj.bal_1 : 0) *
+              (obj.next_period_first_price ? obj.next_period_first_price : 0)
+          })
+        } else {
+          cardFound.categories.push({
             name: categoryName,
             tokens: [
               {
@@ -264,13 +231,43 @@ export const getTokenDetailByPosition = (data: any) => {
                   (obj.next_period_first_price ? obj.next_period_first_price : 0)
               }
             ]
-          }
-        ]
-      })
-    }
+          })
+        }
+      } else {
+        acc.push({
+          blockchain,
+          protocol,
+          position,
+          cardType: 'common',
+          categories: [
+            {
+              name: categoryName,
+              tokens: [
+                {
+                  symbol: tokenSymbol,
+                  balance: obj.bal_1 ? obj.bal_1 : 0,
+                  usdValue:
+                    (obj.bal_1 ? obj.bal_1 : 0) *
+                    (obj.next_period_first_price ? obj.next_period_first_price : 0)
+                }
+              ]
+            }
+          ]
+        })
+      }
 
-    return acc
-  }, [])
+      return acc
+    }, [])
+    .map((card: any) => {
+      card.categories.forEach((category: any) => {
+        card.totalUsdValue =
+          (card.totalUsdValue || 0) +
+          category.tokens.reduce((acc: any, obj: any) => {
+            return acc + obj.usdValue
+          }, 0)
+      })
+      return card
+    })
 
   const metricsCards = rowsFiltered.reduce((acc: any, obj: any): any => {
     const metricCode = obj?.metric_code?.trim()
@@ -354,70 +351,40 @@ export const getTokenDetailByPosition = (data: any) => {
     return acc
   }, [])
 
-  const vaultCards = rowsFiltered.reduce((acc: any, obj: any): any => {
-    const position = obj.lptoken_name.trim()
-    const origin = obj.origin.trim()
+  const vaultCards = rowsFiltered
+    .reduce((acc: any, obj: any): any => {
+      const position = obj.lptoken_name.trim()
+      const origin = obj.origin.trim()
 
-    if (!position.includes('Vault') || origin !== 'detail') {
-      return acc
-    }
+      if (!position.includes('Vault') || origin !== 'detail') {
+        return acc
+      }
 
-    const value = obj.bal_1 ? obj.bal_1 : 0
-    const blockchain = obj?.blockchain?.trim()
-    const protocol = obj?.protocol?.trim()
+      const value = obj.bal_1 ? obj.bal_1 : 0
+      const blockchain = obj?.blockchain?.trim()
+      const protocol = obj?.protocol?.trim()
 
-    const category = value > 0 ? 'Collateral' : 'Debt'
+      const category = value > 0 ? 'Collateral' : 'Debt'
 
-    const cardFound = acc.find((card: any) => {
-      return (
-        card.blockchain === blockchain && card.protocol === protocol && card.position === position
-      )
-    })
-
-    if (cardFound) {
-      const categoryFound = cardFound?.categories.find((category: any) => {
-        return category.name === category
+      const cardFound = acc.find((card: any) => {
+        return (
+          card.blockchain === blockchain && card.protocol === protocol && card.position === position
+        )
       })
 
-      if (categoryFound) {
-        categoryFound?.tokens?.push({
-          symbol: obj.token_symbol,
-          balance: value,
-          usdValue: value * (obj.next_period_first_price ? obj.next_period_first_price : 0)
+      if (cardFound) {
+        const categoryFound = cardFound?.categories.find((category: any) => {
+          return category.name === category
         })
 
-        cardFound.totalUsdValue = categoryFound.tokens.reduce((acc: any, obj: any) => {
-          return acc + obj.usdValue
-        }, 0)
-      } else {
-        cardFound?.categories?.push({
-          name: category,
-          tokens: [
-            {
-              symbol: obj.token_symbol,
-              balance: value,
-              usdValue: value * (obj.next_period_first_price ? obj.next_period_first_price : 0)
-            }
-          ]
-        })
-        cardFound.totalUsdValue = cardFound.categories.reduce((acc: any, obj: any) => {
-          return (
-            acc +
-            obj.tokens.reduce((acc: any, obj: any) => {
-              return acc + obj.usdValue
-            }, 0)
-          )
-        }, 0)
-      }
-    } else {
-      acc.push({
-        blockchain,
-        protocol,
-        position,
-        totalUsdValue: value * (obj.next_period_first_price ? obj.next_period_first_price : 0),
-        cardType: 'metrics',
-        categories: [
-          {
+        if (categoryFound) {
+          categoryFound?.tokens?.push({
+            symbol: obj.token_symbol,
+            balance: value,
+            usdValue: value * (obj.next_period_first_price ? obj.next_period_first_price : 0)
+          })
+        } else {
+          cardFound?.categories?.push({
             name: category,
             tokens: [
               {
@@ -426,13 +393,41 @@ export const getTokenDetailByPosition = (data: any) => {
                 usdValue: value * (obj.next_period_first_price ? obj.next_period_first_price : 0)
               }
             ]
-          }
-        ]
-      })
-    }
+          })
+        }
+      } else {
+        acc.push({
+          blockchain,
+          protocol,
+          position,
+          cardType: 'metrics',
+          categories: [
+            {
+              name: category,
+              tokens: [
+                {
+                  symbol: obj.token_symbol,
+                  balance: value,
+                  usdValue: value * (obj.next_period_first_price ? obj.next_period_first_price : 0)
+                }
+              ]
+            }
+          ]
+        })
+      }
 
-    return acc
-  }, [])
+      return acc
+    }, [])
+    .map((card: any) => {
+      card.categories.forEach((category: any) => {
+        card.totalUsdValue =
+          (card.totalUsdValue || 0) +
+          category.tokens.reduce((acc: any, obj: any) => {
+            return acc + obj.usdValue
+          }, 0)
+      })
+      return card
+    })
 
   const mergeAllCards = (cards1: any, cards2: any, cards3: any) => {
     const cards = cards1.concat(cards2).concat(cards3)
