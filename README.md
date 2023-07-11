@@ -62,3 +62,7 @@ docker exec -it CONTAINER_ID /bin/sh
 
 ## Contribution
 Any and every contribution is welcomed and appreciated.
+
+## Sections of the app and their data dependencies
+
+Check out the readme [Data documentation](https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/tree/main/dapps/reports/DATA.md) for more details.

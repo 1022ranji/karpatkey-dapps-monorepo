@@ -6,9 +6,9 @@ type DataWarehouseEnvironment = 'production' | 'development'
 
 const REPORTS_DATASET = {
   development: {
-    getTreasuryFinancialMetrics: 'reports.vw_treasury_financial_metrics',
+    getTreasuryFinancialMetrics: 'reports.dm_treasury_financial_metrics',
     getTokens: 'reports.lk_tokens',
-    getTreasuryVariationMetricsDetail: 'reports.dm_treasury_variation_metrics_detail',
+    getTreasuryVariationMetricsDetail: 'reports.mvw_treasury_variation_metrics_detail',
     getTreasuryFinancialPositions: 'reports.vw_treasury_financial_positions',
     getTreasuryHistoricVariation: 'reports.dm_treasury_historic_variation',
     getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail'
