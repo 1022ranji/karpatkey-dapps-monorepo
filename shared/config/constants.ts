@@ -82,7 +82,7 @@ export const enum DAO_NAME_KEY {
 export const FILTER_DAOS: FILTER_DAO[] = [
   {
     id: DAO_NAME_KEY['Gnosis DAO'],
-    name: 'Gnosis DAO',
+    name: 'Gnosis',
     icon: '/images/protocols/gnosis.svg',
     keyName: 'Gnosis DAO',
     sinceMonth: 1,
