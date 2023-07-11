@@ -364,7 +364,7 @@ export const getTokenDetailByPosition = (data: any) => {
       const blockchain = obj?.blockchain?.trim()
       const protocol = obj?.protocol?.trim()
 
-      const category = value > 0 ? 'Collateral' : 'Debt'
+      const category = value > 0 ? 'Farming Funds: Collateral' : 'Farming Funds: Debt'
 
       const cardFound = acc.find((card: any) => {
         return (
