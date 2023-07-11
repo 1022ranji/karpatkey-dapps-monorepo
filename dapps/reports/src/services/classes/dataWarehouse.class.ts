@@ -19,7 +19,7 @@ const REPORTS_DATASET = {
     getTreasuryVariationMetricsDetail: 'reports_production.prod_treasury_variation_metrics_detail',
     getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions',
     getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation',
-    getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail'
+    getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail'
   }
 }
 
