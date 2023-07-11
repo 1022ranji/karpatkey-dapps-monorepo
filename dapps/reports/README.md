@@ -50,3 +50,7 @@ docker run -p 3000:3000 dharmendrakariya/reports:test
 ```
 
 - App will be up and running on http://localhost:3000/
+
+## Sections of the app and their data dependencies
+
+Check out the readme [Data documentation](https://github.com/KarpatkeyDAO/karpatkey-dapps-monorepo/tree/main/dapps/reports/DATA.md) for more details.
