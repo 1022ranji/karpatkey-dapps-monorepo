@@ -21,7 +21,7 @@ const PasswordProtect = () => {
       sx={{ justifyContent: 'center', alignItems: 'center', paddingTop: '100px' }}
     >
       <CustomTypography variant={'h1'} sx={{ textAlign: 'center' }}>
-        This app is under development...
+        This site is under development
       </CustomTypography>
       <form action="/api/password-protect" method="post">
         <BoxWrapperColumn gap={2}>
