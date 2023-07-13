@@ -56,24 +56,24 @@ const TableResults = (props: TableResultsProps) => {
                 return (
                   <TableRow key={index}>
                     <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {row.blockchain}
+                      {row?.blockchain}
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '20%' }} align="left">
                       <BoxWrapperColumn sx={{ width: '90%', overflowWrap: 'anywhere' }}>
-                        {row.position}
+                        {row?.position}
                         <CustomTypography variant="tableCellSubData">
-                          {row.protocol}
+                          {row?.protocol}
                         </CustomTypography>
                       </BoxWrapperColumn>
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {formatCurrency(row['rewards'] || 0)}
+                      {formatCurrency(row?.rewards?.toFixed(2) || 0)}
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {formatCurrency(row['fees']) || 0}
+                      {formatCurrency(row?.fees?.toFixed(2)) || 0}
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {formatCurrency(row['total'] || 0)}
+                      {formatCurrency(row?.total?.toFixed(2) || 0)}
                     </TableCellCustom>
                   </TableRow>
                 )

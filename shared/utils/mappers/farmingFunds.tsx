@@ -125,7 +125,9 @@ export const getFarmingResultsDetailsByProtocol = (data: any) => {
     }
   }
 
-  return rowsFlat.sort((a: any, b: any) => b.total - a.total)
+  return rowsFlat
+    .filter((row: any) => row.total < -0.5 || row.total > 0.5)
+    .sort((a: any, b: any) => b.total - a.total)
 }
 
 export const getFarmingResultsDetailsByProtocolTotals = (data: any) => {
