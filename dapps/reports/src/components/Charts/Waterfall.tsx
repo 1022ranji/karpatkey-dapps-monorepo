@@ -1,4 +1,3 @@
-import { RoundToCeilNearest, RoundToFloorNearest } from '@karpatkey-monorepo/reports/src/utils/math'
 import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box, BoxProps, Paper } from '@mui/material'
@@ -123,18 +122,35 @@ const Waterfall = ({
   ...props
 }: BoxProps & WaterfallProps) => {
   const initialBalanceFunds = data.find((item) => item.value === 'Initial Balance')?.uv
-  const finalBalanceFunds = data.find((item) => item.value === 'Final Balance')?.uv
 
-  const minBalanceFund = Math.min(initialBalanceFunds, finalBalanceFunds)
-  const maxValueUV = data.reduce((acc, item) => {
-    if (item.value !== 'Final Balance') {
-      return acc + item.uv
-    }
-    return acc
-  }, 0)
+  const { minValue } = data.reduce(
+    (acc, item) => {
+      if (item.value !== 'Initial Balance' && item.value !== 'Final Balance') {
+        acc.value += item.uv
+        if (acc.value < acc.minValue) {
+          acc.minValue = acc.value
+        }
+      }
+      return acc
+    },
+    { value: initialBalanceFunds, minValue: initialBalanceFunds }
+  )
 
-  const domainDataMinFloor = RoundToFloorNearest(minBalanceFund * 0.98)
-  const domainDataMaxCeil = RoundToCeilNearest(maxValueUV * (data.length > 4 ? 1.05 : 1.01))
+  const { maxValue } = data.reduce(
+    (acc, item) => {
+      if (item.value !== 'Initial Balance' && item.value !== 'Final Balance') {
+        acc.value += item.uv
+        if (acc.value > acc.maxValue) {
+          acc.maxValue = acc.value
+        }
+      }
+      return acc
+    },
+    { value: initialBalanceFunds, maxValue: initialBalanceFunds }
+  )
+
+  const minValueFloor = minValue * 0.998
+  const maxValueCeil = maxValue * 1.002
 
   let charactersLength = 20
   let fontSize = 12
@@ -187,9 +203,8 @@ const Waterfall = ({
           <YAxis
             type={'number'}
             domain={() => {
-              return [domainDataMinFloor, domainDataMaxCeil]
+              return [minValueFloor, maxValueCeil]
             }}
-            interval={0}
             tickCount={6}
             fontSize={fontSize}
             tickFormatter={(tick) => {
@@ -197,7 +212,7 @@ const Waterfall = ({
                 .formatCurrency({
                   average: true,
                   spaceSeparated: false,
-                  mantissa: 1
+                  mantissa: 2
                 })
                 .toUpperCase()
             }}
