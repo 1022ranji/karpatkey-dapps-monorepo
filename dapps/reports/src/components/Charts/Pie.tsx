@@ -3,9 +3,9 @@ import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { BoxProps } from '@mui/material'
 import numbro from 'numbro'
-import React from 'react'
 import { Cell, Pie, PieChart as PieRechart } from 'recharts'
 import { reduceSentenceByLengthInLines } from '@karpatkey-monorepo/reports/src/utils/strings'
+import * as React from 'react'
 
 const RenderCustomizedLabel = (props: any) => {
   const { cx, cy, midAngle, outerRadius, fontSize, index, percent, label } = props
@@ -147,18 +147,18 @@ export type PieChartProps = {
   height?: number
   innerRadius?: number
   outerRadius?: number
+  footerMessage?: React.ReactElement
 }
 
 const PieChart = (props: BoxProps & PieChartProps) => {
-  const { data, title, dataKey, width, height, innerRadius, outerRadius } = props
+  const { data, footerMessage, title, dataKey, width, height, innerRadius, outerRadius } = props
 
   return (
     <BoxWrapperColumn
-      gap={2}
       sx={{
-        alignSelf: 'stretch',
         justifyContent: 'flex-start',
-        minWidth: 'max-content'
+        minWidth: 'max-content',
+        height: '100%'
       }}
     >
       {title ? <PieChartTitle title={title} /> : null}
@@ -174,6 +174,7 @@ const PieChart = (props: BoxProps & PieChartProps) => {
       ) : (
         <EmptyData />
       )}
+      {footerMessage ? footerMessage : null}
     </BoxWrapperColumn>
   )
 }
