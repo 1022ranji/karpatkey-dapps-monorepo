@@ -15,6 +15,7 @@ import {
   XAxis,
   YAxis
 } from 'recharts'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export type WaterfallProps = {
   title?: string
@@ -90,9 +91,9 @@ const RenderCustomizedLabel = (props: any) => {
 }
 
 const CustomizedAxisTick = (props: any) => {
-  const { x, y, payload } = props
+  const { x, y, fontSize, payload, charactersLength = 20 } = props
 
-  const words = reduceSentenceByLengthInLines(payload.value, 20)
+  const words = reduceSentenceByLengthInLines(payload.value, charactersLength)
 
   return (
     <g transform={`translate(${x},${y})`}>
@@ -104,7 +105,7 @@ const CustomizedAxisTick = (props: any) => {
           key={i}
           height="auto"
           textAnchor="middle"
-          fontSize={12}
+          fontSize={fontSize}
           fill="#222222"
         >
           {word}
@@ -135,6 +136,22 @@ const Waterfall = ({
   const domainDataMinFloor = RoundToFloorNearest(minBalanceFund * 0.98)
   const domainDataMaxCeil = RoundToCeilNearest(maxValueUV * (data.length > 4 ? 1.05 : 1.01))
 
+  let charactersLength = 20
+  let fontSize = 12
+  const isMoreThanMDAndLessThanXL = useMediaQuery(
+    (theme: any) => theme.breakpoints.down('xl') && theme.breakpoints.up('md')
+  )
+  if (isMoreThanMDAndLessThanXL) {
+    charactersLength = 8
+    fontSize = 10
+  }
+
+  const isLessThanMD = useMediaQuery((theme: any) => theme.breakpoints.down('md'))
+  if (isLessThanMD) {
+    charactersLength = 8
+    fontSize = 7
+  }
+
   return (
     <Box
       display="flex"
@@ -159,7 +176,14 @@ const Waterfall = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={'value'} interval={0} tick={<CustomizedAxisTick />} />
+          <XAxis
+            dataKey={'value'}
+            interval={0}
+            fontSize={fontSize}
+            tick={(props: any) => (
+              <CustomizedAxisTick {...props} charactersLength={charactersLength} />
+            )}
+          />
           <YAxis
             type={'number'}
             domain={() => {
@@ -167,7 +191,7 @@ const Waterfall = ({
             }}
             interval={0}
             tickCount={6}
-            fontSize={12}
+            fontSize={fontSize}
             tickFormatter={(tick) => {
               return numbro(tick)
                 .formatCurrency({
