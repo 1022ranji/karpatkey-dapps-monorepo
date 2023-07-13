@@ -183,11 +183,6 @@ const Waterfall = ({
     fontSize = 7
   }
 
-  console.log('isLessThanMD', isLessThanMD)
-  console.log('isMoreThanMDAndLessThanLG', isMoreThanMDAndLessThanLG)
-  console.log('isMoreThanLGAndLessThanXL', isMoreThanLGAndLessThanXL)
-  console.log('isGreaterThanXL', isGreaterThanXL)
-
   return (
     <Box
       display="flex"
