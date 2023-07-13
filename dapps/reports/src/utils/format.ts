@@ -1,7 +1,7 @@
 import numbro from 'numbro'
 
 export const formatCurrency = (value: number, mantissa = 0) => {
-  if (value === 0) return '-'
+  if (value === 0 || (value < 0.5 && value > -0.5)) return '-'
 
   return numbro(value).formatCurrency({
     spaceSeparated: false,
