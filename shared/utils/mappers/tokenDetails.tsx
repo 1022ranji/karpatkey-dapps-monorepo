@@ -289,10 +289,10 @@ export const getTokenDetailByPosition = (data: any) => {
 
     let ratioName = ''
     if (!obj.token_symbol && obj.metric_code === 'm24') {
-      ratioName = 'Price to drop liquidation'
+      ratioName = 'Collateral Price drop to liquidation'
     }
     if (!obj.token_symbol && obj.metric_code === 'm23') {
-      ratioName = 'Liquidation Price'
+      ratioName = 'Collateral Liquidation Price'
     }
     if (!obj.token_symbol && obj.metric_code === 'm22') {
       ratioName = 'Minimum Collateral Ratio'

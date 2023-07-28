@@ -23,8 +23,8 @@ const sortOrder = [
   'Debt',
   'Collateral Ratio',
   'Minimum Collateral Ratio',
-  'Liquidation Price',
-  'Price to drop liquidation'
+  'Collateral Liquidation Price',
+  'Collateral Price drop to liquidation'
 ]
 
 const Ratios = ({ title, ratios }: RatiosProps) => {
@@ -38,13 +38,13 @@ const Ratios = ({ title, ratios }: RatiosProps) => {
         ?.sort((a, b) => sortOrder.indexOf(a.name) - sortOrder.indexOf(b.name))
         .map(({ name, value }, index: number) => {
           let formatValue = ''
-          if (name === 'Collateral Ratio' || name === 'Price to drop liquidation') {
+          if (name === 'Collateral Ratio' || name === 'Collateral Price drop to liquidation') {
             formatValue = formatPercentage(value || 0, 0)
           }
           if (name === 'Minimum Collateral Ratio') {
             formatValue = formatPercentage((value || 0) / 100, 0)
           }
-          if (name === 'Liquidation Price') {
+          if (name === 'Collateral Liquidation Price') {
             formatValue = formatCurrency(value || 0, 0)
           }
           return (
