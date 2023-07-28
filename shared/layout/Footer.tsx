@@ -7,7 +7,7 @@ import Twitter from '@karpatkey-monorepo/shared/components/Icons/Socials/Twitter
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import React, { FC, ReactElement } from 'react'
+import React from 'react'
 import BoxWrapperColumn from '../components/Wrappers/BoxWrapperColumn'
 
 export const FOOTER_HEIGHT = 160
@@ -18,8 +18,8 @@ const FooterWrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   paddingRight: '48px',
   paddingLeft: '48px',
   paddingTop: '48px',
-  justifyContent: 'space-evenly',
-  gap: 4
+  justifyContent: 'center',
+  gap: 20
 }))
 
 const CustomTypographyFooter = styled(CustomTypography)({
@@ -31,21 +31,28 @@ const CustomTypographyFooter = styled(CustomTypography)({
   color: '#262626'
 })
 
-const Footer: FC = (): ReactElement => {
+interface FooterProps {
+  disclaimerText?: string
+}
+
+const Footer = (props: FooterProps) => {
+  const { disclaimerText } = props
   return (
     <AnimatePresenceWrapper>
       <FooterWrapper>
-        <BoxWrapperRow>
-          <CustomTypography
-            variant="body2"
-            color="textSecondary"
-            align="left"
-            width="100%"
-            sx={{ fontStyle: 'italic' }}
-          >
-            Token Balances and Prices are considered at end of month 0 UTC
-          </CustomTypography>
-        </BoxWrapperRow>
+        {disclaimerText ? (
+          <BoxWrapperRow>
+            <CustomTypography
+              variant="body2"
+              color="textSecondary"
+              align="left"
+              width="100%"
+              sx={{ fontStyle: 'italic' }}
+            >
+              {disclaimerText}
+            </CustomTypography>
+          </BoxWrapperRow>
+        ) : null}
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <BoxWrapperRow>
             <CustomTypographyFooter>© 2023 karpatkey • &nbsp;</CustomTypographyFooter>
