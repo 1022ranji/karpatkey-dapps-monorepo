@@ -85,7 +85,8 @@ const Summary = (props: SummaryProps) => {
                         textAlign: 'center'
                       }}
                     >
-                      Negative balance = {formatCurrency(negativeTotalValue?.Total)}
+                      Negative balance due to loan debt ={' '}
+                      {formatCurrency(negativeTotalValue?.Total)}
                     </CustomTypography>
                   )
                 }
