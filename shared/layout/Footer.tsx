@@ -8,15 +8,18 @@ import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWra
 import { Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React, { FC, ReactElement } from 'react'
+import BoxWrapperColumn from '../components/Wrappers/BoxWrapperColumn'
 
-export const FOOTER_HEIGHT = 100
+export const FOOTER_HEIGHT = 160
 
-const FooterWrapper = styled(BoxWrapperRow)(({ theme }: any) => ({
+const FooterWrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default,
   height: FOOTER_HEIGHT,
-  marginRight: '48px',
-  marginLeft: '48px',
-  justifyContent: 'space-between'
+  paddingRight: '48px',
+  paddingLeft: '48px',
+  paddingTop: '48px',
+  justifyContent: 'space-evenly',
+  gap: 4
 }))
 
 const CustomTypographyFooter = styled(CustomTypography)({
@@ -33,28 +36,41 @@ const Footer: FC = (): ReactElement => {
     <AnimatePresenceWrapper>
       <FooterWrapper>
         <BoxWrapperRow>
-          <CustomTypographyFooter>© 2023 karpatkey • &nbsp;</CustomTypographyFooter>
-          <Link
-            href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
-            target="_blank"
-            sx={{ color: 'black' }}
+          <CustomTypography
+            variant="body2"
+            color="textSecondary"
+            align="left"
+            width="100%"
+            sx={{ fontStyle: 'italic' }}
           >
-            <CustomTypographyFooter sx={{ fontWeight: 500 }}>press kit</CustomTypographyFooter>
-          </Link>
+            Token Balances and Prices are considered at end of month 0 UTC
+          </CustomTypography>
         </BoxWrapperRow>
-        <BoxWrapperRow gap={4}>
-          <Link href={`https://github.com/KarpatkeyDAO`} target="_blank">
-            <Github height={24} width={24} />
-          </Link>
-          <Link href={`https://twitter.com/karpatkey`} target="_blank">
-            <Twitter height={24} width={24} />
-          </Link>
-          <Link href={`https://mirror.xyz/karpatkey.eth`} target="_blank">
-            <Mirror height={24} width={24} />
-          </Link>
-          <Link href={`https://www.linkedin.com/company/karpatkey/mycompany/`} target="_blank">
-            <Linkedin height={24} width={24} />
-          </Link>
+        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
+          <BoxWrapperRow>
+            <CustomTypographyFooter>© 2023 karpatkey • &nbsp;</CustomTypographyFooter>
+            <Link
+              href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
+              target="_blank"
+              sx={{ color: 'black' }}
+            >
+              <CustomTypographyFooter sx={{ fontWeight: 500 }}>press kit</CustomTypographyFooter>
+            </Link>
+          </BoxWrapperRow>
+          <BoxWrapperRow gap={4}>
+            <Link href={`https://github.com/KarpatkeyDAO`} target="_blank">
+              <Github height={24} width={24} />
+            </Link>
+            <Link href={`https://twitter.com/karpatkey`} target="_blank">
+              <Twitter height={24} width={24} />
+            </Link>
+            <Link href={`https://mirror.xyz/karpatkey.eth`} target="_blank">
+              <Mirror height={24} width={24} />
+            </Link>
+            <Link href={`https://www.linkedin.com/company/karpatkey/mycompany/`} target="_blank">
+              <Linkedin height={24} width={24} />
+            </Link>
+          </BoxWrapperRow>
         </BoxWrapperRow>
       </FooterWrapper>
     </AnimatePresenceWrapper>
