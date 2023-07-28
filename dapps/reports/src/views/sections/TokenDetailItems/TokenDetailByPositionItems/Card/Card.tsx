@@ -6,9 +6,11 @@ import Title from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailIte
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import * as React from 'react'
+import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
 
 import Common from './Common'
 import Ratios from './Ratios'
+import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
 
 interface CardItemProps {
   id: number
@@ -18,6 +20,8 @@ interface CardItemProps {
 const Card = (props: CardItemProps) => {
   const { card } = props
   const { blockchain, protocol, position, totalUsdValue, cardType, categories } = card
+
+  const helpText = <UniswapHelpText />
 
   return (
     <BoxWrapperColumn gap={4}>
@@ -29,7 +33,7 @@ const Card = (props: CardItemProps) => {
         </BoxWrapperRow>
       </BoxWrapperRow>
       <BoxWrapperColumn gap={1}>
-        <Position position={position} />
+        <Position position={position} {...(protocol === UNISWAP_PROTOCOL ? { helpText } : {})} />
         <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUsdValue || 0, 2)} />
       </BoxWrapperColumn>
       {cardType === 'common' &&

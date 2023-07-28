@@ -1,12 +1,15 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import * as React from 'react'
+import { ReactElement } from 'react'
 
 interface PositionProps {
   position: string
+  url?: string
+  helpText?: ReactElement
 }
 
-const Position = ({ position }: PositionProps) => {
+const Position = ({ position, url, helpText }: PositionProps) => {
   return (
     <CustomTypography
       sx={{
@@ -23,7 +26,8 @@ const Position = ({ position }: PositionProps) => {
       gap={1}
     >
       {position}
-      <OpenInNewIcon fontSize={'small'} />
+      {helpText}
+      {url ? <OpenInNewIcon fontSize={'small'} /> : null}
     </CustomTypography>
   )
 }

@@ -9,6 +9,8 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material'
 import * as React from 'react'
+import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
+import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
 
 interface TableFundsProps {
   funds: any
@@ -67,12 +69,21 @@ const TableFunds = (props: TableFundsProps) => {
                         {row.blockchain}
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperColumn sx={{ width: '90%', overflowWrap: 'anywhere' }}>
-                          {row.position}
-                          <CustomTypography variant="tableCellSubData">
-                            {row.protocol}
-                          </CustomTypography>
-                        </BoxWrapperColumn>
+                        <BoxWrapperRow
+                          sx={{
+                            width: '90%',
+                            overflowWrap: 'anywhere',
+                            justifyContent: 'flex-start'
+                          }}
+                        >
+                          <BoxWrapperColumn>
+                            {row.position}
+                            <CustomTypography variant="tableCellSubData">
+                              {row.protocol}
+                            </CustomTypography>
+                          </BoxWrapperColumn>
+                          {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
+                        </BoxWrapperRow>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapper>
