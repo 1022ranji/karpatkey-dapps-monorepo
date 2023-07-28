@@ -162,7 +162,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
         <EmptyData />
       ) : (
-        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
+        <BoxWrapperRow sx={{ justifyContent: 'space-between', alignItems: 'start' }}>
           <DynamicPieChart
             data={filteredWalletTokenDetailForPieChartWithColorsAndOthers}
             dataKey="value"
