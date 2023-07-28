@@ -10,6 +10,7 @@ import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWra
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material'
 import * as React from 'react'
 import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
+import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
 
 interface TableFundsProps {
   funds: any
@@ -81,7 +82,7 @@ const TableFunds = (props: TableFundsProps) => {
                               {row.protocol}
                             </CustomTypography>
                           </BoxWrapperColumn>
-                          {row.protocol === 'UniswapV3' ? <UniswapHelpText /> : null}
+                          {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
                         </BoxWrapperRow>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">

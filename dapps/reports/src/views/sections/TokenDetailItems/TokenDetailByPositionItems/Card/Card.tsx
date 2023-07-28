@@ -10,6 +10,7 @@ import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpTe
 
 import Common from './Common'
 import Ratios from './Ratios'
+import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
 
 interface CardItemProps {
   id: number
@@ -32,7 +33,7 @@ const Card = (props: CardItemProps) => {
         </BoxWrapperRow>
       </BoxWrapperRow>
       <BoxWrapperColumn gap={1}>
-        <Position position={position} {...(protocol === 'UniswapV3' ? { helpText } : {})} />
+        <Position position={position} {...(protocol === UNISWAP_PROTOCOL ? { helpText } : {})} />
         <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUsdValue || 0, 2)} />
       </BoxWrapperColumn>
       {cardType === 'common' &&
