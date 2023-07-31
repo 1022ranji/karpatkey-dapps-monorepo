@@ -8,7 +8,9 @@ import * as React from 'react'
 
 const DynamicTableTokenDetail = dynamic(
   () =>
-    import('dapps/reports/src/views/sections/TokenDetailItems/TokenDetailItems/TableTokenDetail')
+    import(
+      '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailItems/TableTokenDetail'
+    )
 )
 
 interface TokenDetailContainerProps {

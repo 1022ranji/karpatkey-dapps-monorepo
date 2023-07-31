@@ -1,4 +1,4 @@
-import { PASSWORD_PROTECT } from '@karpatkey-monorepo/reports/src/config/constants'
+import { PASSWORD_PROTECT } from './config/constants'
 import { NextRequest, NextResponse } from 'next/server'
 
 const isPasswordEnabled = !!PASSWORD_PROTECT
