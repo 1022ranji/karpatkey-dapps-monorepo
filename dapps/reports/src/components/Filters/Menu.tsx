@@ -100,7 +100,7 @@ const Menu = () => {
 
   return (
     <BoxWrapperRow gap={2}>
-      <BoxWrapperRow component={'span'} id={id || ''} aria-describedby={id} gap={2}>
+      <BoxWrapperRow component={'span'} id={id || ''} gap={2}>
         {filterElement}
         <Share {...filter} />
       </BoxWrapperRow>
