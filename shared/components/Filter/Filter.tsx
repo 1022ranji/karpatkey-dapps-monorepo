@@ -79,13 +79,7 @@ const Filter = (props: FilterProps) => {
   return (
     <BoxWrapperRow gap={2}>
       <CustomTypography variant="filterTitle">Filters</CustomTypography>
-      <BoxWrapperRow
-        component={'span'}
-        gap={2}
-        onClick={handleClick}
-        id={id || ''}
-        aria-describedby={id}
-      >
+      <BoxWrapperRow gap={2} onClick={handleClick} id={id || ''}>
         {enableBlockchain ? (
           <FilterTextOption
             title={blockchain || 'Blockchain'}
