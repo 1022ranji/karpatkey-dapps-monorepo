@@ -117,7 +117,12 @@ const Sidebar = () => {
                   <Box
                     onClick={() => {
                       setSectionVisible(slugify(text))
-                      router.push(`#${slugify(text)}`)
+                      router.push(`#${slugify(text)}`).catch((e) => {
+                        // workaround for https://github.com/vercel/next.js/issues/37362
+                        if (!e.cancelled) {
+                          throw e
+                        }
+                      })
                     }}
                     key={index}
                     style={{ textDecoration: 'none', color: 'black' }}
