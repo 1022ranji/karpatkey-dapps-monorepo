@@ -6,7 +6,7 @@ import CustomTypography from './CustomTypography'
 const Logo = () => (
   <Box
     onClick={() => {
-      window.open('/', '_self')
+      window.open('https://www.karpatkey.com/', '_self')
     }}
     alignItems="center"
     display="flex"
