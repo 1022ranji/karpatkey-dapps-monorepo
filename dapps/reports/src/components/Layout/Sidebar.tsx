@@ -124,7 +124,7 @@ const Sidebar = () => {
                   >
                     <ListItem key={text}>
                       <ListItemButton sx={{ padding: '0 0' }} disableTouchRipple>
-                        <ListItemIcon sx={{ justifyContent: 'flex-start', minWidth: '40px' }}>
+                        <ListItemIcon sx={{ justifyContent: 'flex-start', minWidth: '35px' }}>
                           {isActive ? (
                             <CircleIcon sx={{ color: 'custom.black.primary' }} />
                           ) : (
