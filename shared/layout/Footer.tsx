@@ -9,6 +9,7 @@ import { Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React from 'react'
 import BoxWrapperColumn from '../components/Wrappers/BoxWrapperColumn'
+import Tooltip from '@mui/material/Tooltip'
 
 export const FOOTER_HEIGHT = 160
 
@@ -33,10 +34,11 @@ const CustomTypographyFooter = styled(CustomTypography)({
 
 interface FooterProps {
   disclaimerText?: string
+  appVersion?: string
 }
 
 const Footer = (props: FooterProps) => {
-  const { disclaimerText } = props
+  const { disclaimerText, appVersion } = props
   return (
     <AnimatePresenceWrapper>
       <FooterWrapper>
@@ -65,9 +67,11 @@ const Footer = (props: FooterProps) => {
             </Link>
           </BoxWrapperRow>
           <BoxWrapperRow gap={4}>
-            <Link href={`https://github.com/KarpatkeyDAO`} target="_blank">
-              <Github height={24} width={24} />
-            </Link>
+            <Tooltip title={appVersion} sx={{ ml: 1 }}>
+              <Link href={`https://github.com/KarpatkeyDAO`} target="_blank">
+                <Github height={24} width={24} />
+              </Link>
+            </Tooltip>
             <Link href={`https://twitter.com/karpatkey`} target="_blank">
               <Twitter height={24} width={24} />
             </Link>
