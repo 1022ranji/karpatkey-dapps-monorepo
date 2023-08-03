@@ -296,7 +296,7 @@ const Form = (props: FormProps) => {
                 </BoxWrapperRow>
               )}
               <ButtonStyled sx={{ marginLeft: 'auto' }} type="submit">
-                Apply filter
+                Apply selection
               </ButtonStyled>
             </BoxWrapperRow>
           </BoxWrapperColumn>
