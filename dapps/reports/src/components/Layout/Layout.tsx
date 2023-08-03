@@ -16,6 +16,8 @@ interface LayoutProps {
 
 const LayoutWithSidebarWrapper = styled(Box)(() => ({
   display: 'grid',
+  overflowX: 'hidden',
+  overflowY: 'hidden',
   gridTemplateRows: `${HEADER_HEIGHT}px auto ${FOOTER_HEIGHT}px`,
   gridTemplateColumns: `${SIDEBAR_WIDTH}px auto auto`,
   gridTemplateAreas: `"header header header"
@@ -26,6 +28,8 @@ const LayoutWithSidebarWrapper = styled(Box)(() => ({
 const LayoutWithoutSidebarWrapper = styled(Box)(() => ({
   display: 'grid',
   gap: '0px 0px',
+  overflowX: 'hidden',
+  overflowY: 'hidden',
   gridTemplateRows: `${HEADER_HEIGHT}px auto ${FOOTER_HEIGHT}px`,
   gridTemplateColumns: `auto`,
   gridTemplateAreas: `"header"
@@ -76,9 +80,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           top: HEADER_HEIGHT,
           borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
           zIndex: 800,
-          minHeight: '100vh',
-          overflowX: 'hidden',
-          overflowY: 'hidden'
+          minHeight: '100vh'
         }}
       >
         <Body>{children}</Body>
@@ -111,9 +113,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           width: '100%',
           top: HEADER_HEIGHT,
           zIndex: 900,
-          minHeight: '100vh',
-          overflowX: 'hidden',
-          overflowY: 'hidden'
+          minHeight: '100vh'
         }}
       >
         <Body>{children}</Body>
