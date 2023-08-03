@@ -4,6 +4,7 @@ import FilterTextOption from '@karpatkey-monorepo/shared/components/Filter/Filte
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import * as React from 'react'
+import Tooltip from '@mui/material/Tooltip'
 
 interface FilterProps {
   id: string | undefined
@@ -78,7 +79,7 @@ const Filter = (props: FilterProps) => {
 
   return (
     <BoxWrapperRow gap={2}>
-      <CustomTypography variant="filterTitle">Filters</CustomTypography>
+      <CustomTypography variant="filterTitle">Select report</CustomTypography>
       <BoxWrapperRow gap={2} onClick={handleClick} id={id || ''}>
         {enableBlockchain ? (
           <FilterTextOption
@@ -114,22 +115,24 @@ const Filter = (props: FilterProps) => {
           />
         ) : null}
       </BoxWrapperRow>
-      <HighlightOffIcon
-        sx={{
-          ...(isClearButtonEnabled
-            ? { color: 'custom.black.primary' }
-            : { color: 'custom.grey.secondary' }),
-          cursor: 'pointer',
-          width: 48,
-          height: 48
-        }}
-        onClick={() => {
-          if (isClearButtonEnabled) {
-            handleClear()
-          }
-        }}
-        fontSize={'small'}
-      />
+      <Tooltip title={'Clear selected report'} sx={{ ml: 1 }}>
+        <HighlightOffIcon
+          sx={{
+            ...(isClearButtonEnabled
+              ? { color: 'custom.black.primary' }
+              : { color: 'custom.grey.secondary' }),
+            cursor: 'pointer',
+            width: 48,
+            height: 48
+          }}
+          onClick={() => {
+            if (isClearButtonEnabled) {
+              handleClear()
+            }
+          }}
+          fontSize={'small'}
+        />
+      </Tooltip>
       <CustomPopover
         id={id}
         open={open}
