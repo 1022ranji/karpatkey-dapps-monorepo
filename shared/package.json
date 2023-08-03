@@ -44,7 +44,7 @@
     "eslint-config-next": "13.4.12",
     "eslint-config-prettier": "^8.10.0",
     "lint-staged": "^13.2.3",
-    "prettier": "^3.0.0",
+    "prettier": "^3.0.1",
     "tsc-files": "^1.1.4",
     "typescript": "5.1.6"
   },
