@@ -8,6 +8,7 @@ import Tooltip from '@mui/material/Tooltip'
 
 interface FilterProps {
   id: string | undefined
+  title?: string
   open: boolean
   anchorEl: any
   handleClose: () => void
@@ -32,6 +33,7 @@ interface FilterProps {
 const Filter = (props: FilterProps) => {
   const {
     id,
+    title = 'Filters',
     open,
     anchorEl,
     handleClose,
@@ -79,7 +81,7 @@ const Filter = (props: FilterProps) => {
 
   return (
     <BoxWrapperRow gap={2}>
-      <CustomTypography variant="filterTitle">Select report</CustomTypography>
+      <CustomTypography variant="filterTitle">{title}</CustomTypography>
       <BoxWrapperRow gap={2} onClick={handleClick} id={id || ''}>
         {enableBlockchain ? (
           <FilterTextOption

@@ -73,6 +73,7 @@ const Menu = () => {
   const filterElement = (
     <Filter
       id={id}
+      title="Select report"
       handleClick={handleClick}
       handleClose={handleClose}
       handleClear={handleClear}
