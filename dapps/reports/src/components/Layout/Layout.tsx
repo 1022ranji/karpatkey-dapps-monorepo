@@ -6,9 +6,6 @@ import Footer, { FOOTER_HEIGHT } from '@karpatkey-monorepo/shared/layout/Footer'
 import { Box } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React, { ReactElement } from 'react'
-import getConfig from 'next/config'
-
-const { publicRuntimeConfig } = getConfig()
 
 interface LayoutProps {
   children: React.ReactElement
@@ -38,8 +35,6 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
   const { dao, year, month } = state.value
 
   const isSidebarVisible = !!(dao && year && month)
-
-  const appVersion = `Release version: v${publicRuntimeConfig.version}`
 
   return isSidebarVisible ? (
     <LayoutWithSidebarWrapper>
@@ -84,10 +79,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
         <Body>{children}</Body>
       </Box>
       <Box sx={{ gridArea: 'footer', width: '100%' }}>
-        <Footer
-          appVersion={appVersion}
-          disclaimerText={'Token Balances and Prices are considered at end of month 0 UTC'}
-        />
+        <Footer disclaimerText={'Token Balances and Prices are considered at end of month 0 UTC'} />
       </Box>
     </LayoutWithSidebarWrapper>
   ) : (
@@ -119,7 +111,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
         <Body>{children}</Body>
       </Box>
       <Box sx={{ gridArea: 'footer', width: '100%' }}>
-        <Footer appVersion={appVersion} />
+        <Footer />
       </Box>
     </LayoutWithoutSidebarWrapper>
   )
