@@ -28,6 +28,7 @@ interface FilterProps {
   enableYear?: boolean
   enableMonth?: boolean
   position?: 'left' | 'right' | 'middle'
+  tooltipText?: string
 }
 
 const Filter = (props: FilterProps) => {
@@ -52,7 +53,8 @@ const Filter = (props: FilterProps) => {
     enableDAO,
     enableYear,
     enableMonth,
-    position = 'middle'
+    position = 'middle',
+    tooltipText
   } = props
 
   const isClearButtonEnabled = React.useMemo(() => {
@@ -117,7 +119,7 @@ const Filter = (props: FilterProps) => {
           />
         ) : null}
       </BoxWrapperRow>
-      <Tooltip title={'Clear selected report'} sx={{ ml: 1 }}>
+      <Tooltip title={tooltipText} sx={{ ml: 1 }}>
         <HighlightOffIcon
           sx={{
             ...(isClearButtonEnabled

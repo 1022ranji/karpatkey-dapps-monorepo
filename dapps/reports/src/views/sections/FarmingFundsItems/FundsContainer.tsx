@@ -116,6 +116,7 @@ const FundsContainer = (props: FundsContainerProps) => {
       protocol={protocolFilter}
       enableProtocol
       enableBlockchain
+      tooltipText={'Clear filter'}
     >
       <Form
         blockchainOptions={blockchainOptions}

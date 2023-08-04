@@ -85,6 +85,7 @@ const Menu = () => {
       DAO={defaultDAOValue ? defaultDAOValue.label : ''}
       year={defaultYearValue ? defaultYearValue.label : ''}
       month={defaultMonthValue ? defaultMonthValue.label : ''}
+      tooltipText={'Clear selected report'}
     >
       <Form
         onRequestClose={handleClose}
