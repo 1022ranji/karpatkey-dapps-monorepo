@@ -192,9 +192,9 @@ export const getTokenDetailByPosition = (data: any) => {
         return acc
       }
 
-      let categoryName = 'Farming Funds'
+      let categoryName = 'Farming funds'
       if (metric.includes('unclaim')) {
-        categoryName = 'Unclaimed Rewards'
+        categoryName = 'Unclaimed rewards'
       }
       if (metric.includes('balance') && protocol.includes('Wallet')) {
         categoryName = 'Wallet'
@@ -291,16 +291,16 @@ export const getTokenDetailByPosition = (data: any) => {
 
     let ratioName = ''
     if (!tokenSymbol && metricCode === 'm24') {
-      ratioName = 'Collateral Price drop to liquidation'
+      ratioName = 'Collateral price drop to liquidation'
     }
     if (!tokenSymbol && metricCode === 'm23') {
-      ratioName = 'Collateral Liquidation Price'
+      ratioName = 'Collateral liquidation price'
     }
     if (!tokenSymbol && metricCode === 'm22') {
-      ratioName = 'Minimum Collateral Ratio'
+      ratioName = 'Minimum collateral ratio'
     }
     if (!tokenSymbol && metricCode === 'm21') {
-      ratioName = 'Collateral Ratio'
+      ratioName = 'Collateral ratio'
     }
 
     const cardFound = acc.find((card: any) => {
@@ -373,7 +373,7 @@ export const getTokenDetailByPosition = (data: any) => {
       }
 
       const balance = obj.bal_1 ? obj.bal_1 : 0
-      const categoryName = balance > 0 ? 'Farming Funds: Collateral' : 'Farming Funds: Debt'
+      const categoryName = balance > 0 ? 'Farming funds: collateral' : 'Farming funds: debt'
 
       const cardFound = acc.find((card: any) => {
         return (

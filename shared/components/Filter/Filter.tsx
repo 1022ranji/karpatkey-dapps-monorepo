@@ -4,9 +4,11 @@ import FilterTextOption from '@karpatkey-monorepo/shared/components/Filter/Filte
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import * as React from 'react'
+import Tooltip from '@mui/material/Tooltip'
 
 interface FilterProps {
   id: string | undefined
+  title?: string
   open: boolean
   anchorEl: any
   handleClose: () => void
@@ -26,11 +28,13 @@ interface FilterProps {
   enableYear?: boolean
   enableMonth?: boolean
   position?: 'left' | 'right' | 'middle'
+  tooltipText?: string
 }
 
 const Filter = (props: FilterProps) => {
   const {
     id,
+    title = 'Filters',
     open,
     anchorEl,
     handleClose,
@@ -49,7 +53,8 @@ const Filter = (props: FilterProps) => {
     enableDAO,
     enableYear,
     enableMonth,
-    position = 'middle'
+    position = 'middle',
+    tooltipText
   } = props
 
   const isClearButtonEnabled = React.useMemo(() => {
@@ -78,7 +83,7 @@ const Filter = (props: FilterProps) => {
 
   return (
     <BoxWrapperRow gap={2}>
-      <CustomTypography variant="filterTitle">Filters</CustomTypography>
+      <CustomTypography variant="filterTitle">{title}</CustomTypography>
       <BoxWrapperRow gap={2} onClick={handleClick} id={id || ''}>
         {enableBlockchain ? (
           <FilterTextOption
@@ -114,22 +119,24 @@ const Filter = (props: FilterProps) => {
           />
         ) : null}
       </BoxWrapperRow>
-      <HighlightOffIcon
-        sx={{
-          ...(isClearButtonEnabled
-            ? { color: 'custom.black.primary' }
-            : { color: 'custom.grey.secondary' }),
-          cursor: 'pointer',
-          width: 48,
-          height: 48
-        }}
-        onClick={() => {
-          if (isClearButtonEnabled) {
-            handleClear()
-          }
-        }}
-        fontSize={'small'}
-      />
+      <Tooltip title={tooltipText} sx={{ ml: 1 }}>
+        <HighlightOffIcon
+          sx={{
+            ...(isClearButtonEnabled
+              ? { color: 'custom.black.primary' }
+              : { color: 'custom.grey.secondary' }),
+            cursor: 'pointer',
+            width: 48,
+            height: 48
+          }}
+          onClick={() => {
+            if (isClearButtonEnabled) {
+              handleClear()
+            }
+          }}
+          fontSize={'small'}
+        />
+      </Tooltip>
       <CustomPopover
         id={id}
         open={open}

@@ -163,6 +163,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       enableBlockchain
       enableProtocol
       enableToken
+      tooltipText={'Clear filter'}
     >
       <Form
         blockchainOptions={blockchainOptions}
@@ -176,6 +177,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
         enableBlockchain
         enableProtocol
         enableToken
+        buttonTitle={'Apply filter'}
       />
     </Filter>
   )
