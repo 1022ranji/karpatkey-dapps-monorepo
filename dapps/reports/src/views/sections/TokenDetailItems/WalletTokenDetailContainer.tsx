@@ -117,6 +117,7 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
         onSubmitClose={onSubmitClose}
         defaultBlockchainValue={defaultBlockchainValue}
         enableBlockchain
+        buttonTitle={'Apply filter'}
       />
     </Filter>
   )

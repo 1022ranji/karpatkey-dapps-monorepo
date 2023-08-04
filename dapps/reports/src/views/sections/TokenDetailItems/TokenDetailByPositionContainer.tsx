@@ -176,6 +176,7 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
         enableBlockchain
         enableProtocol
         enableToken
+        buttonTitle={'Apply filter'}
       />
     </Filter>
   )

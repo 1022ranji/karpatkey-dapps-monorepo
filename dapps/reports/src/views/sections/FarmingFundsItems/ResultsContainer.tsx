@@ -126,6 +126,7 @@ const ResultsContainer = (props: ResultsContainerProps) => {
         defaultProtocolValue={defaultProtocolValue}
         enableProtocol
         enableBlockchain
+        buttonTitle={'Apply filter'}
       />
     </Filter>
   )

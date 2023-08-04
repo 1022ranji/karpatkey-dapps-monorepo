@@ -95,6 +95,7 @@ const Menu = () => {
         enableDAO
         enableYear
         enableMonth
+        buttonTitle={'Apply selection'}
       />
     </Filter>
   )

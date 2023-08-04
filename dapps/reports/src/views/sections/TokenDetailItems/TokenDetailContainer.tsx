@@ -113,6 +113,7 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
         onSubmitClose={onSubmitClose}
         defaultBlockchainValue={defaultBlockchainValue}
         enableBlockchain
+        buttonTitle={'Apply filter'}
       />
     </Filter>
   )

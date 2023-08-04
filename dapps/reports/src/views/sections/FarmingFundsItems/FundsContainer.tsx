@@ -126,6 +126,7 @@ const FundsContainer = (props: FundsContainerProps) => {
         defaultProtocolValue={defaultProtocolValue}
         enableProtocol
         enableBlockchain
+        buttonTitle={'Apply filter'}
       />
     </Filter>
   )
