@@ -19,11 +19,13 @@ import Lido from '@karpatkey-monorepo/shared/components/Icons/Protocols/Lido'
 import Maker from '@karpatkey-monorepo/shared/components/Icons/Protocols/Maker'
 import Notional from '@karpatkey-monorepo/shared/components/Icons/Protocols/Notional'
 import Pods from '@karpatkey-monorepo/shared/components/Icons/Protocols/Pods'
+import Spark from '@karpatkey-monorepo/shared/components/Icons/Protocols/Spark'
 import StakeWise from '@karpatkey-monorepo/shared/components/Icons/Protocols/StakeWise'
 import SushiSwap from '@karpatkey-monorepo/shared/components/Icons/Protocols/SushiSwap'
 import Swapr from '@karpatkey-monorepo/shared/components/Icons/Protocols/Swapr'
 import UniswapV3 from '@karpatkey-monorepo/shared/components/Icons/Protocols/UniswapV3'
 import Validators from '@karpatkey-monorepo/shared/components/Icons/Protocols/Validators'
+import CoW from '@karpatkey-monorepo/shared/components/Icons/Protocols/CoW'
 import * as React from 'react'
 
 interface ProtocolIconProps {
@@ -93,6 +95,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
     case 'Maker':
       icon = <Maker width={24} height={24} />
       break
+    case 'CoW':
+      icon = <CoW width={24} height={24} />
+      break
     case 'Notional':
       icon = <Notional width={24} height={24} />
       break
@@ -101,6 +106,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Swapr':
       icon = <Swapr width={24} height={24} />
+      break
+    case 'Spark':
+      icon = <Spark width={24} height={24} />
       break
     case 'SushiSwap':
       icon = <SushiSwap width={24} height={24} />
