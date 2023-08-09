@@ -20,7 +20,7 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
       id="Farming funds and results"
       title="Farming funds and results"
       subTitle="Farming funds by protocol"
-      helpInfo="Farming funds, % allocation and results per position.  Detail by rewards and fees/rebasing/pool token variation. Swap results."
+      helpInfo="Farming funds, % allocation and results per position. Swap results."
     >
       {!fundsByProtocol || fundsByProtocol.length === 0 ? (
         <EmptyData />
