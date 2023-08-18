@@ -42,7 +42,7 @@
     "framer-motion": "^10.16.0",
     "lottie-react": "^2.4.0",
     "luxon": "^3.4.0",
-    "next": "^13.4.17",
+    "next": "^13.4.18",
     "numbro": "^2.3.6",
     "puppeteer": "^21.1.0",
     "react": "^18.2.0",
