@@ -76,7 +76,8 @@ export const enum DAO_NAME_KEY {
   'ENS DAO' = 3,
   'CoW DAO' = 4,
   'karpatkey DAO' = 5,
-  'Gnosis Guild' = 6
+  'Gnosis Guild' = 6,
+  'Lido' = 7
 }
 
 export const FILTER_DAOS: FILTER_DAO[] = [
@@ -150,6 +151,24 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     icon: '/images/protocols/karpatkey.svg',
     keyName: 'karpatkey DAO',
     sinceMonth: 1,
+    sinceYear: 2023,
+    addresses: [
+      {
+        address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
+        chainId: 1
+      },
+      {
+        address: '0x54e191B01aA9C1F61AA5C3BCe8d00956F32D3E71',
+        chainId: 100
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['Lido'],
+    name: 'Lido',
+    icon: '/images/protocols/lido.svg',
+    keyName: 'Lido',
+    sinceMonth: 7,
     sinceYear: 2023,
     addresses: [
       {
