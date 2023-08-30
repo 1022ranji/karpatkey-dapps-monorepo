@@ -40,6 +40,7 @@ export type CHAIN = {
 export type DAO_ADDRESS = {
   address: string
   chainId: number
+  isSafe: boolean
 }
 
 export interface FILTER_DAO {
@@ -76,7 +77,8 @@ export const enum DAO_NAME_KEY {
   'ENS DAO' = 3,
   'CoW DAO' = 4,
   'karpatkey DAO' = 5,
-  'Gnosis Guild' = 6
+  'Gnosis Guild' = 6,
+  'Lido' = 7
 }
 
 export const FILTER_DAOS: FILTER_DAO[] = [
@@ -90,11 +92,13 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     addresses: [
       {
         address: '0x849d52316331967b6ff1198e5e32a0eb168d039d',
-        chainId: 1
+        chainId: 1,
+        isSafe: true
       },
       {
         address: '0x458cd345b4c05e8df39d0a07220feb4ec19f5e6f',
-        chainId: 100
+        chainId: 100,
+        isSafe: true
       }
     ]
   },
@@ -108,7 +112,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     addresses: [
       {
         address: '0x0efccbb9e2c09ea29551879bd9da32362b32fc89',
-        chainId: 1
+        chainId: 1,
+        isSafe: true
       }
     ]
   },
@@ -122,7 +127,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     addresses: [
       {
         address: '0x4f2083f5fbede34c2714affb3105539775f7fe64',
-        chainId: 1
+        chainId: 1,
+        isSafe: true
       }
     ]
   },
@@ -136,11 +142,13 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     addresses: [
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
-        chainId: 1
+        chainId: 1,
+        isSafe: true
       },
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
-        chainId: 100
+        chainId: 100,
+        isSafe: true
       }
     ]
   },
@@ -154,11 +162,29 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     addresses: [
       {
         address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
-        chainId: 1
+        chainId: 1,
+        isSafe: true
       },
       {
         address: '0x54e191B01aA9C1F61AA5C3BCe8d00956F32D3E71',
-        chainId: 100
+        chainId: 100,
+        isSafe: true
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['Lido'],
+    name: 'Lido',
+    icon: '/images/protocols/lido.svg',
+    keyName: 'Lido',
+    sinceMonth: 7,
+    sinceYear: 2023,
+    addresses: [
+      // TODO: update theses addresses
+      {
+        address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
+        chainId: 1,
+        isSafe: false
       }
     ]
   }
