@@ -171,6 +171,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     sinceMonth: 7,
     sinceYear: 2023,
     addresses: [
+      // TODO: update theses addresses
       {
         address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
         chainId: 1
