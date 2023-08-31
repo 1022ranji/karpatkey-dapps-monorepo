@@ -13,7 +13,8 @@ interface MonthAutocompleteProps {
 export default function MonthAutocomplete(props: MonthAutocompleteProps) {
   // TODO: remove this when filter refactor is ready
   const domainName = window.location.hostname
-  const isProduction = domainName.includes('karpatkey')
+  // TODO: this should be done with an env variable
+  const isProduction = domainName.includes('reports.karpatkey.dev')
   const options = isProduction ? [{ label: 'July', id: 7 }] : MONTHS
   return <CustomAutocomplete {...props} options={options} label={<Label />} />
 }
