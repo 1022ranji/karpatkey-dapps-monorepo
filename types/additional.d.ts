@@ -26,3 +26,4 @@ declare type DAO_NAME =
   | 'CoW DAO'
   | 'karpatkey DAO'
   | 'Gnosis Guild'
+  | 'Lido'

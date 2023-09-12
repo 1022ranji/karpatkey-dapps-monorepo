@@ -18,9 +18,11 @@ export const getTokenDetails = (data: any) => {
       blockchain: string
       tokenSymbol: string
     }[][] => {
-      const tokenCategory = obj['token_category'].replace(/[0-9][0-9] /g, '').trim()
-      const blockchain = obj['blockchain'].trim()
-      const tokenSymbol = obj['token_symbol'].trim()
+      const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '').trim()
+      const blockchain = obj?.blockchain?.trim()
+      const tokenSymbol = obj?.token_symbol?.trim()
+
+      if (!tokenCategory || !blockchain || !tokenSymbol) return acc
 
       if (!acc[blockchain]) acc[blockchain] = {}
       if (!acc[blockchain][tokenCategory]) acc[blockchain][tokenCategory] = {}
@@ -100,8 +102,10 @@ export const getTokenDetailsGrouped = (data: any) => {
       tokenCategory: string
       tokenSymbol: string
     }[][] => {
-      const tokenCategory = obj['token_category'].replace(/[0-9][0-9] /g, '').trim()
-      const tokenSymbol = obj['token_symbol'].trim()
+      const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '').trim()
+      const tokenSymbol = obj?.token_symbol?.trim()
+
+      if (!tokenCategory || !tokenSymbol) return acc
 
       if (!acc[tokenCategory]) acc[tokenCategory] = {}
       if (!acc[tokenCategory][tokenSymbol])
