@@ -94,8 +94,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                             <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
                               <OpenInNewIcon
                                 onClick={onClick}
-                                fontSize={'small'}
-                                sx={{ cursor: 'pointer' }}
+                                sx={{ cursor: 'pointer', fontSize: '1rem !important' }}
                               />
                             </Tooltip>
                           )}
@@ -133,9 +132,9 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                           )}
 
                           {row.priceVariation > 0 ? (
-                            <ArrowUpwardIcon fontSize={'small'} />
+                            <ArrowUpwardIcon sx={{ fontSize: '1rem !important' }} />
                           ) : !row.priceVariation ? null : (
-                            <ArrowDownwardIcon fontSize={'small'} />
+                            <ArrowDownwardIcon sx={{ fontSize: '1rem !important' }} />
                           )}
                         </BoxWrapperRow>
                       </TableCellCustom>
