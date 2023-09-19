@@ -121,10 +121,20 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                          {formatPercentage(row.priceVariation)}
+                          {formatPercentage(row.priceVariation) === '0.00%' ? (
+                            <Tooltip
+                              title={formatPercentage(row.priceVariation, 10)}
+                              sx={{ ml: 1 }}
+                            >
+                              <span>{formatPercentage(row.priceVariation)}</span>
+                            </Tooltip>
+                          ) : (
+                            formatPercentage(row.priceVariation)
+                          )}
+
                           {row.priceVariation > 0 ? (
                             <ArrowUpwardIcon fontSize={'small'} />
-                          ) : (
+                          ) : !row.priceVariation ? null : (
                             <ArrowDownwardIcon fontSize={'small'} />
                           )}
                         </BoxWrapperRow>
