@@ -1,5 +1,5 @@
 
-FROM node:lts-alpine as builder
+FROM node:20.0.0-alpine as builder
 
 RUN apk update && \
     apk add git && \
@@ -13,7 +13,7 @@ COPY . .
 RUN yarn install
 
 # Production image
-FROM node:lts-alpine
+FROM node:20.0.0-alpine
 
 WORKDIR /app
 
