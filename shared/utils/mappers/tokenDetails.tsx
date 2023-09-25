@@ -1,6 +1,6 @@
 export const getTokenDetails = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
-    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && row.bal_1 > 0
+    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
   const rows = rowsFiltered.reduce(
@@ -84,7 +84,7 @@ export const getTokenDetails = (data: any) => {
 
 export const getTokenDetailsGrouped = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
-    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && row.bal_1 > 0
+    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
   const rows = rowsFiltered.reduce(
