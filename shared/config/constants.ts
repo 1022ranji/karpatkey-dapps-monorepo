@@ -51,6 +51,7 @@ export interface FILTER_DAO {
   sinceMonth: number
   sinceYear: number
   addresses: DAO_ADDRESS[]
+  shouldBeDisplayedHomepage?: boolean
 }
 
 export const CHAINS: CHAIN[] = [
@@ -89,6 +90,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis DAO',
     sinceMonth: 1,
     sinceYear: 2023,
+    shouldBeDisplayedHomepage: true,
     addresses: [
       {
         address: '0x849d52316331967b6ff1198e5e32a0eb168d039d',
@@ -109,6 +111,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Balancer DAO',
     sinceMonth: 2,
     sinceYear: 2023,
+    shouldBeDisplayedHomepage: true,
     addresses: [
       {
         address: '0x0efccbb9e2c09ea29551879bd9da32362b32fc89',
@@ -124,6 +127,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'ENS DAO',
     sinceMonth: 3,
     sinceYear: 2023,
+    shouldBeDisplayedHomepage: true,
     addresses: [
       {
         address: '0x4f2083f5fbede34c2714affb3105539775f7fe64',
@@ -139,6 +143,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'CoW DAO',
     sinceMonth: 2,
     sinceYear: 2023,
+    shouldBeDisplayedHomepage: true,
     addresses: [
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
@@ -159,6 +164,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'karpatkey DAO',
     sinceMonth: 1,
     sinceYear: 2023,
+    shouldBeDisplayedHomepage: true,
     addresses: [
       {
         address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
@@ -179,6 +185,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Lido',
     sinceMonth: 7,
     sinceYear: 2023,
+    shouldBeDisplayedHomepage: false,
     addresses: [
       // TODO: update theses addresses
       {
