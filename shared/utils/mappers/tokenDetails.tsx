@@ -478,7 +478,7 @@ export const getTokenDetailByPosition = (data: any) => {
 export const getWalletTokenDetails = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
     return (
-      row.protocol.includes('Wallet') && row.metric.includes('balances_monthly') && row.bal_1 !== 0
+      row.protocol.includes('Wallet') && row.metric.includes('balances_monthly') && +row.bal_1 !== 0
     )
   })
 
