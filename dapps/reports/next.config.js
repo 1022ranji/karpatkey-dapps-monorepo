@@ -7,6 +7,9 @@ const nextConfig = {
   transpilePackages: ['@karpatkey-monorepo/shared'],
   publicRuntimeConfig: {
     version
+  },
+  images: {
+    domains: ['reports.karpatkey.com', 'localhost', 'reports.karpatkey.dev']
   }
 }
 
