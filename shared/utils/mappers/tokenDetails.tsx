@@ -1,6 +1,6 @@
 export const getTokenDetails = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
-    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && row.bal_1 > 0
+    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
   const rows = rowsFiltered.reduce(
@@ -84,7 +84,7 @@ export const getTokenDetails = (data: any) => {
 
 export const getTokenDetailsGrouped = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
-    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && row.bal_1 > 0
+    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
   const rows = rowsFiltered.reduce(
@@ -478,7 +478,7 @@ export const getTokenDetailByPosition = (data: any) => {
 export const getWalletTokenDetails = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
     return (
-      row.protocol.includes('Wallet') && row.metric.includes('balances_monthly') && row.bal_1 > 0
+      row.protocol.includes('Wallet') && row.metric.includes('balances_monthly') && +row.bal_1 !== 0
     )
   })
 
