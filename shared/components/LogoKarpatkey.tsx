@@ -11,7 +11,7 @@ const LogoKarpatkey = () => (
     display="flex"
     sx={{ textDecoration: 'none', cursor: 'pointer' }}
   >
-    <NextImage alt="logo" src="/images/logos/logo1.png" width={102} height={21} />
+    <NextImage alt="logo" src="/images/logos/logo2.png" width={102} height={21} />
   </Box>
 )
 
