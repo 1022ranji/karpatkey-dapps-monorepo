@@ -5,14 +5,27 @@ import { filterSchemaValidation } from '@karpatkey-monorepo/reports/src/validati
 import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import React, { ReactElement } from 'react'
+import { isProductionCheckingDomainName } from '@karpatkey-monorepo/shared/utils'
 
 const HomepageContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Homepage'))
-const WelcomeContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Welcome'))
+const WelcomeContent = dynamic(() => import('../views/Welcome'))
+const DashboardContent = dynamic(() => import('../views/Dashboard'))
+
 const Homepage = (props: ReportProps) => {
   const { month, dao, year } = props
   const isFilterEmpty = !month && !dao && !year
 
-  return isFilterEmpty ? <WelcomeContent /> : <HomepageContent {...props} />
+  if (isFilterEmpty) {
+    const isProduction = isProductionCheckingDomainName()
+
+    if (isProduction) {
+      return <WelcomeContent />
+    } else {
+      return <DashboardContent {...props} />
+    }
+  }
+
+  return <HomepageContent {...props} />
 }
 
 Homepage.getTitle = 'Home'

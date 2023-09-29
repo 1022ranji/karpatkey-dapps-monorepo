@@ -1,5 +1,11 @@
 import { getAddress } from '@ethersproject/address'
-import { FILTER_DAO, FILTER_DAOS, MONTHS, NONE } from '@karpatkey-monorepo/shared/config/constants'
+import {
+  FILTER_DAO,
+  FILTER_DAOS,
+  MONTHS,
+  MONTHS_ALLOWED,
+  NONE
+} from '@karpatkey-monorepo/shared/config/constants'
 
 import { AutocompleteOption } from '../components/CustomAutocomplete'
 
@@ -56,3 +62,23 @@ export const isDAONameValid = (daoName: DAO_NAME) => {
 export const isYearValid = (year: number) => year < 2022 || year > new Date().getFullYear()
 
 export const isMonthValid = (month: number) => month < 1 || month > 12
+
+export const getLatestMonth = () => {
+  const currentMonth = new Date().getMonth() + 1
+  // Get the latest month allowed, closer to the current month
+  let month = 0
+  MONTHS_ALLOWED.forEach(({ id }) => {
+    if (id <= +currentMonth && id > month) {
+      month = id
+    }
+  })
+  return month
+}
+
+export const isProductionCheckingDomainName = () => {
+  // TODO: remove this when filter refactor is ready
+  const domainName = window.location.hostname
+  // TODO: this should be done with an env variable
+  const isProduction = domainName.includes('reports.karpatkey.com')
+  return isProduction
+}

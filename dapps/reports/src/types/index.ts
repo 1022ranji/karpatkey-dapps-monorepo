@@ -26,6 +26,9 @@ export type ReportData = {
   tokenDetailsGrouped: any[]
   tokenDetailByPosition: any[]
   walletTokenDetail: any[]
+  daoResume: any[]
+  nonCustodialAum: number
+  lastMonthFarmingResults: number
 }
 
 export type ReportProps = ReportData & Filter
