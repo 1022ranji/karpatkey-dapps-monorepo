@@ -9,9 +9,7 @@ const Welcome = () => {
 
   React.useEffect(() => {
     ;(async () => {
-      const karpatkeyFields = await import(
-        '@karpatkey-monorepo/reports/src/utils/Lottie/karpatkeyFields.json'
-      )
+      const karpatkeyFields = await import('../utils/Lottie/karpatkeyFields.json')
 
       setLottieFile(karpatkeyFields)
     })()

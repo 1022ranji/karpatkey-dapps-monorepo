@@ -1,6 +1,6 @@
 import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
 import { Filter } from '@karpatkey-monorepo/reports/src/types'
-import { getDAO } from '@karpatkey-monorepo/shared/utils'
+import { getDAO, getLatestMonth } from '@karpatkey-monorepo/shared/utils'
 import {
   getBalanceOverviewByBlockchain,
   getBalanceOverviewByType
@@ -31,6 +31,169 @@ import {
   getTreasuryVariationForThePeriodDetails,
   getTreasuryVariationHistory
 } from '@karpatkey-monorepo/shared/utils/mappers/treasuryVariation'
+import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
+
+const summaryData = ({
+  variationMetricsDetailFiltered,
+  financialPositionsFiltered,
+  financialMetricsFiltered,
+  financialMetricAndVarDetailFiltered
+}: any) => {
+  // Funds by token category
+  const fundsByTokenCategory = getSummaryFundsByTokenCategory(variationMetricsDetailFiltered)
+
+  // Funds by type
+  const fundsByType = getSummaryFundsByType(variationMetricsDetailFiltered)
+
+  // Funds by blockchain
+  const fundsByBlockchain = getSummaryFundsByBlockchain(variationMetricsDetailFiltered)
+
+  // Funds by protocol
+  const fundsByProtocol = getSummaryFundsByProtocol(financialPositionsFiltered)
+
+  // Summary blocks
+  const totalFunds = getTotalFunds(variationMetricsDetailFiltered)
+  const capitalUtilization = getCapitalUtilization(financialMetricsFiltered)
+  const farmingResults = getFarmingResults(financialMetricsFiltered)
+  const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
+
+  return {
+    totalFunds,
+    capitalUtilization,
+    farmingResults,
+    globalROI,
+    fundsByTokenCategory,
+    fundsByType,
+    fundsByBlockchain,
+    fundsByProtocol
+  }
+}
+
+const balanceOverviewData = ({ variationMetricsDetailFiltered }: any) => {
+  // Funds by token category / Type
+  const balanceOverviewType = getBalanceOverviewByType(variationMetricsDetailFiltered)
+
+  // Funds by token category / Blockchain
+  const balanceOverviewBlockchain = getBalanceOverviewByBlockchain(variationMetricsDetailFiltered)
+
+  return {
+    balanceOverviewType,
+    balanceOverviewBlockchain
+  }
+}
+
+const treasuryVariationData = ({ financialMetricsFiltered, historicVariationFiltered }: any) => {
+  // For the period
+  const treasuryVariationData = getTreasuryVariationForThePeriod(financialMetricsFiltered)
+
+  // In this year
+  const historicVariationData = getTreasuryVariationHistory(historicVariationFiltered)
+
+  // For the period, detail
+  const treasuryVariationForThePeriodDetailData =
+    getTreasuryVariationForThePeriodDetails(financialMetricsFiltered)
+
+  return {
+    treasuryVariationData,
+    historicVariationData,
+    treasuryVariationForThePeriodDetailData
+  }
+}
+
+const farmingFundsData = ({ financialPositionsFiltered, financialMetricsFiltered }: any) => {
+  // Farming funds / Results by protocol
+  const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
+
+  // Farming result from farm swaps
+  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsFiltered)
+
+  // Farming results details by protocol
+  const farmingResultsDetailsByProtocol =
+    getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
+
+  return {
+    farmingFundsByProtocol,
+    totalFarmingResultsFarmSwaps,
+    farmingResultsDetailsByProtocol
+  }
+}
+
+const tokenDetailsData = ({
+  variationMetricsDetailFiltered,
+  financialMetricAndVarDetailFiltered
+}: any) => {
+  const tokenDetails = getTokenDetails(variationMetricsDetailFiltered)
+  const tokenDetailsGrouped = getTokenDetailsGrouped(variationMetricsDetailFiltered)
+
+  // Token detail by position
+  const tokenDetailByPosition = getTokenDetailByPosition(financialMetricAndVarDetailFiltered)
+
+  // Wallet token detail
+  const walletTokenDetail = getWalletTokenDetails(variationMetricsDetailFiltered)
+
+  return {
+    tokenDetails,
+    tokenDetailsGrouped,
+    tokenDetailByPosition,
+    walletTokenDetail
+  }
+}
+
+const getDAOResume = async ({
+  dao,
+  variationMetricsDetail,
+  financialMetrics,
+  financialMetricAndVarDetail
+}: any) => {
+  const daoFound = FILTER_DAOS.find((filterDao: FILTER_DAO) => {
+    return filterDao.keyName.toLowerCase() === (dao as string).toLowerCase()
+  })
+  const metricPeriodType = 'month'
+
+  const month = getLatestMonth()
+  const year = new Date().getFullYear()
+  const metricPeriod = `${year}_${month}`
+
+  const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) =>
+    filterValues(row, metricPeriodType, dao, metricPeriod)
+  )
+  const financialMetricsFiltered = financialMetrics.filter((row: any) =>
+    filterValues(row, metricPeriodType, dao, metricPeriod)
+  )
+  const financialMetricAndVarDetailFiltered = financialMetricAndVarDetail.filter((row: any) =>
+    filterValues(row, metricPeriodType, dao, metricPeriod)
+  )
+
+  const totalFunds = getTotalFunds(variationMetricsDetailFiltered)
+  const capitalUtilization = getCapitalUtilization(financialMetricsFiltered)
+  const farmingResults = getFarmingResults(financialMetricsFiltered)
+  const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
+
+  const urlToReport = `?dao=${daoFound?.id}&month=${month}&year=${year}`
+
+  return {
+    totalFunds,
+    capitalUtilization,
+    farmingResults,
+    globalROI,
+    urlToReport
+  }
+}
+
+const filterValues = (
+  row: {
+    date_type: string
+    dao: string
+    year_month: string
+  },
+  metricPeriodType: string,
+  daoKeyName: DAO_NAME | undefined,
+  metricPeriod: Maybe<string>
+) => {
+  return (
+    row.date_type === metricPeriodType && row.dao === daoKeyName && row.year_month === metricPeriod
+  )
+}
 
 export const getCommonServerSideProps = async (params: Filter) => {
   const { month, year, dao } = params
@@ -58,130 +221,89 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const DAO = getDAO(dao)
   const daoKeyName = DAO?.keyName
   const metricPeriodType = 'month'
-  const metricPeriod = year && month ? `${year}_${month}` : null
+  const metricPeriod: Maybe<string> = year && month ? `${year}_${month}` : null
 
   // Step 4: Apply filters to the data by common params, like daoName, periodType and period
-  const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) => {
-    return (
-      row.date_type === metricPeriodType &&
-      row.dao === daoKeyName &&
-      row.year_month === metricPeriod
-    )
-  })
+  const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) =>
+    filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
+  )
 
-  const financialPositionsFiltered = financialPositions.filter((row: any) => {
-    return (
-      row.date_type === metricPeriodType &&
-      row.dao === daoKeyName &&
-      row.year_month === metricPeriod
-    )
-  })
+  const financialPositionsFiltered = financialPositions.filter((row: any) =>
+    filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
+  )
 
-  const historicVariationFiltered = historicVariation.filter((row: any) => {
-    return (
-      row.date_type === metricPeriodType &&
-      row.dao === daoKeyName &&
-      row.year_month === metricPeriod
-    )
-  })
+  const historicVariationFiltered = historicVariation.filter((row: any) =>
+    filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
+  )
 
-  const financialMetricsFiltered = financialMetrics.filter((row: any) => {
-    return (
-      row.date_type === metricPeriodType &&
-      row.dao === daoKeyName &&
-      row.year_month === metricPeriod
-    )
-  })
+  const financialMetricsFiltered = financialMetrics.filter((row: any) =>
+    filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
+  )
 
-  const financialMetricAndVarDetailFiltered = financialMetricAndVarDetail.filter((row: any) => {
-    return (
-      row.date_type === metricPeriodType &&
-      row.dao === daoKeyName &&
-      row.year_month === metricPeriod
-    )
-  })
+  const financialMetricAndVarDetailFiltered = financialMetricAndVarDetail.filter((row: any) =>
+    filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
+  )
 
   // #####################################################
 
   // #### Summary blocks ####
-
-  // Funds by token category
-  const fundsByTokenCategory = getSummaryFundsByTokenCategory(variationMetricsDetailFiltered)
-
-  // Funds by type
-  const fundsByType = getSummaryFundsByType(variationMetricsDetailFiltered)
-
-  // Funds by blockchain
-  const fundsByBlockchain = getSummaryFundsByBlockchain(variationMetricsDetailFiltered)
-
-  // Funds by protocol
-  const fundsByProtocol = getSummaryFundsByProtocol(financialPositionsFiltered)
-
-  // Summary blocks
-  const totalFunds = getTotalFunds(variationMetricsDetailFiltered)
-  const capitalUtilization = getCapitalUtilization(financialMetricsFiltered)
-  const farmingResults = getFarmingResults(financialMetricsFiltered)
-  const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
+  const summaryDataValues = summaryData({
+    variationMetricsDetailFiltered,
+    financialPositionsFiltered,
+    financialMetricsFiltered,
+    financialMetricAndVarDetailFiltered
+  })
 
   // #### Balance Overview block ####
-  // Funds by token category / Type
-  const balanceOverviewType = getBalanceOverviewByType(variationMetricsDetailFiltered)
-
-  // Funds by token category / Blockchain
-  const balanceOverviewBlockchain = getBalanceOverviewByBlockchain(variationMetricsDetailFiltered)
+  const balanceOverviewValues = balanceOverviewData({ variationMetricsDetailFiltered })
 
   // #### Treasury variation ####
-  // For the period
-  const treasuryVariationData = getTreasuryVariationForThePeriod(financialMetricsFiltered)
+  const treasuryVariationValues = treasuryVariationData({
+    financialMetricsFiltered,
+    historicVariationFiltered
+  })
 
-  // In this year
-  const historicVariationData = getTreasuryVariationHistory(historicVariationFiltered)
+  // #### Farming Funds / Results ####
+  const farmingFundsValues = farmingFundsData({
+    financialPositionsFiltered,
+    financialMetricsFiltered
+  })
 
-  // For the period, detail
-  const treasuryVariationForThePeriodDetailData =
-    getTreasuryVariationForThePeriodDetails(financialMetricsFiltered)
+  // #### Token detail ####
+  const tokenDetailsValues = tokenDetailsData({
+    variationMetricsDetailFiltered,
+    financialMetricAndVarDetailFiltered
+  })
 
-  // #### Farming Funds / Results
-  // Farming funds / Results by protocol
-  const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
+  const daoResumePromises = FILTER_DAOS.filter(
+    (dao: FILTER_DAO) => dao.shouldBeDisplayedHomepage
+  ).map(async (dao: FILTER_DAO) => {
+    const daoResume = await getDAOResume({
+      dao: dao.keyName,
+      variationMetricsDetail,
+      financialMetrics,
+      financialMetricAndVarDetail
+    })
+    return {
+      name: dao.name,
+      keyName: dao.keyName,
+      icon: dao.icon,
+      ...daoResume
+    }
+  })
+  const daoResume = await Promise.all(daoResumePromises)
 
-  // Farming result from farm swaps
-  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsFiltered)
-
-  // Farming results details by protocol
-  const farmingResultsDetailsByProtocol =
-    getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
-
-  // Token detail
-  const tokenDetails = getTokenDetails(variationMetricsDetailFiltered)
-  const tokenDetailsGrouped = getTokenDetailsGrouped(variationMetricsDetailFiltered)
-
-  // Token detail by position
-  const tokenDetailByPosition = getTokenDetailByPosition(financialMetricAndVarDetailFiltered)
-
-  // Wallet token detail
-  const walletTokenDetail = getWalletTokenDetails(variationMetricsDetailFiltered)
+  const nonCustodialAum = daoResume.reduce((acc, dao) => acc + dao.totalFunds, 0)
+  const lastMonthFarmingResults = daoResume.reduce((acc, dao) => acc + dao.farmingResults, 0)
 
   return {
-    totalFunds,
-    capitalUtilization,
-    farmingResults,
-    globalROI,
-    fundsByTokenCategory,
-    fundsByType,
-    fundsByBlockchain,
-    fundsByProtocol,
-    balanceOverviewType,
-    balanceOverviewBlockchain,
-    treasuryVariationData,
-    historicVariationData,
-    treasuryVariationForThePeriodDetailData,
-    farmingFundsByProtocol,
-    farmingResultsDetailsByProtocol,
-    totalFarmingResultsFarmSwaps,
-    tokenDetails,
-    tokenDetailsGrouped,
-    tokenDetailByPosition,
-    walletTokenDetail
+    ...summaryDataValues,
+    ...balanceOverviewValues,
+    ...treasuryVariationValues,
+    ...farmingFundsValues,
+    ...tokenDetailsValues,
+    daoResume,
+    nonCustodialAum,
+    lastMonthFarmingResults
   }
 }
