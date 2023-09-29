@@ -155,7 +155,7 @@ const Dashboard = (props: ReportProps) => {
           textAlign="center"
           sx={{
             fontFamily: 'IBM Plex Mono',
-            fontSize: '30px',
+            fontSize: '24px',
             lineHeight: '28px',
             fontWeight: '300',
             fontStyle: 'normal'
