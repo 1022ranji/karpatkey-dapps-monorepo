@@ -296,13 +296,20 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const nonCustodialAum = daoResume.reduce((acc, dao) => acc + dao.totalFunds, 0)
   const lastMonthFarmingResults = daoResume.reduce((acc, dao) => acc + dao.farmingResults, 0)
 
+  // sort daoResume by total funds, but keep the item with keyName equal to "karpatkey DAO" at the bottom
+  const daoResumeSorted = daoResume.sort((a, b) => {
+    if (a.keyName === 'karpatkey DAO') return 1
+    if (b.keyName === 'karpatkey DAO') return -1
+    return b.totalFunds - a.totalFunds
+  })
+
   return {
     ...summaryDataValues,
     ...balanceOverviewValues,
     ...treasuryVariationValues,
     ...farmingFundsValues,
     ...tokenDetailsValues,
-    daoResume,
+    daoResume: daoResumeSorted,
     nonCustodialAum,
     lastMonthFarmingResults
   }
