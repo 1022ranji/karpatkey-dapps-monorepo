@@ -84,19 +84,15 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperRow
-                          gap={1}
-                          sx={{ justifyContent: 'flex-start' }}
-                          title={row.priceAvg}
-                        >
-                          {formatCurrencyWithPrecision(row.priceAvg)}
+                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                          <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
+                            <span>{formatCurrencyWithPrecision(row.priceAvg)}</span>
+                          </Tooltip>
                           {TOKEN && (
-                            <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
-                              <OpenInNewIcon
-                                onClick={onClick}
-                                sx={{ cursor: 'pointer', fontSize: '1rem !important' }}
-                              />
-                            </Tooltip>
+                            <OpenInNewIcon
+                              onClick={onClick}
+                              sx={{ cursor: 'pointer', fontSize: '1rem !important' }}
+                            />
                           )}
                         </BoxWrapperRow>
                       </TableCellCustom>
