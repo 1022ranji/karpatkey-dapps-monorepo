@@ -132,7 +132,7 @@ const Dashboard = (props: ReportProps) => {
                             onClick={() => {
                               window.open(urlToReport, '_blank')
                             }}
-                            sx={{ cursor: 'pointer', fontSize: '1.2rem !important' }}
+                            sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
                           />
                         </TableCellCustom>
                       </TableRow>

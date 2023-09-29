@@ -8,8 +8,8 @@ import React, { ReactElement } from 'react'
 import { isProductionCheckingDomainName } from '@karpatkey-monorepo/shared/utils'
 
 const HomepageContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Homepage'))
-const WelcomeContent = dynamic(() => import('../views/Welcome'))
-const DashboardContent = dynamic(() => import('../views/Dashboard'))
+const WelcomeContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Welcome'))
+const DashboardContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Dashboard'))
 
 const Homepage = (props: ReportProps) => {
   const { month, dao, year } = props
