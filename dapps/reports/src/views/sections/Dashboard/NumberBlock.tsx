@@ -18,8 +18,8 @@ export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
         sx={{
           fontFamily: 'IBM Plex Mono',
           fontSize: '24px',
-          lineHeight: '28px',
-          fontWeight: '300',
+          lineHeight: '24px',
+          fontWeight: '400',
           fontStyle: 'normal'
         }}
       >

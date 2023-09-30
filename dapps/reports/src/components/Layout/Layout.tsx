@@ -49,7 +49,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           minHeight: HEADER_HEIGHT
         }}
       >
-        <Header />
+        <Header showFilters />
       </Box>
       <Box
         sx={{

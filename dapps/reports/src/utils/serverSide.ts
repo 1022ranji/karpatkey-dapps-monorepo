@@ -275,9 +275,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     financialMetricAndVarDetailFiltered
   })
 
-  const daoResumePromises = FILTER_DAOS.filter(
-    (dao: FILTER_DAO) => dao.shouldBeDisplayedHomepage
-  ).map(async (dao: FILTER_DAO) => {
+  const daoResumePromises = FILTER_DAOS.map(async (dao: FILTER_DAO) => {
     const daoResume = await getDAOResume({
       dao: dao.keyName,
       variationMetricsDetail,
@@ -288,15 +286,23 @@ export const getCommonServerSideProps = async (params: Filter) => {
       name: dao.name,
       keyName: dao.keyName,
       icon: dao.icon,
+      shouldBeDisplayedHomepage: dao.shouldBeDisplayedHomepage,
       ...daoResume
     }
   })
   const daoResume = await Promise.all(daoResumePromises)
 
-  const nonCustodialAum = daoResume.reduce((acc, dao) => acc + dao.totalFunds, 0)
-  const lastMonthFarmingResults = daoResume.reduce((acc, dao) => acc + dao.farmingResults, 0)
+  const nonCustodialAum = daoResume.reduce((acc, dao) => {
+    if (!dao.shouldBeDisplayedHomepage) return acc
+    return acc + dao.totalFunds
+  }, 0)
 
-  // sort daoResume by total funds, but keep the item with keyName equal to "karpatkey DAO" at the bottom
+  const lastMonthFarmingResults = daoResume.reduce((acc, dao) => {
+    if (!dao.shouldBeDisplayedHomepage) return acc
+    return acc + dao.farmingResults
+  }, 0)
+
+  // sort daoResume by total funds, but keep the item with keyName equal to "karpatkey DAO" at the last item
   const daoResumeSorted = daoResume.sort((a, b) => {
     if (a.keyName === 'karpatkey DAO') return 1
     if (b.keyName === 'karpatkey DAO') return -1
