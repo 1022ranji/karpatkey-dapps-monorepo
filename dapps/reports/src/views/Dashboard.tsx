@@ -11,23 +11,7 @@ import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/sr
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
-
-const Title = ({ title }: { title: string }) => {
-  return (
-    <CustomTypography
-      sx={{
-        fontFamily: 'IBM Plex Sans',
-        fontStyle: 'normal',
-        fontWeight: '600 !important',
-        fontSize: '16px',
-        lineHeight: '22px',
-        color: '#222222'
-      }}
-    >
-      {title}
-    </CustomTypography>
-  )
-}
+import { useRouter } from 'next/router'
 
 const Value = ({ value }: { value: string }) => {
   return (
@@ -35,10 +19,10 @@ const Value = ({ value }: { value: string }) => {
       sx={{
         fontFamily: 'IBM Plex Mono',
         fontStyle: 'normal',
-        fontWeight: '600 !important',
-        fontSize: '22px',
+        fontWeight: '400 !important',
+        fontSize: '18px',
         lineHeight: '24px',
-        color: '#222222'
+        color: '#1A1A1A'
       }}
     >
       {value}
@@ -46,12 +30,133 @@ const Value = ({ value }: { value: string }) => {
   )
 }
 
+const Title = ({ title }: { title: string }) => {
+  return (
+    <CustomTypography
+      textAlign="center"
+      sx={{
+        fontFamily: 'IBM Plex Mono',
+        fontSize: '24px',
+        lineHeight: '28px',
+        fontWeight: '300',
+        fontStyle: 'normal',
+        color: '#1A1A1A'
+      }}
+    >
+      {title}
+    </CustomTypography>
+  )
+}
+
+interface TableProps {
+  daoResume: any
+}
+
+const DashboardTable = ({ daoResume }: TableProps) => {
+  const router = useRouter()
+
+  return (
+    <TableContainer component={Box}>
+      <Table>
+        <TableHead>
+          <TableRow sx={{ '& th': { borderBottom: 'none !important' } }}>
+            <TableEmptyCellCustom />
+            <TableCellCustom align="left" sx={{ width: '20%', padding: '5px' }}>
+              <Value value={'Total funds'} />
+            </TableCellCustom>
+            <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
+              <Value value={'Capital utilisation'} />
+            </TableCellCustom>
+            <TableCellCustom align="left" sx={{ width: '25%', padding: '5px' }}>
+              <Value value={'Farming results'} />
+            </TableCellCustom>
+            <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
+              <Value value={'APY'} />
+            </TableCellCustom>
+            <TableEmptyCellCustom />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {daoResume.length === 0 ? null : (
+            <>
+              {daoResume.map((dao: any, index: number) => {
+                const {
+                  icon,
+                  name,
+                  totalFunds,
+                  capitalUtilization,
+                  farmingResults,
+                  globalROI,
+                  urlToReport
+                } = dao
+
+                const onClick = () => {
+                  router.push(urlToReport)
+                }
+
+                return (
+                  <TableRow
+                    key={index}
+                    onClick={onClick}
+                    hover
+                    sx={{
+                      borderRadius: 10,
+                      display: 'table-group-row !important',
+                      '& td': {
+                        borderBottom: 'none !important'
+                      },
+                      '&:hover': {
+                        cursor: 'pointer'
+                      }
+                    }}
+                  >
+                    <TableCellCustom align="left" sx={{ padding: '5px' }}>
+                      <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
+                        <Image src={icon} alt={name} width={48} height={48} />
+                        <Value value={name} />
+                      </BoxWrapperRow>
+                    </TableCellCustom>
+                    <TableCellCustom align="left" sx={{ width: '20%', padding: '5px' }}>
+                      <Value value={formatCurrency(totalFunds)} />
+                    </TableCellCustom>
+                    <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
+                      <Value value={formatPercentage(capitalUtilization, 1)} />
+                    </TableCellCustom>
+                    <TableCellCustom align="left" sx={{ width: '25%', padding: '5px' }}>
+                      <Value value={formatCurrency(farmingResults)} />
+                    </TableCellCustom>
+                    <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
+                      <Value value={formatPercentage(globalROI)} />
+                    </TableCellCustom>
+                    <TableCellCustom align="left" sx={{ padding: '5px' }}>
+                      <OpenInNewIcon
+                        onClick={onClick}
+                        sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
+                      />
+                    </TableCellCustom>
+                  </TableRow>
+                )
+              })}
+            </>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
+}
+
 const Dashboard = (props: ReportProps) => {
   const { daoResume, nonCustodialAum, lastMonthFarmingResults } = props
 
+  const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
+  const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
+
   return (
     <AnimatePresenceWrapper>
-      <BoxWrapperColumn sx={{ alignItems: 'center', marginTop: 10 }} gap={10}>
+      <BoxWrapperColumn
+        sx={{ alignItems: 'center', marginTop: 5, marginRight: '10%', marginLeft: '10%' }}
+        gap={10}
+      >
         <CustomTypography variant="h1" textAlign="center">
           DAO treasury reports
         </CustomTypography>
@@ -64,117 +169,19 @@ const Dashboard = (props: ReportProps) => {
           />
         </BoxWrapperRow>
 
-        <BoxWrapperColumn sx={{ alignItems: 'flex-start' }} gap={2}>
-          <TableContainer component={Box}>
-            <Table sx={{ width: '100%' }}>
-              <TableHead>
-                <TableRow sx={{ '& th': { borderBottom: 'none !important' } }}>
-                  <TableEmptyCellCustom sx={{ width: '`15vw' }} />
-                  <TableCellCustom align="left" sx={{ width: '12vw', padding: '10px' }}>
-                    <Title title={'Total funds'} />
-                  </TableCellCustom>
-                  <TableCellCustom align="left" sx={{ width: '10vw', padding: '10px' }}>
-                    <Title title={'Capital utilisation'} />
-                  </TableCellCustom>
-                  <TableCellCustom align="left" sx={{ width: '10vw', padding: '10px' }}>
-                    <Title title={'Farming results'} />
-                  </TableCellCustom>
-                  <TableCellCustom align="left" sx={{ width: '5vw', padding: '10px' }}>
-                    <Title title={'APY'} />
-                  </TableCellCustom>
-                  <TableEmptyCellCustom />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {daoResume.length === 0 ? null : (
-                  <>
-                    {daoResume.map((dao: any, index: number) => {
-                      const {
-                        icon,
-                        name,
-                        totalFunds,
-                        capitalUtilization,
-                        farmingResults,
-                        globalROI,
-                        urlToReport
-                      } = dao
-                      return (
-                        <TableRow key={index} sx={{ '& td': { borderBottom: 'none !important' } }}>
-                          <TableCellCustom align="left" sx={{ width: '15vw', padding: '10px' }}>
-                            <BoxWrapperRow
-                              key={index}
-                              gap={4}
-                              sx={{ justifyContent: 'flex-start' }}
-                            >
-                              <Image src={icon} alt={name} width={64} height={64} />
-                              <CustomTypography
-                                sx={{
-                                  fontFamily: 'IBM Plex Sans',
-                                  fontStyle: 'normal',
-                                  fontWeight: '600 !important',
-                                  fontSize: '26px',
-                                  lineHeight: '22px',
-                                  color: '#222222'
-                                }}
-                              >
-                                {name}
-                              </CustomTypography>
-                            </BoxWrapperRow>
-                          </TableCellCustom>
-                          <TableCellCustom align="left" sx={{ width: '12vw', padding: '10px' }}>
-                            <Value value={formatCurrency(totalFunds)} />
-                          </TableCellCustom>
-                          <TableCellCustom align="left" sx={{ width: '10vw', padding: '10px' }}>
-                            <Value value={formatPercentage(capitalUtilization, 1)} />
-                          </TableCellCustom>
-                          <TableCellCustom align="left" sx={{ width: '10vw', padding: '10px' }}>
-                            <Value value={formatCurrency(farmingResults)} />
-                          </TableCellCustom>
-                          <TableCellCustom align="left" sx={{ width: '5vw', padding: '10px' }}>
-                            <Value value={formatPercentage(globalROI)} />
-                          </TableCellCustom>
-                          <TableCellCustom align="left" sx={{ padding: '10px' }}>
-                            <OpenInNewIcon
-                              onClick={() => {
-                                window.open(urlToReport, '_blank')
-                              }}
-                              sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
-                            />
-                          </TableCellCustom>
-                        </TableRow>
-                      )
-                    })}
-                  </>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <BoxWrapperColumn gap={10}>
+          <BoxWrapperColumn>
+            <DashboardTable daoResume={daoResumeWithoutLido} />
+          </BoxWrapperColumn>
+
+          <BoxWrapperColumn gap={4}>
+            <Title title="Other treasuries not considered in non-custodial AUM" />
+            <DashboardTable daoResume={daoResumeWithLido} />
+          </BoxWrapperColumn>
         </BoxWrapperColumn>
 
-        <CustomTypography
-          textAlign="center"
-          sx={{
-            fontFamily: 'IBM Plex Mono',
-            fontSize: '30px',
-            lineHeight: '28px',
-            fontWeight: '300',
-            fontStyle: 'normal'
-          }}
-        >
-          Reports are available in desktop view only. Responsive view is coming soon!
-        </CustomTypography>
-        <CustomTypography
-          textAlign="center"
-          sx={{
-            fontFamily: 'IBM Plex Mono',
-            fontSize: '24px',
-            lineHeight: '28px',
-            fontWeight: '300',
-            fontStyle: 'normal'
-          }}
-        >
-          Select report above
-        </CustomTypography>
+        <Title title="Reports are available in desktop view only. Responsive view is coming soon!" />
+        <Title title="Select report above" />
       </BoxWrapperColumn>
     </AnimatePresenceWrapper>
   )

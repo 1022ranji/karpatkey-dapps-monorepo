@@ -6,7 +6,11 @@ import React from 'react'
 
 export const HEADER_HEIGHT = 100
 
-const Header = () => {
+interface HeaderProps {
+  showFilters?: boolean
+}
+
+const Header = ({ showFilters = false }: HeaderProps) => {
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperRow
@@ -18,7 +22,7 @@ const Header = () => {
         }}
       >
         <LogoKarpatkey />
-        <Filters />
+        {showFilters ? <Filters /> : null}
       </BoxWrapperRow>
     </AnimatePresenceWrapper>
   )

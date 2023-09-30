@@ -11,7 +11,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
+import Loading from '@karpatkey-monorepo/reports/src/components/Loading'
 import * as React from 'react'
 
 import '../styles/globals.css'
@@ -29,6 +30,27 @@ export default function MyApp(props: MyAppProps) {
   const router = useRouter()
   const isPasswordProtected = router.asPath.includes('/password-protect')
 
+  const [loading, setLoading] = React.useState(false)
+
+  React.useEffect(() => {
+    const start = () => {
+      console.log('start')
+      setLoading(true)
+    }
+    const end = () => {
+      console.log('finished')
+      setLoading(false)
+    }
+    Router.events.on('routeChangeStart', start)
+    Router.events.on('routeChangeComplete', end)
+    Router.events.on('routeChangeError', end)
+    return () => {
+      Router.events.off('routeChangeStart', start)
+      Router.events.off('routeChangeComplete', end)
+      Router.events.off('routeChangeError', end)
+    }
+  }, [])
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -44,9 +66,7 @@ export default function MyApp(props: MyAppProps) {
               <NoSsr>
                 {isPasswordProtected ? <Component {...pageProps} /> : null}
                 {!isPasswordProtected ? (
-                  <Layout>
-                    <Component {...pageProps} />
-                  </Layout>
+                  <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
                 ) : null}
               </NoSsr>
             </FilterProvider>
