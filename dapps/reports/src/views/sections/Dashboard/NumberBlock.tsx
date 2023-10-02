@@ -9,8 +9,8 @@ interface NumberBlockProps {
 
 export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
   return (
-    <BoxWrapperColumn sx={{ justifyContent: 'center' }} gap={2}>
-      <CustomTypography variant="h2" textAlign="center">
+    <BoxWrapperColumn sx={{ justifyContent: 'center' }} gap={'10px'}>
+      <CustomTypography variant="h2" textAlign="center" sx={{ fontWeight: 600 }}>
         {amount}
       </CustomTypography>
       <CustomTypography

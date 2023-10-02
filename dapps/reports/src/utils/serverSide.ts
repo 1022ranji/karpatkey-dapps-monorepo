@@ -308,6 +308,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     if (b.keyName === 'karpatkey DAO') return -1
     return b.totalFunds - a.totalFunds
   })
+  const latestMonth = getLatestMonth()
 
   return {
     ...summaryDataValues,
@@ -317,6 +318,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     ...tokenDetailsValues,
     daoResume: daoResumeSorted,
     nonCustodialAum,
-    lastMonthFarmingResults
+    lastMonthFarmingResults,
+    latestMonth
   }
 }
