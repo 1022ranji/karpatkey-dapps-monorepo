@@ -29,6 +29,7 @@ export type ReportData = {
   daoResume: any[]
   nonCustodialAum: number
   lastMonthFarmingResults: number
+  latestMonth: number
 }
 
 export type ReportProps = ReportData & Filter

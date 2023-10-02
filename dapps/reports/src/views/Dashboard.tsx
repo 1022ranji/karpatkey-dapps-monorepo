@@ -12,48 +12,20 @@ import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/Ta
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import { useRouter } from 'next/router'
-
-const Value = ({ value }: { value: string }) => {
-  return (
-    <CustomTypography
-      sx={{
-        fontFamily: 'IBM Plex Mono',
-        fontStyle: 'normal',
-        fontWeight: '400 !important',
-        fontSize: '18px',
-        lineHeight: '24px',
-        color: '#1A1A1A'
-      }}
-    >
-      {value}
-    </CustomTypography>
-  )
-}
-
-const Title = ({ title }: { title: string }) => {
-  return (
-    <CustomTypography
-      textAlign="center"
-      sx={{
-        fontFamily: 'IBM Plex Mono',
-        fontSize: '24px',
-        lineHeight: '28px',
-        fontWeight: '300',
-        fontStyle: 'normal',
-        color: '#1A1A1A'
-      }}
-    >
-      {title}
-    </CustomTypography>
-  )
-}
+import { Value } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Value'
+import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Title'
+import Divider from '@mui/material/Divider'
+import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 
 interface TableProps {
   daoResume: any
+  latestMonth: number
 }
 
-const DashboardTable = ({ daoResume }: TableProps) => {
+const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
   const router = useRouter()
+
+  const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
 
   return (
     <TableContainer component={Box}>
@@ -61,17 +33,17 @@ const DashboardTable = ({ daoResume }: TableProps) => {
         <TableHead>
           <TableRow sx={{ '& th': { borderBottom: 'none !important' } }}>
             <TableEmptyCellCustom />
-            <TableCellCustom align="left" sx={{ width: '20%', padding: '5px' }}>
-              <Value value={'Total funds'} />
+            <TableCellCustom align="left" sx={{ width: '20%', padding: '4px', paddingX: '30px' }}>
+              <Value value={'Total funds'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
-              <Value value={'Capital utilisation'} />
+            <TableCellCustom align="left" sx={{ width: '10%', padding: '4px', paddingX: '30px' }}>
+              <Value value={'Capital utilisation'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableCellCustom align="left" sx={{ width: '25%', padding: '5px' }}>
-              <Value value={'Farming results'} />
+            <TableCellCustom align="left" sx={{ width: '25%', padding: '4px', paddingX: '30px' }}>
+              <Value value={'Farming results'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
-              <Value value={'APY'} />
+            <TableCellCustom align="left" sx={{ width: '10%', padding: '4px', paddingX: '5px' }}>
+              <Value value={'APY'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableEmptyCellCustom />
           </TableRow>
@@ -99,6 +71,7 @@ const DashboardTable = ({ daoResume }: TableProps) => {
                     key={index}
                     onClick={onClick}
                     hover
+                    title={`Click to see the ${latestMonthLabel} treasury report`}
                     sx={{
                       borderRadius: 10,
                       display: 'table-group-row !important',
@@ -110,22 +83,34 @@ const DashboardTable = ({ daoResume }: TableProps) => {
                       }
                     }}
                   >
-                    <TableCellCustom align="left" sx={{ padding: '5px' }}>
+                    <TableCellCustom align="left" sx={{ padding: '4px', paddingX: '30px' }}>
                       <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
                         <Image src={icon} alt={name} width={48} height={48} />
-                        <Value value={name} />
+                        <Value value={name} fontWeight={600} />
                       </BoxWrapperRow>
                     </TableCellCustom>
-                    <TableCellCustom align="left" sx={{ width: '20%', padding: '5px' }}>
+                    <TableCellCustom
+                      align="left"
+                      sx={{ width: '20%', padding: '4px', paddingX: '30px' }}
+                    >
                       <Value value={formatCurrency(totalFunds)} />
                     </TableCellCustom>
-                    <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
+                    <TableCellCustom
+                      align="left"
+                      sx={{ width: '10%', padding: '4px', paddingX: '30px' }}
+                    >
                       <Value value={formatPercentage(capitalUtilization, 1)} />
                     </TableCellCustom>
-                    <TableCellCustom align="left" sx={{ width: '25%', padding: '5px' }}>
+                    <TableCellCustom
+                      align="left"
+                      sx={{ width: '25%', padding: '4px', paddingX: '30px' }}
+                    >
                       <Value value={formatCurrency(farmingResults)} />
                     </TableCellCustom>
-                    <TableCellCustom align="left" sx={{ width: '10%', padding: '5px' }}>
+                    <TableCellCustom
+                      align="left"
+                      sx={{ width: '10%', padding: '4px', paddingX: '30px' }}
+                    >
                       <Value value={formatPercentage(globalROI)} />
                     </TableCellCustom>
                     <TableCellCustom align="left" sx={{ padding: '5px' }}>
@@ -146,7 +131,7 @@ const DashboardTable = ({ daoResume }: TableProps) => {
 }
 
 const Dashboard = (props: ReportProps) => {
-  const { daoResume, nonCustodialAum, lastMonthFarmingResults } = props
+  const { daoResume, nonCustodialAum, lastMonthFarmingResults, latestMonth } = props
 
   const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
   const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
@@ -157,26 +142,30 @@ const Dashboard = (props: ReportProps) => {
         sx={{ alignItems: 'center', marginTop: 5, marginRight: '10%', marginLeft: '10%' }}
         gap={10}
       >
-        <CustomTypography variant="h1" textAlign="center">
-          DAO treasury reports
-        </CustomTypography>
+        <BoxWrapperColumn gap={5}>
+          <CustomTypography variant="h1" textAlign="center">
+            DAO treasury reports
+          </CustomTypography>
 
-        <BoxWrapperRow gap={12}>
-          <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
-          <NumberBlock
-            amount={formatCurrency(lastMonthFarmingResults)}
-            title="Last month farming results"
-          />
-        </BoxWrapperRow>
+          <BoxWrapperRow gap={12}>
+            <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
+            <NumberBlock
+              amount={formatCurrency(lastMonthFarmingResults)}
+              title="Last month farming results"
+            />
+          </BoxWrapperRow>
+        </BoxWrapperColumn>
 
         <BoxWrapperColumn gap={10}>
           <BoxWrapperColumn>
-            <DashboardTable daoResume={daoResumeWithoutLido} />
+            <DashboardTable daoResume={daoResumeWithoutLido} latestMonth={latestMonth} />
           </BoxWrapperColumn>
+
+          <Divider sx={{ borderBottomWidth: 5 }} />
 
           <BoxWrapperColumn gap={4}>
             <Title title="Other treasuries not considered in non-custodial AUM" />
-            <DashboardTable daoResume={daoResumeWithLido} />
+            <DashboardTable daoResume={daoResumeWithLido} latestMonth={latestMonth} />
           </BoxWrapperColumn>
         </BoxWrapperColumn>
 
