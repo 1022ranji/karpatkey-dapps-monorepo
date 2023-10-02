@@ -83,7 +83,10 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       }
                     }}
                   >
-                    <TableCellCustom align="left" sx={{ padding: '4px', paddingX: '30px' }}>
+                    <TableCellCustom
+                      align="left"
+                      sx={{ paddingY: '4px', paddingLeft: '5px', paddingRight: '30px' }}
+                    >
                       <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
                         <Image src={icon} alt={name} width={48} height={48} />
                         <Value value={name} fontWeight={600} />
