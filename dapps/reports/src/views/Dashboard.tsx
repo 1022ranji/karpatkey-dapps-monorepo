@@ -32,20 +32,42 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
       <Table>
         <TableHead>
           <TableRow sx={{ '& th': { borderBottom: 'none !important' } }}>
-            <TableEmptyCellCustom />
-            <TableCellCustom align="left" sx={{ width: '20%', padding: '4px', paddingX: '30px' }}>
+            <TableEmptyCellCustom
+              sx={{ minWidth: '260px', maxWidth: '260px', paddingY: '4px', paddingLeft: '5px' }}
+            />
+            <TableCellCustom
+              align="left"
+              sx={{ minWidth: '205px', maxWidth: '205px', paddingY: '4px', paddingX: '20px' }}
+            >
               <Value value={'Total funds'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableCellCustom align="left" sx={{ width: '10%', padding: '4px', paddingX: '30px' }}>
+            <TableCellCustom
+              align="left"
+              sx={{ minWidth: '165px', maxWidth: '165px', paddingY: '4px', paddingX: '20px' }}
+            >
               <Value value={'Capital utilisation'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableCellCustom align="left" sx={{ width: '25%', padding: '4px', paddingX: '30px' }}>
+            <TableCellCustom
+              align="left"
+              sx={{ minWidth: '145px', maxWidth: '145px', paddingY: '4px', paddingX: '20px' }}
+            >
               <Value value={'Farming results'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableCellCustom align="left" sx={{ width: '10%', padding: '4px', paddingX: '5px' }}>
+            <TableCellCustom
+              align="left"
+              sx={{
+                minWidth: '115px',
+                maxWidth: '115px',
+                paddingY: '4px',
+                paddingLeft: '20px',
+                marginRight: '5px'
+              }}
+            >
               <Value value={'APY'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableEmptyCellCustom />
+            <TableEmptyCellCustom
+              sx={{ minWidth: '25px', maxWidth: '25px', paddingY: '4px', paddingRight: '5px' }}
+            />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -85,7 +107,12 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                   >
                     <TableCellCustom
                       align="left"
-                      sx={{ paddingY: '4px', paddingLeft: '5px', paddingRight: '30px' }}
+                      sx={{
+                        minWidth: '260px',
+                        maxWidth: '260px',
+                        paddingY: '4px',
+                        paddingLeft: '5px'
+                      }}
                     >
                       <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
                         <Image src={icon} alt={name} width={48} height={48} />
@@ -94,29 +121,58 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                     </TableCellCustom>
                     <TableCellCustom
                       align="left"
-                      sx={{ width: '20%', padding: '4px', paddingX: '30px' }}
+                      sx={{
+                        minWidth: '205px',
+                        maxWidth: '205px',
+                        paddingY: '4px',
+                        paddingX: '20px'
+                      }}
                     >
                       <Value value={formatCurrency(totalFunds)} />
                     </TableCellCustom>
                     <TableCellCustom
                       align="left"
-                      sx={{ width: '10%', padding: '4px', paddingX: '30px' }}
+                      sx={{
+                        minWidth: '165px',
+                        maxWidth: '165px',
+                        paddingY: '4px',
+                        paddingX: '20px'
+                      }}
                     >
                       <Value value={formatPercentage(capitalUtilization, 1)} />
                     </TableCellCustom>
                     <TableCellCustom
                       align="left"
-                      sx={{ width: '25%', padding: '4px', paddingX: '30px' }}
+                      sx={{
+                        minWidth: '145px',
+                        maxWidth: '145px',
+                        paddingY: '4px',
+                        paddingX: '20px'
+                      }}
                     >
                       <Value value={formatCurrency(farmingResults)} />
                     </TableCellCustom>
                     <TableCellCustom
                       align="left"
-                      sx={{ width: '10%', padding: '4px', paddingX: '30px' }}
+                      sx={{
+                        minWidth: '115px',
+                        maxWidth: '115px',
+                        paddingY: '4px',
+                        paddingLeft: '20px',
+                        marginRight: '5px'
+                      }}
                     >
                       <Value value={formatPercentage(globalROI)} />
                     </TableCellCustom>
-                    <TableCellCustom align="left" sx={{ padding: '5px' }}>
+                    <TableCellCustom
+                      align="left"
+                      sx={{
+                        minWidth: '25px',
+                        maxWidth: '25px',
+                        paddingY: '4px',
+                        paddingRight: '5px'
+                      }}
+                    >
                       <OpenInNewIcon
                         onClick={onClick}
                         sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
@@ -143,7 +199,7 @@ const Dashboard = (props: ReportProps) => {
     <AnimatePresenceWrapper>
       <BoxWrapperColumn
         sx={{ alignItems: 'center', marginTop: 5, marginRight: '10%', marginLeft: '10%' }}
-        gap={10}
+        gap={'50px'}
       >
         <BoxWrapperColumn gap={5}>
           <CustomTypography variant="h1" textAlign="center">
@@ -159,7 +215,7 @@ const Dashboard = (props: ReportProps) => {
           </BoxWrapperRow>
         </BoxWrapperColumn>
 
-        <BoxWrapperColumn gap={10}>
+        <BoxWrapperColumn gap={'50px'}>
           <BoxWrapperColumn>
             <DashboardTable daoResume={daoResumeWithoutLido} latestMonth={latestMonth} />
           </BoxWrapperColumn>
