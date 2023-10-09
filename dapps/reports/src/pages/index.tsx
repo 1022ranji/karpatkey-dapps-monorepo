@@ -7,12 +7,17 @@ import { GetServerSidePropsContext } from 'next/types'
 import React, { ReactElement } from 'react'
 
 const HomepageContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Homepage'))
-const WelcomeContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Welcome'))
+const DashboardContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Dashboard'))
+
 const Homepage = (props: ReportProps) => {
   const { month, dao, year } = props
   const isFilterEmpty = !month && !dao && !year
 
-  return isFilterEmpty ? <WelcomeContent /> : <HomepageContent {...props} />
+  if (isFilterEmpty) {
+    return <DashboardContent {...props} />
+  }
+
+  return <HomepageContent {...props} />
 }
 
 Homepage.getTitle = 'Home'

@@ -34,7 +34,12 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
   const { state } = useFilter()
   const { dao, year, month } = state.value
 
-  const isSidebarVisible = !!(dao && year && month)
+  const queryParams = new URLSearchParams(window.location.search)
+  const daoParam = queryParams.get('dao')
+  const yearParam = queryParams.get('year')
+  const monthParam = queryParams.get('month')
+
+  const isSidebarVisible = !!(dao && year && month) && !!(daoParam && yearParam && monthParam)
 
   return isSidebarVisible ? (
     <LayoutWithSidebarWrapper>
@@ -49,7 +54,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           minHeight: HEADER_HEIGHT
         }}
       >
-        <Header />
+        <Header showFilters />
       </Box>
       <Box
         sx={{
