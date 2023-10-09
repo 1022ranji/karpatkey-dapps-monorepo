@@ -249,7 +249,7 @@ const Dashboard = (props: ReportProps) => {
 
         <Value
           value={'Reports are available in desktop view only. Responsive view is coming soon!'}
-          fontWeight={600}
+          fontWeight={400}
           fontSize={'16px'}
         />
       </BoxWrapperColumn>
