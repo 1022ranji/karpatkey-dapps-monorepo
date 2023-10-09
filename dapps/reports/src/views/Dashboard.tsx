@@ -163,7 +163,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           paddingX: '20px'
                         }}
                       >
-                        <Value value={formatPercentage(capitalUtilization, 1)} />
+                        <Value value={formatPercentage(capitalUtilization, 0)} />
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
@@ -186,7 +186,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           marginRight: '5px'
                         }}
                       >
-                        <Value value={formatPercentage(globalROI)} />
+                        <Value value={formatPercentage(globalROI, 1)} />
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
