@@ -85,8 +85,14 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                   urlToReport
                 } = dao
 
-                const onClick = () => {
-                  router.push(urlToReport)
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const onClick = (e: any) => {
+                  if (e.ctrlKey || e.metaKey) {
+                    //if ctrl key or command is pressed
+                    window.open(urlToReport, '_blank')
+                  } else {
+                    router.push(urlToReport)
+                  }
                 }
 
                 return (
