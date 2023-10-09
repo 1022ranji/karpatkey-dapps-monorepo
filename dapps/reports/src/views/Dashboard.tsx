@@ -16,6 +16,7 @@ import { Value } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/
 import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Title'
 import Divider from '@mui/material/Divider'
 import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
+import Tooltip from '@mui/material/Tooltip'
 
 interface TableProps {
   daoResume: any
@@ -89,96 +90,114 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 }
 
                 return (
-                  <TableRow
+                  <Tooltip
                     key={index}
-                    onClick={onClick}
-                    hover
-                    title={`Click to see the ${latestMonthLabel} treasury report`}
-                    sx={{
-                      borderRadius: 10,
-                      display: 'table-group-row !important',
-                      '& td': {
-                        borderBottom: 'none !important'
-                      },
-                      '&:hover': {
-                        cursor: 'pointer'
-                      }
+                    title={
+                      <CustomTypography variant="body2" sx={{ color: 'common.white' }}>
+                        {`Click to see the ${latestMonthLabel} treasury report`}
+                      </CustomTypography>
+                    }
+                    sx={{ cursor: 'pointer' }}
+                    PopperProps={{
+                      modifiers: [
+                        {
+                          name: 'offset',
+                          options: {
+                            offset: [50, -15]
+                          }
+                        }
+                      ]
                     }}
                   >
-                    <TableCellCustom
-                      align="left"
+                    <TableRow
+                      onClick={onClick}
+                      hover
                       sx={{
-                        minWidth: '260px',
-                        maxWidth: '260px',
-                        paddingY: '4px',
-                        paddingLeft: '5px'
+                        borderRadius: 10,
+                        display: 'table-group-row !important',
+                        '& td': {
+                          borderBottom: 'none !important'
+                        },
+                        '&:hover': {
+                          cursor: 'pointer'
+                        }
                       }}
                     >
-                      <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
-                        <Image src={icon} alt={name} width={48} height={48} />
-                        <Value value={name} fontWeight={600} />
-                      </BoxWrapperRow>
-                    </TableCellCustom>
-                    <TableCellCustom
-                      align="left"
-                      sx={{
-                        minWidth: '205px',
-                        maxWidth: '205px',
-                        paddingY: '4px',
-                        paddingX: '20px'
-                      }}
-                    >
-                      <Value value={formatCurrency(totalFunds)} />
-                    </TableCellCustom>
-                    <TableCellCustom
-                      align="left"
-                      sx={{
-                        minWidth: '165px',
-                        maxWidth: '165px',
-                        paddingY: '4px',
-                        paddingX: '20px'
-                      }}
-                    >
-                      <Value value={formatPercentage(capitalUtilization, 1)} />
-                    </TableCellCustom>
-                    <TableCellCustom
-                      align="left"
-                      sx={{
-                        minWidth: '145px',
-                        maxWidth: '145px',
-                        paddingY: '4px',
-                        paddingX: '20px'
-                      }}
-                    >
-                      <Value value={formatCurrency(farmingResults)} />
-                    </TableCellCustom>
-                    <TableCellCustom
-                      align="left"
-                      sx={{
-                        minWidth: '115px',
-                        maxWidth: '115px',
-                        paddingY: '4px',
-                        paddingLeft: '20px',
-                        marginRight: '5px'
-                      }}
-                    >
-                      <Value value={formatPercentage(globalROI)} />
-                    </TableCellCustom>
-                    <TableCellCustom
-                      align="left"
-                      sx={{
-                        minWidth: '25px',
-                        maxWidth: '25px',
-                        paddingY: '4px',
-                        paddingRight: '5px'
-                      }}
-                    >
-                      <OpenInNewIcon
-                        onClick={onClick}
-                        sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
-                      />
-                    </TableCellCustom>
-                  </TableRow>
+                      <TableCellCustom
+                        align="left"
+                        sx={{
+                          minWidth: '260px',
+                          maxWidth: '260px',
+                          paddingY: '4px',
+                          paddingLeft: '5px'
+                        }}
+                      >
+                        <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
+                          <Image src={icon} alt={name} width={48} height={48} />
+                          <Value value={name} fontWeight={600} />
+                        </BoxWrapperRow>
+                      </TableCellCustom>
+                      <TableCellCustom
+                        align="left"
+                        sx={{
+                          minWidth: '205px',
+                          maxWidth: '205px',
+                          paddingY: '4px',
+                          paddingX: '20px'
+                        }}
+                      >
+                        <Value value={formatCurrency(totalFunds)} />
+                      </TableCellCustom>
+                      <TableCellCustom
+                        align="left"
+                        sx={{
+                          minWidth: '165px',
+                          maxWidth: '165px',
+                          paddingY: '4px',
+                          paddingX: '20px'
+                        }}
+                      >
+                        <Value value={formatPercentage(capitalUtilization, 1)} />
+                      </TableCellCustom>
+                      <TableCellCustom
+                        align="left"
+                        sx={{
+                          minWidth: '145px',
+                          maxWidth: '145px',
+                          paddingY: '4px',
+                          paddingX: '20px'
+                        }}
+                      >
+                        <Value value={formatCurrency(farmingResults)} />
+                      </TableCellCustom>
+                      <TableCellCustom
+                        align="left"
+                        sx={{
+                          minWidth: '115px',
+                          maxWidth: '115px',
+                          paddingY: '4px',
+                          paddingLeft: '20px',
+                          marginRight: '5px'
+                        }}
+                      >
+                        <Value value={formatPercentage(globalROI)} />
+                      </TableCellCustom>
+                      <TableCellCustom
+                        align="left"
+                        sx={{
+                          minWidth: '25px',
+                          maxWidth: '25px',
+                          paddingY: '4px',
+                          paddingRight: '5px'
+                        }}
+                      >
+                        <OpenInNewIcon
+                          onClick={onClick}
+                          sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
+                        />
+                      </TableCellCustom>
+                    </TableRow>
+                  </Tooltip>
                 )
               })}
             </>
@@ -228,8 +247,11 @@ const Dashboard = (props: ReportProps) => {
           </BoxWrapperColumn>
         </BoxWrapperColumn>
 
-        <Title title="Reports are available in desktop view only. Responsive view is coming soon!" />
-        <Title title="Select report above" />
+        <Value
+          value={'Reports are available in desktop view only. Responsive view is coming soon!'}
+          fontWeight={600}
+          fontSize={'16px'}
+        />
       </BoxWrapperColumn>
     </AnimatePresenceWrapper>
   )
