@@ -1,5 +1,13 @@
 import Body from '@karpatkey-monorepo/reports/src/components/Layout/Body'
 import Header, { HEADER_HEIGHT } from '@karpatkey-monorepo/reports/src/components/Layout/Header'
+import {
+  HomepageHeader,
+  HOMEPAGE_HEADER_HEIGHT
+} from '@karpatkey-monorepo/reports/src/components/Layout/HomepageHeader'
+import {
+  HomepageFooter,
+  HOMEPAGE_FOOTER_HEIGHT
+} from '@karpatkey-monorepo/reports/src/components/Layout/HomepageFooter'
 import Sidebar, { SIDEBAR_WIDTH } from '@karpatkey-monorepo/reports/src/components/Layout/Sidebar'
 import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import Footer, { FOOTER_HEIGHT } from '@karpatkey-monorepo/shared/layout/Footer'
@@ -23,7 +31,7 @@ const LayoutWithSidebarWrapper = styled(Box)(() => ({
 const LayoutWithoutSidebarWrapper = styled(Box)(() => ({
   display: 'grid',
   gap: '0px 0px',
-  gridTemplateRows: `${HEADER_HEIGHT}px auto ${FOOTER_HEIGHT}px`,
+  gridTemplateRows: `70px auto 70px`,
   gridTemplateColumns: `auto`,
   gridTemplateAreas: `"header"
                       "body"
@@ -95,28 +103,26 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           width: '100%',
           position: 'fixed',
           top: 0,
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          zIndex: 1000,
-          minHeight: HEADER_HEIGHT
+          zIndex: 2,
+          minHeight: HOMEPAGE_HEADER_HEIGHT
         }}
       >
-        <Header />
+        <HomepageHeader />
       </Box>
       <Box
         sx={{
           gridArea: 'body',
           width: '100%',
-          top: HEADER_HEIGHT,
-          zIndex: 900,
-          minHeight: '100vh',
+          zIndex: 1,
+          padding: '50px 30px',
           overflowX: 'hidden',
           overflowY: 'hidden'
         }}
       >
         <Body>{children}</Body>
       </Box>
-      <Box sx={{ gridArea: 'footer', width: '100%' }}>
-        <Footer />
+      <Box sx={{ gridArea: 'footer', width: '100%', minHeight: HOMEPAGE_FOOTER_HEIGHT }}>
+        <HomepageFooter />
       </Box>
     </LayoutWithoutSidebarWrapper>
   )

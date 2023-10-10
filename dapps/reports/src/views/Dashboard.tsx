@@ -223,7 +223,13 @@ const Dashboard = (props: ReportProps) => {
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn
-        sx={{ alignItems: 'center', marginTop: 5, marginRight: '10%', marginLeft: '10%' }}
+        sx={{
+          alignItems: 'center',
+          marginBottom: 5,
+          marginTop: 5,
+          marginRight: '10%',
+          marginLeft: '10%'
+        }}
         gap={'50px'}
       >
         <BoxWrapperColumn gap={5}>
