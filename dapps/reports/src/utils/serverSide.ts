@@ -275,21 +275,24 @@ export const getCommonServerSideProps = async (params: Filter) => {
     financialMetricAndVarDetailFiltered
   })
 
-  const daoResumePromises = FILTER_DAOS.map(async (dao: FILTER_DAO) => {
-    const daoResume = await getDAOResume({
-      dao: dao.keyName,
-      variationMetricsDetail,
-      financialMetrics,
-      financialMetricAndVarDetail
-    })
-    return {
-      name: dao.name,
-      keyName: dao.keyName,
-      icon: dao.icon,
-      shouldBeDisplayedHomepage: dao.shouldBeDisplayedHomepage,
-      ...daoResume
+  const daoResumePromises = FILTER_DAOS.filter((filterDao: FILTER_DAO) => filterDao.isEnabled).map(
+    async (dao: FILTER_DAO) => {
+      const daoResume = await getDAOResume({
+        dao: dao.keyName,
+        variationMetricsDetail,
+        financialMetrics,
+        financialMetricAndVarDetail
+      })
+      return {
+        name: dao.name,
+        keyName: dao.keyName,
+        icon: dao.icon,
+        shouldBeDisplayedHomepage: dao.shouldBeDisplayedHomepage,
+        isEnabled: dao.isEnabled,
+        ...daoResume
+      }
     }
-  })
+  )
   const daoResume = await Promise.all(daoResumePromises)
 
   const nonCustodialAum = daoResume.reduce((acc, dao) => {

@@ -251,12 +251,15 @@ const Dashboard = (props: ReportProps) => {
             <DashboardTable daoResume={daoResumeWithoutLido} latestMonth={latestMonth} />
           </BoxWrapperColumn>
 
-          <Divider sx={{ borderBottomWidth: 5 }} />
-
-          <BoxWrapperColumn gap={4}>
-            <Title title="Other treasuries not considered in non-custodial AUM" />
-            <DashboardTable daoResume={daoResumeWithLido} latestMonth={latestMonth} />
-          </BoxWrapperColumn>
+          {daoResumeWithLido.length === 0 ? null : (
+            <>
+              <Divider sx={{ borderBottomWidth: 5 }} />
+              <BoxWrapperColumn gap={4}>
+                <Title title="Other treasuries not considered in non-custodial AUM" />
+                <DashboardTable daoResume={daoResumeWithLido} latestMonth={latestMonth} />
+              </BoxWrapperColumn>
+            </>
+          )}
         </BoxWrapperColumn>
 
         <Value

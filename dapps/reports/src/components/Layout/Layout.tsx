@@ -114,7 +114,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
           gridArea: 'body',
           width: '100%',
           zIndex: 1,
-          padding: '50px 30px',
+          padding: '5px 30px',
           overflowX: 'hidden',
           overflowY: 'hidden'
         }}
