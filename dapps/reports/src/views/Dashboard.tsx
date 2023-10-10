@@ -4,7 +4,7 @@ import React from 'react'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import Image from 'next/image'
 import { ReportProps } from '@karpatkey-monorepo/reports/src/types'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
+import {Box, Table, TableBody, TableContainer, TableHead, TableRow} from '@mui/material'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import { NumberBlock } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/NumberBlock'
 import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
@@ -17,6 +17,7 @@ import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/
 import Divider from '@mui/material/Divider'
 import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import Tooltip from '@mui/material/Tooltip'
+import { LinkWrapper } from '@karpatkey-monorepo/reports/src/components/LinkWrapper'
 
 interface TableProps {
   daoResume: any
@@ -138,10 +139,12 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           paddingLeft: '5px'
                         }}
                       >
-                        <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
-                          <Image src={icon} alt={name} width={48} height={48} />
-                          <Value value={name} fontWeight={600} />
-                        </BoxWrapperRow>
+                        <LinkWrapper url={urlToReport} >
+                          <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
+                            <Image src={icon} alt={name} width={48} height={48} />
+                            <Value value={name} fontWeight={600} />
+                          </BoxWrapperRow>
+                        </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
@@ -152,7 +155,9 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           paddingX: '20px'
                         }}
                       >
-                        <Value value={formatCurrency(totalFunds)} />
+                        <LinkWrapper url={urlToReport} >
+                          <Value value={formatCurrency(totalFunds)} />
+                        </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
@@ -163,7 +168,9 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           paddingX: '20px'
                         }}
                       >
-                        <Value value={formatPercentage(capitalUtilization, 0)} />
+                        <LinkWrapper url={urlToReport} >
+                          <Value value={formatPercentage(capitalUtilization, 0)} />
+                        </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
@@ -174,7 +181,9 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           paddingX: '20px'
                         }}
                       >
-                        <Value value={formatCurrency(farmingResults)} />
+                        <LinkWrapper url={urlToReport} >
+                          <Value value={formatCurrency(farmingResults)} />
+                        </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
@@ -186,7 +195,9 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           marginRight: '5px'
                         }}
                       >
-                        <Value value={formatPercentage(globalROI, 1)} />
+                        <LinkWrapper url={urlToReport} >
+                          <Value value={formatPercentage(globalROI, 1)} />
+                        </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
@@ -197,10 +208,12 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                           paddingRight: '5px'
                         }}
                       >
-                        <OpenInNewIcon
-                          onClick={onClick}
-                          sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
-                        />
+                        <LinkWrapper url={urlToReport} >
+                          <OpenInNewIcon
+                            onClick={onClick}
+                            sx={{ cursor: 'pointer', fontSize: '1.2rem' }}
+                          />
+                        </LinkWrapper>
                       </TableCellCustom>
                     </TableRow>
                   </Tooltip>
@@ -213,6 +226,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
     </TableContainer>
   )
 }
+
 
 const Dashboard = (props: ReportProps) => {
   const { daoResume, nonCustodialAum, lastMonthFarmingResults, latestMonth } = props
