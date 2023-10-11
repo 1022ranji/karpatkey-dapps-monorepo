@@ -1,19 +1,14 @@
 import Body from '@karpatkey-monorepo/reports/src/components/Layout/Body'
 import Header, { HEADER_HEIGHT } from '@karpatkey-monorepo/reports/src/components/Layout/Header'
-import {
-  HomepageHeader,
-  HOMEPAGE_HEADER_HEIGHT
-} from '@karpatkey-monorepo/reports/src/components/Layout/HomepageHeader'
-import {
-  HomepageFooter,
-  HOMEPAGE_FOOTER_HEIGHT
-} from '@karpatkey-monorepo/reports/src/components/Layout/HomepageFooter'
+import { Header as HomepageHeader } from '@karpatkey-monorepo/reports/src/components/Layout/Homepage/Header'
+import { Footer as HomepageFooter } from '@karpatkey-monorepo/reports/src/components/Layout/Homepage/Footer'
 import Sidebar, { SIDEBAR_WIDTH } from '@karpatkey-monorepo/reports/src/components/Layout/Sidebar'
 import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import Footer, { FOOTER_HEIGHT } from '@karpatkey-monorepo/shared/layout/Footer'
 import { Box } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React, { ReactElement } from 'react'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 
 interface LayoutProps {
   children: React.ReactElement
@@ -28,14 +23,18 @@ const LayoutWithSidebarWrapper = styled(Box)(() => ({
                       "sidebar footer footer"`
 }))
 
-const LayoutWithoutSidebarWrapper = styled(Box)(() => ({
-  display: 'grid',
-  gap: '0px 0px',
-  gridTemplateRows: `70px auto 70px`,
-  gridTemplateColumns: `auto`,
-  gridTemplateAreas: `"header"
-                      "body"
-                      "footer"`
+const MainWrapper = styled(BoxWrapperColumn)(() => ({
+  height: '100vh',
+  width: '100vw'
+}))
+
+const MainContainer = styled(BoxWrapperColumn)(() => ({
+  alignItems: 'center',
+  flexGrow: 1,
+  zIndex: 1,
+  paddingRight: '30px',
+  paddingLeft: '30px',
+  justifyContent: 'space-between'
 }))
 
 const Layout = ({ children }: LayoutProps): ReactElement => {
@@ -96,35 +95,11 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
       </Box>
     </LayoutWithSidebarWrapper>
   ) : (
-    <LayoutWithoutSidebarWrapper>
-      <Box
-        sx={{
-          gridArea: 'header',
-          width: '100%',
-          position: 'fixed',
-          top: 0,
-          zIndex: 2,
-          minHeight: HOMEPAGE_HEADER_HEIGHT
-        }}
-      >
-        <HomepageHeader />
-      </Box>
-      <Box
-        sx={{
-          gridArea: 'body',
-          width: '100%',
-          zIndex: 1,
-          padding: '5px 30px',
-          overflowX: 'hidden',
-          overflowY: 'hidden'
-        }}
-      >
-        <Body>{children}</Body>
-      </Box>
-      <Box sx={{ gridArea: 'footer', width: '100%', minHeight: HOMEPAGE_FOOTER_HEIGHT }}>
-        <HomepageFooter />
-      </Box>
-    </LayoutWithoutSidebarWrapper>
+    <MainWrapper>
+      <HomepageHeader />
+      <MainContainer component="main">{children}</MainContainer>
+      <HomepageFooter />
+    </MainWrapper>
   )
 }
 
