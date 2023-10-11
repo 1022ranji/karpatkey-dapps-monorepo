@@ -1,11 +1,12 @@
-import React from "react";
-import Link from "@karpatkey-monorepo/shared/components/Link";
+import React from 'react'
+import Link from '@karpatkey-monorepo/shared/components/Link'
 
 interface LinkWrapperProps {
   url: string
+  children: React.ReactNode
 }
 
-export const LinkWrapper: React.FC<LinkWrapperProps> = ({url, children} ) => {
+export const LinkWrapper: React.FC<LinkWrapperProps> = ({ url, children }) => {
   return (
     <Link
       href={url}
