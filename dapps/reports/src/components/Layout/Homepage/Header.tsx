@@ -1,5 +1,5 @@
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
-import { LogoKarpatkey } from '../../LogoKarpatkey'
+import { LogoKarpatkey } from '@karpatkey-monorepo/reports/src/components/LogoKarpatkey'
 import React from 'react'
 import { styled, Box, Link } from '@mui/material'
 import { useScrollDirection } from '@karpatkey-monorepo/reports/src/hooks/useScrollDirection'
