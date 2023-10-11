@@ -3,14 +3,14 @@ import { LogoKarpatkey } from '@karpatkey-monorepo/reports/src/components/LogoKa
 import React from 'react'
 import { styled, Box, Link } from '@mui/material'
 import { useScrollDirection } from '@karpatkey-monorepo/reports/src/hooks/useScrollDirection'
-
-export const HOMEPAGE_HEADER_HEIGHT = 30
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const NavbarLogoLeftContainer = styled(Box)(() => ({
   justifyContent: 'center',
   marginLeft: 'auto',
   marginRight: 'auto',
-  display: 'flex'
+  display: 'flex',
+  zIndex: 2
 }))
 
 const NavbarLeft = styled(Box)(() => ({
@@ -44,7 +44,7 @@ const Container = styled(Box)(() => ({
   backgroundColor: 'transparent',
   marginLeft: 'auto',
   marginRight: 'auto',
-  height: HOMEPAGE_HEADER_HEIGHT,
+  height: '30px',
   width: '100%',
   maxWidth: '940px',
   fontFamily: 'IBM Plex Sans, sans-serif'
@@ -75,8 +75,10 @@ const LinkStyled = styled(Link)(() => ({
   }
 }))
 
-export const HomepageHeader = () => {
+export const Header = () => {
   const scrollDirection = useScrollDirection()
+
+  const matchesQuery = useMediaQuery('(min-width:710px)')
 
   return (
     <AnimatePresenceWrapper>
@@ -85,30 +87,32 @@ export const HomepageHeader = () => {
           <Container>
             <NavbarWrapper>
               <LogoKarpatkey />
-              <Box
-                sx={{
-                  gridColumnGap: '30px',
-                  gridRowGap: '30px',
-                  backgroundColor: 'transparent',
-                  alignItems: 'center',
-                  display: 'flex',
-                  position: 'relative',
-                  float: 'right'
-                }}
-              >
-                <LinkStyled href="https://www.karpatkey.com/contributions">
-                  Contributions
-                </LinkStyled>
-                <LinkStyled
-                  sx={{ fontWeight: 700, opacity: 100 }}
-                  href="https://reports.karpatkey.com/"
+              {matchesQuery ? (
+                <Box
+                  sx={{
+                    gridColumnGap: '30px',
+                    gridRowGap: '30px',
+                    backgroundColor: 'transparent',
+                    alignItems: 'center',
+                    display: 'flex',
+                    position: 'relative',
+                    float: 'right'
+                  }}
                 >
-                  Reports
-                </LinkStyled>
-                <LinkStyled href="https://www.karpatkey.com/writing">Writing</LinkStyled>
-                <LinkStyled href="https://www.karpatkey.com/jobs">Jobs</LinkStyled>
-                <LinkStyled href="https://www.karpatkey.com/contact">Contact</LinkStyled>
-              </Box>
+                  <LinkStyled href="https://www.karpatkey.com/contributions">
+                    Contributions
+                  </LinkStyled>
+                  <LinkStyled
+                    sx={{ fontWeight: 700, opacity: 100 }}
+                    href="https://reports.karpatkey.com/"
+                  >
+                    Reports
+                  </LinkStyled>
+                  <LinkStyled href="https://www.karpatkey.com/writing">Writing</LinkStyled>
+                  <LinkStyled href="https://www.karpatkey.com/jobs">Jobs</LinkStyled>
+                  <LinkStyled href="https://www.karpatkey.com/contact">Contact</LinkStyled>
+                </Box>
+              ) : null}
             </NavbarWrapper>
           </Container>
         </NavbarLeft>
