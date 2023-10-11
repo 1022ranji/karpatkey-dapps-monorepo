@@ -142,7 +142,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
   },
   {
     id: DAO_NAME_KEY['CoW DAO'],
-    name: 'CoW',
+    name: 'CoW Protocol',
     icon: '/images/protocols/cow.svg',
     keyName: 'CoW DAO',
     sinceMonth: 2,
