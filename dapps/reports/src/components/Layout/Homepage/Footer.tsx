@@ -10,12 +10,11 @@ import { styled } from '@mui/material/styles'
 import React from 'react'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 
-export const HOMEPAGE_FOOTER_HEIGHT = 30
-
-const FooterWrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
+const Wrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default,
   justifyContent: 'center',
   gap: 20,
+  height: '70px',
   width: '100%',
   maxWidth: '1140px',
   padding: '20px 20px',
@@ -23,10 +22,9 @@ const FooterWrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   marginRight: 'auto'
 }))
 
-const FooterContainer = styled(Box)(() => ({
+const Container = styled(Box)(() => ({
   display: 'block',
   position: 'static',
-  backgroundColor: 'transparent',
   marginLeft: 'auto',
   marginRight: 'auto',
   width: '100%',
@@ -35,7 +33,7 @@ const FooterContainer = styled(Box)(() => ({
   paddingRight: '20px'
 }))
 
-const CustomTypographyFooter = styled(CustomTypography)({
+const Title = styled(CustomTypography)({
   fontFamily: 'IBM Plex Sans',
   fontStyle: 'normal',
   fontWeight: 400,
@@ -44,22 +42,20 @@ const CustomTypographyFooter = styled(CustomTypography)({
   color: '#262626'
 })
 
-export const HomepageFooter = () => {
+export const Footer = () => {
   return (
     <AnimatePresenceWrapper>
-      <FooterWrapper>
-        <FooterContainer>
+      <Wrapper>
+        <Container>
           <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
             <BoxWrapperRow>
-              <CustomTypographyFooter>
-                © 2023 karpatkey&nbsp;&nbsp;•&nbsp;&nbsp;
-              </CustomTypographyFooter>
+              <Title>© 2023 karpatkey&nbsp;&nbsp;•&nbsp;&nbsp;</Title>
               <Link
                 href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
                 target="_blank"
                 sx={{ textDecoration: 'none' }}
               >
-                <CustomTypographyFooter
+                <Title
                   sx={{
                     fontWeight: 500,
                     '&:hover': {
@@ -68,7 +64,7 @@ export const HomepageFooter = () => {
                   }}
                 >
                   press kit
-                </CustomTypographyFooter>
+                </Title>
               </Link>
             </BoxWrapperRow>
             <BoxWrapperRow gap={4}>
@@ -86,8 +82,8 @@ export const HomepageFooter = () => {
               </Link>
             </BoxWrapperRow>
           </BoxWrapperRow>
-        </FooterContainer>
-      </FooterWrapper>
+        </Container>
+      </Wrapper>
     </AnimatePresenceWrapper>
   )
 }
