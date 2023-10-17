@@ -8,13 +8,15 @@ import { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 import Image from 'next/image'
 import * as React from 'react'
 
-const DAOs = FILTER_DAOS.map((option: FILTER_DAO) => {
-  return {
-    logo: option.icon,
-    label: option.name,
-    id: option.id
-  }
-}).sort((a, b) => (a.label < b.label ? -1 : 1))
+const DAOs = FILTER_DAOS.filter((option: FILTER_DAO) => option.isEnabled)
+  .map((option: FILTER_DAO) => {
+    return {
+      logo: option.icon,
+      label: option.name,
+      id: option.id
+    }
+  })
+  .sort((a, b) => (a.label < b.label ? -1 : 1))
 
 const RenderInput = (params: AutocompleteRenderInputParams) => {
   const InputProps = {

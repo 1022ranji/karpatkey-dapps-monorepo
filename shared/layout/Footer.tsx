@@ -59,7 +59,7 @@ const Footer = (props: FooterProps) => {
             <Link
               href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
               target="_blank"
-              sx={{ color: 'black' }}
+              sx={{ textDecoration: 'none' }}
             >
               <CustomTypographyFooter sx={{ fontWeight: 500 }}>press kit</CustomTypographyFooter>
             </Link>
