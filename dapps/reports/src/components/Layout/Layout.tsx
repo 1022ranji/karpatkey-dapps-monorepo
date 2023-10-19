@@ -1,11 +1,13 @@
 import Body from '@karpatkey-monorepo/reports/src/components/Layout/Body'
 import Header, { HEADER_HEIGHT } from '@karpatkey-monorepo/reports/src/components/Layout/Header'
+import { Header as HomepageHeader } from '@karpatkey-monorepo/reports/src/components/Layout/Homepage/Header'
+import { Footer as HomepageFooter } from '@karpatkey-monorepo/reports/src/components/Layout/Homepage/Footer'
 import Sidebar, { SIDEBAR_WIDTH } from '@karpatkey-monorepo/reports/src/components/Layout/Sidebar'
-import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import Footer, { FOOTER_HEIGHT } from '@karpatkey-monorepo/shared/layout/Footer'
 import { Box } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React, { ReactElement } from 'react'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 
 interface LayoutProps {
   children: React.ReactElement
@@ -20,26 +22,27 @@ const LayoutWithSidebarWrapper = styled(Box)(() => ({
                       "sidebar footer footer"`
 }))
 
-const LayoutWithoutSidebarWrapper = styled(Box)(() => ({
-  display: 'grid',
-  gap: '0px 0px',
-  gridTemplateRows: `${HEADER_HEIGHT}px auto ${FOOTER_HEIGHT}px`,
-  gridTemplateColumns: `auto`,
-  gridTemplateAreas: `"header"
-                      "body"
-                      "footer"`
+const MainWrapper = styled(BoxWrapperColumn)(() => ({
+  height: '100vh',
+  width: '100vw'
+}))
+
+const MainContainer = styled(BoxWrapperColumn)(() => ({
+  alignItems: 'center',
+  flexGrow: 1,
+  zIndex: 1,
+  paddingRight: '30px',
+  paddingLeft: '30px',
+  justifyContent: 'space-between'
 }))
 
 const Layout = ({ children }: LayoutProps): ReactElement => {
-  const { state } = useFilter()
-  const { dao, year, month } = state.value
-
   const queryParams = new URLSearchParams(window.location.search)
   const daoParam = queryParams.get('dao')
   const yearParam = queryParams.get('year')
   const monthParam = queryParams.get('month')
 
-  const isSidebarVisible = !!(dao && year && month) && !!(daoParam && yearParam && monthParam)
+  const isSidebarVisible = !!(daoParam && yearParam && monthParam)
 
   return isSidebarVisible ? (
     <LayoutWithSidebarWrapper>
@@ -88,37 +91,11 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
       </Box>
     </LayoutWithSidebarWrapper>
   ) : (
-    <LayoutWithoutSidebarWrapper>
-      <Box
-        sx={{
-          gridArea: 'header',
-          width: '100%',
-          position: 'fixed',
-          top: 0,
-          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-          zIndex: 1000,
-          minHeight: HEADER_HEIGHT
-        }}
-      >
-        <Header />
-      </Box>
-      <Box
-        sx={{
-          gridArea: 'body',
-          width: '100%',
-          top: HEADER_HEIGHT,
-          zIndex: 900,
-          minHeight: '100vh',
-          overflowX: 'hidden',
-          overflowY: 'hidden'
-        }}
-      >
-        <Body>{children}</Body>
-      </Box>
-      <Box sx={{ gridArea: 'footer', width: '100%' }}>
-        <Footer />
-      </Box>
-    </LayoutWithoutSidebarWrapper>
+    <MainWrapper>
+      <HomepageHeader />
+      <MainContainer component="main">{children}</MainContainer>
+      <HomepageFooter />
+    </MainWrapper>
   )
 }
 

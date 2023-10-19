@@ -12,7 +12,7 @@ const Custom500Page: NextPage = () => {
   return (
     <PageWrapper>
       <Box height="100%" display="flex" position="relative" alignItems="center">
-        <Box display="block" height="100%" width="100%" position="relative">
+        <Box display="block" height="calc(100vh - 360px)" width="100%" position="relative">
           <CustomTypography color="textSecondary" variant="h3" textAlign="center">
             Internal server error
           </CustomTypography>
