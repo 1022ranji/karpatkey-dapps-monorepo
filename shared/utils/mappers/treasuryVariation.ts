@@ -226,5 +226,6 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
     })
   }
 
-  return rows
+  // Remove funds in the range of 0.5
+  return rows.filter((row: any) => !(row.funds === 0 || (row.funds < 0.5 && row.funds > -0.5)))
 }
