@@ -27,13 +27,26 @@ interface PieChartProps {
   footerMessage?: React.ReactNode
   width?: string | number
   height?: string | number
+  innerSize?: string
+  outerSize?: string
 }
 
 export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
-  const { data, title, footerMessage, width = 440, height = 400 } = props
+  const {
+    data,
+    title,
+    footerMessage,
+    width = 440,
+    height = 400,
+    innerSize = '40%',
+    outerSize = '65%'
+  } = props
   const chartComponentRef = React.useRef<HighchartsReact.RefObject>(null)
 
   const options = {
+    title: {
+      text: ''
+    },
     credits: {
       enabled: false
     },
@@ -53,8 +66,8 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         borderWidth: 0,
         colorByPoint: true,
         type: 'pie',
-        size: '65%',
-        innerSize: '40%',
+        size: outerSize,
+        innerSize,
         dataLabels: {
           enabled: true,
           crop: false,
