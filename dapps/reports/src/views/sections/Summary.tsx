@@ -1,11 +1,11 @@
-import {formatCurrency, formatPercentage} from '@karpatkey-monorepo/reports/src/utils/format'
+import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import * as React from 'react'
 import { Box } from '@mui/material'
-import BoxPieChart from '@karpatkey-monorepo/reports/src/components/Charts/Pie'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
-import {PieChart} from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
+import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 
 interface SummaryProps {
   totalFunds: number
@@ -36,7 +36,7 @@ const Summary = (props: SummaryProps) => {
   console.log('fundsByTokenCategory', fundsByTokenCategory)
   return (
     <AnimatePresenceWrapper>
-      <BoxWrapperColumn sx={{margin: '30px 30px'}} gap={10}>
+      <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
         <Box
           id="summary"
           sx={{
@@ -46,12 +46,12 @@ const Summary = (props: SummaryProps) => {
             gap: 10
           }}
         >
-          <BoxInfoCard title="Total funds" value={formatCurrency(totalFunds)}/>
+          <BoxInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
           <BoxInfoCard
             title="Capital utilisation"
             value={formatPercentage(capitalUtilization, 1)}
           />
-          <BoxInfoCard title="Farming results" value={formatCurrency(farmingResults)}/>
+          <BoxInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
           <BoxInfoCard
             title="APY"
             value={formatPercentage(globalROI)}
@@ -63,11 +63,11 @@ const Summary = (props: SummaryProps) => {
             display: 'flex',
             flexWrap: 'wrap',
             alignContent: 'center',
-            gap: 10
+            gap: 2
           }}
         >
           <PieChart
-            title="Total funds by blockchain"
+            title="Total funds by token category"
             data={fundsByTokenCategory.map((item) => {
               return {
                 name: item.label,
@@ -75,54 +75,51 @@ const Summary = (props: SummaryProps) => {
                 color: item.color
               }
             })}
-            width={400}
-            height={350}
+            width={440}
+            height={400}
+            {...(negativeTotalValue
+              ? {
+                  footerMessage: (
+                    <CustomTypography
+                      variant={'body2'}
+                      color="textSecondary"
+                      sx={{
+                        fontFamily: 'IBM Plex Sans',
+                        fontSize: 12,
+                        fontStyle: 'italic',
+                        textAlign: 'center'
+                      }}
+                    >
+                      Negative balance due to loan debt ={' '}
+                      {formatCurrency(negativeTotalValue?.Total)}
+                    </CustomTypography>
+                  )
+                }
+              : {})}
           />
-          {/*<BoxPieChart*/}
-          {/*  data={fundsByTokenCategory}*/}
-          {/*  title="Total funds by token category"*/}
-          {/*  dataKey="funds"*/}
-          {/*  width={400}*/}
-          {/*  height={350}*/}
-          {/*  innerRadius={40}*/}
-          {/*  outerRadius={100}*/}
-          {/*  {...(negativeTotalValue*/}
-          {/*    ? {*/}
-          {/*        footerMessage: (*/}
-          {/*          <CustomTypography*/}
-          {/*            variant={'body2'}*/}
-          {/*            color="textSecondary"*/}
-          {/*            sx={{*/}
-          {/*              fontFamily: 'IBM Plex Sans',*/}
-          {/*              fontSize: 12,*/}
-          {/*              fontStyle: 'italic',*/}
-          {/*              textAlign: 'center'*/}
-          {/*            }}*/}
-          {/*          >*/}
-          {/*            Negative balance due to loan debt ={' '}*/}
-          {/*            {formatCurrency(negativeTotalValue?.Total)}*/}
-          {/*          </CustomTypography>*/}
-          {/*        )*/}
-          {/*      }*/}
-          {/*    : {})}*/}
-          {/*/>*/}
-          <BoxPieChart
-            data={fundsByBlockchain}
+          <PieChart
             title="Total funds by blockchain"
-            dataKey="funds"
-            width={400}
-            height={350}
-            innerRadius={40}
-            outerRadius={100}
+            data={fundsByBlockchain.map((item) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
+            width={440}
+            height={400}
           />
-          <BoxPieChart
-            data={fundsByType}
+          <PieChart
             title="Total funds by type"
-            dataKey="funds"
-            width={400}
-            height={350}
-            innerRadius={40}
-            outerRadius={100}
+            data={fundsByType.map((item) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
+            width={440}
+            height={400}
           />
         </Box>
       </BoxWrapperColumn>
