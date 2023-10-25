@@ -59,7 +59,7 @@
     "@types/react": "18.2.32",
     "@types/react-copy-to-clipboard": "^5.0.6",
     "@types/react-dom": "18.2.14",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "eslint": "8.52.0",
     "eslint-config-next": "13.5.6",
