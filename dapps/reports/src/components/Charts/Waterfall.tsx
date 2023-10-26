@@ -15,6 +15,7 @@ import {
   YAxis
 } from 'recharts'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 
 export type WaterfallProps = {
   title?: string
@@ -47,11 +48,7 @@ const CustomTooltip = ({ active, payload }: any) => {
           color="textSecondary"
           sx={{ padding: 1, textAlign: 'left' }}
         >
-          {numbro(payload[1].value).formatCurrency({
-            spaceSeparated: false,
-            mantissa: 2,
-            thousandSeparated: true
-          })}
+          {formatCurrency(payload[1].value, 0, true)}
         </CustomTypography>
       </Paper>
     )
@@ -65,6 +62,9 @@ const RenderCustomizedLabel = (props: any) => {
   const radius = 10
 
   const customY = value > 0 ? y - radius : y - radius + viewBox.height
+
+  const valueCast = value === 0 || (value < 0.5 && value > -0.5) ? '$0' : value
+
   return (
     <g>
       <text
@@ -76,7 +76,7 @@ const RenderCustomizedLabel = (props: any) => {
         textAnchor="middle"
         dominantBaseline="middle"
       >
-        {numbro(value)
+        {numbro(valueCast)
           .formatCurrency({
             average: true,
             totalLength: 3,

@@ -183,10 +183,9 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
 
         if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
 
-        acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + (obj['metric_value'] ?? 0)
         acc[metricKey.key - 1] = {
           ...acc[metricKey.key - 1],
-          ...metricKey
+          funds: acc[metricKey.key - 1].funds + (obj['metric_value'] ?? 0)
         }
 
         return acc
@@ -227,5 +226,6 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
     })
   }
 
-  return rows
+  // Remove funds in the range of 0.5
+  return rows.filter((row: any) => !(row.funds === 0 || (row.funds < 0.5 && row.funds > -0.5)))
 }
