@@ -28,6 +28,7 @@ export type ReportData = {
   walletTokenDetail: any[]
   daoResume: any[]
   nonCustodialAum: number
+  ourDaoTreasuries: number
   lastMonthFarmingResults: number
   latestMonth: number
 }

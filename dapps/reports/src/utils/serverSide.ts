@@ -32,6 +32,7 @@ import {
   getTreasuryVariationHistory
 } from '@karpatkey-monorepo/shared/utils/mappers/treasuryVariation'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
+import { DataWarehouse } from '../services/classes/dataWarehouse.class'
 
 const summaryData = ({
   variationMetricsDetailFiltered,
@@ -313,6 +314,10 @@ export const getCommonServerSideProps = async (params: Filter) => {
   })
   const latestMonth = getLatestMonth()
 
+  const dataWarehouse = DataWarehouse.getInstance()
+  const ourDaoTreasuriesData = await dataWarehouse.getOurDAOTreasury()
+  const ourDaoTreasuries = ourDaoTreasuriesData.length > 0 ? ourDaoTreasuriesData[0].value : 0
+
   return {
     ...summaryDataValues,
     ...balanceOverviewValues,
@@ -321,6 +326,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     ...tokenDetailsValues,
     daoResume: daoResumeSorted,
     nonCustodialAum,
+    ourDaoTreasuries,
     lastMonthFarmingResults,
     latestMonth
   }
