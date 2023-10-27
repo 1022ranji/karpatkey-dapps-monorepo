@@ -262,7 +262,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
 }
 
 const Dashboard = (props: ReportProps) => {
-  const { daoResume, nonCustodialAum, lastMonthFarmingResults, latestMonth } = props
+  const { daoResume, ourDaoTreasuries, nonCustodialAum, lastMonthFarmingResults, latestMonth } =
+    props
 
   const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
   const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
@@ -306,6 +307,7 @@ const Dashboard = (props: ReportProps) => {
               : { flexDirection: 'column', alignItems: 'center', gap: '40px' })
           }}
         >
+          <NumberBlock amount={formatCurrency(ourDaoTreasuries)} title="Our DAO treasuries" />
           <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
           <NumberBlock
             amount={formatCurrency(lastMonthFarmingResults)}
