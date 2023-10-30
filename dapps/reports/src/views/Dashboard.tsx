@@ -48,7 +48,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
               align="left"
               sx={{ minWidth: '205px', maxWidth: '205px', paddingY: '4px', paddingX: '20px' }}
             >
-              <Value value={'Total funds'} fontWeight={600} fontSize={'16px'} />
+              <Value value={'Total funds (ncAUM)'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
