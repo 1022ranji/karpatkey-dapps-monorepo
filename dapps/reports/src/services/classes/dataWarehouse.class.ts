@@ -11,7 +11,8 @@ const REPORTS_DATASET = {
     getTreasuryVariationMetricsDetail: 'reports.mvw_treasury_variation_metrics_detail',
     getTreasuryFinancialPositions: 'reports.vw_treasury_financial_positions',
     getTreasuryHistoricVariation: 'reports.dm_treasury_historic_variation',
-    getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail'
+    getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail',
+    getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr'
   },
   production: {
     getTreasuryFinancialMetrics: 'reports_production.prod_treasury_financial_metrics',
@@ -19,7 +20,8 @@ const REPORTS_DATASET = {
     getTreasuryVariationMetricsDetail: 'reports_production.prod_treasury_variation_metrics_detail',
     getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions',
     getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation',
-    getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail'
+    getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail',
+    getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr'
   }
 }
 
@@ -100,6 +102,16 @@ export class DataWarehouse {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getFinancialMetricAndVarDetail'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    return await this.executeCommonJobQuery(viewQuery)
+  }
+
+  async getOurDAOTreasury() {
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getOurDAOTreasury'
       ]
     const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
 
