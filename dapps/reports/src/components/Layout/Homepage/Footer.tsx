@@ -75,7 +75,7 @@ export const Footer = () => {
             </BoxWrapperRow>
             <BoxWrapperRow gap={isMobile ? 2 : 4}>
               <Link
-                href={`https://github.com/KarpatkeyDAO`}
+                href={`https://github.com/karpatkey/`}
                 target="_blank"
                 height={isMobile ? '20px' : '24px'}
                 width={isMobile ? '20px' : '24px'}
