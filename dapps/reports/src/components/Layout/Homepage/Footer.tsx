@@ -9,7 +9,7 @@ import { Box, Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React from 'react'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
-import { useScreenSize } from '../../../hooks/useScreenSize'
+import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
 
 const Wrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default,
