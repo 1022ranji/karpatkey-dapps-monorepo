@@ -34,7 +34,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
   const matchesCapitalUtilization = useMediaQuery('(min-width:710px)')
   const matchesFarmingResults = useMediaQuery('(min-width:780px)')
   const matchesAPY = useMediaQuery('(min-width:900px)')
-  const matchesIcon = useMediaQuery('(min-width:960px)')
+  const matchesIcon = useMediaQuery('(min-width:1000px)')
 
   return (
     <TableContainer component={Box}>
@@ -268,7 +268,7 @@ const Dashboard = (props: ReportProps) => {
   const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
   const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
 
-  const matchesQuery = useMediaQuery('(min-width:750px)')
+  const matchesQuery = useMediaQuery('(min-width:1000px)')
 
   const screenSize = useScreenSize()
 
@@ -276,15 +276,30 @@ const Dashboard = (props: ReportProps) => {
     <BoxWrapperColumn
       sx={{
         alignItems: 'center',
-        justifyContent: 'space-between',
-        maxHeight: '740px !important',
-        paddingBottom: 10,
-        paddingTop: 10,
+        justifyContent: 'center',
+        maxHeight: '840px !important',
+        marginBottom: 5,
+        marginTop: 5,
         marginRight: '10%',
         marginLeft: '10%',
         gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
       }}
     >
+      <BoxWrapperColumn
+        sx={{
+          display: screenSize.width < 1000 ? 'flex' : 'none',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Value
+          value={'Reports are available in desktop view only.'}
+          fontWeight={400}
+          fontSize={'16px'}
+        />
+        <Value value={'Responsive view is coming soon!'} fontWeight={400} fontSize={'16px'} />
+      </BoxWrapperColumn>
+
       <BoxWrapperColumn
         sx={{
           gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
@@ -330,14 +345,6 @@ const Dashboard = (props: ReportProps) => {
           </AnimatePresenceWrapper>
         )}
       </BoxWrapperColumn>
-
-      <AnimatePresenceWrapper>
-        <Value
-          value={'Reports are available in desktop view only. Responsive view is coming soon!'}
-          fontWeight={400}
-          fontSize={'16px'}
-        />
-      </AnimatePresenceWrapper>
     </BoxWrapperColumn>
   )
 }
