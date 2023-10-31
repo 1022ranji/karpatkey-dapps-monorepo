@@ -278,8 +278,8 @@ const Dashboard = (props: ReportProps) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         maxHeight: '740px !important',
-        paddingBottom: 5,
-        paddingTop: 5,
+        paddingBottom: 10,
+        paddingTop: 10,
         marginRight: '10%',
         marginLeft: '10%',
         gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
@@ -290,12 +290,6 @@ const Dashboard = (props: ReportProps) => {
           gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
         }}
       >
-        <AnimatePresenceWrapper>
-          <CustomTypography variant="h1" textAlign="center">
-            DAO treasury reports
-          </CustomTypography>
-        </AnimatePresenceWrapper>
-
         <BoxWrapperRow
           sx={{
             ...(matchesQuery
