@@ -9,6 +9,7 @@ import { Box, Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React from 'react'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
 
 const Wrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default,
@@ -28,9 +29,7 @@ const Container = styled(Box)(() => ({
   marginLeft: 'auto',
   marginRight: 'auto',
   width: '100%',
-  maxWidth: '980px',
-  paddingLeft: '20px',
-  paddingRight: '20px'
+  maxWidth: '980px'
 }))
 
 const Title = styled(CustomTypography)({
@@ -43,62 +42,69 @@ const Title = styled(CustomTypography)({
 })
 
 export const Footer = () => {
+  const screenSize = useScreenSize()
+  const isMobile = screenSize.width < 600
   return (
     <AnimatePresenceWrapper>
       <Wrapper>
-        <Container>
+        <Container
+          sx={{ paddingLeft: isMobile ? 'none' : '20px', paddingRight: isMobile ? 'none' : '20px' }}
+        >
           <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
             <BoxWrapperRow>
-              <Title>© 2023 karpatkey&nbsp;&nbsp;•&nbsp;&nbsp;</Title>
-              <Link
-                href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
-                target="_blank"
-                sx={{ textDecoration: 'none' }}
-              >
-                <Title
-                  sx={{
-                    fontWeight: 500,
-                    '&:hover': {
-                      color: 'rgba(26, 27, 31, 0.6)'
-                    }
-                  }}
+              <Title>© 2023 karpatkey</Title>
+              {!isMobile && <Title>&nbsp;&nbsp;•&nbsp;&nbsp;</Title>}
+              {!isMobile && (
+                <Link
+                  href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
+                  target="_blank"
+                  sx={{ textDecoration: 'none' }}
                 >
-                  press kit
-                </Title>
-              </Link>
+                  <Title
+                    sx={{
+                      fontWeight: 500,
+                      '&:hover': {
+                        color: 'rgba(26, 27, 31, 0.6)'
+                      }
+                    }}
+                  >
+                    press kit
+                  </Title>
+                </Link>
+              )}
             </BoxWrapperRow>
-            <BoxWrapperRow gap={4}>
+            <BoxWrapperRow gap={isMobile ? 2 : 4}>
               <Link
                 href={`https://github.com/karpatkey`}
                 target="_blank"
-                height={'24px'}
-                width={'24px'}
+                height={isMobile ? '20px' : '24px'}
+                width={isMobile ? '20px' : '24px'}
               >
-                <Github height={'20px'} width={'100%'} />
+                <Github height={isMobile ? '14px' : '20px'} width={'100%'} />
               </Link>
               <Link
                 href={`https://twitter.com/karpatkey`}
                 target="_blank"
-                height={'24px'}
-                width={'24px'}
+                height={isMobile ? '20px' : '24px'}
+                width={isMobile ? '20px' : '24px'}
               >
-                <Twitter height={'20px'} width={'100%'} />
+                <Twitter height={isMobile ? '14px' : '20px'} width={'100%'} />
               </Link>
               <Link
                 href={`https://mirror.xyz/karpatkey.eth`}
                 target="_blank"
-                height={'24px'}
-                width={'24px'}
+                height={isMobile ? '20px' : '24px'}
+                width={isMobile ? '20px' : '24px'}
               >
-                <Mirror height={'20px'} width={'100%'} />
+                <Mirror height={isMobile ? '14px' : '20px'} width={'100%'} />
               </Link>
               <Link
                 href={`https://www.linkedin.com/company/karpatkey/mycompany/`}
                 target="_blank"
-                height={'24px'}
-                width={'24px'}
+                height={isMobile ? '20px' : '24px'}
+                width={isMobile ? '20px' : '24px'}
               >
-                <Linkedin height={'20px'} width={'100%'} />
+                <Linkedin height={isMobile ? '14px' : '20px'} width={'100%'} />
               </Link>
             </BoxWrapperRow>
           </BoxWrapperRow>
