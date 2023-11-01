@@ -34,7 +34,10 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
   const matchesCapitalUtilization = useMediaQuery('(min-width:710px)')
   const matchesFarmingResults = useMediaQuery('(min-width:780px)')
   const matchesAPY = useMediaQuery('(min-width:900px)')
-  const matchesIcon = useMediaQuery('(min-width:960px)')
+  const matchesIcon = useMediaQuery('(min-width:1050px)')
+
+  const screenSize = useScreenSize()
+  const isMobile = screenSize.width < 550
 
   return (
     <TableContainer component={Box}>
@@ -42,19 +45,29 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
         <TableHead>
           <TableRow sx={{ '& th': { borderBottom: 'none !important' } }}>
             <TableEmptyCellCustom
-              sx={{ minWidth: '260px', maxWidth: '260px', paddingY: '4px', paddingLeft: '5px' }}
+              sx={{
+                minWidth: isMobile ? '170px' : '260px',
+                maxWidth: isMobile ? '170px' : '260px',
+                paddingY: '4px',
+                paddingLeft: '5px'
+              }}
             />
             <TableCellCustom
               align="left"
-              sx={{ minWidth: '205px', maxWidth: '205px', paddingY: '4px', paddingX: '20px' }}
+              sx={{
+                minWidth: isMobile ? '190px' : '205px',
+                maxWidth: isMobile ? '190px' : '205px',
+                paddingY: '4px',
+                paddingX: '20px'
+              }}
             >
               <Value value={'Total funds (ncAUM)'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
               sx={{
-                minWidth: '165px',
-                maxWidth: '165px',
+                minWidth: isMobile ? '150px' : '165px',
+                maxWidth: isMobile ? '150px' : '165px',
                 paddingY: '4px',
                 paddingX: '20px',
                 ...(matchesCapitalUtilization ? { display: 'table-cell' } : { display: 'none' })
@@ -65,8 +78,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
             <TableCellCustom
               align="left"
               sx={{
-                minWidth: '145px',
-                maxWidth: '145px',
+                minWidth: isMobile ? '130px' : '145px',
+                maxWidth: isMobile ? '130px' : '145px',
                 paddingY: '4px',
                 paddingX: '20px',
                 ...(matchesFarmingResults ? { display: 'table-cell' } : { display: 'none' })
@@ -77,8 +90,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
             <TableCellCustom
               align="left"
               sx={{
-                minWidth: '115px',
-                maxWidth: '115px',
+                minWidth: isMobile ? '100px' : '115px',
+                maxWidth: isMobile ? '100px' : '115px',
                 paddingY: '4px',
                 paddingLeft: '20px',
                 marginRight: '5px',
@@ -159,15 +172,20 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '260px',
-                          maxWidth: '260px',
+                          minWidth: isMobile ? '170px' : '260px',
+                          maxWidth: isMobile ? '170px' : '260px',
                           paddingY: '4px',
                           paddingLeft: '5px'
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
                           <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
-                            <Image src={icon} alt={name} width={48} height={48} />
+                            <Image
+                              src={icon}
+                              alt={name}
+                              width={isMobile ? 32 : 48}
+                              height={isMobile ? 32 : 48}
+                            />
                             <Value value={name} fontWeight={600} />
                           </BoxWrapperRow>
                         </LinkWrapper>
@@ -175,8 +193,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '205px',
-                          maxWidth: '205px',
+                          minWidth: isMobile ? '190px' : '205px',
+                          maxWidth: isMobile ? '190px' : '205px',
                           paddingY: '4px',
                           paddingX: '20px'
                         }}
@@ -188,8 +206,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '165px',
-                          maxWidth: '165px',
+                          minWidth: isMobile ? '150px' : '165px',
+                          maxWidth: isMobile ? '150px' : '165px',
                           paddingY: '4px',
                           paddingX: '20px',
                           ...(matchesCapitalUtilization
@@ -204,8 +222,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '145px',
-                          maxWidth: '145px',
+                          minWidth: isMobile ? '130px' : '145px',
+                          maxWidth: isMobile ? '130px' : '145px',
                           paddingY: '4px',
                           paddingX: '20px',
                           ...(matchesFarmingResults
@@ -220,8 +238,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '115px',
-                          maxWidth: '115px',
+                          minWidth: isMobile ? '100px' : '115px',
+                          maxWidth: isMobile ? '100px' : '115px',
                           paddingY: '4px',
                           paddingLeft: '20px',
                           marginRight: '5px',
@@ -268,7 +286,7 @@ const Dashboard = (props: ReportProps) => {
   const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
   const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
 
-  const matchesQuery = useMediaQuery('(min-width:750px)')
+  const matchesQuery = useMediaQuery('(min-width:1000px)')
 
   const screenSize = useScreenSize()
 
@@ -276,26 +294,31 @@ const Dashboard = (props: ReportProps) => {
     <BoxWrapperColumn
       sx={{
         alignItems: 'center',
-        justifyContent: 'space-between',
-        maxHeight: '740px !important',
-        paddingBottom: 5,
-        paddingTop: 5,
+        justifyContent: 'center',
+        maxHeight: '840px !important',
+        marginBottom: '110px',
+        marginTop: '110px',
         marginRight: '10%',
         marginLeft: '10%',
-        gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+        gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
       }}
     >
       <BoxWrapperColumn
         sx={{
-          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+          display: screenSize.width < 1050 ? 'flex' : 'none',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
-        <AnimatePresenceWrapper>
-          <CustomTypography variant="h1" textAlign="center">
-            DAO treasury reports
-          </CustomTypography>
-        </AnimatePresenceWrapper>
+        <Value value={'Available in desktop view only.'} fontWeight={400} fontSize={'16px'} />
+        <Value value={'Responsive view is coming soon!'} fontWeight={400} fontSize={'16px'} />
+      </BoxWrapperColumn>
 
+      <BoxWrapperColumn
+        sx={{
+          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
+        }}
+      >
         <BoxWrapperRow
           sx={{
             ...(matchesQuery
@@ -318,7 +341,7 @@ const Dashboard = (props: ReportProps) => {
 
       <BoxWrapperColumn
         sx={{
-          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
         }}
       >
         <AnimatePresenceWrapper>
@@ -336,14 +359,6 @@ const Dashboard = (props: ReportProps) => {
           </AnimatePresenceWrapper>
         )}
       </BoxWrapperColumn>
-
-      <AnimatePresenceWrapper>
-        <Value
-          value={'Reports are available in desktop view only. Responsive view is coming soon!'}
-          fontWeight={400}
-          fontSize={'16px'}
-        />
-      </AnimatePresenceWrapper>
     </BoxWrapperColumn>
   )
 }

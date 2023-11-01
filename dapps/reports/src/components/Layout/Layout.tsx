@@ -31,8 +31,6 @@ const MainContainer = styled(BoxWrapperColumn)(() => ({
   alignItems: 'center',
   flexGrow: 1,
   zIndex: 1,
-  paddingRight: '30px',
-  paddingLeft: '30px',
   justifyContent: 'space-between'
 }))
 
