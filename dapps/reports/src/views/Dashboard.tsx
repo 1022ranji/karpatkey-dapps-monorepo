@@ -34,7 +34,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
   const matchesCapitalUtilization = useMediaQuery('(min-width:710px)')
   const matchesFarmingResults = useMediaQuery('(min-width:780px)')
   const matchesAPY = useMediaQuery('(min-width:900px)')
-  const matchesIcon = useMediaQuery('(min-width:1000px)')
+  const matchesIcon = useMediaQuery('(min-width:1050px)')
 
   const screenSize = useScreenSize()
   const isMobile = screenSize.width < 550
@@ -296,16 +296,16 @@ const Dashboard = (props: ReportProps) => {
         alignItems: 'center',
         justifyContent: 'center',
         maxHeight: '840px !important',
-        marginBottom: 10,
-        marginTop: 10,
+        marginBottom: '110px',
+        marginTop: '110px',
         marginRight: '10%',
         marginLeft: '10%',
-        gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+        gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
       }}
     >
       <BoxWrapperColumn
         sx={{
-          display: screenSize.width < 1000 ? 'flex' : 'none',
+          display: screenSize.width < 1050 ? 'flex' : 'none',
           alignItems: 'center',
           justifyContent: 'center'
         }}
@@ -316,7 +316,7 @@ const Dashboard = (props: ReportProps) => {
 
       <BoxWrapperColumn
         sx={{
-          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
         }}
       >
         <BoxWrapperRow
@@ -341,7 +341,7 @@ const Dashboard = (props: ReportProps) => {
 
       <BoxWrapperColumn
         sx={{
-          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
         }}
       >
         <AnimatePresenceWrapper>
