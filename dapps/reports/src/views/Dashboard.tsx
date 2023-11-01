@@ -297,7 +297,7 @@ const Dashboard = (props: ReportProps) => {
         justifyContent: 'center',
         maxHeight: '840px !important',
         marginBottom: '110px',
-        marginTop: '110px',
+        marginTop: screenSize.width > 1050 ? '110px' : '40px',
         marginRight: '10%',
         marginLeft: '10%',
         gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
@@ -310,8 +310,10 @@ const Dashboard = (props: ReportProps) => {
           justifyContent: 'center'
         }}
       >
-        <Value value={'Available in desktop view only.'} fontWeight={400} fontSize={'16px'} />
-        <Value value={'Responsive view is coming soon!'} fontWeight={400} fontSize={'16px'} />
+        <AnimatePresenceWrapper>
+          <Value value={'Available in desktop view only.'} fontWeight={400} fontSize={'16px'} />
+          <Value value={'Responsive view is coming soon!'} fontWeight={400} fontSize={'16px'} />
+        </AnimatePresenceWrapper>
       </BoxWrapperColumn>
 
       <BoxWrapperColumn
