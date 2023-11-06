@@ -9,7 +9,7 @@ const Enzyme = (props: any) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1105_71)">
+      <g clipPath="url(#clip0_1105_71)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"

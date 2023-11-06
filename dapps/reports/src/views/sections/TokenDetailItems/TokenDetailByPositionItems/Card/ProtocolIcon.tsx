@@ -27,6 +27,8 @@ import UniswapV3 from '@karpatkey-monorepo/shared/components/Icons/Protocols/Uni
 import Validators from '@karpatkey-monorepo/shared/components/Icons/Protocols/Validators'
 import CoW from '@karpatkey-monorepo/shared/components/Icons/Protocols/CoW'
 import Enzyme from '@karpatkey-monorepo/shared/components/Icons/Protocols/Enzyme'
+import Gnosis from '@karpatkey-monorepo/shared/components/Icons/Protocols/Gnosis'
+import RocketPool from '@karpatkey-monorepo/shared/components/Icons/Protocols/RocketPool'
 import * as React from 'react'
 
 interface ProtocolIconProps {
@@ -125,6 +127,12 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Enzyme':
       icon = <Enzyme width={24} height={24} />
+      break
+    case 'Gnosis':
+      icon = <Gnosis width={24} height={24} />
+      break
+    case 'Rocket':
+      icon = <RocketPool width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />
