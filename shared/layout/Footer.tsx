@@ -65,7 +65,7 @@ const Footer = (props: FooterProps) => {
             </Link>
           </BoxWrapperRow>
           <BoxWrapperRow gap={4}>
-            <Link href={`https://github.com/KarpatkeyDAO`} target="_blank">
+            <Link href={`https://github.com/karpatkey`} target="_blank">
               <Github height={24} width={24} />
             </Link>
             <Link href={`https://twitter.com/karpatkey`} target="_blank">
