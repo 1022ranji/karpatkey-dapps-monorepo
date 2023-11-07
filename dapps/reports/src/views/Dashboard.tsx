@@ -39,6 +39,9 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
   const screenSize = useScreenSize()
   const isMobile = screenSize.width < 550
 
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
+
   return (
     <TableContainer component={Box}>
       <Table>
@@ -118,12 +121,17 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 const {
                   icon,
                   name,
+                  keyName,
                   totalFunds,
                   capitalUtilization,
                   farmingResults,
                   globalROI,
                   urlToReport
                 } = dao
+
+                const isDAOEns =
+                  keyName === 'ENS DAO' && +currentYear === 2023 && +latestMonth === 10
+                const APY = isDAOEns ? '2.0%' : formatPercentage(globalROI, 1)
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const onClick = (e: any) => {
@@ -247,7 +255,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatPercentage(globalROI, 1)} />
+                          <Value value={APY} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom

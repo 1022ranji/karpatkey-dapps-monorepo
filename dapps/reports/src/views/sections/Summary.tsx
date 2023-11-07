@@ -6,8 +6,12 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import { Box } from '@mui/material'
 import BoxPieChart from '@karpatkey-monorepo/reports/src/components/Charts/Pie'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
+import { getDAO } from '@karpatkey-monorepo/shared/utils'
 
 interface SummaryProps {
+  dao: Maybe<number>
+  month: Maybe<number>
+  year: Maybe<number>
   totalFunds: number
   capitalUtilization: number
   globalROI: number
@@ -20,6 +24,9 @@ interface SummaryProps {
 
 const Summary = (props: SummaryProps) => {
   const {
+    month,
+    year,
+    dao,
     totalFunds,
     capitalUtilization,
     globalROI,
@@ -30,8 +37,13 @@ const Summary = (props: SummaryProps) => {
     balanceOverviewType
   } = props
 
-  const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
+  // Logic for ENS DAO only for the month of October 2023
+  const DAO_OBJ = getDAO(dao)
+  const isDAOEns =
+    DAO_OBJ?.keyName === 'ENS DAO' && year && month && +year === 2023 && +month === 10
+  const APY = isDAOEns ? '2.04%' : formatPercentage(globalROI)
 
+  const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
@@ -52,7 +64,7 @@ const Summary = (props: SummaryProps) => {
           <BoxInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
           <BoxInfoCard
             title="APY"
-            value={formatPercentage(globalROI)}
+            value={APY}
             helpInfo="This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1."
           />
         </Box>
