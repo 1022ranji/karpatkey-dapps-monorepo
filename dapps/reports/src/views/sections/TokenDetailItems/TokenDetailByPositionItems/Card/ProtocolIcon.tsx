@@ -29,6 +29,7 @@ import CoW from '@karpatkey-monorepo/shared/components/Icons/Protocols/CoW'
 import Enzyme from '@karpatkey-monorepo/shared/components/Icons/Protocols/Enzyme'
 import Gnosis from '@karpatkey-monorepo/shared/components/Icons/Protocols/Gnosis'
 import RocketPool from '@karpatkey-monorepo/shared/components/Icons/Protocols/RocketPool'
+import KarpatkeyIcon from '@karpatkey-monorepo/shared/components/Icons/Protocols/Karpatkey'
 import * as React from 'react'
 
 interface ProtocolIconProps {
@@ -40,6 +41,7 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
 
   let icon: Maybe<React.ReactElement> = null
 
+  console.log('arbitrage', `"${protocol}"`)
   switch (protocol) {
     case 'Aave':
       icon = <Aave width={24} height={24} />
@@ -133,6 +135,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Rocket':
       icon = <RocketPool width={24} height={24} />
+      break
+    case 'Arbitrage Bot':
+      icon = <KarpatkeyIcon width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />
