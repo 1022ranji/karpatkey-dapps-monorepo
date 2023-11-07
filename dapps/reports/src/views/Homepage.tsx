@@ -60,6 +60,9 @@ const HomepageContent = (props: ReportProps) => {
     <BoxContainerWrapper>
       <Hero />
       <Summary
+        dao={dao}
+        month={month}
+        year={year}
         totalFunds={totalFunds}
         capitalUtilization={capitalUtilization}
         globalROI={globalROI}

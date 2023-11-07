@@ -41,7 +41,6 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
 
   let icon: Maybe<React.ReactElement> = null
 
-  console.log('arbitrage', `"${protocol}"`)
   switch (protocol) {
     case 'Aave':
       icon = <Aave width={24} height={24} />
