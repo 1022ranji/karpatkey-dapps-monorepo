@@ -43,7 +43,7 @@
     "highcharts": "^11.2.0",
     "highcharts-react-official": "^3.2.1",
     "lottie-react": "^2.4.0",
-    "luxon": "^3.4.3",
+    "luxon": "^3.4.4",
     "next": "13.4.12",
     "numbro": "^2.4.0",
     "puppeteer": "^21.5.2",
