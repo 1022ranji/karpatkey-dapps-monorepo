@@ -766,7 +766,7 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
-"@mui/x-date-pickers@^6.18.1":
+"@mui/x-date-pickers@^6.18.2":
   version "6.18.2"
   resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-6.18.2.tgz#07f76c4a9ba022b8916607d9b3501c39160787c2"
   integrity sha512-HJq4uoFQSu5isa/mesWw2BKh8KBRYUQb+KaSlVlWfJNgP3YhPvWZ6yqCNYyxOAiPMxb0n3nBjS9ErO27OHjFMA==
