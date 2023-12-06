@@ -8,7 +8,7 @@ const REPORTS_DATASET = {
   development: {
     getTreasuryFinancialMetrics: 'reports.vw_treasury_financial_metrics',
     getTokens: 'reports.lk_tokens',
-    getTreasuryVariationMetricsDetail: 'reports.mvw_treasury_variation_metrics_detail',
+    getTreasuryVariationMetricsDetail: 'reports.vw_dev_token_detail', //'reports.mvw_treasury_variation_metrics_detail',
     getTreasuryFinancialPositions: 'reports.vw_treasury_financial_positions',
     getTreasuryHistoricVariation: 'reports.dm_treasury_historic_variation',
     getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail',
@@ -17,7 +17,7 @@ const REPORTS_DATASET = {
   production: {
     getTreasuryFinancialMetrics: 'reports_production.prod_treasury_financial_metrics',
     getTokens: 'reports_production.prod_tokens',
-    getTreasuryVariationMetricsDetail: 'reports_production.prod_treasury_variation_metrics_detail',
+    getTreasuryVariationMetricsDetail: 'reports_production.vw_prod_token_detail', //'reports_production.prod_treasury_variation_metrics_detail',
     getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions',
     getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation',
     getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail',
