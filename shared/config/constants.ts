@@ -468,5 +468,6 @@ export const MONTHS_ALLOWED = [
   { label: 'July', id: 7 },
   { label: 'August', id: 8 },
   { label: 'September', id: 9 },
-  { label: 'October', id: 10 }
+  { label: 'October', id: 10 },
+  { label: 'November', id: 11 }
 ]
