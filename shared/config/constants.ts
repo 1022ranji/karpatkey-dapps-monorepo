@@ -83,6 +83,29 @@ export const enum DAO_NAME_KEY {
   'Lido' = 7
 }
 
+export const getDAONumberByName = (daoName: string): number => {
+  switch (daoName) {
+    case 'Gnosis DAO':
+      return DAO_NAME_KEY['Gnosis DAO']
+    case 'Gnosis LTD':
+      return DAO_NAME_KEY['Gnosis LTD']
+    case 'Balancer DAO':
+      return DAO_NAME_KEY['Balancer DAO']
+    case 'ENS DAO':
+      return DAO_NAME_KEY['ENS DAO']
+    case 'CoW DAO':
+      return DAO_NAME_KEY['CoW DAO']
+    case 'karpatkey DAO':
+      return DAO_NAME_KEY['karpatkey DAO']
+    case 'Gnosis Guild':
+      return DAO_NAME_KEY['Gnosis Guild']
+    case 'Lido':
+      return DAO_NAME_KEY['Lido']
+    default:
+      return -1
+  }
+}
+
 export const FILTER_DAOS: FILTER_DAO[] = [
   {
     id: DAO_NAME_KEY['Gnosis DAO'],
@@ -468,6 +491,247 @@ export const MONTHS_ALLOWED = [
   { label: 'July', id: 7 },
   { label: 'August', id: 8 },
   { label: 'September', id: 9 },
-  { label: 'October', id: 10 },
-  { label: 'November', id: 11 }
+  { label: 'October', id: 10 }
+  // { label: 'November', id: 11 }
+]
+
+export const MONTHS_ALLOWED_BY_DAO = [
+  {
+    DAO: 'Gnosis DAO',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      }
+    ]
+  },
+  {
+    DAO: 'Gnosis LTD',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      }
+    ]
+  },
+  {
+    DAO: 'Balancer DAO',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      }
+    ]
+  },
+  {
+    DAO: 'ENS DAO',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
+      }
+    ]
+  },
+  {
+    DAO: 'CoW DAO',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      }
+    ]
+  },
+  {
+    DAO: 'karpatkey DAO',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      }
+    ]
+  },
+  {
+    DAO: 'Gnosis Guild',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      }
+    ]
+  },
+  {
+    DAO: 'Lido',
+    DATES_ALLOWED: [
+      {
+        label: 'July',
+        month: 7,
+        year: 2023,
+        id: 7_2023
+      },
+      {
+        label: 'August',
+        month: 8,
+        year: 2023,
+        id: 8_2023
+      },
+      {
+        label: 'September',
+        month: 9,
+        year: 2023,
+        id: 9_2023
+      },
+      {
+        label: 'October',
+        month: 10,
+        year: 2023,
+        id: 10_2023
+      }
+    ]
+  }
 ]
