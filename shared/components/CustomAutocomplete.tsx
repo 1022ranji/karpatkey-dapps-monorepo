@@ -17,6 +17,7 @@ interface AutocompleteProps {
   label?: React.ReactElement
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactElement
   renderOption?: (props: any, option: any, { selected }: any) => React.ReactElement
+  onChangeProps?: (value: any) => void
 }
 
 const CustomRenderOption = (props: any, option: any) => {
@@ -45,7 +46,12 @@ export const CustomAutocomplete = (props: AutocompleteProps) => {
             selectOnFocus
             value={value || null}
             isOptionEqualToValue={isOptionEqualToValue}
-            onChange={(_, data) => onChange(data)}
+            onChange={(_, data) => {
+              if (props.onChangeProps) {
+                props.onChangeProps(data)
+              }
+              onChange(data)
+            }}
             renderInput={
               renderInput
                 ? (params: AutocompleteRenderInputParams) => renderInput(params)

@@ -3,9 +3,11 @@ import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.conte
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form, { SubmitValues } from '@karpatkey-monorepo/shared/components/Filter/Form'
-import { YEARS } from '@karpatkey-monorepo/shared/components/Form/YearAutocomplete'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
+import {
+  getDAONumberByName,
+  MONTHS_ALLOWED_BY_DAO
+} from '@karpatkey-monorepo/shared/config/constants'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -35,7 +37,7 @@ const Menu = () => {
 
   // DAO default value
   const filterDaoOption = FILTER_DAOS.find(
-    (option: FILTER_DAO) => filter.dao && option.id === Number(filter.dao)
+    (option: FILTER_DAO) => filter?.dao && option.id === +filter?.dao
   )
 
   const defaultDAOValue = filterDaoOption
@@ -47,12 +49,37 @@ const Menu = () => {
     : null
 
   // Month default value
-  const filterMonthOption = MONTHS.find((option) => option.id === Number(filter.month))
-  const defaultMonthValue = filterMonthOption ? filterMonthOption : null
+  const filterMonthOption =
+    MONTHS_ALLOWED_BY_DAO.find((option) => {
+      return filter?.dao && getDAONumberByName(option.DAO) === +filter?.dao
+    })?.DATES_ALLOWED?.find((option) => {
+      return (
+        filter?.year &&
+        filter.month &&
+        option.month === +filter.month &&
+        option.year === +filter?.year
+      )
+    }) ?? null
+  const defaultMonthValue = filterMonthOption
+    ? {
+        id: filterMonthOption.month,
+        label: filterMonthOption.label
+      }
+    : null
 
   // Year default value
-  const filterYearOption = YEARS.find((option) => option.id === Number(filter.year))
-  const defaultYearValue = filterYearOption ? filterYearOption : null
+  const filterYearOption =
+    MONTHS_ALLOWED_BY_DAO.find((option) => {
+      return filter?.dao && getDAONumberByName(option.DAO) === +filter?.dao
+    })?.DATES_ALLOWED?.find((option) => {
+      return filter?.year && option.year === +filter?.year
+    }) ?? null
+  const defaultYearValue = filterYearOption
+    ? {
+        id: filterYearOption.year,
+        label: filterYearOption.year + ''
+      }
+    : null
 
   const onSubmitClose = (data: SubmitValues) => {
     const month = data?.month
