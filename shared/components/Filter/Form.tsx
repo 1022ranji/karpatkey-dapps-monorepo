@@ -201,6 +201,8 @@ const Form = (props: FormProps) => {
   const {
     handleSubmit,
     control,
+    watch,
+    setValue,
     formState: { errors }
   } = useForm<FormValues>({
     defaultValues,
@@ -226,6 +228,16 @@ const Form = (props: FormProps) => {
       month
     }
     onSubmitClose(params)
+  }
+
+  const DAOWatched = watch('DAO')
+  const yearWatched = watch('year')
+  const monthWatched = watch('month')
+
+  const selectedValues = {
+    DAO: DAOWatched?.id,
+    year: yearWatched?.id,
+    month: monthWatched?.id
   }
 
   return (
@@ -267,17 +279,36 @@ const Form = (props: FormProps) => {
               ) : null}
               {enableDAO ? (
                 <Stack width={200}>
-                  <DAOAutocomplete control={control} name={'DAO'} />
+                  <DAOAutocomplete
+                    control={control}
+                    name={'DAO'}
+                    onChangeProps={
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      (value: any) => {
+                        // Selected DAO changed, reset month and year
+                        setValue('year', null)
+                        setValue('month', null)
+                      }
+                    }
+                  />
                 </Stack>
               ) : null}
               {enableMonth ? (
                 <Stack width={200}>
-                  <MonthAutocomplete control={control} name={'month'} />
+                  <MonthAutocomplete
+                    control={control}
+                    name={'month'}
+                    selectedValues={selectedValues}
+                  />
                 </Stack>
               ) : null}
               {enableYear ? (
                 <Stack width={200}>
-                  <YearAutocomplete control={control} name={'year'} />
+                  <YearAutocomplete
+                    control={control}
+                    name={'year'}
+                    selectedValues={selectedValues}
+                  />
                 </Stack>
               ) : null}
             </BoxWrapperRow>

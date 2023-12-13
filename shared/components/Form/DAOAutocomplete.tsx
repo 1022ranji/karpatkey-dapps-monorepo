@@ -69,6 +69,7 @@ const RenderOption = (props: any, option: any) => {
 interface DAOAutocompleteProps {
   name: string
   control: any
+  onChangeProps?: (value: any) => void
 }
 
 export default function DAOAutocomplete(props: DAOAutocompleteProps) {

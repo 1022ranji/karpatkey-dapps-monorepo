@@ -5,6 +5,10 @@ import { filterSchemaValidation } from '@karpatkey-monorepo/reports/src/validati
 import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import React, { ReactElement } from 'react'
+import {
+  getDAONumberByName,
+  MONTHS_ALLOWED_BY_DAO
+} from '@karpatkey-monorepo/shared/config/constants'
 
 const HomepageContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Homepage'))
 const DashboardContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Dashboard'))
@@ -29,6 +33,24 @@ export default Homepage
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx
   const { month = null, year = null, dao = null } = query
+
+  // Validate the year and month, if exist for the dao, use the MONTHS_ALLOWED_BY_DAO to verify this
+  if (month && year && dao) {
+    const allowedMonthAndYear = MONTHS_ALLOWED_BY_DAO.find((option) => {
+      return getDAONumberByName(option.DAO) === +dao
+    })?.DATES_ALLOWED?.find((option) => {
+      return option.year === +year && option.month === +month
+    })
+
+    if (!allowedMonthAndYear) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/500'
+        }
+      }
+    }
+  }
 
   const params = { dao, month, year } as Filter
 
