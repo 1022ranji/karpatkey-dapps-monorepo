@@ -39,9 +39,11 @@ const Summary = (props: SummaryProps) => {
 
   // Logic for ENS DAO only for the month of October 2023
   const DAO_OBJ = getDAO(dao)
-  const isDAOEns =
+  const isDAOEnsOctober =
     DAO_OBJ?.keyName === 'ENS DAO' && year && month && +year === 2023 && +month === 10
-  const APY = isDAOEns ? '2.04%' : formatPercentage(globalROI)
+  const isDAOEnsNovember =
+    DAO_OBJ?.keyName === 'ENS DAO' && year && month && +year === 2023 && +month === 11
+  const APY = isDAOEnsOctober ? '2.04%' : isDAOEnsNovember ? '2,9%' : formatPercentage(globalROI)
 
   /* eslint-disable */
   const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
