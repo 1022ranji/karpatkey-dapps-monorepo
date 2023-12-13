@@ -17,7 +17,7 @@ const FooterWrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   height: FOOTER_HEIGHT,
   paddingRight: '48px',
   paddingLeft: '48px',
-  paddingTop: '20px',
+  paddingTop: '40px',
   paddingBottom: '20px',
   justifyContent: 'space-between',
   gap: 20
