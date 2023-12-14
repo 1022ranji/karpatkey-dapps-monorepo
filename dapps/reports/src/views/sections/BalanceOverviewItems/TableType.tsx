@@ -21,7 +21,7 @@ const TableType = (props: TableTypeProps) => {
               Token category
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-              Farming funds
+              DeFi funds
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '20%' }} align="left">
               Unclaimed rewards

@@ -17,9 +17,9 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
 
   return (
     <PaperSection
-      id="Farming funds and results"
-      title="Farming funds and results"
-      subTitle="Farming funds by protocol"
+      id="Funds and results by position"
+      title="Funds and results by position"
+      subTitle="Allocated funds by protocol"
       helpInfo="Farming funds, % allocation and results per position. Swap results."
     >
       {!fundsByProtocol || fundsByProtocol.length === 0 ? (

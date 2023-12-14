@@ -26,6 +26,18 @@ export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
   {
     reportName: 'getFinancialMetricAndVarDetail' as unknown as Report,
     fileName: 'financial-metric-and-var-detail'
+  },
+  {
+    reportName: 'getTreasuryFinancialMetricsWaterfall' as unknown as Report,
+    fileName: 'treasury-financial-metrics-waterfall'
+  },
+  {
+    reportName: 'getWaterfall1Report' as unknown as Report,
+    fileName: 'waterfall1-report'
+  },
+  {
+    reportName: 'getTotalFundsByTokenCategory' as unknown as Report,
+    fileName: 'total-funds-by-token-category'
   }
 ]
 

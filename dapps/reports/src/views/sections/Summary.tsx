@@ -59,15 +59,12 @@ const Summary = (props: SummaryProps) => {
           }}
         >
           <BoxInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
-          <BoxInfoCard
-            title="Capital utilisation"
-            value={formatPercentage(capitalUtilization, 1)}
-          />
-          <BoxInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
+          <BoxInfoCard title="Allocated funds" value={formatPercentage(capitalUtilization, 1)} />
+          <BoxInfoCard title="Defi results" value={formatCurrency(farmingResults)} />
           <BoxInfoCard
             title="APY"
             value={APY}
-            helpInfo="This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1."
+            helpInfo="Calculated as (1+(DeFi results / DeFi funds at final prices))^12-1."
           />
         </Box>
         <Box
