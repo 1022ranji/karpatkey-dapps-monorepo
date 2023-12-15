@@ -2,10 +2,10 @@ import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/sr
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import * as React from 'react'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box } from '@mui/material'
-import BoxPieChart from '@karpatkey-monorepo/reports/src/components/Charts/Pie'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
+import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
+import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { getDAO } from '@karpatkey-monorepo/shared/utils'
 
 interface SummaryProps {
@@ -45,7 +45,9 @@ const Summary = (props: SummaryProps) => {
     DAO_OBJ?.keyName === 'ENS DAO' && year && month && +year === 2023 && +month === 11
   const APY = isDAOEnsOctober ? '2.04%' : isDAOEnsNovember ? '2.9%' : formatPercentage(globalROI)
 
+  /* eslint-disable */
   const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
+
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
@@ -72,17 +74,20 @@ const Summary = (props: SummaryProps) => {
             display: 'flex',
             flexWrap: 'wrap',
             alignContent: 'center',
-            gap: 10
+            gap: 2
           }}
         >
-          <BoxPieChart
-            data={fundsByTokenCategory}
+          <PieChart
             title="Total funds by token category"
-            dataKey="funds"
-            width={400}
-            height={350}
-            innerRadius={40}
-            outerRadius={100}
+            data={fundsByTokenCategory.map((item) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
+            width={440}
+            height={400}
             {...(negativeTotalValue
               ? {
                   footerMessage: (
@@ -103,23 +108,29 @@ const Summary = (props: SummaryProps) => {
                 }
               : {})}
           />
-          <BoxPieChart
-            data={fundsByBlockchain}
+          <PieChart
             title="Total funds by blockchain"
-            dataKey="funds"
-            width={400}
-            height={350}
-            innerRadius={40}
-            outerRadius={100}
+            data={fundsByBlockchain.map((item) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
+            width={440}
+            height={400}
           />
-          <BoxPieChart
-            data={fundsByType}
+          <PieChart
             title="Total funds by type"
-            dataKey="funds"
-            width={400}
-            height={350}
-            innerRadius={40}
-            outerRadius={100}
+            data={fundsByType.map((item) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
+            width={440}
+            height={400}
           />
         </Box>
       </BoxWrapperColumn>

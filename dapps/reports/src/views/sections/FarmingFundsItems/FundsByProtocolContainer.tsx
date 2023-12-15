@@ -1,14 +1,10 @@
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import * as React from 'react'
-import dynamic from 'next/dynamic'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
 import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
-
-const DynamicPieChart = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie')
-)
 
 interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
@@ -29,13 +25,19 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
         <EmptyData />
       ) : (
         <BoxWrapperRow sx={{ justifyContent: 'space-evenly' }}>
-          <DynamicPieChart
-            data={fundsByProtocol}
-            dataKey="allocation"
+          <PieChart
+            title="Total funds by type"
+            data={fundsByProtocol.map((item) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
+            innerSize="60%"
+            outerSize="90%"
             width={550}
             height={450}
-            innerRadius={80}
-            outerRadius={150}
           />
           <BoxInfoCard title="DeFi results" value={formatCurrency(defiResults, 0)} />
         </BoxWrapperRow>
