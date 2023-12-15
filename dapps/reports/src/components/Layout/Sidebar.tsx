@@ -100,7 +100,7 @@ const Sidebar = () => {
     inView,
     setSectionVisible,
     threshold: 0.15,
-    anchors: ['farming-funds-and-results', 'token-detail']
+    anchors: ['funds-and-results-by-position', 'token-detail']
   })
 
   const isLoading = useIsLoading()

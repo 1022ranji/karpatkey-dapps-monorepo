@@ -137,7 +137,7 @@ const FundsContainer = (props: FundsContainerProps) => {
   return (
     <PaperSection
       id="Funds and results by position"
-      subTitle="Farming funds/results by position"
+      subTitle="DeFi funds/results by position"
       filter={filter}
     >
       {filteredFunds.length === 0 && !isFilterActive ? (

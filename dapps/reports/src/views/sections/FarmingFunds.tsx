@@ -33,7 +33,7 @@ const FarmingFunds = (props: FarmingFundsProps) => {
       <AnimatePresenceWrapper>
         {/*TODO: hide this component for the moment*/}
         {/*<ResultsContainer {...{ fundsDetails }} />*/}
-        <PaperSection subTitle="Farming results from Farm-Swaps">
+        <PaperSection subTitle="DeFi results from DeFi-Swaps">
           <CustomTypography variant="farmSwapsValue">
             {totalFarmSwaps === 0 ? (
               <CustomTypography
@@ -42,7 +42,7 @@ const FarmingFunds = (props: FarmingFundsProps) => {
                 align="left"
                 sx={{ fontStyle: 'italic' }}
               >
-                No farming results from Farm-Swaps within the selected period
+                No Defi results from DeFi-Swaps within the selected period
               </CustomTypography>
             ) : (
               numbro(totalFarmSwaps || 0).formatCurrency({

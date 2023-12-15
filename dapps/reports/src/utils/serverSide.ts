@@ -112,18 +112,21 @@ const treasuryVariationData = ({
 const farmingFundsData = ({
   waterfall1ReportFiltered,
   financialPositionsFiltered,
-  financialMetricsFiltered
+  financialMetricsFiltered,
+  treasuryFinancialMetricsWaterfallFiltered
 }: any) => {
-  // Funds and results by position
+  // Allocated funds by protocol
   const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
 
   // DeFi results
   const defiResults = getDeFiFundsTotal(waterfall1ReportFiltered)
 
-  // Farming result from farm swaps
-  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsFiltered)
+  // DeFi results from DeFi-Swaps
+  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(
+    treasuryFinancialMetricsWaterfallFiltered
+  )
 
-  // Farming results details by protocol
+  // DeFi funds/results by position
   const farmingResultsDetailsByProtocol =
     getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
 
@@ -309,7 +312,8 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const farmingFundsValues = farmingFundsData({
     waterfall1ReportFiltered,
     financialPositionsFiltered,
-    financialMetricsFiltered
+    financialMetricsFiltered,
+    treasuryFinancialMetricsWaterfallFiltered
   })
 
   // #### Token detail ####

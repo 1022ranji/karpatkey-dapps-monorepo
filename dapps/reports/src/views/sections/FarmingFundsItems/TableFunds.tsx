@@ -41,13 +41,13 @@ const TableFunds = (props: TableFundsProps) => {
                 Position
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Farming funds
+                DeFi funds
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Unclaimed rewards
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Farming results *
+                DeFi results *
               </TableHeadCellCustom>
             </TableRow>
           </TableHead>
@@ -160,7 +160,8 @@ const TableFunds = (props: TableFundsProps) => {
         align="left"
         sx={{ fontStyle: 'italic' }}
       >
-        * Farming Results include results from fees, rebasing, pool token variation and rewards
+        * DeFi Results include results from fees, rebasing, pool token variation and rewards from
+        DeFi positions
       </CustomTypography>
     </BoxWrapperColumn>
   )
