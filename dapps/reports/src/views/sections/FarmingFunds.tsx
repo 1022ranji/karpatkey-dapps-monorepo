@@ -5,6 +5,7 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import numbro from 'numbro'
 import * as React from 'react'
+import { isYearAndMonthValid } from '../../utils/params'
 
 interface FarmingFundsProps {
   totalFarmingResultsFarmSwaps: number
@@ -22,6 +23,8 @@ const FarmingFunds = (props: FarmingFundsProps) => {
     defiResults
   } = props
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <>
       <AnimatePresenceWrapper>
@@ -33,7 +36,9 @@ const FarmingFunds = (props: FarmingFundsProps) => {
       <AnimatePresenceWrapper>
         {/*TODO: hide this component for the moment*/}
         {/*<ResultsContainer {...{ fundsDetails }} />*/}
-        <PaperSection subTitle="DeFi results from DeFi-Swaps">
+        <PaperSection
+          subTitle={isDDay ? 'DeFi results from DeFi-Swaps' : 'Farming results from Farm-Swaps'}
+        >
           <CustomTypography variant="farmSwapsValue">
             {totalFarmSwaps === 0 ? (
               <CustomTypography
@@ -42,7 +47,9 @@ const FarmingFunds = (props: FarmingFundsProps) => {
                 align="left"
                 sx={{ fontStyle: 'italic' }}
               >
-                No Defi results from DeFi-Swaps within the selected period
+                {isDDay
+                  ? 'No DeFi results from DeFi-Swaps within the selected period'
+                  : 'No farming results from Farm-Swaps within the selected period'}
               </CustomTypography>
             ) : (
               numbro(totalFarmSwaps || 0).formatCurrency({

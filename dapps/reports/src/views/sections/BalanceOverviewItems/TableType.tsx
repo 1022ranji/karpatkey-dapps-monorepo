@@ -5,12 +5,15 @@ import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/Tab
 import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import Box from '@mui/material/Box'
 import * as React from 'react'
+import { isYearAndMonthValid } from '../../../utils/params'
 
 type TableTypeProps = { balanceOverviewType: any } & BoxProps
 
 const TableType = (props: TableTypeProps) => {
   const { balanceOverviewType } = props
   const dataFooterType = {} as any
+
+  const isDDay = isYearAndMonthValid()
 
   return (
     <TableContainer component={Box}>
@@ -21,7 +24,7 @@ const TableType = (props: TableTypeProps) => {
               Token category
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-              DeFi funds
+              {isDDay ? 'DeFi funds' : 'Farming funds'}
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '20%' }} align="left">
               Unclaimed rewards

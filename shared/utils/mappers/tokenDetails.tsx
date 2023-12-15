@@ -1,3 +1,5 @@
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+
 export const getTokenDetails = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
@@ -165,7 +167,9 @@ export const getTokenDetailsGrouped = (data: any) => {
   })
 }
 
-export const getTokenDetailByPosition = (data: any) => {
+export const getTokenDetailByPosition = (data: any, params: any) => {
+  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+
   const rowsFiltered = data.filter((row: any) => {
     return (
       ((row.metric.includes('balances') || row.metric.includes('unclaim')) &&
@@ -196,9 +200,9 @@ export const getTokenDetailByPosition = (data: any) => {
         return acc
       }
 
-      let categoryName = 'DeFi funds'
+      let categoryName = isDDay ? 'DeFi funds' : 'Farming funds'
       if (metric.includes('unclaim')) {
-        categoryName = 'DeFi unclaimed rewards'
+        categoryName = isDDay ? 'DeFi unclaimed rewards' : 'Unclaimed rewards'
       }
       if (metric.includes('balance') && protocol.includes('Wallet')) {
         categoryName = 'Wallet'

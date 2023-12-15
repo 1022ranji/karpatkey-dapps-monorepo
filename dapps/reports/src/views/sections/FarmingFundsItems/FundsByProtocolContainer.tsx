@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
+import { isYearAndMonthValid } from '../../../utils/params'
 
 const DynamicPieChart = dynamic(
   () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie')
@@ -18,17 +19,19 @@ interface FundsByProtocolContainerProps {
 const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
   const { fundsByProtocol, defiResults } = props
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <PaperSection
-      id="Funds and results by position"
-      title="Funds and results by position"
-      subTitle="Allocated funds by protocol"
+      id={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
+      title={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
+      subTitle={isDDay ? 'Allocated funds by protocol' : 'Farming funds by protocol'}
       helpInfo="Farming funds, % allocation and results per position. Swap results."
     >
       {!fundsByProtocol || fundsByProtocol.length === 0 ? (
         <EmptyData />
       ) : (
-        <BoxWrapperRow sx={{ justifyContent: 'space-evenly' }}>
+        <BoxWrapperRow sx={{ justifyContent: isDDay ? 'space-evenly' : 'center' }}>
           <DynamicPieChart
             data={fundsByProtocol}
             dataKey="allocation"
@@ -37,7 +40,7 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
             innerRadius={80}
             outerRadius={150}
           />
-          <BoxInfoCard title="DeFi results" value={formatCurrency(defiResults, 0)} />
+          {isDDay && <BoxInfoCard title="DeFi results" value={formatCurrency(defiResults, 0)} />}
         </BoxWrapperRow>
       )}
     </PaperSection>

@@ -9,6 +9,7 @@ import { Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React from 'react'
 import BoxWrapperColumn from '../components/Wrappers/BoxWrapperColumn'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 export const FOOTER_HEIGHT = 560
 
@@ -39,6 +40,7 @@ interface FooterProps {
 
 const Footer = (props: FooterProps) => {
   const { primaryDisclaimerText, secondaryDisclaimerText } = props
+  const isDDay = isYearAndMonthValid()
   return (
     <AnimatePresenceWrapper>
       <FooterWrapper>
@@ -55,7 +57,7 @@ const Footer = (props: FooterProps) => {
                 Token Balances and Prices are considered at end of month 0 UTC.
               </CustomTypography>
             ) : null}
-            {secondaryDisclaimerText ? (
+            {secondaryDisclaimerText && isDDay ? (
               <BoxWrapperColumn gap={'10px'}>
                 <CustomTypography
                   variant="body2"

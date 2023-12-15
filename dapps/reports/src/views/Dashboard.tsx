@@ -20,6 +20,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { LinkWrapper } from '@karpatkey-monorepo/reports/src/components/LinkWrapper'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
+import { isYearAndMonthValid } from '../utils/params'
 
 interface TableProps {
   daoResume: any
@@ -41,6 +42,8 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
 
   const currentDate = new Date()
   const currentYear = currentDate.getFullYear()
+
+  const isDDay = isYearAndMonthValid()
 
   return (
     <TableContainer component={Box}>
@@ -76,7 +79,11 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 ...(matchesCapitalUtilization ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value value={'Allocated funds'} fontWeight={600} fontSize={'16px'} />
+              <Value
+                value={isDDay ? 'Allocated funds' : 'Capital utilisation'}
+                fontWeight={600}
+                fontSize={'16px'}
+              />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -88,7 +95,11 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 ...(matchesFarmingResults ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value value={'DeFi results'} fontWeight={600} fontSize={'16px'} />
+              <Value
+                value={isDDay ? 'DeFi results' : 'Farming results'}
+                fontWeight={600}
+                fontSize={'16px'}
+              />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -129,9 +140,15 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                   urlToReport
                 } = dao
 
-                const isDAOEns =
+                const isDAOEnsOctober =
                   keyName === 'ENS DAO' && +currentYear === 2023 && +latestMonth === 10
-                const APY = isDAOEns ? '2.0%' : formatPercentage(globalROI, 1)
+                const isDAOEnsNovember =
+                  keyName === 'ENS DAO' && +currentYear === 2023 && +latestMonth === 11
+                const APY = isDAOEnsOctober
+                  ? '2.04%'
+                  : isDAOEnsNovember
+                    ? '2.9%'
+                    : formatPercentage(globalROI)
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const onClick = (e: any) => {
@@ -298,6 +315,8 @@ const Dashboard = (props: ReportProps) => {
 
   const screenSize = useScreenSize()
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <BoxWrapperColumn
       sx={{
@@ -344,7 +363,7 @@ const Dashboard = (props: ReportProps) => {
           <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
           <NumberBlock
             amount={formatCurrency(lastMonthFarmingResults)}
-            title="Last month DeFi results"
+            title={isDDay ? 'Last month DeFi results' : 'Last month farming results'}
           />
         </BoxWrapperRow>
       </BoxWrapperColumn>

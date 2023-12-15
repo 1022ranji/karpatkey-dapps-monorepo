@@ -1,4 +1,8 @@
-export const getBalanceOverviewByType = (data: any) => {
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+
+export const getBalanceOverviewByType = (data: any, params: any) => {
+  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+
   const rows = data
     .filter((row: any) => {
       return row.metric.includes('balances') || row.metric.includes('unclaim')
@@ -11,7 +15,9 @@ export const getBalanceOverviewByType = (data: any) => {
         ? 'Unclaimed rewards'
         : metric.includes('balance') && protocol.includes('Wallet')
           ? 'Wallet'
-          : 'DeFi funds'
+          : isDDay
+            ? 'DeFi funds'
+            : 'Farming funds'
 
       if (!acc[tokenCategory]) acc[tokenCategory] = {}
       if (!acc[tokenCategory][metricKey])
@@ -25,13 +31,14 @@ export const getBalanceOverviewByType = (data: any) => {
 
   return Object.keys(rows)
     .map((key: string) => {
-      const farmingFunds = rows[key as any]['DeFi funds' as any]?.funds ?? 0
+      const customKey = isDDay ? ('DeFi funds' as any) : ('Farming funds' as any)
+      const farmingFunds = rows[key as any][customKey]?.funds ?? 0
       const unclaimedRewards = rows[key as any]['Unclaimed rewards' as any]?.funds ?? 0
       const wallet = rows[key as any]['Wallet' as any]?.funds ?? 0
       const total = farmingFunds + unclaimedRewards + wallet
       return {
         'Token Category': key,
-        'DeFi funds': farmingFunds,
+        customKey: farmingFunds,
         'Unclaimed rewards': unclaimedRewards,
         Wallet: wallet,
         Total: total

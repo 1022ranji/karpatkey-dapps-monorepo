@@ -11,6 +11,7 @@ import { Box, Table, TableBody, TableContainer, TableHead, TableRow, styled } fr
 import * as React from 'react'
 import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
+import { isYearAndMonthValid } from '../../../utils/params'
 
 interface TableFundsProps {
   funds: any
@@ -28,6 +29,8 @@ const TableFunds = (props: TableFundsProps) => {
   const { funds, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
@@ -41,13 +44,13 @@ const TableFunds = (props: TableFundsProps) => {
                 Position
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                DeFi funds
+                {isDDay ? 'DeFi funds' : 'Farming funds'}
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Unclaimed rewards
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                DeFi results *
+                {isDDay ? 'DeFi results *' : 'Farming results *'}
               </TableHeadCellCustom>
             </TableRow>
           </TableHead>
@@ -160,8 +163,9 @@ const TableFunds = (props: TableFundsProps) => {
         align="left"
         sx={{ fontStyle: 'italic' }}
       >
-        * DeFi Results include results from fees, rebasing, pool token variation and rewards from
-        DeFi positions
+        {isDDay
+          ? '* DeFi Results include results from fees, rebasing, pool token variation and rewards from DeFi positions'
+          : '* Farming Results include results from fees, rebasing, pool token variation and rewards'}
       </CustomTypography>
     </BoxWrapperColumn>
   )

@@ -73,9 +73,9 @@ const summaryData = ({
   }
 }
 
-const balanceOverviewData = ({ variationMetricsDetailFiltered }: any) => {
+const balanceOverviewData = ({ variationMetricsDetailFiltered, params }: any) => {
   // Funds by token category / Type
-  const balanceOverviewType = getBalanceOverviewByType(variationMetricsDetailFiltered)
+  const balanceOverviewType = getBalanceOverviewByType(variationMetricsDetailFiltered, params)
 
   // Funds by token category / Blockchain
   const balanceOverviewBlockchain = getBalanceOverviewByBlockchain(variationMetricsDetailFiltered)
@@ -140,13 +140,17 @@ const farmingFundsData = ({
 
 const tokenDetailsData = ({
   variationMetricsDetailFiltered,
-  financialMetricAndVarDetailFiltered
+  financialMetricAndVarDetailFiltered,
+  params
 }: any) => {
   const tokenDetails = getTokenDetails(variationMetricsDetailFiltered)
   const tokenDetailsGrouped = getTokenDetailsGrouped(variationMetricsDetailFiltered)
 
   // Token detail by position
-  const tokenDetailByPosition = getTokenDetailByPosition(financialMetricAndVarDetailFiltered)
+  const tokenDetailByPosition = getTokenDetailByPosition(
+    financialMetricAndVarDetailFiltered,
+    params
+  )
 
   // Wallet token detail
   const walletTokenDetail = getWalletTokenDetails(variationMetricsDetailFiltered)
@@ -299,7 +303,10 @@ export const getCommonServerSideProps = async (params: Filter) => {
   })
 
   // #### Balance Overview block ####
-  const balanceOverviewValues = balanceOverviewData({ variationMetricsDetailFiltered })
+  const balanceOverviewValues = balanceOverviewData({
+    variationMetricsDetailFiltered,
+    params
+  })
 
   // #### Treasury variation ####
   const treasuryVariationValues = treasuryVariationData({
@@ -319,7 +326,8 @@ export const getCommonServerSideProps = async (params: Filter) => {
   // #### Token detail ####
   const tokenDetailsValues = tokenDetailsData({
     variationMetricsDetailFiltered,
-    financialMetricAndVarDetailFiltered
+    financialMetricAndVarDetailFiltered,
+    params
   })
 
   const daoResumePromises = FILTER_DAOS.filter((filterDao: FILTER_DAO) => filterDao.isEnabled).map(

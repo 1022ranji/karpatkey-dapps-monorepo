@@ -7,6 +7,7 @@ import { Box } from '@mui/material'
 import BoxPieChart from '@karpatkey-monorepo/reports/src/components/Charts/Pie'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
 import { getDAO } from '@karpatkey-monorepo/shared/utils'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface SummaryProps {
   dao: Maybe<number>
@@ -46,6 +47,9 @@ const Summary = (props: SummaryProps) => {
   const APY = isDAOEnsOctober ? '2.04%' : isDAOEnsNovember ? '2.9%' : formatPercentage(globalROI)
 
   const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
+
+  const isDDay = isYearAndMonthValid()
+
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
@@ -59,12 +63,22 @@ const Summary = (props: SummaryProps) => {
           }}
         >
           <BoxInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
-          <BoxInfoCard title="Allocated funds" value={formatPercentage(capitalUtilization, 1)} />
-          <BoxInfoCard title="Defi results" value={formatCurrency(farmingResults)} />
+          <BoxInfoCard
+            title={isDDay ? 'Allocated funds' : 'Capital utilisation'}
+            value={formatPercentage(capitalUtilization, 1)}
+          />
+          <BoxInfoCard
+            title={isDDay ? 'Defi results' : 'Farming results'}
+            value={formatCurrency(farmingResults)}
+          />
           <BoxInfoCard
             title="APY"
             value={APY}
-            helpInfo="Calculated as (1+(DeFi results / DeFi funds at final prices))^12-1."
+            helpInfo={
+              isDDay
+                ? 'Calculated as (1+(DeFi results / DeFi funds at final prices))^12-1.'
+                : 'This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1.'
+            }
           />
         </Box>
         <Box
