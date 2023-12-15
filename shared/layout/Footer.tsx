@@ -10,15 +10,16 @@ import { styled } from '@mui/material/styles'
 import React from 'react'
 import BoxWrapperColumn from '../components/Wrappers/BoxWrapperColumn'
 
-export const FOOTER_HEIGHT = 160
+export const FOOTER_HEIGHT = 560
 
 const FooterWrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default,
   height: FOOTER_HEIGHT,
   paddingRight: '48px',
   paddingLeft: '48px',
-  paddingTop: '48px',
-  justifyContent: 'center',
+  paddingTop: '40px',
+  paddingBottom: '20px',
+  justifyContent: 'space-between',
   gap: 20
 }))
 
@@ -32,26 +33,84 @@ const CustomTypographyFooter = styled(CustomTypography)({
 })
 
 interface FooterProps {
-  disclaimerText?: string
+  primaryDisclaimerText?: boolean
+  secondaryDisclaimerText?: boolean
 }
 
 const Footer = (props: FooterProps) => {
-  const { disclaimerText } = props
+  const { primaryDisclaimerText, secondaryDisclaimerText } = props
   return (
     <AnimatePresenceWrapper>
       <FooterWrapper>
-        {disclaimerText ? (
-          <BoxWrapperRow>
-            <CustomTypography
-              variant="body2"
-              color="textSecondary"
-              align="left"
-              width="100%"
-              sx={{ fontStyle: 'italic' }}
-            >
-              {disclaimerText}
-            </CustomTypography>
-          </BoxWrapperRow>
+        {primaryDisclaimerText || secondaryDisclaimerText ? (
+          <BoxWrapperColumn gap={'10px'}>
+            {primaryDisclaimerText ? (
+              <CustomTypography
+                variant="body2"
+                color="textSecondary"
+                align="left"
+                width="100%"
+                sx={{ fontStyle: 'italic' }}
+              >
+                Token Balances and Prices are considered at end of month 0 UTC.
+              </CustomTypography>
+            ) : null}
+            {secondaryDisclaimerText ? (
+              <BoxWrapperColumn gap={'10px'}>
+                <CustomTypography
+                  variant="body2"
+                  color="textSecondary"
+                  align="left"
+                  width="100%"
+                  sx={{ fontStyle: 'italic', lineHeight: '28px' }}
+                >
+                  The following report is provided for informational purposes only, and does not
+                  constitute financial, investment, legal, regulatory, or tax advice.
+                </CustomTypography>
+                <CustomTypography
+                  variant="body2"
+                  color="textSecondary"
+                  align="left"
+                  width="100%"
+                  sx={{ fontStyle: 'italic', lineHeight: '28px' }}
+                >
+                  The accuracy of the data and information contained in the report cannot be
+                  guaranteed, as they are provided strictly on a best efforts basis. References to
+                  assets are made for informational purposes, and are not a recommendation, offer to
+                  sell, or solicitation of an offer to buy any asset. Content, data, or assessments
+                  provided in this report are subject to change without notice. Furthermore, the
+                  financial statements presented have not undergone a comprehensive financial
+                  statement audit from a third-party professional accounting firm. As such, there
+                  may exist errors or inaccuracies that affect the statements.
+                </CustomTypography>
+                <CustomTypography
+                  variant="body2"
+                  color="textSecondary"
+                  align="left"
+                  width="100%"
+                  sx={{ fontStyle: 'italic', lineHeight: '28px' }}
+                >
+                  This report may include certain forward looking statements; such statements face a
+                  high degree of uncertainty and are not a guarantee or promise of future
+                  performance or events. Author(s) are materially relying on waiver of liability as
+                  a condition of providing this report. By accessing the content herein, readers
+                  agree to indemnify and hold harmless author(s) and karpatkey DAO against any and
+                  all claims.
+                </CustomTypography>
+                <CustomTypography
+                  variant="body2"
+                  color="textSecondary"
+                  align="left"
+                  width="100%"
+                  sx={{ fontStyle: 'italic', lineHeight: '28px' }}
+                >
+                  ACCORDINGLY, WE RECOMMEND THAT YOU DO NOT RELY ON NOR MAKE ANY FINANCIAL OR
+                  INVESTMENT DECISION BASED ON THE STATEMENTS AND INFORMATION CONTAINED IN THIS
+                  REPORT.
+                </CustomTypography>
+              </BoxWrapperColumn>
+            ) : null}
+          </BoxWrapperColumn>
         ) : null}
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <BoxWrapperRow>

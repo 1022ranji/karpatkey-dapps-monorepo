@@ -6,6 +6,7 @@ import {
   getBalanceOverviewByType
 } from '@karpatkey-monorepo/shared/utils/mappers/balanceOverview'
 import {
+  getDeFiFundsTotal,
   getFarmingFundsByProtocol,
   getFarmingResultsDetailsByProtocol,
   getFarmingResultsFarmSwapsTotal
@@ -37,11 +38,13 @@ import { DataWarehouse } from '../services/classes/dataWarehouse.class'
 const summaryData = ({
   variationMetricsDetailFiltered,
   financialPositionsFiltered,
-  financialMetricsFiltered,
-  financialMetricAndVarDetailFiltered
+  financialMetricAndVarDetailFiltered,
+  treasuryFinancialMetricsWaterfallFiltered,
+  waterfall1ReportFiltered,
+  totalFundsByTokenCategoryFiltered
 }: any) => {
   // Funds by token category
-  const fundsByTokenCategory = getSummaryFundsByTokenCategory(variationMetricsDetailFiltered)
+  const fundsByTokenCategory = getSummaryFundsByTokenCategory(totalFundsByTokenCategoryFiltered)
 
   // Funds by type
   const fundsByType = getSummaryFundsByType(variationMetricsDetailFiltered)
@@ -53,10 +56,10 @@ const summaryData = ({
   const fundsByProtocol = getSummaryFundsByProtocol(financialPositionsFiltered)
 
   // Summary blocks
-  const totalFunds = getTotalFunds(variationMetricsDetailFiltered)
-  const capitalUtilization = getCapitalUtilization(financialMetricsFiltered)
-  const farmingResults = getFarmingResults(financialMetricsFiltered)
-  const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
+  const totalFunds = getTotalFunds(financialMetricAndVarDetailFiltered)
+  const capitalUtilization = getCapitalUtilization(treasuryFinancialMetricsWaterfallFiltered)
+  const farmingResults = getFarmingResults(waterfall1ReportFiltered)
+  const globalROI = getGlobalROI(treasuryFinancialMetricsWaterfallFiltered)
 
   return {
     totalFunds,
@@ -83,16 +86,21 @@ const balanceOverviewData = ({ variationMetricsDetailFiltered }: any) => {
   }
 }
 
-const treasuryVariationData = ({ financialMetricsFiltered, historicVariationFiltered }: any) => {
+const treasuryVariationData = ({
+  waterfall1ReportFiltered,
+  historicVariationFiltered,
+  treasuryFinancialMetricsWaterfallFiltered
+}: any) => {
   // For the period
-  const treasuryVariationData = getTreasuryVariationForThePeriod(financialMetricsFiltered)
+  const treasuryVariationData = getTreasuryVariationForThePeriod(waterfall1ReportFiltered)
 
   // In this year
   const historicVariationData = getTreasuryVariationHistory(historicVariationFiltered)
 
   // For the period, detail
-  const treasuryVariationForThePeriodDetailData =
-    getTreasuryVariationForThePeriodDetails(financialMetricsFiltered)
+  const treasuryVariationForThePeriodDetailData = getTreasuryVariationForThePeriodDetails(
+    treasuryFinancialMetricsWaterfallFiltered
+  )
 
   return {
     treasuryVariationData,
@@ -101,18 +109,29 @@ const treasuryVariationData = ({ financialMetricsFiltered, historicVariationFilt
   }
 }
 
-const farmingFundsData = ({ financialPositionsFiltered, financialMetricsFiltered }: any) => {
-  // Farming funds / Results by protocol
+const farmingFundsData = ({
+  waterfall1ReportFiltered,
+  financialPositionsFiltered,
+  financialMetricsFiltered,
+  treasuryFinancialMetricsWaterfallFiltered
+}: any) => {
+  // Allocated funds by protocol
   const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
 
-  // Farming result from farm swaps
-  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsFiltered)
+  // DeFi results
+  const defiResults = getDeFiFundsTotal(waterfall1ReportFiltered)
 
-  // Farming results details by protocol
+  // DeFi results from DeFi-Swaps
+  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(
+    treasuryFinancialMetricsWaterfallFiltered
+  )
+
+  // DeFi funds/results by position
   const farmingResultsDetailsByProtocol =
     getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
 
   return {
+    defiResults,
     farmingFundsByProtocol,
     totalFarmingResultsFarmSwaps,
     farmingResultsDetailsByProtocol
@@ -218,6 +237,16 @@ export const getCommonServerSideProps = async (params: Filter) => {
     'getFinancialMetricAndVarDetail' as unknown as Report
   )
 
+  const treasuryFinancialMetricsWaterfall = await cache.getReport(
+    'getTreasuryFinancialMetricsWaterfall' as unknown as Report
+  )
+
+  const waterfall1Report = await cache.getReport('getWaterfall1Report' as unknown as Report)
+
+  const totalFundsByTokenCategory = await cache.getReport(
+    'getTotalFundsByTokenCategory' as unknown as Report
+  )
+
   // Step 3: Get filter data like daoName, periodType and period
   const DAO = getDAO(dao)
   const daoKeyName = DAO?.keyName
@@ -245,14 +274,28 @@ export const getCommonServerSideProps = async (params: Filter) => {
     filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
   )
 
+  const treasuryFinancialMetricsWaterfallFiltered = treasuryFinancialMetricsWaterfall.filter(
+    (row: any) => filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
+  )
+
+  const waterfall1ReportFiltered = waterfall1Report.filter((row: any) => {
+    return row.dao === daoKeyName && row.year_month === metricPeriod
+  })
+
+  const totalFundsByTokenCategoryFiltered = totalFundsByTokenCategory.filter((row: any) =>
+    filterValues(row, metricPeriodType, daoKeyName, metricPeriod)
+  )
+
   // #####################################################
 
   // #### Summary blocks ####
   const summaryDataValues = summaryData({
     variationMetricsDetailFiltered,
     financialPositionsFiltered,
-    financialMetricsFiltered,
-    financialMetricAndVarDetailFiltered
+    financialMetricAndVarDetailFiltered,
+    treasuryFinancialMetricsWaterfallFiltered,
+    waterfall1ReportFiltered,
+    totalFundsByTokenCategoryFiltered
   })
 
   // #### Balance Overview block ####
@@ -260,14 +303,17 @@ export const getCommonServerSideProps = async (params: Filter) => {
 
   // #### Treasury variation ####
   const treasuryVariationValues = treasuryVariationData({
-    financialMetricsFiltered,
-    historicVariationFiltered
+    waterfall1ReportFiltered,
+    historicVariationFiltered,
+    treasuryFinancialMetricsWaterfallFiltered
   })
 
-  // #### Farming Funds / Results ####
+  // #### Funds and results by position ####
   const farmingFundsValues = farmingFundsData({
+    waterfall1ReportFiltered,
     financialPositionsFiltered,
-    financialMetricsFiltered
+    financialMetricsFiltered,
+    treasuryFinancialMetricsWaterfallFiltered
   })
 
   // #### Token detail ####

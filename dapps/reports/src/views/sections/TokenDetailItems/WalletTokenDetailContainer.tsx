@@ -54,8 +54,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
             currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue['blockchain'].toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+                ? '/images/chains/gnosis.svg'
+                : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -90,8 +90,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
           blockchainFilter === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter === 'Gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }

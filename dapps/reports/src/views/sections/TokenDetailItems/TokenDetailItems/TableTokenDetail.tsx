@@ -42,7 +42,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                 Token balance
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Allocation
+                Share
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Price variation

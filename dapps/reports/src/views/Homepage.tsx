@@ -29,6 +29,7 @@ const HomepageContent = (props: ReportProps) => {
     treasuryVariationForThePeriodDetailData,
     totalFarmingResultsFarmSwaps,
     farmingFundsByProtocol,
+    defiResults,
     farmingResultsDetailsByProtocol,
     tokenDetails,
     tokenDetailsGrouped,
@@ -47,7 +48,8 @@ const HomepageContent = (props: ReportProps) => {
     totalFarmingResultsFarmSwaps,
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
-    fundsByProtocol
+    fundsByProtocol,
+    defiResults
   }
 
   const treasuryVariationProps = {

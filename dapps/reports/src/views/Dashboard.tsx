@@ -76,7 +76,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 ...(matchesCapitalUtilization ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value value={'Capital utilisation'} fontWeight={600} fontSize={'16px'} />
+              <Value value={'Allocated funds'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -88,7 +88,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 ...(matchesFarmingResults ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value value={'Farming results'} fontWeight={600} fontSize={'16px'} />
+              <Value value={'DeFi results'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -344,7 +344,7 @@ const Dashboard = (props: ReportProps) => {
           <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
           <NumberBlock
             amount={formatCurrency(lastMonthFarmingResults)}
-            title="Last month farming results"
+            title="Last month DeFi results"
           />
         </BoxWrapperRow>
       </BoxWrapperColumn>

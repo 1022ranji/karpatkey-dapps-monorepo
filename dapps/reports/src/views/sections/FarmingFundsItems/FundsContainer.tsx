@@ -39,8 +39,8 @@ const FundsContainer = (props: FundsContainerProps) => {
             currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue['blockchain'].toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+                ? '/images/chains/gnosis.svg'
+                : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -90,8 +90,8 @@ const FundsContainer = (props: FundsContainerProps) => {
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -136,8 +136,8 @@ const FundsContainer = (props: FundsContainerProps) => {
 
   return (
     <PaperSection
-      id="Farming funds and results"
-      subTitle="Farming funds/results by position"
+      id="Funds and results by position"
+      subTitle="DeFi funds/results by position"
       filter={filter}
     >
       {filteredFunds.length === 0 && !isFilterActive ? (

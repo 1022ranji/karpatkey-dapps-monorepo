@@ -6,6 +6,14 @@ export const getFarmingFundsTotal = (data: any) => {
   }, 0)
 }
 
+export const getDeFiFundsTotal = (data: any) => {
+  return data.reduce((acc: any, obj: any): number => {
+    const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
+    acc += value
+    return acc
+  }, 0)
+}
+
 export const getFarmingFundsByProtocol = (data: any) => {
   const rows = data.reduce((acc: any, obj: any) => {
     const blockchain = obj['blockchain'].trim()

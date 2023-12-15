@@ -22,7 +22,10 @@
     "cache:treasuryFinancialPositions": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTreasuryFinancialPositions",
     "cache:treasuryHistoricVariation": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTreasuryHistoricVariation",
     "cache:financialMetricAndVarDetail": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getFinancialMetricAndVarDetail",
-    "generate:cache": "yarn cache:treasuryFinancialMetrics && yarn cache:tokens && yarn cache:treasuryVariationMetricsDetail && yarn cache:treasuryFinancialPositions && yarn cache:treasuryHistoricVariation && yarn cache:financialMetricAndVarDetail"
+    "cache:treasuryFinancialMetricsWaterfall": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTreasuryFinancialMetricsWaterfall",
+    "cache:waterfall1Report": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getWaterfall1Report",
+    "cache:totalFundsByTokenCategory": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTotalFundsByTokenCategory",
+    "generate:cache": "yarn cache:treasuryFinancialMetrics && yarn cache:tokens && yarn cache:treasuryVariationMetricsDetail && yarn cache:treasuryFinancialPositions && yarn cache:treasuryHistoricVariation && yarn cache:financialMetricAndVarDetail && yarn cache:treasuryFinancialMetricsWaterfall && yarn cache:waterfall1Report && yarn cache:totalFundsByTokenCategory"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
