@@ -522,6 +522,12 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
       }
     ]
   },
@@ -551,6 +557,12 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
       }
     ]
   },
@@ -580,6 +592,12 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
       }
     ]
   },
@@ -644,6 +662,12 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
       }
     ]
   },
@@ -673,6 +697,12 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
       }
     ]
   },
@@ -702,6 +732,12 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
       }
     ]
   },
@@ -731,6 +767,12 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
+      },
+      {
+        label: 'November',
+        month: 11,
+        year: 2023,
+        id: 11_2023
       }
     ]
   }
