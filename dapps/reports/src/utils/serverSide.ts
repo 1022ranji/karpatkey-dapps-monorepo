@@ -6,6 +6,7 @@ import {
   getBalanceOverviewByType
 } from '@karpatkey-monorepo/shared/utils/mappers/balanceOverview'
 import {
+  getDeFiFundsTotal,
   getFarmingFundsByProtocol,
   getFarmingResultsDetailsByProtocol,
   getFarmingResultsFarmSwapsTotal
@@ -108,9 +109,16 @@ const treasuryVariationData = ({
   }
 }
 
-const farmingFundsData = ({ financialPositionsFiltered, financialMetricsFiltered }: any) => {
-  // Farming funds / Results by protocol
+const farmingFundsData = ({
+  waterfall1ReportFiltered,
+  financialPositionsFiltered,
+  financialMetricsFiltered
+}: any) => {
+  // Funds and results by position
   const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
+
+  // DeFi results
+  const defiResults = getDeFiFundsTotal(waterfall1ReportFiltered)
 
   // Farming result from farm swaps
   const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsFiltered)
@@ -120,6 +128,7 @@ const farmingFundsData = ({ financialPositionsFiltered, financialMetricsFiltered
     getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
 
   return {
+    defiResults,
     farmingFundsByProtocol,
     totalFarmingResultsFarmSwaps,
     farmingResultsDetailsByProtocol
@@ -296,8 +305,9 @@ export const getCommonServerSideProps = async (params: Filter) => {
     treasuryFinancialMetricsWaterfallFiltered
   })
 
-  // #### Farming Funds / Results ####
+  // #### Funds and results by position ####
   const farmingFundsValues = farmingFundsData({
+    waterfall1ReportFiltered,
     financialPositionsFiltered,
     financialMetricsFiltered
   })

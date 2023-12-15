@@ -31,6 +31,7 @@ export type ReportData = {
   ourDaoTreasuries: number
   lastMonthFarmingResults: number
   latestMonth: number
+  defiResults: number
 }
 
 export type ReportProps = ReportData & Filter

@@ -11,19 +11,21 @@ interface FarmingFundsProps {
   farmingFundsByProtocol: any[]
   farmingResultsDetailsByProtocol: any[]
   fundsByProtocol: any[]
+  defiResults: number
 }
 
 const FarmingFunds = (props: FarmingFundsProps) => {
   const {
     farmingFundsByProtocol: funds,
     totalFarmingResultsFarmSwaps: totalFarmSwaps,
-    fundsByProtocol
+    fundsByProtocol,
+    defiResults
   } = props
 
   return (
     <>
       <AnimatePresenceWrapper>
-        <FundsByProtocolContainer {...{ fundsByProtocol }} />
+        <FundsByProtocolContainer fundsByProtocol={fundsByProtocol} defiResults={defiResults} />
       </AnimatePresenceWrapper>
       <AnimatePresenceWrapper>
         <FundsContainer {...{ funds }} />

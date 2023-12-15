@@ -134,12 +134,6 @@ export const getTreasuryVariationForThePeriodDetails = (data: any) => {
         const metricCode = obj?.metric_code
         const nonfarmingPosition = obj?.nonfarming_position
 
-        console.log(
-          'metric',
-          obj?.metric,
-          obj?.metric_code,
-          obj?.Waterfall_Metrics?.replace(/[0-9][0-9] /g, '')?.trim()
-        )
         const label = obj?.Waterfall_Metrics?.replace(/[0-9][0-9] /g, '')?.trim()
         const metricKey =
           metricCode === 'm07'
