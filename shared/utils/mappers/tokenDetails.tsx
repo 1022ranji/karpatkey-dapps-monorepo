@@ -196,9 +196,9 @@ export const getTokenDetailByPosition = (data: any) => {
         return acc
       }
 
-      let categoryName = 'Farming funds'
+      let categoryName = 'DeFi funds'
       if (metric.includes('unclaim')) {
-        categoryName = 'Unclaimed rewards'
+        categoryName = 'DeFi unclaimed rewards'
       }
       if (metric.includes('balance') && protocol.includes('Wallet')) {
         categoryName = 'Wallet'
