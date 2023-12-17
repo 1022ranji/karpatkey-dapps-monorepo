@@ -11,11 +11,11 @@ import React from 'react'
 import BoxWrapperColumn from '../components/Wrappers/BoxWrapperColumn'
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
-export const FOOTER_HEIGHT = 560
+export const FOOTER_HEIGHT = 40
 
 const FooterWrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default,
-  height: FOOTER_HEIGHT,
+  height: 'auto',
   paddingRight: '48px',
   paddingLeft: '48px',
   paddingTop: '40px',
@@ -58,7 +58,7 @@ const Footer = (props: FooterProps) => {
               </CustomTypography>
             ) : null}
             {secondaryDisclaimerText && isDDay ? (
-              <BoxWrapperColumn gap={'10px'}>
+              <BoxWrapperColumn gap={'10px'} sx={{ marginBottom: '40px', marginTop: '80px' }}>
                 <CustomTypography
                   variant="body2"
                   color="textSecondary"
@@ -114,7 +114,7 @@ const Footer = (props: FooterProps) => {
             ) : null}
           </BoxWrapperColumn>
         ) : null}
-        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
+        <BoxWrapperRow sx={{ justifyContent: 'space-between', height: FOOTER_HEIGHT }}>
           <BoxWrapperRow>
             <CustomTypographyFooter>© 2023 karpatkey • &nbsp;</CustomTypographyFooter>
             <Link

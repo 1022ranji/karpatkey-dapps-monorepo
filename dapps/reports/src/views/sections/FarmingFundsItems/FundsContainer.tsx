@@ -6,6 +6,7 @@ import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import { getFarmingFundsByProtocolTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
+import { isYearAndMonthValid } from '../../../utils/params'
 
 const DynamicTableFunds = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableFunds')
@@ -134,10 +135,12 @@ const FundsContainer = (props: FundsContainerProps) => {
 
   const isFilterActive = blockchainFilter || protocolFilter
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <PaperSection
-      id="Funds and results by position"
-      subTitle="DeFi funds/results by position"
+      id={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
+      subTitle={isDDay ? 'DeFi funds/results by position' : 'Farming funds/results by position'}
       filter={filter}
     >
       {filteredFunds.length === 0 && !isFilterActive ? (

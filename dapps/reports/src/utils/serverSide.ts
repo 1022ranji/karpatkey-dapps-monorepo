@@ -41,13 +41,14 @@ const summaryData = ({
   financialMetricAndVarDetailFiltered,
   treasuryFinancialMetricsWaterfallFiltered,
   waterfall1ReportFiltered,
-  totalFundsByTokenCategoryFiltered
+  totalFundsByTokenCategoryFiltered,
+  params
 }: any) => {
   // Funds by token category
   const fundsByTokenCategory = getSummaryFundsByTokenCategory(totalFundsByTokenCategoryFiltered)
 
   // Funds by type
-  const fundsByType = getSummaryFundsByType(variationMetricsDetailFiltered)
+  const fundsByType = getSummaryFundsByType(variationMetricsDetailFiltered, params)
 
   // Funds by blockchain
   const fundsByBlockchain = getSummaryFundsByBlockchain(variationMetricsDetailFiltered)
@@ -89,17 +90,19 @@ const balanceOverviewData = ({ variationMetricsDetailFiltered, params }: any) =>
 const treasuryVariationData = ({
   waterfall1ReportFiltered,
   historicVariationFiltered,
-  treasuryFinancialMetricsWaterfallFiltered
+  treasuryFinancialMetricsWaterfallFiltered,
+  params
 }: any) => {
   // For the period
-  const treasuryVariationData = getTreasuryVariationForThePeriod(waterfall1ReportFiltered)
+  const treasuryVariationData = getTreasuryVariationForThePeriod(waterfall1ReportFiltered, params)
 
   // In this year
-  const historicVariationData = getTreasuryVariationHistory(historicVariationFiltered)
+  const historicVariationData = getTreasuryVariationHistory(historicVariationFiltered, params)
 
   // For the period, detail
   const treasuryVariationForThePeriodDetailData = getTreasuryVariationForThePeriodDetails(
-    treasuryFinancialMetricsWaterfallFiltered
+    treasuryFinancialMetricsWaterfallFiltered,
+    params
   )
 
   return {
@@ -299,7 +302,8 @@ export const getCommonServerSideProps = async (params: Filter) => {
     financialMetricAndVarDetailFiltered,
     treasuryFinancialMetricsWaterfallFiltered,
     waterfall1ReportFiltered,
-    totalFundsByTokenCategoryFiltered
+    totalFundsByTokenCategoryFiltered,
+    params
   })
 
   // #### Balance Overview block ####
@@ -312,7 +316,8 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const treasuryVariationValues = treasuryVariationData({
     waterfall1ReportFiltered,
     historicVariationFiltered,
-    treasuryFinancialMetricsWaterfallFiltered
+    treasuryFinancialMetricsWaterfallFiltered,
+    params
   })
 
   // #### Funds and results by position ####

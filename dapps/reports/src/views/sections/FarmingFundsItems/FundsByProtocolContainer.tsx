@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
-import { isYearAndMonthValid } from '../../../utils/params'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 const DynamicPieChart = dynamic(
   () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie')
@@ -26,7 +26,11 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
       id={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
       title={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
       subTitle={isDDay ? 'Allocated funds by protocol' : 'Farming funds by protocol'}
-      helpInfo="Farming funds, % allocation and results per position. Swap results."
+      helpInfo={
+        isDDay
+          ? 'DeFi funds, % allocation and results per position. Swap results. Operations funds and results per position.'
+          : 'Farming funds, % allocation and results per position. Swap results.'
+      }
     >
       {!fundsByProtocol || fundsByProtocol.length === 0 ? (
         <EmptyData />

@@ -5,7 +5,7 @@ import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypogr
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import numbro from 'numbro'
 import * as React from 'react'
-import { isYearAndMonthValid } from '../../utils/params'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface FarmingFundsProps {
   totalFarmingResultsFarmSwaps: number

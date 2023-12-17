@@ -17,7 +17,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import * as React from 'react'
-import { isYearAndMonthValid } from '../../../../utils/params'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface TableTokenDetailProps {
   filteredTokenDetails: any[]
