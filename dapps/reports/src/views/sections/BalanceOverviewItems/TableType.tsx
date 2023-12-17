@@ -5,8 +5,6 @@ import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/Tab
 import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import Box from '@mui/material/Box'
 import * as React from 'react'
-import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 
 type TableTypeProps = { balanceOverviewType: any } & BoxProps
@@ -14,8 +12,6 @@ type TableTypeProps = { balanceOverviewType: any } & BoxProps
 const TableType = (props: TableTypeProps) => {
   const { balanceOverviewType } = props
   const dataFooterType = {} as any
-
-  const isDDay = isYearAndMonthValid()
 
   return (
     <BoxWrapperColumn gap={4}>
@@ -27,7 +23,7 @@ const TableType = (props: TableTypeProps) => {
                 Token category
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                {isDDay ? 'DeFi funds *' : 'Farming funds'}
+                Farming funds
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Unclaimed rewards
@@ -88,16 +84,6 @@ const TableType = (props: TableTypeProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isDDay && (
-        <CustomTypography
-          variant="body2"
-          color="textSecondary"
-          align="left"
-          sx={{ fontStyle: 'italic' }}
-        >
-          * Positions aimed at yield generation
-        </CustomTypography>
-      )}
     </BoxWrapperColumn>
   )
 }

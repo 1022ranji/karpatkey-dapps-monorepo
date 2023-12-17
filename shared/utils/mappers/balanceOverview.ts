@@ -3,11 +3,12 @@ import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/param
 export const getBalanceOverviewByType = (data: any, params: any) => {
   const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
 
-  const rows = data
-    .filter((row: any) => {
-      return row.metric.includes('balances') || row.metric.includes('unclaim')
-    })
-    .reduce((acc: any, obj: any): { funds: number }[][] => {
+  let rows = data.filter((row: any) => {
+    return row.metric.includes('balances') || row.metric.includes('unclaim')
+  })
+
+  if (!isDDay) {
+    rows = rows.reduce((acc: any, obj: any): { funds: number }[][] => {
       const metric = obj?.metric.trim()
       const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '')?.trim()
       const protocol = obj?.protocol.trim()
@@ -15,9 +16,7 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
         ? 'Unclaimed rewards'
         : metric.includes('balance') && protocol.includes('Wallet')
           ? 'Wallet'
-          : isDDay
-            ? 'DeFi funds'
-            : 'Farming funds'
+          : 'Farming funds'
 
       if (!acc[tokenCategory]) acc[tokenCategory] = {}
       if (!acc[tokenCategory][metricKey])
@@ -29,22 +28,63 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
       return acc
     }, [])
 
-  return Object.keys(rows)
-    .map((key: string) => {
-      const customKey = isDDay ? ('DeFi funds' as any) : ('Farming funds' as any)
-      const farmingFunds = rows[key as any][customKey]?.funds ?? 0
-      const unclaimedRewards = rows[key as any]['Unclaimed rewards' as any]?.funds ?? 0
-      const wallet = rows[key as any]['Wallet' as any]?.funds ?? 0
-      const total = farmingFunds + unclaimedRewards + wallet
-      return {
-        'Token Category': key,
-        customKey: farmingFunds,
-        'Unclaimed rewards': unclaimedRewards,
-        Wallet: wallet,
-        Total: total
-      }
-    })
-    .sort((a: any, b: any) => b.Total - a.Total)
+    return Object.keys(rows)
+      .map((key: string) => {
+        const farmingFunds = rows[key as any]['Farming funds' as any]?.funds ?? 0
+        const unclaimedRewards = rows[key as any]['Unclaimed rewards' as any]?.funds ?? 0
+        const wallet = rows[key as any]['Wallet' as any]?.funds ?? 0
+        const total = farmingFunds + unclaimedRewards + wallet
+        return {
+          'Token Category': key,
+          'Farming funds': farmingFunds,
+          'Unclaimed rewards': unclaimedRewards,
+          Wallet: wallet,
+          Total: total
+        }
+      })
+      .sort((a: any, b: any) => b.Total - a.Total)
+  } else {
+    rows = rows.reduce((acc: any, obj: any): { funds: number }[][] => {
+      const metric = obj?.metric.trim()
+      const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '')?.trim()
+      const protocol = obj?.protocol.trim()
+      const nonfarmingPosition = obj?.nonfarming_position.trim()
+
+      const metricKey =
+        metric.includes('balance') && protocol.includes('Wallet')
+          ? 'Wallet'
+          : nonfarmingPosition === 'TRUE'
+            ? 'Operations funds'
+            : nonfarmingPosition === 'FALSE'
+              ? 'DeFi funds'
+              : metric
+
+      if (!acc[tokenCategory]) acc[tokenCategory] = {}
+      if (!acc[tokenCategory][metricKey])
+        acc[tokenCategory][metricKey] = { funds: 0, row: tokenCategory, column: metricKey }
+      acc[tokenCategory][metricKey].funds =
+        acc[tokenCategory][metricKey].funds +
+        ((obj?.bal_1 ?? 0) * obj?.next_period_first_price ?? 0)
+
+      return acc
+    }, [])
+
+    return Object.keys(rows)
+      .map((key: string) => {
+        const defiFunds = rows[key as any]['DeFi funds' as any]?.funds ?? 0
+        const operationsFunds = rows[key as any]['Operations funds' as any]?.funds ?? 0
+        const wallet = rows[key as any]['Wallet' as any]?.funds ?? 0
+        const total = defiFunds + operationsFunds + wallet
+        return {
+          'Token Category': key,
+          'DeFi funds': defiFunds,
+          'Operations funds': operationsFunds,
+          Wallet: wallet,
+          Total: total
+        }
+      })
+      .sort((a: any, b: any) => b.Total - a.Total)
+  }
 }
 
 export const getBalanceOverviewByBlockchain = (data: any) => {

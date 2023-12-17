@@ -1,7 +1,7 @@
 export const getYearAndMonth = (param?: { yearArg: string; monthArg: string }) => {
   let yearParam = param?.yearArg ?? null
   let monthParam = param?.monthArg ?? null
-  if (!yearParam && !monthParam && window.location.search) {
+  if (!yearParam && !monthParam && typeof window !== 'undefined' && window?.location?.search) {
     const queryParams = new URLSearchParams(window.location.search)
     yearParam = queryParams.get('year')
     monthParam = queryParams.get('month')

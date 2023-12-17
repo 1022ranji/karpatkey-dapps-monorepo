@@ -20,7 +20,6 @@ import Tooltip from '@mui/material/Tooltip'
 import { LinkWrapper } from '@karpatkey-monorepo/reports/src/components/LinkWrapper'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
-import { isYearAndMonthValid } from '../utils/params'
 
 interface TableProps {
   daoResume: any
@@ -42,8 +41,6 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
 
   const currentDate = new Date()
   const currentYear = currentDate.getFullYear()
-
-  const isDDay = isYearAndMonthValid()
 
   return (
     <TableContainer component={Box}>
@@ -79,11 +76,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 ...(matchesCapitalUtilization ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value
-                value={isDDay ? 'Allocated funds' : 'Capital utilisation'}
-                fontWeight={600}
-                fontSize={'16px'}
-              />
+              <Value value={'Allocated funds'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -95,11 +88,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 ...(matchesFarmingResults ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value
-                value={isDDay ? 'DeFi results' : 'Farming results'}
-                fontWeight={600}
-                fontSize={'16px'}
-              />
+              <Value value={'DeFi results'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -315,8 +304,6 @@ const Dashboard = (props: ReportProps) => {
 
   const screenSize = useScreenSize()
 
-  const isDDay = isYearAndMonthValid()
-
   return (
     <BoxWrapperColumn
       sx={{
@@ -363,7 +350,7 @@ const Dashboard = (props: ReportProps) => {
           <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
           <NumberBlock
             amount={formatCurrency(lastMonthFarmingResults)}
-            title={isDDay ? 'Last month DeFi results' : 'Last month farming results'}
+            title={'Last month DeFi results'}
           />
         </BoxWrapperRow>
       </BoxWrapperColumn>
