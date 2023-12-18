@@ -129,9 +129,15 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                   urlToReport
                 } = dao
 
-                const isDAOEns =
+                const isDAOEnsOctober =
                   keyName === 'ENS DAO' && +currentYear === 2023 && +latestMonth === 10
-                const APY = isDAOEns ? '2.0%' : formatPercentage(globalROI, 1)
+                const isDAOEnsNovember =
+                  keyName === 'ENS DAO' && +currentYear === 2023 && +latestMonth === 11
+                const APY = isDAOEnsOctober
+                  ? '2.04%'
+                  : isDAOEnsNovember
+                    ? '2.9%'
+                    : formatPercentage(globalROI)
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const onClick = (e: any) => {
@@ -344,7 +350,7 @@ const Dashboard = (props: ReportProps) => {
           <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
           <NumberBlock
             amount={formatCurrency(lastMonthFarmingResults)}
-            title="Last month DeFi results"
+            title={'Last month DeFi results'}
           />
         </BoxWrapperRow>
       </BoxWrapperColumn>

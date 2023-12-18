@@ -5,6 +5,7 @@ import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWra
 import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
 import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
@@ -14,17 +15,23 @@ interface FundsByProtocolContainerProps {
 const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
   const { fundsByProtocol, defiResults } = props
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <PaperSection
-      id="Funds and results by position"
-      title="Funds and results by position"
-      subTitle="Allocated funds by protocol"
-      helpInfo="Farming funds, % allocation and results per position. Swap results."
+      id={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
+      title={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
+      subTitle={isDDay ? 'Allocated funds by protocol' : 'Farming funds by protocol'}
+      helpInfo={
+        isDDay
+          ? 'DeFi funds, % allocation and results per position. Swap results. Operations funds and results per position.'
+          : 'Farming funds, % allocation and results per position. Swap results.'
+      }
     >
       {!fundsByProtocol || fundsByProtocol.length === 0 ? (
         <EmptyData />
       ) : (
-        <BoxWrapperRow sx={{ justifyContent: 'space-evenly' }}>
+        <BoxWrapperRow sx={{ justifyContent: isDDay ? 'space-evenly' : 'center' }}>
           <PieChart
             title="Total funds by type"
             data={fundsByProtocol.map((item) => {
@@ -39,7 +46,7 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
             width={550}
             height={450}
           />
-          <BoxInfoCard title="DeFi results" value={formatCurrency(defiResults, 0)} />
+          {isDDay && <BoxInfoCard title="DeFi results" value={formatCurrency(defiResults, 0)} />}
         </BoxWrapperRow>
       )}
     </PaperSection>

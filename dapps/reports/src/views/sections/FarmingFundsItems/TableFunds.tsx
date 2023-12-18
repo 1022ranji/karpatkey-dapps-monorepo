@@ -11,6 +11,7 @@ import { Box, Table, TableBody, TableContainer, TableHead, TableRow, styled } fr
 import * as React from 'react'
 import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface TableFundsProps {
   funds: any
@@ -28,26 +29,30 @@ const TableFunds = (props: TableFundsProps) => {
   const { funds, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                 Blockchain
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                 Position
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                DeFi funds
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                {isDDay ? 'DeFi funds' : 'Farming funds'}
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Unclaimed rewards
-              </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                DeFi results *
+              {!isDDay ? (
+                <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                  Unclaimed rewards
+                </TableHeadCellCustom>
+              ) : null}
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                {isDDay ? 'DeFi results *' : 'Farming results *'}
               </TableHeadCellCustom>
             </TableRow>
           </TableHead>
@@ -65,10 +70,10 @@ const TableFunds = (props: TableFundsProps) => {
 
                   return (
                     <TableRow key={index}>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         {row.blockchain}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         <BoxWrapperRow
                           sx={{
                             width: '90%',
@@ -85,7 +90,7 @@ const TableFunds = (props: TableFundsProps) => {
                           {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
                         </BoxWrapperRow>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         <BoxWrapper>
                           {formatCurrency(Math.round(row.funds || 0))}
                           {row?.allocation > 0 ? (
@@ -95,10 +100,12 @@ const TableFunds = (props: TableFundsProps) => {
                           ) : null}
                         </BoxWrapper>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {formatCurrency(Math.round(row.unclaimed || 0))}
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      {!isDDay ? (
+                        <TableCellCustom sx={{ width: '20%' }} align="left">
+                          {formatCurrency(Math.round(row.unclaimed || 0))}
+                        </TableCellCustom>
+                      ) : null}
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         {formatCurrency(Math.round(row.results || 0))}
                       </TableCellCustom>
                     </TableRow>
@@ -139,13 +146,15 @@ const TableFunds = (props: TableFundsProps) => {
                   <TableFooterCellCustom colSpan={2} align="left">
                     Total
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                     <BoxWrapper>{formatCurrency(Math.round(totals?.fundsTotal || 0))}</BoxWrapper>
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
-                  </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                  {!isDDay ? (
+                    <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                      {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
+                    </TableFooterCellCustom>
+                  ) : null}
+                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                     {formatCurrency(Math.round(totals?.resultsTotal || 0))}
                   </TableFooterCellCustom>
                 </TableRow>
@@ -160,8 +169,9 @@ const TableFunds = (props: TableFundsProps) => {
         align="left"
         sx={{ fontStyle: 'italic' }}
       >
-        * DeFi Results include results from fees, rebasing, pool token variation and rewards from
-        DeFi positions
+        {isDDay
+          ? '* DeFi Results include results from fees, rebasing, pool token variation and rewards from DeFi positions'
+          : '* Farming Results include results from fees, rebasing, pool token variation and rewards'}
       </CustomTypography>
     </BoxWrapperColumn>
   )

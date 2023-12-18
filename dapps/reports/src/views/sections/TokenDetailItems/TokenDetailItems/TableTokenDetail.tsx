@@ -17,6 +17,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import * as React from 'react'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface TableTokenDetailProps {
   filteredTokenDetails: any[]
@@ -25,6 +26,8 @@ interface TableTokenDetailProps {
 const TableTokenDetail = (props: TableTokenDetailProps) => {
   const { filteredTokenDetails } = props
   const [displayAll, setDisplayAll] = React.useState(false)
+
+  const isDDay = isYearAndMonthValid()
 
   return (
     <BoxWrapperColumn gap={4}>
@@ -42,7 +45,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                 Token balance
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Share
+                {isDDay ? 'Share' : 'Allocation'}
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Price variation

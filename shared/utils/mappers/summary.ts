@@ -3,6 +3,7 @@ import {
   OTHERS_SUMMARY_LIMIT
 } from '@karpatkey-monorepo/shared/config/constants'
 import { SUMMARY_COLORS } from '@karpatkey-monorepo/shared/config/theme'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 export const getSummaryFundsByTokenCategory = (data: any) => {
   const rows: { funds: number; label: string }[] = data
@@ -50,7 +51,9 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
   return fundsByTokenCategory
 }
 
-export const getSummaryFundsByType = (data: any) => {
+export const getSummaryFundsByType = (data: any, params: any) => {
+  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+
   const rows: { funds: number; label: string }[] = data
     .filter((row: any) => {
       return row.metric.includes('balances') || row.metric.includes('unclaim')
@@ -62,7 +65,9 @@ export const getSummaryFundsByType = (data: any) => {
         ? 'Unclaimed rewards'
         : metric.includes('balance') && protocol.includes('Wallet')
           ? 'Wallet'
-          : 'Farming funds'
+          : isDDay
+            ? 'DeFi funds'
+            : 'Farming funds'
 
       if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
 

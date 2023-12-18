@@ -1,16 +1,19 @@
 import FundsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsContainer'
 import FundsByProtocolContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsByProtocolContainer'
+import OperationsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/OperationsContainer'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import numbro from 'numbro'
 import * as React from 'react'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface FarmingFundsProps {
   totalFarmingResultsFarmSwaps: number
   farmingFundsByProtocol: any[]
   farmingResultsDetailsByProtocol: any[]
   fundsByProtocol: any[]
+  operationDetails: any[]
   defiResults: number
 }
 
@@ -19,8 +22,11 @@ const FarmingFunds = (props: FarmingFundsProps) => {
     farmingFundsByProtocol: funds,
     totalFarmingResultsFarmSwaps: totalFarmSwaps,
     fundsByProtocol,
-    defiResults
+    defiResults,
+    operationDetails
   } = props
+
+  const isDDay = isYearAndMonthValid()
 
   return (
     <>
@@ -33,7 +39,9 @@ const FarmingFunds = (props: FarmingFundsProps) => {
       <AnimatePresenceWrapper>
         {/*TODO: hide this component for the moment*/}
         {/*<ResultsContainer {...{ fundsDetails }} />*/}
-        <PaperSection subTitle="DeFi results from DeFi-Swaps">
+        <PaperSection
+          subTitle={isDDay ? 'DeFi results from DeFi-Swaps' : 'Farming results from Farm-Swaps'}
+        >
           <CustomTypography variant="farmSwapsValue">
             {totalFarmSwaps === 0 ? (
               <CustomTypography
@@ -42,7 +50,9 @@ const FarmingFunds = (props: FarmingFundsProps) => {
                 align="left"
                 sx={{ fontStyle: 'italic' }}
               >
-                No Defi results from DeFi-Swaps within the selected period
+                {isDDay
+                  ? 'No DeFi results from DeFi-Swaps within the selected period'
+                  : 'No farming results from Farm-Swaps within the selected period'}
               </CustomTypography>
             ) : (
               numbro(totalFarmSwaps || 0).formatCurrency({
@@ -54,6 +64,11 @@ const FarmingFunds = (props: FarmingFundsProps) => {
           </CustomTypography>
         </PaperSection>
       </AnimatePresenceWrapper>
+      {operationDetails.length > 0 && isDDay && (
+        <AnimatePresenceWrapper>
+          <OperationsContainer operationDetails={operationDetails} />
+        </AnimatePresenceWrapper>
+      )}
     </>
   )
 }
