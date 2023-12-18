@@ -175,7 +175,8 @@ const getDAOResume = async ({
   dao,
   variationMetricsDetail,
   financialMetrics,
-  financialMetricAndVarDetail
+  financialMetricAndVarDetail,
+  waterfall1Report
 }: any) => {
   const daoFound = FILTER_DAOS.find((filterDao: FILTER_DAO) => {
     return filterDao.keyName.toLowerCase() === (dao as string).toLowerCase()
@@ -192,13 +193,16 @@ const getDAOResume = async ({
   const financialMetricsFiltered = financialMetrics.filter((row: any) =>
     filterValues(row, metricPeriodType, dao, metricPeriod)
   )
+  const waterfall1ReportFiltered = waterfall1Report.filter(
+    (row: any) => row.dao === dao && row.year_month === metricPeriod
+  )
   const financialMetricAndVarDetailFiltered = financialMetricAndVarDetail.filter((row: any) =>
     filterValues(row, metricPeriodType, dao, metricPeriod)
   )
 
   const totalFunds = getTotalFunds(variationMetricsDetailFiltered)
   const capitalUtilization = getCapitalUtilization(financialMetricsFiltered)
-  const farmingResults = getFarmingResults(financialMetricsFiltered)
+  const farmingResults = getFarmingResults(waterfall1ReportFiltered)
   const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
 
   const urlToReport = `?dao=${daoFound?.id}&month=${month}&year=${year}`
@@ -346,7 +350,8 @@ export const getCommonServerSideProps = async (params: Filter) => {
         dao: dao.keyName,
         variationMetricsDetail,
         financialMetrics,
-        financialMetricAndVarDetail
+        financialMetricAndVarDetail,
+        waterfall1Report
       })
       return {
         name: dao.name,

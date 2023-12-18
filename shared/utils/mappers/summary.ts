@@ -273,7 +273,7 @@ export const getCapitalUtilization = (data: any) => {
 
 export const getFarmingResults = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    const value = obj?.waterfall_metric === '03 DeFi results' ? obj['metric_value'] : 0
+    const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
     acc = acc + value
     return acc
   }, 0)
