@@ -1,5 +1,6 @@
 import FundsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsContainer'
 import FundsByProtocolContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/FundsByProtocolContainer'
+import OperationsContainer from '@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/OperationsContainer'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -12,6 +13,7 @@ interface FarmingFundsProps {
   farmingFundsByProtocol: any[]
   farmingResultsDetailsByProtocol: any[]
   fundsByProtocol: any[]
+  operationDetails: any[]
   defiResults: number
 }
 
@@ -20,7 +22,8 @@ const FarmingFunds = (props: FarmingFundsProps) => {
     farmingFundsByProtocol: funds,
     totalFarmingResultsFarmSwaps: totalFarmSwaps,
     fundsByProtocol,
-    defiResults
+    defiResults,
+    operationDetails
   } = props
 
   const isDDay = isYearAndMonthValid()
@@ -61,6 +64,11 @@ const FarmingFunds = (props: FarmingFundsProps) => {
           </CustomTypography>
         </PaperSection>
       </AnimatePresenceWrapper>
+      {operationDetails.length > 0 && isDDay && (
+        <AnimatePresenceWrapper>
+          <OperationsContainer operationDetails={operationDetails} />
+        </AnimatePresenceWrapper>
+      )}
     </>
   )
 }

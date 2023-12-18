@@ -14,6 +14,39 @@ export const getDeFiFundsTotal = (data: any) => {
   }, 0)
 }
 
+export const getOperationDetails = (data: any) => {
+  const rows = data
+    .filter((row: any) => {
+      return row?.nonfarming_position === 'TRUE'
+    })
+    .map((item: any) => {
+      const position =
+        item?.Assets === 'Delegated MKR-Lend&Borrow Collateral' ? 'Delegated MKR' : item?.Assets
+
+      return {
+        blockchain: item?.blockchain,
+        protocol: item?.protocol,
+        position,
+        operationsFunds: item?.funds_UR,
+        funds: item?.Funds,
+        allocation: 0,
+        operationResults: item?.Revenue,
+        priceVariation: item?.Price_variation_for_initial_balance
+      }
+    })
+
+  const total = rows.reduce(
+    (accumulator: number, currentValue: any) => accumulator + currentValue.funds,
+    0
+  )
+
+  rows.forEach((row: any) => {
+    row.allocation = row.funds / total
+  })
+
+  return rows.sort((a: any, b: any) => b.funds - a.funds)
+}
+
 export const getFarmingFundsByProtocol = (data: any) => {
   const rows = data.reduce((acc: any, obj: any) => {
     const blockchain = obj['blockchain'].trim()
@@ -82,7 +115,7 @@ export const getFarmingFundsByProtocolTotals = (data: any) => {
 
 export const getFarmingResultsFarmSwapsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    const value = obj['metric_code'] === 'm20' ? obj['metric_value'] : 0
+    const value = obj?.metric === 'farming executed only swaps' ? obj['metric_value'] : 0
     acc += value
     return acc
   }, 0)
@@ -151,5 +184,37 @@ export const getFarmingResultsDetailsByProtocolTotals = (data: any) => {
       }
     },
     { rewardsTotal: 0, feesTotal: 0, total: 0 }
+  )
+}
+
+export const getOperationsDetailTotals = (data: any) => {
+  return data.reduce(
+    (
+      accumulator: {
+        operationsFundsTotal: number
+        allocationTotal: number
+        operationResultsTotal: number
+        priceVariationTotal: number
+      },
+      currentValue: {
+        operationsFunds: number
+        allocation: number
+        operationResults: number
+        priceVariation: number
+      }
+    ) => {
+      return {
+        operationsFundsTotal: accumulator.operationsFundsTotal + currentValue.operationsFunds,
+        allocationTotal: accumulator.allocationTotal + currentValue.allocation,
+        operationResultsTotal: accumulator.operationResultsTotal + currentValue.operationResults,
+        priceVariationTotal: accumulator.priceVariationTotal + currentValue.priceVariation
+      }
+    },
+    {
+      operationsFundsTotal: 0,
+      allocationTotal: 0,
+      operationResultsTotal: 0,
+      priceVariationTotal: 0
+    }
   )
 }

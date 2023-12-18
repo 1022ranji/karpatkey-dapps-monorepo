@@ -9,7 +9,8 @@ import {
   getDeFiFundsTotal,
   getFarmingFundsByProtocol,
   getFarmingResultsDetailsByProtocol,
-  getFarmingResultsFarmSwapsTotal
+  getFarmingResultsFarmSwapsTotal,
+  getOperationDetails
 } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import {
   getCapitalUtilization,
@@ -129,6 +130,9 @@ const farmingFundsData = ({
     treasuryFinancialMetricsWaterfallFiltered
   )
 
+  // Operations details
+  const operationDetails = getOperationDetails(financialPositionsFiltered)
+
   // DeFi funds/results by position
   const farmingResultsDetailsByProtocol =
     getFarmingResultsDetailsByProtocol(financialMetricsFiltered)
@@ -137,7 +141,8 @@ const farmingFundsData = ({
     defiResults,
     farmingFundsByProtocol,
     totalFarmingResultsFarmSwaps,
-    farmingResultsDetailsByProtocol
+    farmingResultsDetailsByProtocol,
+    operationDetails
   }
 }
 

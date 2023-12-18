@@ -9,7 +9,7 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
 
   if (!isDDay) {
     rows = rows.reduce((acc: any, obj: any): { funds: number }[][] => {
-      const metric = obj?.metric.trim()
+      const metric = obj?.metric?.trim()
       const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '')?.trim()
       const protocol = obj?.protocol.trim()
       const metricKey = metric.includes('unclaim')
@@ -45,7 +45,7 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
       .sort((a: any, b: any) => b.Total - a.Total)
   } else {
     rows = rows.reduce((acc: any, obj: any): { funds: number }[][] => {
-      const metric = obj?.metric.trim()
+      const metric = obj?.metric?.trim()
       const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '')?.trim()
       const protocol = obj?.protocol.trim()
       const nonfarmingPosition = obj?.nonfarming_position.trim()

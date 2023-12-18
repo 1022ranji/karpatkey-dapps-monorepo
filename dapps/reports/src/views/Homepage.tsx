@@ -34,7 +34,8 @@ const HomepageContent = (props: ReportProps) => {
     tokenDetails,
     tokenDetailsGrouped,
     tokenDetailByPosition,
-    walletTokenDetail
+    walletTokenDetail,
+    operationDetails
   } = props
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -49,6 +50,7 @@ const HomepageContent = (props: ReportProps) => {
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
     fundsByProtocol,
+    operationDetails,
     defiResults
   }
 
