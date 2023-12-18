@@ -12,6 +12,8 @@ import * as React from 'react'
 import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import Tooltip from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/Info'
 
 interface TableFundsProps {
   funds: any
@@ -52,7 +54,19 @@ const TableFunds = (props: TableFundsProps) => {
                 </TableHeadCellCustom>
               ) : null}
               <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                {isDDay ? 'DeFi results *' : 'Farming results *'}
+                <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
+                  {isDDay ? 'DeFi results' : 'Farming results'}
+                  <Tooltip
+                    title={
+                      isDDay
+                        ? 'DeFi results include results from fees, rebasing, pool token variation and rewards from DeFi positions'
+                        : 'Farming results include results from fees, rebasing, pool token variation and rewards'
+                    }
+                    sx={{ ml: 1, cursor: 'pointer' }}
+                  >
+                    <InfoIcon />
+                  </Tooltip>
+                </BoxWrapperRow>
               </TableHeadCellCustom>
             </TableRow>
           </TableHead>
@@ -163,16 +177,6 @@ const TableFunds = (props: TableFundsProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <CustomTypography
-        variant="body2"
-        color="textSecondary"
-        align="left"
-        sx={{ fontStyle: 'italic' }}
-      >
-        {isDDay
-          ? '* DeFi Results include results from fees, rebasing, pool token variation and rewards from DeFi positions'
-          : '* Farming Results include results from fees, rebasing, pool token variation and rewards'}
-      </CustomTypography>
     </BoxWrapperColumn>
   )
 }

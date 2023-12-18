@@ -54,31 +54,59 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
 export const getSummaryFundsByType = (data: any, params: any) => {
   const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
 
-  const rows: { funds: number; label: string }[] = data
-    .filter((row: any) => {
-      return row.metric.includes('balances') || row.metric.includes('unclaim')
-    })
-    .reduce((acc: any, obj: any): { funds: number; label: string }[] => {
-      const metric = obj?.metric.trim()
-      const protocol = obj?.protocol.trim()
-      const metricKey = metric.includes('unclaimed_rewards')
-        ? 'Unclaimed rewards'
-        : metric.includes('balance') && protocol.includes('Wallet')
-          ? 'Wallet'
-          : isDDay
-            ? 'DeFi funds'
+  let rows: any[] = []
+
+  if (isDDay) {
+    rows = data
+      .filter((row: any) => {
+        return row.metric.includes('balances') || row.metric.includes('unclaim')
+      })
+      .reduce((acc: any, obj: any): { funds: number; label: string }[] => {
+        const metric = obj?.metric.trim()
+        const protocol = obj?.protocol.trim()
+        const nonfarmingPosition = obj?.nonfarming_position.trim()
+        const metricKey =
+          metric.includes('balance') && protocol.includes('Wallet')
+            ? 'Wallet'
+            : nonfarmingPosition === 'TRUE'
+              ? 'Operations funds'
+              : nonfarmingPosition === 'FALSE'
+                ? 'DeFi funds'
+                : metric
+
+        if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
+
+        acc[metricKey].funds =
+          acc[metricKey].funds + ((obj?.bal_1 ?? 0) * obj?.next_period_first_price ?? 0)
+        acc[metricKey].label = metricKey
+
+        return acc
+      }, [])
+  } else {
+    rows = data
+      .filter((row: any) => {
+        return row.metric.includes('balances') || row.metric.includes('unclaim')
+      })
+      .reduce((acc: any, obj: any): { funds: number; label: string }[] => {
+        const metric = obj?.metric.trim()
+        const protocol = obj?.protocol.trim()
+        const metricKey = metric.includes('unclaimed_rewards')
+          ? 'Unclaimed rewards'
+          : metric.includes('balance') && protocol.includes('Wallet')
+            ? 'Wallet'
             : 'Farming funds'
 
-      if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
+        if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
 
-      acc[metricKey].funds =
-        acc[metricKey].funds + ((obj?.bal_1 ?? 0) * obj?.next_period_first_price ?? 0)
-      acc[metricKey].label = metricKey
+        acc[metricKey].funds =
+          acc[metricKey].funds + ((obj?.bal_1 ?? 0) * obj?.next_period_first_price ?? 0)
+        acc[metricKey].label = metricKey
 
-      return acc
-    }, [])
+        return acc
+      }, [])
+  }
 
-  const total = Object.values(rows).reduce(
+  const total: number = Object.values(rows).reduce(
     (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
     0
   )
@@ -87,7 +115,7 @@ export const getSummaryFundsByType = (data: any, params: any) => {
     .map((key: string) => {
       return {
         value: key,
-        allocation: rows[key as any].funds / total,
+        allocation: total > 0 ? rows[key as any].funds / total : 0,
         funds: rows[key as any].funds,
         label: rows[key as any].label
       }

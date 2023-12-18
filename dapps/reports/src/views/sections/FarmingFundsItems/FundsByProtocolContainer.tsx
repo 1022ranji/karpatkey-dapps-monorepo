@@ -3,8 +3,6 @@ import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import * as React from 'react'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
-import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
-import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 interface FundsByProtocolContainerProps {
@@ -13,7 +11,7 @@ interface FundsByProtocolContainerProps {
 }
 
 const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
-  const { fundsByProtocol, defiResults } = props
+  const { fundsByProtocol } = props
 
   const isDDay = isYearAndMonthValid()
 
@@ -46,7 +44,6 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
             width={550}
             height={450}
           />
-          {isDDay && <BoxInfoCard title="DeFi results" value={formatCurrency(defiResults, 0)} />}
         </BoxWrapperRow>
       )}
     </PaperSection>
