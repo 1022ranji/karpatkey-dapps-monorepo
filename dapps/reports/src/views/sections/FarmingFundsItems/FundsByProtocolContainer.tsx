@@ -31,7 +31,6 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
       ) : (
         <BoxWrapperRow sx={{ justifyContent: isDDay ? 'space-evenly' : 'center' }}>
           <PieChart
-            title="Total funds by type"
             data={fundsByProtocol.map((item) => {
               return {
                 name: item.label,
