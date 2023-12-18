@@ -5,8 +5,10 @@ import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/Tab
 import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import Box from '@mui/material/Box'
 import * as React from 'react'
-import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
+import Tooltip from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/Info'
 
 type TableTypeProps = { balanceOverviewType: any } & BoxProps
 
@@ -34,11 +36,30 @@ const TableTypeDDay = (props: TableTypeProps) => {
                 sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
                 align="left"
               >
-                DeFi funds *
+                <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
+                  DeFi funds
+                  <Tooltip
+                    title={'Positions aimed at yield generation'}
+                    sx={{ ml: 1, cursor: 'pointer' }}
+                  >
+                    <InfoIcon />
+                  </Tooltip>
+                </BoxWrapperRow>
               </TableHeadCellCustom>
               {haveOperationsFundsField ? (
                 <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                  Operations funds **
+                  <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
+                    Operations
+                    <br /> funds
+                    <Tooltip
+                      title={
+                        'Positions tailored to meet specific requirements like market making, not focused on yield generation'
+                      }
+                      sx={{ ml: 1, cursor: 'pointer' }}
+                    >
+                      <InfoIcon />
+                    </Tooltip>
+                  </BoxWrapperRow>
                 </TableHeadCellCustom>
               ) : null}
               <TableHeadCellCustom
@@ -130,29 +151,6 @@ const TableTypeDDay = (props: TableTypeProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <BoxWrapperColumn gap={2}>
-        <CustomTypography
-          variant="body2"
-          color="textSecondary"
-          align="left"
-          sx={{ fontStyle: 'italic' }}
-        >
-          * Positions aimed at yield generation
-        </CustomTypography>
-
-        {haveOperationsFundsField ? (
-          <CustomTypography
-            variant="body2"
-            color="textSecondary"
-            align="left"
-            sx={{ fontStyle: 'italic' }}
-          >
-            ** Positions tailored to meet specific requirements like market making, not focused on
-            yield generation
-          </CustomTypography>
-        ) : null}
-      </BoxWrapperColumn>
     </BoxWrapperColumn>
   )
 }

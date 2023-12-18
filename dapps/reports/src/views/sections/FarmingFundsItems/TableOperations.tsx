@@ -7,13 +7,22 @@ import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/T
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, styled, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import * as React from 'react'
+import Tooltip from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/Info'
 
 interface TableResultsProps {
   operationDetails: any
   totals: any
 }
+
+const BoxWrapper = styled(BoxWrapperColumn)({
+  minWidth: 'max-content',
+  width: '125px',
+  maxWidth: '100%',
+  alignItems: 'flex-end'
+})
 
 const TableOperations = (props: TableResultsProps) => {
   const { operationDetails, totals } = props
@@ -25,38 +34,38 @@ const TableOperations = (props: TableResultsProps) => {
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Blockchain
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Position
               </TableHeadCellCustom>
-              <TableHeadCellCustom
-                align="left"
-                sx={{
-                  width: '15%',
-                  wordWrap: 'break-all',
-                  whiteSpace: 'normal',
-                  paddingRight: '10px'
-                }}
-              >
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Operations funds
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
-                Allocation
+              <TableHeadCellCustom sx={{ width: '20%', paddingRight: '5px' }} align="left">
+                <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
+                  Operation <br /> results
+                  <Tooltip
+                    title={
+                      'Operations Results include results from fees, rebasing, pool token variation and rewards from Operations positions'
+                    }
+                    sx={{ ml: 1, cursor: 'pointer' }}
+                  >
+                    <InfoIcon />
+                  </Tooltip>
+                </BoxWrapperRow>
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
-                Operation results *
-              </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '25%' }} align="left">
-                Price variation for initial balance
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Price variation <br />
+                for initial balance
               </TableHeadCellCustom>
             </TableRow>
           </TableHead>
           <TableBody>
             {operationDetails.length === 0 ? (
               <TableRow>
-                <TableEmptyCellCustom colSpan={6}>
+                <TableEmptyCellCustom colSpan={5}>
                   <EmptyData />
                 </TableEmptyCellCustom>
               </TableRow>
@@ -67,10 +76,10 @@ const TableOperations = (props: TableResultsProps) => {
 
                   return (
                     <TableRow key={index}>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
                         {row?.blockchain}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapperColumn sx={{ width: '90%', overflowWrap: 'anywhere' }}>
                           {row?.position}
                           <CustomTypography variant="tableCellSubData">
@@ -78,16 +87,20 @@ const TableOperations = (props: TableResultsProps) => {
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
-                        {formatCurrency(row?.operationsFunds?.toFixed(2) || 0)}
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        <BoxWrapper>
+                          {formatCurrency(Math.round(row?.operationsFunds || 0))}
+                          {row?.allocation > 0 ? (
+                            <CustomTypography variant="tableCellSubData">
+                              {formatPercentage(row.allocation)}
+                            </CustomTypography>
+                          ) : null}
+                        </BoxWrapper>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
-                        {formatPercentage(row?.allocation?.toFixed(2)) || 0}
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
                         {formatCurrency(row?.operationResults?.toFixed(2) || 0)}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '25%' }} align="left">
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
                         {formatCurrency(row?.priceVariation?.toFixed(2) || 0)}
                       </TableCellCustom>
                     </TableRow>
@@ -96,7 +109,7 @@ const TableOperations = (props: TableResultsProps) => {
 
                 {operationDetails.length > 5 ? (
                   <TableRow>
-                    <TableCellCustom colSpan={6} align="center">
+                    <TableCellCustom colSpan={5} align="center">
                       <BoxWrapperRow gap={1}>
                         <CustomTypography
                           variant="tableCellSubData"
@@ -126,22 +139,16 @@ const TableOperations = (props: TableResultsProps) => {
                   </TableRow>
                 ) : null}
                 <TableRow>
-                  <TableFooterCellCustom sx={{ width: '15%' }} align="left">
+                  <TableFooterCellCustom colSpan={2} align="left">
                     Total
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '15%' }} align="left">
-                    {' '}
+                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                    <BoxWrapper>{formatCurrency(totals?.operationsFundsTotal || 0)}</BoxWrapper>
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '15%' }} align="left">
-                    {formatCurrency(totals?.operationsFundsTotal || 0)}
-                  </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '15%' }} align="left">
-                    {formatPercentage(totals?.allocationTotal || 0)}
-                  </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '15%' }} align="left">
+                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                     {formatCurrency(totals?.operationResultsTotal || 0)}
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '25%' }} align="left">
+                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                     {formatCurrency(totals?.priceVariationTotal || 0)}
                   </TableFooterCellCustom>
                 </TableRow>
@@ -150,15 +157,6 @@ const TableOperations = (props: TableResultsProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <CustomTypography
-        variant="body2"
-        color="textSecondary"
-        align="left"
-        sx={{ fontStyle: 'italic' }}
-      >
-        Operations Results include results from fees, rebasing, pool token variation and rewards
-        from Operations positions
-      </CustomTypography>
     </BoxWrapperColumn>
   )
 }

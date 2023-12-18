@@ -68,7 +68,7 @@ const Summary = (props: SummaryProps) => {
             value={formatPercentage(capitalUtilization, 1)}
           />
           <BoxInfoCard
-            title={isDDay ? 'Defi results' : 'Farming results'}
+            title={isDDay ? 'DeFi results' : 'Farming results'}
             value={formatCurrency(farmingResults)}
           />
           <BoxInfoCard
@@ -76,7 +76,7 @@ const Summary = (props: SummaryProps) => {
             value={APY}
             helpInfo={
               isDDay
-                ? 'Calculated as (1+(DeFi results / DeFi funds at final prices))^12-1.'
+                ? 'Calculated as (1+(DeFi results / DeFi initial funds at final prices))^12-1.'
                 : 'This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1.'
             }
           />

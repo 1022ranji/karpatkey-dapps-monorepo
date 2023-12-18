@@ -58,7 +58,7 @@ const Footer = (props: FooterProps) => {
               </CustomTypography>
             ) : null}
             {secondaryDisclaimerText && isDDay ? (
-              <BoxWrapperColumn gap={'10px'} sx={{ marginBottom: '40px', marginTop: '80px' }}>
+              <BoxWrapperColumn gap={'10px'} sx={{ marginBottom: '40px', marginTop: '40px' }}>
                 <CustomTypography
                   variant="body2"
                   color="textSecondary"

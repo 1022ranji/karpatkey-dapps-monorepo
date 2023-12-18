@@ -12,18 +12,15 @@ export const getTreasuryVariationForThePeriod = (data: any, params: any) => {
       const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
       const funds = +row?.metric_value ?? 0
 
-      const valueLabel =
-        value === 'Operations results' ? 'Operations' : value === 'DeFi results' ? 'DeFi' : value
-
-      const key = valueLabel.includes('Initial Balance')
+      const key = value.includes('Initial Balance')
         ? 1
-        : valueLabel.includes('Operations')
+        : value.includes('Operations')
           ? 2
-          : valueLabel.includes('DeFi')
+          : value.includes('DeFi')
             ? 3
             : 4
       return {
-        value: valueLabel,
+        value,
         funds,
         key
       }
@@ -112,18 +109,16 @@ export const getTreasuryVariationHistory = (data: any, params: any) => {
     rows = data.map((row: any) => {
       const value = row?.metric?.replace(/[0-9][0-9] /g, '')?.trim()
       const funds = +row?.metric_value ?? 0
-      const valueLabel =
-        value === 'Operations results' ? 'Operations' : value === 'DeFi results' ? 'DeFi' : value
 
-      const key = valueLabel.includes('Initial Balance')
+      const key = value.includes('Initial Balance')
         ? 1
-        : valueLabel.includes('Operations')
+        : value.includes('Operations')
           ? 2
-          : valueLabel.includes('DeFi')
+          : value.includes('DeFi')
             ? 3
             : 4
       return {
-        value: valueLabel,
+        value,
         funds,
         key
       }
@@ -220,35 +215,41 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, params: any) 
         acc: any,
         obj: any
       ): { funds: number; value: string; shortedValue: string; key: number }[] => {
-        const metric = obj?.metric?.trim()
-        const metricCode = obj?.metric_code
-        const nonfarmingPosition = obj?.nonfarming_position
-
-        const label = obj?.Waterfall_Metrics?.replace(/[0-9][0-9] /g, '')?.trim()
+        const metric = obj?.metric.trim()
         const metricKey =
-          metricCode === 'm07'
-            ? { value: label, shortedValue: 'IB', key: 1 }
-            : metricCode === 'm11'
-              ? { value: label, shortedValue: 'OPVB', key: 2 }
+          metric === 'usd initial balance & UR'
+            ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
+            : metric === 'non farming price variation'
+              ? {
+                  value: 'Ops-Price variation for initial balance',
+                  shortedValue: 'NFP',
+                  key: 2
+                }
               : metric === 'nonfarming_income'
-                ? { value: label, shortedValue: 'OI', key: 3 }
+                ? { value: 'Ops-Income', shortedValue: 'NFI', key: 3 }
                 : metric === 'nonfarming_outcome'
-                  ? { value: label, shortedValue: 'OU', key: 4 }
+                  ? { value: 'Ops-Outcome', shortedValue: 'NFO', key: 4 }
                   : metric === 'nonfarming_swap'
-                    ? { value: label, shortedValue: 'NFS', key: 5 }
+                    ? { value: 'Ops-Swaps', shortedValue: 'NFS', key: 5 }
                     : metric === 'nonfarming_bridge'
-                      ? { value: label, shortedValue: 'NFB', key: 6 }
-                      : metricCode === 'm14' && nonfarmingPosition === 'TRUE'
-                        ? { value: label, shortedValue: 'NFS', key: 7 }
-                        : metricCode === 'm15' && nonfarmingPosition === 'TRUE'
-                          ? { value: label, shortedValue: 'NFFRP', key: 8 }
-                          : metricCode === 'm20'
-                            ? { value: label, shortedValue: 'DS', key: 9 }
-                            : metricCode === 'm14'
-                              ? { value: label, shortedValue: 'DR', key: 10 }
-                              : metricCode === 'm15'
-                                ? { value: label, shortedValue: 'DF', key: 11 }
-                                : { value: metric, key: 12 }
+                      ? { value: 'Ops-Bridges', shortedValue: 'NFB', key: 6 }
+                      : metric === 'farming executed only swaps'
+                        ? { value: 'DeFi-Swaps', shortedValue: 'FS', key: 7 }
+                        : metric === 'farming rewards'
+                          ? { value: 'DeFi-Rewards', shortedValue: 'FR', key: 8 }
+                          : metric === 'farming token variation'
+                            ? {
+                                value: 'DeFi-Fees / Rebasing / Pool token variation',
+                                shortedValue: 'FFRP',
+                                key: 9
+                              }
+                            : metric === 'farming price variation'
+                              ? {
+                                  value: 'DeFi-Price Variation in Rew,Fees,TkVar',
+                                  shortedValue: 'FPVRFT',
+                                  key: 10
+                                }
+                              : { value: metric, key: 11 }
 
         if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
 
