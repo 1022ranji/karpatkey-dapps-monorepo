@@ -1,62 +1,62 @@
-import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
-import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
-import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
-import { getFarmingFundsByProtocolTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
+import { getOperationsDetailTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
-import { isYearAndMonthValid } from '../../../utils/params'
+import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
+import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
+import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 
-const DynamicTableFunds = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableFunds')
+const DynamicTableOperations = dynamic(
+  () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableOperations')
 )
 
-interface FundsContainerProps {
-  funds: any[]
+interface ResultsContainerProps {
+  operationDetails: any[]
 }
 
-const FundsContainer = (props: FundsContainerProps) => {
-  const { funds } = props
+const OperationsContainer = (props: ResultsContainerProps) => {
+  const { operationDetails } = props
+
   const [blockchainFilter, setBlockchainFilter] = React.useState<Maybe<string>>(null)
   const [protocolFilter, setProtocolFilter] = React.useState<Maybe<string>>(null)
 
-  const filteredFunds = funds.filter((fund) => {
-    const blockchain = blockchainFilter ? blockchainFilter === fund['blockchain'] : true
-    const protocol = protocolFilter ? protocolFilter === fund['protocol'] : true
+  const filteredOperationDetails = operationDetails.filter((item) => {
+    const blockchain = blockchainFilter ? blockchainFilter === item?.blockchain : true
+    const protocol = protocolFilter ? protocolFilter === item?.protocol : true
     return blockchain && protocol
   })
 
-  const totals = getFarmingFundsByProtocolTotals(filteredFunds)
+  const totals = getOperationsDetailTotals(filteredOperationDetails)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
-  const blockchainOptions = funds
+  const blockchainOptions = operationDetails
     .reduce((result: AutocompleteOption[], currentValue) => {
-      const value = result.find((item) => item.id === currentValue['blockchain'])
+      const value = result.find((item) => item.id === currentValue?.blockchain)
       if (!value)
         result.push({
           logo:
-            currentValue['blockchain'].toLowerCase() === 'ethereum'
+            currentValue?.blockchain.toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
-              : currentValue['blockchain'].toLowerCase() === 'gnosis'
+              : currentValue?.blockchain.toLowerCase() === 'gnosis'
                 ? '/images/chains/gnosis.svg'
                 : '/images/chains/all.svg',
-          label: currentValue['blockchain'],
-          id: currentValue['blockchain']
+          label: currentValue?.blockchain,
+          id: currentValue?.blockchain
         })
 
       return result
     }, [])
     .sort((a, b) => a.label.localeCompare(b.label))
 
-  const protocolOptions = funds
+  const protocolOptions = operationDetails
     .reduce((result: AutocompleteOption[], currentValue) => {
-      const value = result.find((item) => item.id === currentValue['protocol'])
+      const value = result.find((item) => item.id === currentValue?.protocol)
       if (!value)
         result.push({
-          label: currentValue['protocol'],
-          id: currentValue['protocol']
+          label: currentValue?.protocol,
+          id: currentValue?.protocol
         })
 
       return result
@@ -135,21 +135,15 @@ const FundsContainer = (props: FundsContainerProps) => {
 
   const isFilterActive = blockchainFilter || protocolFilter
 
-  const isDDay = isYearAndMonthValid()
-
   return (
-    <PaperSection
-      id={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
-      subTitle={isDDay ? 'DeFi funds/results by position' : 'Farming funds/results by position'}
-      filter={filter}
-    >
-      {filteredFunds.length === 0 && !isFilterActive ? (
+    <PaperSection subTitle="Operations funds/results by position" filter={filter}>
+      {filteredOperationDetails.length === 0 && !isFilterActive ? (
         <EmptyData />
       ) : (
-        <DynamicTableFunds {...{ funds: filteredFunds, totals }} />
+        <DynamicTableOperations {...{ operationDetails: filteredOperationDetails, totals }} />
       )}
     </PaperSection>
   )
 }
 
-export default FundsContainer
+export default OperationsContainer
