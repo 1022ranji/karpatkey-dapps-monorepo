@@ -18,12 +18,14 @@ interface FilterProps {
   blockchain?: Maybe<string>
   protocol?: Maybe<string>
   token?: Maybe<string>
+  deFiType?: Maybe<string>
   DAO?: Maybe<string>
   year?: Maybe<string>
   month?: Maybe<string>
   enableProtocol?: boolean
   enableBlockchain?: boolean
   enableToken?: boolean
+  enableDeFiType?: boolean
   enableDAO?: boolean
   enableYear?: boolean
   enableMonth?: boolean
@@ -44,12 +46,14 @@ const Filter = (props: FilterProps) => {
     blockchain,
     protocol,
     token,
+    deFiType,
     DAO,
     year,
     month,
     enableToken,
     enableBlockchain,
     enableProtocol,
+    enableDeFiType,
     enableDAO,
     enableYear,
     enableMonth,
@@ -62,6 +66,7 @@ const Filter = (props: FilterProps) => {
       (enableBlockchain && blockchain) ||
       (enableProtocol && protocol) ||
       (enableToken && token) ||
+      (enableDeFiType && deFiType) ||
       (enableDAO && DAO) ||
       (enableYear && year) ||
       (enableMonth && month)
@@ -74,9 +79,11 @@ const Filter = (props: FilterProps) => {
     enableMonth,
     enableProtocol,
     enableToken,
+    enableDeFiType,
     enableYear,
     month,
     protocol,
+    deFiType,
     token,
     year
   ])
@@ -101,6 +108,12 @@ const Filter = (props: FilterProps) => {
           <FilterTextOption
             title={token || 'Token'}
             {...(token ? { fontWeight: 'extra-bold' } : {})}
+          />
+        ) : null}
+        {enableDeFiType ? (
+          <FilterTextOption
+            title={deFiType || 'Type'}
+            {...(deFiType ? { fontWeight: 'extra-bold' } : {})}
           />
         ) : null}
         {enableDAO ? (
