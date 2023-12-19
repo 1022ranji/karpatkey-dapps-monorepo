@@ -48,7 +48,7 @@ const TableOperations = (props: TableResultsProps) => {
                   Operation <br /> results
                   <Tooltip
                     title={
-                      'Operations Results include results from fees, rebasing, pool token variation and rewards from Operations positions'
+                      'Operations results include fees, rebasing, pool token variation and rewards from Operations positions'
                     }
                     sx={{ ml: 1, cursor: 'pointer' }}
                   >

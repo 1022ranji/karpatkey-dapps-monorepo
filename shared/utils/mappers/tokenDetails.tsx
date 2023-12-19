@@ -227,11 +227,21 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
         })
 
         if (categoryFound) {
-          categoryFound.tokens.push({
-            symbol: tokenSymbol,
-            balance,
-            usdValue: balance * price
+          // check if token already exists
+          const tokenFound = categoryFound.tokens.find((token: any) => {
+            return token.symbol === tokenSymbol
           })
+
+          if (tokenFound) {
+            tokenFound.balance = tokenFound.balance + balance
+            tokenFound.usdValue = tokenFound.balance * price
+          } else {
+            categoryFound.tokens.push({
+              symbol: tokenSymbol,
+              balance,
+              usdValue: balance * price
+            })
+          }
         } else {
           cardFound.categories.push({
             name: categoryName,
