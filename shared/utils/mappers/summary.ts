@@ -64,7 +64,7 @@ export const getSummaryFundsByType = (data: any, params: any) => {
       .reduce((acc: any, obj: any): { funds: number; label: string }[] => {
         const metric = obj?.metric.trim()
         const protocol = obj?.protocol.trim()
-        const nonfarmingPosition = obj?.nonfarming_position.trim()
+        const nonfarmingPosition = obj?.nonfarming_position?.trim()
         const metricKey =
           metric.includes('balance') && protocol.includes('Wallet')
             ? 'Wallet'
