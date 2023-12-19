@@ -11,7 +11,6 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Tooltip from '@mui/material/Tooltip'
 import * as React from 'react'
-import { isYearAndMonthValid } from '../../utils/params'
 
 interface TreasuryVariationProps {
   treasuryVariationData: any[]
@@ -28,8 +27,6 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
   const DAO: Maybe<FILTER_DAO> = getDAO(filterValue.dao) || null
 
   const [toggleType, setToggleType] = React.useState(0)
-
-  const isDDay = isYearAndMonthValid()
 
   const handleToggleOnChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
     if (newToggleType === null) return
@@ -66,11 +63,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
           id="Treasury variation"
           title="Treasury variation"
           subTitle="Treasury variation summary"
-          helpInfo={
-            isDDay
-              ? 'USD balance variation for the period (also year to period), results separated into Operations and DeFi results'
-              : 'USD balance variation for the period (also year to period), results separated into Non Farming and Farming Results.'
-          }
+          helpInfo="USD balance variation for the period (also year to period), results separated into Non Farming and Farming Results."
           filter={filter}
         >
           <TabPanel value={toggleType} index={0}>

@@ -29,13 +29,11 @@ const HomepageContent = (props: ReportProps) => {
     treasuryVariationForThePeriodDetailData,
     totalFarmingResultsFarmSwaps,
     farmingFundsByProtocol,
-    defiResults,
     farmingResultsDetailsByProtocol,
     tokenDetails,
     tokenDetailsGrouped,
     tokenDetailByPosition,
-    walletTokenDetail,
-    operationDetails
+    walletTokenDetail
   } = props
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -49,9 +47,7 @@ const HomepageContent = (props: ReportProps) => {
     totalFarmingResultsFarmSwaps,
     farmingFundsByProtocol,
     farmingResultsDetailsByProtocol,
-    fundsByProtocol,
-    operationDetails,
-    defiResults
+    fundsByProtocol
   }
 
   const treasuryVariationProps = {

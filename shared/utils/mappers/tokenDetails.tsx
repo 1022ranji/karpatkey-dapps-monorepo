@@ -1,5 +1,3 @@
-import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
-
 export const getTokenDetails = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
@@ -167,9 +165,7 @@ export const getTokenDetailsGrouped = (data: any) => {
   })
 }
 
-export const getTokenDetailByPosition = (data: any, params: any) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
-
+export const getTokenDetailByPosition = (data: any) => {
   const rowsFiltered = data.filter((row: any) => {
     return (
       ((row.metric.includes('balances') || row.metric.includes('unclaim')) &&
@@ -190,20 +186,19 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
         return acc
       }
 
-      const deFiType = obj?.farming_type?.includes('DeFi') ? 'DeFi' : 'Operations'
       const tokenSymbol = obj?.token_symbol?.trim()
       const position = obj?.lptoken_name?.trim()
       const blockchain = obj?.blockchain?.trim()
       const protocol = obj?.protocol?.trim()
       const metric = obj?.metric?.trim()
 
-      if (!tokenSymbol || !position || !blockchain || !protocol || !metric || !deFiType) {
+      if (!tokenSymbol || !position || !blockchain || !protocol || !metric) {
         return acc
       }
 
-      let categoryName = isDDay && deFiType ? `${deFiType} funds` : 'Farming funds'
+      let categoryName = 'Farming funds'
       if (metric.includes('unclaim')) {
-        categoryName = isDDay && deFiType ? `${deFiType} unclaimed rewards` : 'Unclaimed rewards'
+        categoryName = 'Unclaimed rewards'
       }
       if (metric.includes('balance') && protocol.includes('Wallet')) {
         categoryName = 'Wallet'
@@ -211,10 +206,7 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
 
       const cardFound = acc.find((card: any) => {
         return (
-          card.blockchain === blockchain &&
-          card.protocol === protocol &&
-          card.position === position &&
-          card.deFiType === deFiType
+          card.blockchain === blockchain && card.protocol === protocol && card.position === position
         )
       })
 
@@ -227,21 +219,11 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
         })
 
         if (categoryFound) {
-          // check if token already exists
-          const tokenFound = categoryFound.tokens.find((token: any) => {
-            return token.symbol === tokenSymbol
+          categoryFound.tokens.push({
+            symbol: tokenSymbol,
+            balance,
+            usdValue: balance * price
           })
-
-          if (tokenFound) {
-            tokenFound.balance = tokenFound.balance + balance
-            tokenFound.usdValue = tokenFound.balance * price
-          } else {
-            categoryFound.tokens.push({
-              symbol: tokenSymbol,
-              balance,
-              usdValue: balance * price
-            })
-          }
         } else {
           cardFound.categories.push({
             name: categoryName,
@@ -259,7 +241,6 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
           blockchain,
           protocol,
           position,
-          deFiType,
           cardType: 'common',
           categories: [
             {
@@ -305,9 +286,8 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
     const protocol = obj?.protocol?.trim()
     const position = obj?.lptoken_name?.trim()
     const tokenSymbol = obj?.token_symbol?.trim()
-    const deFiType = obj?.farming_type?.includes('DeFi') ? 'DeFi' : 'Operations'
 
-    if (!blockchain || !protocol || !position || !deFiType) {
+    if (!blockchain || !protocol || !position) {
       return acc
     }
 
@@ -329,10 +309,7 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
 
     const cardFound = acc.find((card: any) => {
       return (
-        card.blockchain === blockchain &&
-        card.protocol === protocol &&
-        card.position === position &&
-        card.deFiType === deFiType
+        card.blockchain === blockchain && card.protocol === protocol && card.position === position
       )
     })
 
@@ -365,7 +342,6 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
         protocol,
         position,
         cardType: 'metrics',
-        deFiType,
         categories: [
           {
             name: positionType,
@@ -395,27 +371,17 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
       const blockchain = obj?.blockchain?.trim()
       const protocol = obj?.protocol?.trim()
       const tokenSymbol = obj?.token_symbol?.trim()
-      const deFiType = obj?.farming_type?.includes('DeFi') ? 'DeFi' : 'Operations'
 
-      if (!position || !blockchain || !protocol || !tokenSymbol || !deFiType) {
+      if (!position || !blockchain || !protocol || !tokenSymbol) {
         return acc
       }
 
       const balance = obj.bal_1 ? obj.bal_1 : 0
-
-      const positiveBalanceLabel = isDDay
-        ? `${deFiType} funds: collateral`
-        : 'Farming funds: collateral'
-      const negativeBalanceLabel = isDDay ? `${deFiType} funds: debt` : 'Farming funds: debt'
-
-      const categoryName = balance > 0 ? positiveBalanceLabel : negativeBalanceLabel
+      const categoryName = balance > 0 ? 'Farming funds: collateral' : 'Farming funds: debt'
 
       const cardFound = acc.find((card: any) => {
         return (
-          card.blockchain === blockchain &&
-          card.protocol === protocol &&
-          card.position === position &&
-          card.deFiType === deFiType
+          card.blockchain === blockchain && card.protocol === protocol && card.position === position
         )
       })
 
@@ -449,7 +415,6 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
           blockchain,
           protocol,
           position,
-          deFiType,
           cardType: 'metrics',
           categories: [
             {
@@ -486,8 +451,7 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
         return (
           card.blockchain === obj.blockchain &&
           card.protocol === obj.protocol &&
-          card.position === obj.position &&
-          card.deFiType === obj.deFiType
+          card.position === obj.position
         )
       })
 
