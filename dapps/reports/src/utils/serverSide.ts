@@ -117,12 +117,13 @@ const farmingFundsData = ({
   waterfall1ReportFiltered,
   financialPositionsFiltered,
   financialMetricsFiltered,
-  treasuryFinancialMetricsWaterfallFiltered
+  treasuryFinancialMetricsWaterfallFiltered,
+  params
 }: any) => {
   // Allocated funds by protocol
-  const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered)
+  const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositionsFiltered, params)
 
-  // DeFi results
+  // DeFi results, not used anymore
   const defiResults = getDeFiFundsTotal(waterfall1ReportFiltered)
 
   // DeFi results from DeFi-Swaps
@@ -334,7 +335,8 @@ export const getCommonServerSideProps = async (params: Filter) => {
     waterfall1ReportFiltered,
     financialPositionsFiltered,
     financialMetricsFiltered,
-    treasuryFinancialMetricsWaterfallFiltered
+    treasuryFinancialMetricsWaterfallFiltered,
+    params
   })
 
   // #### Token detail ####
