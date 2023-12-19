@@ -1,3 +1,5 @@
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+
 export const getFarmingFundsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
     const value = obj['metric'] === 'total farming' ? obj['metric_value'] : 0
@@ -47,31 +49,65 @@ export const getOperationDetails = (data: any) => {
   return rows.sort((a: any, b: any) => b.funds - a.funds)
 }
 
-export const getFarmingFundsByProtocol = (data: any) => {
-  const rows = data.reduce((acc: any, obj: any) => {
-    const blockchain = obj['blockchain'].trim()
-    const protocol = obj['protocol'].trim()
-    const position = obj['Assets'].trim()
-    if (!acc[blockchain]) acc[blockchain] = {}
-    if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
-    if (!acc[blockchain][protocol][position])
-      acc[blockchain][protocol][position] = {
-        funds: 0,
-        allocation: 0,
-        unclaimed: 0,
-        results: 0,
-        blockchain,
-        protocol,
-        position
-      }
+export const getFarmingFundsByProtocol = (data: any, params: any) => {
+  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
 
-    // 'total farming'
-    acc[blockchain][protocol][position].funds += obj['Funds']
-    acc[blockchain][protocol][position].unclaimed += obj['Unclaimed_Rewards']
-    acc[blockchain][protocol][position].results += obj['Revenue']
+  let rows = []
 
-    return acc
-  }, [])
+  if (isDDay) {
+    rows = data
+      .filter((row: any) => {
+        return row?.nonfarming_position === 'FALSE'
+      })
+      .reduce((acc: any, obj: any) => {
+        const blockchain = obj['blockchain'].trim()
+        const protocol = obj['protocol'].trim()
+        const position = obj['Assets'].trim()
+        if (!acc[blockchain]) acc[blockchain] = {}
+        if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
+        if (!acc[blockchain][protocol][position])
+          acc[blockchain][protocol][position] = {
+            funds: 0,
+            allocation: 0,
+            unclaimed: 0,
+            results: 0,
+            blockchain,
+            protocol,
+            position
+          }
+
+        // 'total farming'
+        acc[blockchain][protocol][position].funds += obj['funds_UR']
+        acc[blockchain][protocol][position].results += obj['Revenue']
+
+        return acc
+      }, [])
+  } else {
+    rows = data.reduce((acc: any, obj: any) => {
+      const blockchain = obj['blockchain'].trim()
+      const protocol = obj['protocol'].trim()
+      const position = obj['Assets'].trim()
+      if (!acc[blockchain]) acc[blockchain] = {}
+      if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
+      if (!acc[blockchain][protocol][position])
+        acc[blockchain][protocol][position] = {
+          funds: 0,
+          allocation: 0,
+          unclaimed: 0,
+          results: 0,
+          blockchain,
+          protocol,
+          position
+        }
+
+      // 'total farming'
+      acc[blockchain][protocol][position].funds += obj['Funds']
+      acc[blockchain][protocol][position].unclaimed += obj['Unclaimed_Rewards']
+      acc[blockchain][protocol][position].results += obj['Revenue']
+
+      return acc
+    }, [])
+  }
 
   const rowsFlat: any = []
   for (const blockchain in rows) {

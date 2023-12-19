@@ -33,6 +33,8 @@ const TableFunds = (props: TableFundsProps) => {
 
   const isDDay = isYearAndMonthValid()
 
+  console.log('funds', funds)
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
