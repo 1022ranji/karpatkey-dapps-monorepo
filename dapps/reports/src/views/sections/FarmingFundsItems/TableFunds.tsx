@@ -59,7 +59,7 @@ const TableFunds = (props: TableFundsProps) => {
                   <Tooltip
                     title={
                       isDDay
-                        ? 'DeFi results include results from fees, rebasing, pool token variation and rewards from DeFi positions'
+                        ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'
                         : 'Farming results include results from fees, rebasing, pool token variation and rewards'
                     }
                     sx={{ ml: 1, cursor: 'pointer' }}
