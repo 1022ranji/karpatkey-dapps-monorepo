@@ -11,7 +11,6 @@ import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpTe
 import Common from './Common'
 import Ratios from './Ratios'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
-import { isYearAndMonthValid } from '../../../../../utils/params'
 
 interface CardItemProps {
   id: number
@@ -20,34 +19,19 @@ interface CardItemProps {
 
 const Card = (props: CardItemProps) => {
   const { card } = props
-  const { blockchain, protocol, position, totalUsdValue, cardType, categories, deFiType } = card
-
-  const isDDay = isYearAndMonthValid()
+  const { blockchain, protocol, position, totalUsdValue, cardType, categories } = card
 
   const helpText = <UniswapHelpText />
 
   return (
     <BoxWrapperColumn gap={4}>
-      {!isDDay ? (
-        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-          <Title title={blockchain} />
-          <BoxWrapperRow gap={1}>
-            <ProtocolIcon protocol={protocol} />
-            <Title title={protocol} />
-          </BoxWrapperRow>
+      <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
+        <Title title={blockchain} />
+        <BoxWrapperRow gap={1}>
+          <ProtocolIcon protocol={protocol} />
+          <Title title={protocol} />
         </BoxWrapperRow>
-      ) : (
-        <BoxWrapperRow sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <BoxWrapperColumn gap={1}>
-            <Title title={blockchain} />
-            <BoxWrapperRow gap={1}>
-              <ProtocolIcon protocol={protocol} />
-              <Title title={protocol} />
-            </BoxWrapperRow>
-          </BoxWrapperColumn>
-          <Title title={deFiType} />
-        </BoxWrapperRow>
-      )}
+      </BoxWrapperRow>
       <BoxWrapperColumn gap={1}>
         <Position position={position} {...(protocol === UNISWAP_PROTOCOL ? { helpText } : {})} />
         <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUsdValue || 0, 2)} />

@@ -20,7 +20,6 @@ import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
-import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 export const SIDEBAR_WIDTH = 290
 
@@ -29,8 +28,15 @@ export type Section =
   | 'Balance overview'
   | 'Treasury variation'
   | 'Farming funds and results'
-  | 'Funds and results by position'
   | 'Token detail'
+
+const SECTIONS: Section[] = [
+  'Summary',
+  'Balance overview',
+  'Treasury variation',
+  'Farming funds and results',
+  'Token detail'
+]
 
 const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>(() => ({
   '& .MuiListItemText-primary': {
@@ -38,15 +44,11 @@ const ListItemTextCustom = styled(ListItemText)<ListItemTextProps>(() => ({
   }
 }))
 
-interface SidebarSkeletonLoadingProps {
-  sections: Section[]
-}
-
-const SidebarSkeletonLoading = ({ sections }: SidebarSkeletonLoadingProps) => {
+const SidebarSkeletonLoading = () => {
   return (
     <BoxWrapperColumn sx={{ padding: '10px 10px', width: SIDEBAR_WIDTH, height: '100%' }} gap={2}>
       <List>
-        {sections.map((_text, index) => {
+        {SECTIONS.map((_text, index) => {
           return (
             <ListItem key={index} sx={{ marginY: '20px' }}>
               <BoxWrapperRow gap={2}>
@@ -74,15 +76,6 @@ const Sidebar = () => {
     delay: 3000
   })
 
-  const isDDay = isYearAndMonthValid()
-  const SECTIONS: Section[] = ['Summary', 'Balance overview', 'Treasury variation', 'Token detail']
-
-  if (isDDay) {
-    SECTIONS.splice(3, 0, 'Funds and results by position')
-  } else {
-    SECTIONS.splice(3, 0, 'Farming funds and results')
-  }
-
   React.useEffect(() => {
     if (inView) {
       setSectionVisible(hash)
@@ -103,18 +96,11 @@ const Sidebar = () => {
     anchors: ['summary']
   })
 
-  const anchorsCustom = ['token-detail']
-  if (isDDay) {
-    anchorsCustom.push('funds-and-results-by-position')
-  } else {
-    anchorsCustom.push('farming-funds-and-results')
-  }
-
   useObserveAnchors({
     inView,
     setSectionVisible,
     threshold: 0.15,
-    anchors: anchorsCustom
+    anchors: ['farming-funds-and-results', 'token-detail']
   })
 
   const isLoading = useIsLoading()
@@ -169,7 +155,7 @@ const Sidebar = () => {
           </BoxWrapperColumn>
         </AnimatePresenceWrapper>
       ) : (
-        <SidebarSkeletonLoading sections={SECTIONS} />
+        <SidebarSkeletonLoading />
       )}
     </>
   )

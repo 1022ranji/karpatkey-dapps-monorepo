@@ -26,18 +26,6 @@ export const ALLOWED_REPORTS: { reportName: Report; fileName: string }[] = [
   {
     reportName: 'getFinancialMetricAndVarDetail' as unknown as Report,
     fileName: 'financial-metric-and-var-detail'
-  },
-  {
-    reportName: 'getTreasuryFinancialMetricsWaterfall' as unknown as Report,
-    fileName: 'treasury-financial-metrics-waterfall'
-  },
-  {
-    reportName: 'getWaterfall1Report' as unknown as Report,
-    fileName: 'waterfall1-report'
-  },
-  {
-    reportName: 'getTotalFundsByTokenCategory' as unknown as Report,
-    fileName: 'total-funds-by-token-category'
   }
 ]
 
@@ -503,8 +491,8 @@ export const MONTHS_ALLOWED = [
   { label: 'July', id: 7 },
   { label: 'August', id: 8 },
   { label: 'September', id: 9 },
-  { label: 'October', id: 10 },
-  { label: 'November', id: 11 }
+  { label: 'October', id: 10 }
+  // { label: 'November', id: 11 }
 ]
 
 export const MONTHS_ALLOWED_BY_DAO = [
@@ -534,12 +522,6 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
-      },
-      {
-        label: 'November',
-        month: 11,
-        year: 2023,
-        id: 11_2023
       }
     ]
   },
@@ -569,12 +551,6 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
-      },
-      {
-        label: 'November',
-        month: 11,
-        year: 2023,
-        id: 11_2023
       }
     ]
   },
@@ -604,12 +580,6 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
-      },
-      {
-        label: 'November',
-        month: 11,
-        year: 2023,
-        id: 11_2023
       }
     ]
   },
@@ -674,12 +644,6 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
-      },
-      {
-        label: 'November',
-        month: 11,
-        year: 2023,
-        id: 11_2023
       }
     ]
   },
@@ -709,12 +673,6 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
-      },
-      {
-        label: 'November',
-        month: 11,
-        year: 2023,
-        id: 11_2023
       }
     ]
   },
@@ -744,12 +702,6 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
-      },
-      {
-        label: 'November',
-        month: 11,
-        year: 2023,
-        id: 11_2023
       }
     ]
   },
@@ -779,12 +731,6 @@ export const MONTHS_ALLOWED_BY_DAO = [
         month: 10,
         year: 2023,
         id: 10_2023
-      },
-      {
-        label: 'November',
-        month: 11,
-        year: 2023,
-        id: 11_2023
       }
     ]
   }

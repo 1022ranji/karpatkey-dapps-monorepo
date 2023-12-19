@@ -4,7 +4,6 @@ import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import * as React from 'react'
-import { isYearAndMonthValid } from '../../../utils/params'
 
 interface TokenDetailByPositionContainerProps {
   tokenDetailByPosition: any[]
@@ -13,12 +12,9 @@ interface TokenDetailByPositionContainerProps {
 const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerProps) => {
   const { tokenDetailByPosition = [] } = props
 
-  const isDDay = isYearAndMonthValid()
-
   const [blockchainFilter, setBlockchainFilter] = React.useState<Maybe<string>>(null)
   const [protocolFilter, setProtocolFilter] = React.useState<Maybe<string>>(null)
   const [tokenFilter, setTokenFilter] = React.useState<Maybe<string>>(null)
-  const [deFiTypeFilter, setDeFiTypeFilter] = React.useState<Maybe<string>>(null)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -34,15 +30,13 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     setBlockchainFilter(null)
     setProtocolFilter(null)
     setTokenFilter(null)
-    setDeFiTypeFilter(null)
   }
 
   const onSubmitClose = (params: any) => {
-    const { blockchain, protocol, token, deFiType } = params
+    const { blockchain, protocol, token } = params
     setBlockchainFilter(blockchain)
     setProtocolFilter(protocol)
     setTokenFilter(token)
-    setDeFiTypeFilter(deFiType)
   }
 
   const open = Boolean(anchorEl)
@@ -50,10 +44,9 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
 
   const filteredDataByBlockchainAndProtocolAndToken = React.useMemo(() => {
     return tokenDetailByPosition.filter((item: any) => {
-      const { blockchain, protocol, deFiType, categories = [] } = item
+      const { blockchain, protocol, categories = [] } = item
       const isBlockchainFilter = blockchainFilter ? blockchainFilter === blockchain : true
       const isProtocolFilter = protocolFilter ? protocolFilter === protocol : true
-      const isDeFiTypeFilter = deFiTypeFilter ? deFiTypeFilter === deFiType : true
 
       const isTokenFilter = categories.reduce((acc: boolean, category: any) => {
         const { tokens = [] } = category
@@ -65,9 +58,9 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
         return acc || isToken
       }, false)
 
-      return isBlockchainFilter && isProtocolFilter && isTokenFilter && isDeFiTypeFilter
+      return isBlockchainFilter && isProtocolFilter && isTokenFilter
     })
-  }, [blockchainFilter, protocolFilter, tokenFilter, deFiTypeFilter, tokenDetailByPosition])
+  }, [blockchainFilter, protocolFilter, tokenFilter, tokenDetailByPosition])
 
   const defaultBlockchainValue = blockchainFilter
     ? {
@@ -75,8 +68,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -96,13 +89,6 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       }
     : null
 
-  const defaultDeFiTypeValue = deFiTypeFilter
-    ? {
-        label: deFiTypeFilter,
-        id: deFiTypeFilter
-      }
-    : null
-
   const blockchainOptions = tokenDetailByPosition
     .reduce((acc: any, item: any) => {
       const { blockchain } = item
@@ -117,8 +103,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
           key.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : key.toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: key,
         id: key
       }
@@ -163,22 +149,6 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
     })
     .sort((a: any, b: any) => a.label.localeCompare(b.label))
 
-  const deFiTypeOptions = tokenDetailByPosition
-    .reduce((acc: any, item: any) => {
-      const { deFiType } = item
-      if (!acc.includes(deFiType) && deFiType) {
-        acc.push(deFiType)
-      }
-      return acc
-    }, [])
-    .map((key: string) => {
-      return {
-        label: key,
-        id: key
-      }
-    })
-    .sort((a: any, b: any) => a.label.localeCompare(b.label))
-
   const filter = (
     <Filter
       id={id}
@@ -193,7 +163,6 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       enableBlockchain
       enableProtocol
       enableToken
-      {...(isDDay ? { enableDeFiType: true, deFiType: deFiTypeFilter } : {})}
       tooltipText={'Clear filter'}
     >
       <Form
@@ -208,7 +177,6 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
         enableBlockchain
         enableProtocol
         enableToken
-        {...(isDDay ? { enableDeFiType: true, defaultDeFiTypeValue, deFiTypeOptions } : {})}
         buttonTitle={'Apply filter'}
       />
     </Filter>

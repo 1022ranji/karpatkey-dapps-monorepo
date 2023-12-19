@@ -5,7 +5,6 @@ import DAOAutocomplete from '@karpatkey-monorepo/shared/components/Form/DAOAutoc
 import MonthAutocomplete from '@karpatkey-monorepo/shared/components/Form/MonthAutocomplete'
 import ProtocolAutocomplete from '@karpatkey-monorepo/shared/components/Form/ProtocolAutocomplete'
 import TokenAutocomplete from '@karpatkey-monorepo/shared/components/Form/TokenAutocomplete'
-import DeFiTypeAutocomplete from '@karpatkey-monorepo/shared/components/Form/DeFiTypeAutocomplete'
 import YearAutocomplete from '@karpatkey-monorepo/shared/components/Form/YearAutocomplete'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
@@ -29,7 +28,6 @@ type FormValues = {
   blockchain: Maybe<AutocompleteOption>
   protocol: Maybe<AutocompleteOption>
   token: Maybe<AutocompleteOption>
-  deFiType: Maybe<AutocompleteOption>
   DAO: Maybe<AutocompleteOption>
   year: Maybe<AutocompleteOption>
   month: Maybe<AutocompleteOption>
@@ -39,7 +37,6 @@ const validationSchema = yup.object({
   blockchain: yup.object().notRequired(),
   protocol: yup.object().notRequired(),
   token: yup.object().notRequired(),
-  deFiType: yup.object().notRequired(),
   DAO: yup.object().notRequired(),
   year: yup.object().notRequired(),
   month: yup.object().notRequired()
@@ -138,7 +135,6 @@ export type SubmitValues = {
   blockchain?: string | number
   protocol?: string | number
   token?: string | number
-  deFiType?: string | number
   DAO?: string | number
   year?: string | number
   month?: string | number
@@ -150,18 +146,15 @@ interface FormProps {
   defaultBlockchainValue?: Maybe<AutocompleteOption>
   defaultProtocolValue?: Maybe<AutocompleteOption>
   defaultTokenValue?: Maybe<AutocompleteOption>
-  defaultDeFiTypeValue?: Maybe<AutocompleteOption>
   defaultDAOValue?: Maybe<AutocompleteOption>
   defaultMonthValue?: Maybe<AutocompleteOption>
   defaultYearValue?: Maybe<AutocompleteOption>
   blockchainOptions?: AutocompleteOption[]
   protocolOptions?: AutocompleteOption[]
   tokenOptions?: AutocompleteOption[]
-  deFiTypeOptions?: AutocompleteOption[]
   enableProtocol?: boolean
   enableBlockchain?: boolean
   enableToken?: boolean
-  enableDeFiType?: boolean
   enableDAO?: boolean
   enableYear?: boolean
   enableMonth?: boolean
@@ -174,19 +167,16 @@ const Form = (props: FormProps) => {
     defaultBlockchainValue = null,
     defaultTokenValue = null,
     defaultProtocolValue = null,
-    defaultDeFiTypeValue = null,
     defaultDAOValue = null,
     defaultYearValue = null,
     defaultMonthValue = null,
     blockchainOptions = [],
     protocolOptions = [],
     tokenOptions = [],
-    deFiTypeOptions = [],
     onSubmitClose,
     enableToken = false,
     enableBlockchain = false,
     enableProtocol = false,
-    enableDeFiType = false,
     enableDAO = false,
     enableYear = false,
     enableMonth = false,
@@ -203,7 +193,6 @@ const Form = (props: FormProps) => {
     blockchain: defaultBlockchainValue,
     protocol: defaultProtocolValue,
     token: defaultTokenValue,
-    deFiType: defaultDeFiTypeValue,
     DAO: defaultDAOValue,
     year: defaultYearValue,
     month: defaultMonthValue
@@ -224,7 +213,6 @@ const Form = (props: FormProps) => {
     const blockchain = data?.blockchain?.id ?? ''
     const protocol = data?.protocol?.id ?? ''
     const token = data?.token?.id ?? ''
-    const deFiType = data?.deFiType?.id ?? ''
     const DAO = data?.DAO?.id ?? ''
     const year = data?.year?.id ?? ''
     const month = data?.month?.id ?? ''
@@ -235,7 +223,6 @@ const Form = (props: FormProps) => {
       blockchain,
       protocol,
       token,
-      deFiType,
       DAO,
       year,
       month
@@ -288,15 +275,6 @@ const Form = (props: FormProps) => {
               {enableToken ? (
                 <Stack width={200}>
                   <TokenAutocomplete options={tokenOptions} control={control} name={'token'} />
-                </Stack>
-              ) : null}
-              {enableDeFiType ? (
-                <Stack width={200}>
-                  <DeFiTypeAutocomplete
-                    options={deFiTypeOptions}
-                    control={control}
-                    name={'deFiType'}
-                  />
                 </Stack>
               ) : null}
               {enableDAO ? (
