@@ -7,16 +7,13 @@ import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/T
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material'
+import { Box, styled, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import * as React from 'react'
-import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
-import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
-import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
 
-interface TableFundsProps {
-  funds: any
+interface TableResultsProps {
+  operationDetails: any
   totals: any
 }
 
@@ -27,11 +24,9 @@ const BoxWrapper = styled(BoxWrapperColumn)({
   alignItems: 'flex-end'
 })
 
-const TableFunds = (props: TableFundsProps) => {
-  const { funds, totals } = props
+const TableOperations = (props: TableResultsProps) => {
+  const { operationDetails, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
-
-  const isDDay = isYearAndMonthValid()
 
   return (
     <BoxWrapperColumn gap={4}>
@@ -39,28 +34,21 @@ const TableFunds = (props: TableFundsProps) => {
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Blockchain
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Position
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                {isDDay ? 'DeFi funds' : 'Farming funds'}
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Operations funds
               </TableHeadCellCustom>
-              {!isDDay ? (
-                <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                  Unclaimed rewards
-                </TableHeadCellCustom>
-              ) : null}
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '20%', paddingRight: '5px' }} align="left">
                 <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
-                  {isDDay ? 'DeFi results' : 'Farming results'}
+                  Operation <br /> results
                   <Tooltip
                     title={
-                      isDDay
-                        ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'
-                        : 'Farming results include results from fees, rebasing, pool token variation and rewards'
+                      'Operations results include fees, rebasing, pool token variation and rewards from Operations positions'
                     }
                     sx={{ ml: 1, cursor: 'pointer' }}
                   >
@@ -68,10 +56,14 @@ const TableFunds = (props: TableFundsProps) => {
                   </Tooltip>
                 </BoxWrapperRow>
               </TableHeadCellCustom>
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                Price variation <br />
+                for initial balance
+              </TableHeadCellCustom>
             </TableRow>
           </TableHead>
           <TableBody>
-            {funds.length === 0 ? (
+            {operationDetails.length === 0 ? (
               <TableRow>
                 <TableEmptyCellCustom colSpan={5}>
                   <EmptyData />
@@ -79,54 +71,43 @@ const TableFunds = (props: TableFundsProps) => {
               </TableRow>
             ) : (
               <>
-                {funds.map((row: any, index: number) => {
+                {operationDetails.map((row: any, index: number) => {
                   if (!displayAll && index > 4) return null
 
                   return (
                     <TableRow key={index}>
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                        {row.blockchain}
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        {row?.blockchain}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                        <BoxWrapperRow
-                          sx={{
-                            width: '90%',
-                            overflowWrap: 'anywhere',
-                            justifyContent: 'flex-start'
-                          }}
-                        >
-                          <BoxWrapperColumn>
-                            {row.position}
-                            <CustomTypography variant="tableCellSubData">
-                              {row.protocol}
-                            </CustomTypography>
-                          </BoxWrapperColumn>
-                          {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
-                        </BoxWrapperRow>
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        <BoxWrapperColumn sx={{ width: '90%', overflowWrap: 'anywhere' }}>
+                          {row?.position}
+                          <CustomTypography variant="tableCellSubData">
+                            {row?.protocol}
+                          </CustomTypography>
+                        </BoxWrapperColumn>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapper>
-                          {formatCurrency(Math.round(row.funds || 0))}
+                          {formatCurrency(Math.round(row?.operationsFunds || 0))}
                           {row?.allocation > 0 ? (
                             <CustomTypography variant="tableCellSubData">
-                              {formatPercentage(row.allocation / 100)}
+                              {formatPercentage(row.allocation)}
                             </CustomTypography>
                           ) : null}
                         </BoxWrapper>
                       </TableCellCustom>
-                      {!isDDay ? (
-                        <TableCellCustom sx={{ width: '20%' }} align="left">
-                          {formatCurrency(Math.round(row.unclaimed || 0))}
-                        </TableCellCustom>
-                      ) : null}
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                        {formatCurrency(Math.round(row.results || 0))}
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        {formatCurrency(row?.operationResults?.toFixed(2) || 0)}
+                      </TableCellCustom>
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                        {formatCurrency(row?.priceVariation?.toFixed(2) || 0)}
                       </TableCellCustom>
                     </TableRow>
                   )
                 })}
 
-                {funds.length > 5 ? (
+                {operationDetails.length > 5 ? (
                   <TableRow>
                     <TableCellCustom colSpan={5} align="center">
                       <BoxWrapperRow gap={1}>
@@ -136,8 +117,10 @@ const TableFunds = (props: TableFundsProps) => {
                           onClick={() => setDisplayAll(!displayAll)}
                         >
                           {!displayAll
-                            ? `${funds.length > 4 ? 5 : funds.length} of ${funds.length}`
-                            : `${funds.length} of ${funds.length}`}
+                            ? `${operationDetails.length > 4 ? 5 : operationDetails.length} of ${
+                                operationDetails.length
+                              }`
+                            : `${operationDetails.length} of ${operationDetails.length}`}
                         </CustomTypography>
                         <CustomTypography
                           variant="tableCellSubData"
@@ -155,21 +138,18 @@ const TableFunds = (props: TableFundsProps) => {
                     </TableCellCustom>
                   </TableRow>
                 ) : null}
-
                 <TableRow>
                   <TableFooterCellCustom colSpan={2} align="left">
                     Total
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                    <BoxWrapper>{formatCurrency(Math.round(totals?.fundsTotal || 0))}</BoxWrapper>
+                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                    <BoxWrapper>{formatCurrency(totals?.operationsFundsTotal || 0)}</BoxWrapper>
                   </TableFooterCellCustom>
-                  {!isDDay ? (
-                    <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                      {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
-                    </TableFooterCellCustom>
-                  ) : null}
-                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                    {formatCurrency(Math.round(totals?.resultsTotal || 0))}
+                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                    {formatCurrency(totals?.operationResultsTotal || 0)}
+                  </TableFooterCellCustom>
+                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                    {formatCurrency(totals?.priceVariationTotal || 0)}
                   </TableFooterCellCustom>
                 </TableRow>
               </>
@@ -181,4 +161,4 @@ const TableFunds = (props: TableFundsProps) => {
   )
 }
 
-export default TableFunds
+export default TableOperations
