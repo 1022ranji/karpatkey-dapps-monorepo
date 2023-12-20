@@ -12,16 +12,22 @@ const REPORTS_DATASET = {
     getTreasuryFinancialPositions: 'reports.vw_treasury_financial_positions',
     getTreasuryHistoricVariation: 'reports.dm_treasury_historic_variation',
     getFinancialMetricAndVarDetail: 'reports.vw_financial_metric_and_var_detail',
-    getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr'
+    getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr',
+    getTreasuryFinancialMetricsWaterfall: 'reports.vw_treasury_financial_metrics_waterfall',
+    getWaterfall1Report: 'reports.vw_waterfall1_report',
+    getTotalFundsByTokenCategory: 'reports.vw_total_funds_by_token_category'
   },
   production: {
-    getTreasuryFinancialMetrics: 'reports_production.prod_treasury_financial_metrics',
-    getTokens: 'reports_production.prod_tokens',
-    getTreasuryVariationMetricsDetail: 'reports_production.vw_prod_token_detail', //'reports_production.prod_treasury_variation_metrics_detail',
-    getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions',
-    getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation',
-    getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail',
-    getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr'
+    getTreasuryFinancialMetrics: 'reports_production.prod_treasury_financial_metrics', // OK
+    getTokens: 'reports_production.prod_tokens', // OK
+    getTreasuryVariationMetricsDetail: 'reports_production.vw_prod_token_detail',
+    getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions', // OK
+    getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation', // OK
+    getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail', // OK
+    getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr', // OK
+    getTreasuryFinancialMetricsWaterfall: 'reports.vw_treasury_financial_metrics_waterfall', // OK
+    getWaterfall1Report: 'reports.vw_waterfall1_report', // OK
+    getTotalFundsByTokenCategory: 'reports.vw_total_funds_by_token_category'
   }
 }
 
@@ -42,6 +48,39 @@ export class DataWarehouse {
     }
 
     return DataWarehouse.instance
+  }
+
+  // DONE
+  async getTotalFundsByTokenCategory() {
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getTotalFundsByTokenCategory'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    return this.executeCommonJobQuery(viewQuery)
+  }
+
+  // DONE
+  async getWaterfall1Report() {
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getWaterfall1Report'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    return this.executeCommonJobQuery(viewQuery)
+  }
+
+  // DONE
+  async getTreasuryFinancialMetricsWaterfall() {
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
+        'getTreasuryFinancialMetricsWaterfall'
+      ]
+    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    return this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE

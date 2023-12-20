@@ -18,6 +18,9 @@ declare type Report =
   | 'getTreasuryHistoricVariation'
   | 'getFinancialMetricAndVarDetail'
   | 'getOurDAOTreasury'
+  | 'getTreasuryFinancialMetricsWaterfall'
+  | 'getWaterfall1Report'
+  | 'getTotalFundsByTokenCategory'
 
 declare type DAO_NAME =
   'Gnosis DAO'

@@ -1,5 +1,6 @@
 import TableBlockchain from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverviewItems/TableBlockchain'
 import TableType from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverviewItems/TableType'
+import TableTypeDDay from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverviewItems/TableTypeDDay'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
@@ -9,6 +10,7 @@ import { BoxProps } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import * as React from 'react'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 type BalanceOverview = { balanceOverviewType: any; balanceOverviewBlockchain: any } & BoxProps
 
@@ -16,6 +18,8 @@ const BalanceOverview = (props: BalanceOverview) => {
   const { balanceOverviewType, balanceOverviewBlockchain } = props
 
   const [toggleType, setToggleType] = React.useState(1)
+
+  const isDDay = isYearAndMonthValid()
 
   const handleToggleOnChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
     if (newToggleType === null) return
@@ -50,7 +54,11 @@ const BalanceOverview = (props: BalanceOverview) => {
         <BoxWrapperColumn>
           <TabPanel value={toggleType} index={1}>
             {balanceOverviewType.length > 0 ? (
-              <TableType balanceOverviewType={balanceOverviewType} />
+              isDDay ? (
+                <TableTypeDDay balanceOverviewType={balanceOverviewType} />
+              ) : (
+                <TableType balanceOverviewType={balanceOverviewType} />
+              )
             ) : (
               <EmptyData />
             )}

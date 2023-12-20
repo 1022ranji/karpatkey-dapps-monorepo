@@ -85,7 +85,7 @@ const Layout = ({ children }: LayoutProps): ReactElement => {
         <Body>{children}</Body>
       </Box>
       <Box sx={{ gridArea: 'footer', width: '100%' }}>
-        <Footer disclaimerText={'Token Balances and Prices are considered at end of month 0 UTC'} />
+        <Footer primaryDisclaimerText secondaryDisclaimerText />
       </Box>
     </LayoutWithSidebarWrapper>
   ) : (

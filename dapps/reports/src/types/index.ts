@@ -23,6 +23,7 @@ export type ReportData = {
   farmingFundsByProtocol: any[]
   farmingResultsDetailsByProtocol: any[]
   tokenDetails: any[]
+  operationDetails: any[]
   tokenDetailsGrouped: any[]
   tokenDetailByPosition: any[]
   walletTokenDetail: any[]
@@ -31,6 +32,7 @@ export type ReportData = {
   ourDaoTreasuries: number
   lastMonthFarmingResults: number
   latestMonth: number
+  defiResults: number
 }
 
 export type ReportProps = ReportData & Filter

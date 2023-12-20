@@ -1,3 +1,5 @@
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+
 export const getFarmingFundsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
     const value = obj['metric'] === 'total farming' ? obj['metric_value'] : 0
@@ -6,31 +8,106 @@ export const getFarmingFundsTotal = (data: any) => {
   }, 0)
 }
 
-export const getFarmingFundsByProtocol = (data: any) => {
-  const rows = data.reduce((acc: any, obj: any) => {
-    const blockchain = obj['blockchain'].trim()
-    const protocol = obj['protocol'].trim()
-    const position = obj['Assets'].trim()
-    if (!acc[blockchain]) acc[blockchain] = {}
-    if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
-    if (!acc[blockchain][protocol][position])
-      acc[blockchain][protocol][position] = {
-        funds: 0,
-        allocation: 0,
-        unclaimed: 0,
-        results: 0,
-        blockchain,
-        protocol,
-        position
-      }
-
-    // 'total farming'
-    acc[blockchain][protocol][position].funds += obj['Funds']
-    acc[blockchain][protocol][position].unclaimed += obj['Unclaimed_Rewards']
-    acc[blockchain][protocol][position].results += obj['Revenue']
-
+export const getDeFiFundsTotal = (data: any) => {
+  return data.reduce((acc: any, obj: any): number => {
+    const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
+    acc += value
     return acc
-  }, [])
+  }, 0)
+}
+
+export const getOperationDetails = (data: any) => {
+  const rows = data
+    .filter((row: any) => {
+      return row?.nonfarming_position === 'TRUE'
+    })
+    .map((item: any) => {
+      const position =
+        item?.Assets === 'Delegated MKR-Lend&Borrow Collateral' ? 'Delegated MKR' : item?.Assets
+
+      return {
+        blockchain: item?.blockchain,
+        protocol: item?.protocol,
+        position,
+        operationsFunds: item?.funds_UR,
+        funds: item?.Funds,
+        allocation: 0,
+        operationResults: item?.Revenue,
+        priceVariation: item?.Price_variation_for_initial_balance
+      }
+    })
+
+  const total = rows.reduce(
+    (accumulator: number, currentValue: any) => accumulator + currentValue.funds,
+    0
+  )
+
+  rows.forEach((row: any) => {
+    row.allocation = row.funds / total
+  })
+
+  return rows.sort((a: any, b: any) => b.funds - a.funds)
+}
+
+export const getFarmingFundsByProtocol = (data: any, params: any) => {
+  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+
+  let rows = []
+
+  if (isDDay) {
+    rows = data
+      .filter((row: any) => {
+        return row?.nonfarming_position === 'FALSE'
+      })
+      .reduce((acc: any, obj: any) => {
+        const blockchain = obj['blockchain'].trim()
+        const protocol = obj['protocol'].trim()
+        const position = obj['Assets'].trim()
+        if (!acc[blockchain]) acc[blockchain] = {}
+        if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
+        if (!acc[blockchain][protocol][position])
+          acc[blockchain][protocol][position] = {
+            funds: 0,
+            allocation: 0,
+            unclaimed: 0,
+            results: 0,
+            blockchain,
+            protocol,
+            position
+          }
+
+        // 'total farming'
+        acc[blockchain][protocol][position].funds += obj['funds_UR']
+        acc[blockchain][protocol][position].results += obj['Revenue']
+
+        return acc
+      }, [])
+  } else {
+    rows = data.reduce((acc: any, obj: any) => {
+      const blockchain = obj['blockchain'].trim()
+      const protocol = obj['protocol'].trim()
+      const position = obj['Assets'].trim()
+      if (!acc[blockchain]) acc[blockchain] = {}
+      if (!acc[blockchain][protocol]) acc[blockchain][protocol] = {}
+      if (!acc[blockchain][protocol][position])
+        acc[blockchain][protocol][position] = {
+          funds: 0,
+          allocation: 0,
+          unclaimed: 0,
+          results: 0,
+          blockchain,
+          protocol,
+          position
+        }
+
+      // 'total farming'
+      acc[blockchain][protocol][position].funds += obj['Funds']
+      acc[blockchain][protocol][position].unclaimed += obj['Unclaimed_Rewards']
+      acc[blockchain][protocol][position].results += obj['Revenue']
+
+      return acc
+    }, [])
+  }
 
   const rowsFlat: any = []
   for (const blockchain in rows) {
@@ -74,7 +151,7 @@ export const getFarmingFundsByProtocolTotals = (data: any) => {
 
 export const getFarmingResultsFarmSwapsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    const value = obj['metric_code'] === 'm20' ? obj['metric_value'] : 0
+    const value = obj?.metric === 'farming executed only swaps' ? obj['metric_value'] : 0
     acc += value
     return acc
   }, 0)
@@ -143,5 +220,37 @@ export const getFarmingResultsDetailsByProtocolTotals = (data: any) => {
       }
     },
     { rewardsTotal: 0, feesTotal: 0, total: 0 }
+  )
+}
+
+export const getOperationsDetailTotals = (data: any) => {
+  return data.reduce(
+    (
+      accumulator: {
+        operationsFundsTotal: number
+        allocationTotal: number
+        operationResultsTotal: number
+        priceVariationTotal: number
+      },
+      currentValue: {
+        operationsFunds: number
+        allocation: number
+        operationResults: number
+        priceVariation: number
+      }
+    ) => {
+      return {
+        operationsFundsTotal: accumulator.operationsFundsTotal + currentValue.operationsFunds,
+        allocationTotal: accumulator.allocationTotal + currentValue.allocation,
+        operationResultsTotal: accumulator.operationResultsTotal + currentValue.operationResults,
+        priceVariationTotal: accumulator.priceVariationTotal + currentValue.priceVariation
+      }
+    },
+    {
+      operationsFundsTotal: 0,
+      allocationTotal: 0,
+      operationResultsTotal: 0,
+      priceVariationTotal: 0
+    }
   )
 }

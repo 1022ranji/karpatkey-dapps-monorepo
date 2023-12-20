@@ -5,3 +5,6 @@ getTreasuryVariationMetricsDetail.json
 getTreasuryFinancialPositions.json
 getTreasuryHistoricVariation.json
 getFinancialMetricAndVarDetail.json
+getTotalFundsByTokenCategory.json
+getTreasuryFinancialMetricsWaterfall.json
+getWaterfall1Report.json
