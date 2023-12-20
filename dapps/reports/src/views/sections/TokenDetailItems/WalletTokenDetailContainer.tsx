@@ -9,13 +9,10 @@ import { WALLET_COLORS } from '@karpatkey-monorepo/shared/config/theme'
 import { PaperProps } from '@mui/material'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
+import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
 
 const DynamicTableWalletTokenDetail = dynamic(
   () => import('./TokenDetailItems/TableWalletTokenDetail')
-)
-
-const DynamicPieChart = dynamic(
-  () => import('@karpatkey-monorepo/reports/src/components/Charts/Pie')
 )
 
 interface WalletTokenDetailContainerProps {
@@ -57,8 +54,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
             currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue['blockchain'].toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+                ? '/images/chains/gnosis.svg'
+                : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -93,8 +90,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
           blockchainFilter === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter === 'Gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -165,13 +162,18 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
         <EmptyData />
       ) : (
         <BoxWrapperRow sx={{ justifyContent: 'space-between', alignItems: 'start' }}>
-          <DynamicPieChart
-            data={filteredWalletTokenDetailForPieChartWithColorsAndOthers}
-            dataKey="value"
+          <PieChart
+            data={filteredWalletTokenDetailForPieChartWithColorsAndOthers.map((item: any) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
             width={550}
             height={450}
-            innerRadius={80}
-            outerRadius={150}
+            innerSize="60%"
+            outerSize="82%"
           />
           <DynamicTableWalletTokenDetail
             filteredWalletTokenDetail={filteredWalletTokenDetail}
