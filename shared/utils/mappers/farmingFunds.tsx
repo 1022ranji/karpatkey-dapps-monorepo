@@ -29,11 +29,11 @@ export const getOperationDetails = (data: any) => {
         blockchain: item?.blockchain,
         protocol: item?.protocol,
         position,
-        operationsFunds: item?.funds_UR,
-        funds: item?.Funds,
+        operationsFunds: item?.funds_UR ?? 0,
+        funds: item?.Funds ?? 0,
         allocation: 0,
-        operationResults: item?.Revenue,
-        priceVariation: item?.Price_variation_for_initial_balance
+        operationResults: item?.Revenue ?? 0,
+        priceVariation: item?.Price_variation_for_initial_balance ?? 0
       }
     })
 

@@ -48,7 +48,7 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
       const metric = obj?.metric?.trim()
       const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '')?.trim()
       const protocol = obj?.protocol.trim()
-      const nonfarmingPosition = obj?.nonfarming_position.trim()
+      const nonfarmingPosition = obj?.nonfarming_position?.trim()
 
       const metricKey =
         metric.includes('balance') && protocol.includes('Wallet')
