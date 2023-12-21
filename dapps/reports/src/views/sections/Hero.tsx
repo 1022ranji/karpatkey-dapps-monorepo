@@ -14,8 +14,13 @@ const Hero = () => {
 
   const filter = state.value
 
-  const dao: Maybe<FILTER_DAO> = getDAO(filter.dao) || null
-  const monthName = filter.month ? getMonthName(filter.month) : null
+  const { dao, monthName } = React.useMemo(() => {
+    const daoParam = filter?.dao ? +filter.dao : null
+    const dao: FILTER_DAO | undefined = getDAO(daoParam)
+    const monthName = filter && filter.month ? getMonthName(+filter.month) : null
+
+    return { dao, monthName }
+  }, [filter])
 
   if (!dao || !monthName) {
     return null
@@ -25,19 +30,19 @@ const Hero = () => {
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px 30px 30px', alignItems: 'flex-start' }} gap={4}>
         <BoxWrapperRow gap={2}>
-          <Image src={dao.icon} alt={dao.name} width={116} height={116} />
+          <Image src={dao?.icon ?? ''} alt={dao?.name} width={116} height={116} key={dao?.icon} />
           <a className="anchor" id="summary" />
           <BoxWrapperColumn
             sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
           >
-            <CustomTypography variant="heroSectionTitle">{dao.name.trim()}</CustomTypography>
+            <CustomTypography variant="heroSectionTitle">{dao?.name?.trim()}</CustomTypography>
             <CustomTypography variant="heroSectionSubtitle">
               {monthName.trim()} Treasury Report
             </CustomTypography>
           </BoxWrapperColumn>
         </BoxWrapperRow>
         <BoxWrapperRow gap={4}>
-          {dao.addresses.map((daoAddress: DAO_ADDRESS, index: number) => (
+          {dao?.addresses.map((daoAddress: DAO_ADDRESS, index: number) => (
             <ButtonAddress key={index} daoAddress={daoAddress} />
           ))}
         </BoxWrapperRow>
