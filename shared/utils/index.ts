@@ -1,11 +1,5 @@
 import { getAddress } from '@ethersproject/address'
-import {
-  FILTER_DAO,
-  FILTER_DAOS,
-  MONTHS,
-  MONTHS_ALLOWED,
-  NONE
-} from '@karpatkey-monorepo/shared/config/constants'
+import { FILTER_DAO, FILTER_DAOS, MONTHS, NONE } from '@karpatkey-monorepo/shared/config/constants'
 
 import { AutocompleteOption } from '../components/CustomAutocomplete'
 
@@ -63,16 +57,37 @@ export const isYearValid = (year: number) => year < 2022 || year > new Date().ge
 
 export const isMonthValid = (month: number) => month < 1 || month > 12
 
-export const getLatestMonth = () => {
-  const currentMonth = new Date().getMonth() + 1
-  // Get the latest month allowed, closer to the current month
-  let month = 0
-  MONTHS_ALLOWED.forEach(({ id }) => {
-    if (id <= +currentMonth && id > month) {
-      month = id
+export const getLatestMonthAndYear = (DAO_PARAM: Maybe<FILTER_DAO>) => {
+  const DATES_ALLOWED =
+    FILTER_DAOS.find((DAO) => DAO.keyName === DAO_PARAM?.keyName)?.datesAllowed || []
+
+  const DATES_ALLOWED_SORTED = DATES_ALLOWED.sort((a, b) => {
+    if (a.year === b.year) {
+      return a.month - b.month
     }
+    return a.year - b.year
   })
-  return month
+
+  return {
+    month: DATES_ALLOWED_SORTED[DATES_ALLOWED_SORTED.length - 1]?.month || null,
+    year: DATES_ALLOWED_SORTED[DATES_ALLOWED_SORTED.length - 1]?.year || null
+  }
+}
+
+export const getLatestMonthAndYearInCommonForEveryDAO = () => {
+  const DATES_ALLOWED = FILTER_DAOS.map((DAO) => DAO.datesAllowed).flat()
+
+  const DATES_ALLOWED_SORTED = DATES_ALLOWED.sort((a: any, b: any) => {
+    if (a.year === b.year) {
+      return a.month - b.month
+    }
+    return a.year - b.year
+  })
+
+  return {
+    month: DATES_ALLOWED_SORTED[DATES_ALLOWED_SORTED.length - 1]?.month || null,
+    year: DATES_ALLOWED_SORTED[DATES_ALLOWED_SORTED.length - 1]?.year || null
+  }
 }
 
 export const isProductionCheckingDomainName = () => {

@@ -4,10 +4,6 @@ import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/Custom
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form, { SubmitValues } from '@karpatkey-monorepo/shared/components/Filter/Form'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import {
-  getDAONumberByName,
-  MONTHS_ALLOWED_BY_DAO
-} from '@karpatkey-monorepo/shared/config/constants'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -50,14 +46,14 @@ const Menu = () => {
 
   // Month default value
   const filterMonthOption =
-    MONTHS_ALLOWED_BY_DAO.find((option) => {
-      return filter?.dao && getDAONumberByName(option.DAO) === +filter?.dao
-    })?.DATES_ALLOWED?.find((option) => {
+    FILTER_DAOS.find((option) => {
+      return filter?.dao && +option.id === +filter?.dao
+    })?.datesAllowed?.find((option) => {
       return (
         filter?.year &&
         filter.month &&
-        option.month === +filter.month &&
-        option.year === +filter?.year
+        +option.month === +filter.month &&
+        +option.year === +filter?.year
       )
     }) ?? null
   const defaultMonthValue = filterMonthOption
@@ -69,10 +65,10 @@ const Menu = () => {
 
   // Year default value
   const filterYearOption =
-    MONTHS_ALLOWED_BY_DAO.find((option) => {
-      return filter?.dao && getDAONumberByName(option.DAO) === +filter?.dao
-    })?.DATES_ALLOWED?.find((option) => {
-      return filter?.year && option.year === +filter?.year
+    FILTER_DAOS.find((option) => {
+      return filter?.dao && +option.id === +filter?.dao
+    })?.datesAllowed?.find((option) => {
+      return filter?.year && +option.year === +filter?.year
     }) ?? null
   const defaultYearValue = filterYearOption
     ? {
