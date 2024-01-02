@@ -1,6 +1,10 @@
 import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
 import { Filter } from '@karpatkey-monorepo/reports/src/types'
-import { getDAO, getLatestMonth } from '@karpatkey-monorepo/shared/utils'
+import {
+  getDAO,
+  getLatestMonthAndYear,
+  getLatestMonthAndYearInCommonForEveryDAO
+} from '@karpatkey-monorepo/shared/utils'
 import {
   getBalanceOverviewByBlockchain,
   getBalanceOverviewByType
@@ -179,13 +183,14 @@ const getDAOResume = async ({
   financialMetricAndVarDetail,
   waterfall1Report
 }: any) => {
-  const daoFound = FILTER_DAOS.find((filterDao: FILTER_DAO) => {
+  const DAO_FOUND = FILTER_DAOS.find((filterDao: FILTER_DAO) => {
     return filterDao.keyName.toLowerCase() === (dao as string).toLowerCase()
   })
   const metricPeriodType = 'month'
 
-  const month = getLatestMonth()
-  const year = new Date().getFullYear()
+  const { month, year } = DAO_FOUND
+    ? getLatestMonthAndYear(DAO_FOUND)
+    : getLatestMonthAndYearInCommonForEveryDAO()
   const metricPeriod = `${year}_${month}`
 
   const variationMetricsDetailFiltered = variationMetricsDetail.filter((row: any) =>
@@ -206,7 +211,7 @@ const getDAOResume = async ({
   const farmingResults = getFarmingResults(waterfall1ReportFiltered)
   const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
 
-  const urlToReport = `?dao=${daoFound?.id}&month=${month}&year=${year}`
+  const urlToReport = `?dao=${DAO_FOUND?.id}&month=${month}&year=${year}`
 
   return {
     totalFunds,
@@ -383,7 +388,10 @@ export const getCommonServerSideProps = async (params: Filter) => {
     if (b.keyName === 'karpatkey DAO') return -1
     return b.totalFunds - a.totalFunds
   })
-  const latestMonth = getLatestMonth()
+
+  const { month: latestMonth } = DAO
+    ? getLatestMonthAndYear(DAO)
+    : getLatestMonthAndYearInCommonForEveryDAO()
 
   const dataWarehouse = DataWarehouse.getInstance()
   const ourDaoTreasuriesData = await dataWarehouse.getOurDAOTreasury()
