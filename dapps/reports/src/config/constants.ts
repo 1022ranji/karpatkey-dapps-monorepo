@@ -8,9 +8,8 @@ export const GOOGLE_CREDS = {
   private_key: process.env?.REACT_GOOGLE_PRIVATE_KEY?.replace(new RegExp('\\\\n', 'g'), '\n')
 }
 
-//TODO revert this to
-// export const DATA_WAREHOUSE_ENV = process.env.REACT_DATA_WAREHOUSE_ENV || 'production'
-export const DATA_WAREHOUSE_ENV = 'production'
+export const DATA_WAREHOUSE_ENV = process.env.REACT_DATA_WAREHOUSE_ENV || 'production'
+
 export const PASSWORD_PROTECT = process.env.PASSWORD_PROTECT
 
 export const UNISWAP_PROTOCOL = 'UniswapV3'
