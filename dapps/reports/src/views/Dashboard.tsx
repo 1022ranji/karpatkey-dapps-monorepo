@@ -127,8 +127,6 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                   urlToReport
                 } = dao
 
-                console.log('latestYear', latestYear)
-                console.log('latestMonth', latestMonth)
                 const isDAOEnsOctober =
                   keyName === 'ENS DAO' && +latestYear === 2023 && +latestMonth === 10
                 const isDAOEnsNovember =
