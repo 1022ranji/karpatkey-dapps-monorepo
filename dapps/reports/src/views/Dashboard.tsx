@@ -24,9 +24,10 @@ import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSi
 interface TableProps {
   daoResume: any
   latestMonth: number
+  latestYear: number
 }
 
-const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
+const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
   const router = useRouter()
 
   const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
@@ -38,9 +39,6 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
 
   const screenSize = useScreenSize()
   const isMobile = screenSize.width < 550
-
-  const currentDate = new Date()
-  const currentYear = currentDate.getFullYear()
 
   return (
     <TableContainer component={Box}>
@@ -129,10 +127,12 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                   urlToReport
                 } = dao
 
+                console.log('latestYear', latestYear)
+                console.log('latestMonth', latestMonth)
                 const isDAOEnsOctober =
-                  keyName === 'ENS DAO' && +currentYear === 2023 && +latestMonth === 10
+                  keyName === 'ENS DAO' && +latestYear === 2023 && +latestMonth === 10
                 const isDAOEnsNovember =
-                  keyName === 'ENS DAO' && +currentYear === 2023 && +latestMonth === 11
+                  keyName === 'ENS DAO' && +latestYear === 2023 && +latestMonth === 11
                 const APY = isDAOEnsOctober
                   ? '2.04%'
                   : isDAOEnsNovember
@@ -294,8 +294,14 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
 }
 
 const Dashboard = (props: ReportProps) => {
-  const { daoResume, ourDaoTreasuries, nonCustodialAum, lastMonthFarmingResults, latestMonth } =
-    props
+  const {
+    daoResume,
+    ourDaoTreasuries,
+    nonCustodialAum,
+    lastMonthFarmingResults,
+    latestMonth,
+    latestYear
+  } = props
 
   const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
   const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
@@ -362,7 +368,11 @@ const Dashboard = (props: ReportProps) => {
       >
         <AnimatePresenceWrapper>
           <BoxWrapperColumn>
-            <DashboardTable daoResume={daoResumeWithoutLido} latestMonth={latestMonth} />
+            <DashboardTable
+              daoResume={daoResumeWithoutLido}
+              latestMonth={latestMonth}
+              latestYear={latestYear}
+            />
           </BoxWrapperColumn>
         </AnimatePresenceWrapper>
         {daoResumeWithLido.length === 0 ? null : (
@@ -370,7 +380,11 @@ const Dashboard = (props: ReportProps) => {
             <Divider sx={{ borderBottomWidth: 5 }} />
             <BoxWrapperColumn gap={4}>
               <Title title="Other treasuries not considered in non-custodial AUM" />
-              <DashboardTable daoResume={daoResumeWithLido} latestMonth={latestMonth} />
+              <DashboardTable
+                daoResume={daoResumeWithLido}
+                latestMonth={latestMonth}
+                latestYear={latestYear}
+              />
             </BoxWrapperColumn>
           </AnimatePresenceWrapper>
         )}
