@@ -389,7 +389,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     return b.totalFunds - a.totalFunds
   })
 
-  const { month: latestMonth } = DAO
+  const { month: latestMonth, year: latestYear } = DAO
     ? getLatestMonthAndYear(DAO)
     : getLatestMonthAndYearInCommonForEveryDAO()
 
@@ -407,6 +407,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     nonCustodialAum,
     ourDaoTreasuries,
     lastMonthFarmingResults,
-    latestMonth
+    latestMonth,
+    latestYear
   }
 }
