@@ -176,6 +176,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   },
@@ -226,6 +232,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   },
@@ -275,6 +287,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   },
@@ -324,6 +342,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   },
@@ -378,6 +402,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   },
@@ -432,6 +462,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   },
@@ -482,6 +518,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   },
@@ -532,6 +574,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 11,
         year: 2023,
         id: 11_2023
+      },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
       }
     ]
   }
