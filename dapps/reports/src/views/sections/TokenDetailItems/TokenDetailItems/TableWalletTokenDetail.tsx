@@ -31,7 +31,7 @@ const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxProps) =
                 Token symbol
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Allocation
+                Share
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Token balance

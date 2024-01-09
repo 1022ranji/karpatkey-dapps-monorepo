@@ -8,7 +8,7 @@ import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWra
 import { Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React from 'react'
-import BoxWrapperColumn from '../components/Wrappers/BoxWrapperColumn'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 import useIsLoading from '@karpatkey-monorepo/reports/src/hooks/useIsLoading'
 
@@ -135,7 +135,7 @@ const Footer = (props: FooterProps) => {
                 </Link>
               </BoxWrapperRow>
               <BoxWrapperRow gap={4}>
-                <Link href={`https://github.com/KarpatkeyDAO`} target="_blank">
+                <Link href={`https://github.com/karpatkey`} target="_blank">
                   <Github height={24} width={24} />
                 </Link>
                 <Link href={`https://twitter.com/karpatkey`} target="_blank">
