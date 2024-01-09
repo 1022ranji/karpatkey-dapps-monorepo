@@ -69,10 +69,10 @@ export const getSummaryFundsByType = (data: any, params: any) => {
           metric.includes('balance') && protocol.includes('Wallet')
             ? 'Wallet'
             : nonfarmingPosition === 'TRUE'
-              ? 'Operations funds'
-              : nonfarmingPosition === 'FALSE'
-                ? 'DeFi funds'
-                : metric
+            ? 'Operations funds'
+            : nonfarmingPosition === 'FALSE'
+            ? 'DeFi funds'
+            : metric
 
         if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
 
@@ -93,8 +93,8 @@ export const getSummaryFundsByType = (data: any, params: any) => {
         const metricKey = metric.includes('unclaimed_rewards')
           ? 'Unclaimed rewards'
           : metric.includes('balance') && protocol.includes('Wallet')
-            ? 'Wallet'
-            : 'Farming funds'
+          ? 'Wallet'
+          : 'Farming funds'
 
         if (!acc[metricKey]) acc[metricKey] = { funds: 0, label: metricKey }
 
@@ -271,12 +271,26 @@ export const getCapitalUtilization = (data: any) => {
   }, 0)
 }
 
-export const getFarmingResults = (data: any) => {
-  return data.reduce((acc: any, obj: any): number => {
-    const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
-    acc = acc + value
-    return acc
-  }, 0)
+export const getFarmingResults = (
+  waterfall1ReportFiltered: any,
+  financialMetricsFiltered: any,
+  params: any
+) => {
+  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+
+  if (isDDay) {
+    return waterfall1ReportFiltered.reduce((acc: any, obj: any): number => {
+      const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
+      acc = acc + value
+      return acc
+    }, 0)
+  } else {
+    return financialMetricsFiltered.reduce((acc: any, obj: any): number => {
+      const value = obj?.metric_code === 'm09' ? obj?.metric_value : 0
+      acc = acc + value
+      return acc
+    }, 0)
+  }
 }
 
 export const getGlobalROI = (data: any) => {

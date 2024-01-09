@@ -47,6 +47,7 @@ const summaryData = ({
   treasuryFinancialMetricsWaterfallFiltered,
   waterfall1ReportFiltered,
   totalFundsByTokenCategoryFiltered,
+  financialMetricsFiltered,
   params
 }: any) => {
   // Funds by token category
@@ -64,7 +65,11 @@ const summaryData = ({
   // Summary blocks
   const totalFunds = getTotalFunds(financialMetricAndVarDetailFiltered)
   const capitalUtilization = getCapitalUtilization(treasuryFinancialMetricsWaterfallFiltered)
-  const farmingResults = getFarmingResults(waterfall1ReportFiltered)
+  const farmingResults = getFarmingResults(
+    waterfall1ReportFiltered,
+    financialMetricsFiltered,
+    params
+  )
   const globalROI = getGlobalROI(treasuryFinancialMetricsWaterfallFiltered)
 
   return {
@@ -96,10 +101,15 @@ const treasuryVariationData = ({
   waterfall1ReportFiltered,
   historicVariationFiltered,
   treasuryFinancialMetricsWaterfallFiltered,
+  financialMetricsFiltered,
   params
 }: any) => {
   // For the period
-  const treasuryVariationData = getTreasuryVariationForThePeriod(waterfall1ReportFiltered, params)
+  const treasuryVariationData = getTreasuryVariationForThePeriod(
+    waterfall1ReportFiltered,
+    financialMetricsFiltered,
+    params
+  )
 
   // In this year
   const historicVariationData = getTreasuryVariationHistory(historicVariationFiltered, params)
@@ -208,7 +218,11 @@ const getDAOResume = async ({
 
   const totalFunds = getTotalFunds(variationMetricsDetailFiltered)
   const capitalUtilization = getCapitalUtilization(financialMetricsFiltered)
-  const farmingResults = getFarmingResults(waterfall1ReportFiltered)
+  const farmingResults = getFarmingResults(waterfall1ReportFiltered, financialMetricsFiltered, {
+    year,
+    month
+  })
+
   const globalROI = getGlobalROI(financialMetricAndVarDetailFiltered)
 
   const urlToReport = `?dao=${DAO_FOUND?.id}&month=${month}&year=${year}`
@@ -318,6 +332,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     treasuryFinancialMetricsWaterfallFiltered,
     waterfall1ReportFiltered,
     totalFundsByTokenCategoryFiltered,
+    financialMetricsFiltered,
     params
   })
 
@@ -332,6 +347,7 @@ export const getCommonServerSideProps = async (params: Filter) => {
     waterfall1ReportFiltered,
     historicVariationFiltered,
     treasuryFinancialMetricsWaterfallFiltered,
+    financialMetricsFiltered,
     params
   })
 
