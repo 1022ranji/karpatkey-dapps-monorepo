@@ -44,6 +44,10 @@ const Title = styled(CustomTypography)({
 export const Footer = () => {
   const screenSize = useScreenSize()
   const isMobile = screenSize.width < 600
+
+  const year = new Date()
+  const fullYear = year.getFullYear()
+
   return (
     <AnimatePresenceWrapper>
       <Wrapper>
@@ -52,7 +56,7 @@ export const Footer = () => {
         >
           <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
             <BoxWrapperRow>
-              <Title>© 2023 karpatkey</Title>
+              <Title>© {fullYear} karpatkey</Title>
               {!isMobile && <Title>&nbsp;&nbsp;•&nbsp;&nbsp;</Title>}
               {!isMobile && (
                 <Link
