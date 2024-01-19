@@ -373,3 +373,33 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, params: any) 
   // Remove funds in the range of 0.5
   return rows.filter((row: any) => !(row.funds === 0 || (row.funds < 0.5 && row.funds > -0.5)))
 }
+
+export const treasuryVariationData = ({
+  waterfall1Report,
+  historicVariation,
+  financialMetricsWaterfall,
+  financialMetrics,
+  params
+}: any) => {
+  // For the period
+  const treasuryVariationData = getTreasuryVariationForThePeriod(
+    waterfall1Report,
+    financialMetrics,
+    params
+  )
+
+  // In this year
+  const historicVariationData = getTreasuryVariationHistory(historicVariation, params)
+
+  // For the period, detail
+  const treasuryVariationForThePeriodDetailData = getTreasuryVariationForThePeriodDetails(
+    financialMetricsWaterfall,
+    params
+  )
+
+  return {
+    treasuryVariationData,
+    historicVariationData,
+    treasuryVariationForThePeriodDetailData
+  }
+}

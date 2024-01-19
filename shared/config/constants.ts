@@ -91,14 +91,14 @@ export const CHAINS: CHAIN[] = [
 ]
 
 export const enum DAO_NAME_KEY {
-  'Gnosis DAO' = 0,
-  'Gnosis LTD' = 1,
-  'Balancer DAO' = 2,
-  'ENS DAO' = 3,
-  'CoW DAO' = 4,
-  'karpatkey DAO' = 5,
-  'Gnosis Guild' = 6,
-  'Lido' = 7
+  'Gnosis DAO' = 1,
+  'Gnosis LTD' = 2,
+  'Balancer DAO' = 3,
+  'ENS DAO' = 4,
+  'CoW DAO' = 5,
+  'karpatkey DAO' = 6,
+  'Gnosis Guild' = 7,
+  'Lido' = 8
 }
 
 export const getDAONumberByName = (daoName: string): number => {

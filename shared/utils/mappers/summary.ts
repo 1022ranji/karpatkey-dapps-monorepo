@@ -300,3 +300,43 @@ export const getGlobalROI = (data: any) => {
     return acc
   }, 0)
 }
+
+export const summaryData = ({
+  variationMetricsDetail,
+  financialPositions,
+  financialMetricAndVarDetail,
+  financialMetricsWaterfall,
+  waterfall1Report,
+  totalFundsByTokenCategory,
+  financialMetrics,
+  params
+}: any) => {
+  // Funds by token category
+  const fundsByTokenCategory = getSummaryFundsByTokenCategory(totalFundsByTokenCategory)
+
+  // Funds by type
+  const fundsByType = getSummaryFundsByType(variationMetricsDetail, params)
+
+  // Funds by blockchain
+  const fundsByBlockchain = getSummaryFundsByBlockchain(variationMetricsDetail)
+
+  // Funds by protocol
+  const fundsByProtocol = getSummaryFundsByProtocol(financialPositions)
+
+  // Summary blocks
+  const totalFunds = getTotalFunds(financialMetricAndVarDetail)
+  const allocatedFunds = getCapitalUtilization(financialMetricsWaterfall)
+  const deFiResults = getFarmingResults(waterfall1Report, financialMetrics, params)
+  const APY = getGlobalROI(financialMetricsWaterfall)
+
+  return {
+    totalFunds,
+    allocatedFunds,
+    deFiResults,
+    APY,
+    fundsByTokenCategory,
+    fundsByType,
+    fundsByBlockchain,
+    fundsByProtocol
+  }
+}

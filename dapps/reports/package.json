@@ -16,6 +16,8 @@
     "lint:eslint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:eslint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",
     "lint:tsc": "tsc -p tsconfig.json",
+    "cache:dashboard": "ts-node --project ./tsconfig.json ./src/scripts/generateDashboard.ts",
+    "cache:reports": "ts-node --project ./tsconfig.json ./src/scripts/generateReports.ts",
     "cache:treasuryFinancialMetrics": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTreasuryFinancialMetrics",
     "cache:tokens": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTokens",
     "cache:treasuryVariationMetricsDetail": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTreasuryVariationMetricsDetail",
@@ -25,15 +27,15 @@
     "cache:treasuryFinancialMetricsWaterfall": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTreasuryFinancialMetricsWaterfall",
     "cache:waterfall1Report": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getWaterfall1Report",
     "cache:totalFundsByTokenCategory": "ts-node --project ./tsconfig.json ./src/scripts/generateCache.ts --report-name getTotalFundsByTokenCategory",
-    "generate:cache": "yarn cache:treasuryFinancialMetrics && yarn cache:tokens && yarn cache:treasuryVariationMetricsDetail && yarn cache:treasuryFinancialPositions && yarn cache:treasuryHistoricVariation && yarn cache:financialMetricAndVarDetail && yarn cache:treasuryFinancialMetricsWaterfall && yarn cache:waterfall1Report && yarn cache:totalFundsByTokenCategory"
+    "generate:cache": "yarn cache:dashboard && yarn cache:reports"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@karpatkey-monorepo/shared": "0.1.0",
     "@google-cloud/bigquery": "^7.3.0",
+    "@karpatkey-monorepo/shared": "0.1.0",
     "@mui/icons-material": "5.14.8",
     "@mui/material": "5.14.8",
     "@mui/x-date-pickers": "^6.16.2",
@@ -53,6 +55,7 @@
     "react-dom": "18.2.0",
     "react-intersection-observer": "^9.5.2",
     "recharts": "^2.9.0",
+    "ts-node": "^10.9.2",
     "yup": "^1.3.2"
   },
   "devDependencies": {

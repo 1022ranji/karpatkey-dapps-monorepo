@@ -550,3 +550,25 @@ export const getWalletTokenDetails = (data: any) => {
 
   return rowsFlat
 }
+
+export const tokenDetailsData = ({
+  variationMetricsDetail,
+  financialMetricAndVarDetail,
+  params
+}: any) => {
+  const tokenDetails = getTokenDetails(variationMetricsDetail)
+  const tokenDetailsGrouped = getTokenDetailsGrouped(variationMetricsDetail)
+
+  // Token detail by position
+  const tokenDetailByPosition = getTokenDetailByPosition(financialMetricAndVarDetail, params)
+
+  // Wallet token detail
+  const walletTokenDetail = getWalletTokenDetails(variationMetricsDetail)
+
+  return {
+    tokenDetails,
+    tokenDetailsGrouped,
+    tokenDetailByPosition,
+    walletTokenDetail
+  }
+}

@@ -1,6 +1,4 @@
-import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
-import { DataWarehouse } from '@karpatkey-monorepo/reports/src/services/classes/dataWarehouse.class'
-import { ALLOWED_REPORTS } from '@karpatkey-monorepo/shared/config/constants'
+import { register } from 'ts-node'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Status = {
@@ -14,19 +12,12 @@ type Status = {
 export default function handler(req: NextApiRequest, res: NextApiResponse<Status>) {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      const cache = Cache.getInstance()
+      register({ transpileOnly: true })
+      const result1 = await import('@karpatkey-monorepo/reports/src/scripts/generateDashboard')
+      const result2 = await import('@karpatkey-monorepo/reports/src/scripts/generateReports')
 
-      const dataWarehouse = DataWarehouse.getInstance()
-
-      // Step 2: Query the data
-      const cachePromises = ALLOWED_REPORTS.map(async (report) => {
-        const reportData = await dataWarehouse[
-          report.reportName as unknown as keyof DataWarehouse
-        ]()
-        cache.writeApi(report.reportName, reportData)
-      })
-      await Promise.all(cachePromises)
-
+      console.log('result1: ', result1)
+      console.log('result2: ', result2)
       // send data to browser
       res.status(200).json({ data: { status: true, message: 'Cache successfully regenerated' } })
       resolve()

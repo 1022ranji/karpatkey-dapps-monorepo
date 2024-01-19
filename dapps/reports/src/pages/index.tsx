@@ -1,21 +1,21 @@
 import PageLayout from '@karpatkey-monorepo/reports/src/components/Layout/Layout'
 import { Filter, ReportProps } from '@karpatkey-monorepo/reports/src/types'
-import { getCommonServerSideProps } from '@karpatkey-monorepo/reports/src/utils/serverSide'
 import { filterSchemaValidation } from '@karpatkey-monorepo/reports/src/validations'
-import dynamic from 'next/dynamic'
 import { GetServerSidePropsContext } from 'next/types'
 import React, { ReactElement } from 'react'
 import { FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
-
-const HomepageContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Homepage'))
-const DashboardContent = dynamic(() => import('@karpatkey-monorepo/reports/src/views/Dashboard'))
+import DashboardContent from '@karpatkey-monorepo/reports/src/views/Dashboard'
+import HomepageContent from '@karpatkey-monorepo/reports/src/views/Homepage'
+import { readFileSync } from 'fs'
+import path from 'path'
 
 const Homepage = (props: ReportProps) => {
-  const { month, dao, year } = props
+  const { month, dao, year, metrics, daoResume } = props
   const isFilterEmpty = !month && !dao && !year
 
   if (isFilterEmpty) {
-    return <DashboardContent {...props} />
+    const params = { metrics, daoResume }
+    return <DashboardContent {...params} />
   }
 
   return <HomepageContent {...props} />
@@ -63,12 +63,20 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // We validate the params here to avoid any errors in the page
   await filterSchemaValidation.validate(params)
 
-  const serverSideProps = await getCommonServerSideProps(params)
+  const pathFile = path.resolve(process.cwd(), './cache/dashboard.json')
+  const dashboard = JSON.parse(readFileSync(pathFile, 'utf8'))
 
-  // Pass data to the page via props
+  let report = null
+  if (dao && month && year) {
+    const pathFile = path.resolve(process.cwd(), `./cache/${dao}.json`)
+    const reports = JSON.parse(readFileSync(pathFile, 'utf8'))
+    report = reports[+year as number][+month as number]
+  }
+
   return {
     props: {
-      ...serverSideProps,
+      ...dashboard,
+      report,
       ...params
     }
   }
