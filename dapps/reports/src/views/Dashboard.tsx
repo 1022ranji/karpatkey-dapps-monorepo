@@ -3,8 +3,7 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import React from 'react'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import Image from 'next/image'
-import { ReportProps } from '@karpatkey-monorepo/reports/src/types'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import { NumberBlock } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/NumberBlock'
 import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
@@ -13,10 +12,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import { useRouter } from 'next/router'
 import { Value } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Value'
-import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Title'
-import Divider from '@mui/material/Divider'
 import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
-import Tooltip from '@mui/material/Tooltip'
 import { LinkWrapper } from '@karpatkey-monorepo/reports/src/components/LinkWrapper'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
@@ -121,9 +117,9 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                   name,
                   keyName,
                   totalFunds,
-                  capitalUtilization,
-                  farmingResults,
-                  globalROI,
+                  allocatedFunds,
+                  deFiResults,
+                  APY,
                   urlToReport
                 } = dao
 
@@ -131,11 +127,11 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                   keyName === 'ENS DAO' && +latestYear === 2023 && +latestMonth === 10
                 const isDAOEnsNovember =
                   keyName === 'ENS DAO' && +latestYear === 2023 && +latestMonth === 11
-                const APY = isDAOEnsOctober
+                const CUSTOM_APY = isDAOEnsOctober
                   ? '2.04%'
                   : isDAOEnsNovember
-                    ? '2.9%'
-                    : formatPercentage(globalROI)
+                  ? '2.9%'
+                  : formatPercentage(APY)
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const onClick = (e: any) => {
@@ -228,7 +224,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatPercentage(capitalUtilization, 0)} />
+                          <Value value={formatPercentage(allocatedFunds, 0)} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -244,7 +240,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatCurrency(farmingResults)} />
+                          <Value value={formatCurrency(deFiResults)} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -259,7 +255,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={APY} />
+                          <Value value={CUSTOM_APY} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -291,18 +287,13 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
   )
 }
 
-const Dashboard = (props: ReportProps) => {
-  const {
-    daoResume,
-    ourDaoTreasuries,
-    nonCustodialAum,
-    lastMonthFarmingResults,
-    latestMonth,
-    latestYear
-  } = props
-
-  const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
-  const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
+interface DashboardProps {
+  metrics: any
+  daoResume: any
+}
+const Dashboard = (props: DashboardProps) => {
+  const { metrics, daoResume } = props
+  const { ourDaoTreasuries, nonCustodialAum, lastMonthDeFiResults, year, month } = metrics
 
   const matchesQuery = useMediaQuery('(min-width:1000px)')
 
@@ -353,7 +344,7 @@ const Dashboard = (props: ReportProps) => {
           <NumberBlock amount={formatCurrency(ourDaoTreasuries)} title="Our DAO treasuries" />
           <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
           <NumberBlock
-            amount={formatCurrency(lastMonthFarmingResults)}
+            amount={formatCurrency(lastMonthDeFiResults)}
             title={'Last month DeFi results'}
           />
         </BoxWrapperRow>
@@ -366,26 +357,9 @@ const Dashboard = (props: ReportProps) => {
       >
         <AnimatePresenceWrapper>
           <BoxWrapperColumn>
-            <DashboardTable
-              daoResume={daoResumeWithoutLido}
-              latestMonth={latestMonth}
-              latestYear={latestYear}
-            />
+            <DashboardTable daoResume={daoResume} latestMonth={month} latestYear={year} />
           </BoxWrapperColumn>
         </AnimatePresenceWrapper>
-        {daoResumeWithLido.length === 0 ? null : (
-          <AnimatePresenceWrapper>
-            <Divider sx={{ borderBottomWidth: 5 }} />
-            <BoxWrapperColumn gap={4}>
-              <Title title="Other treasuries not considered in non-custodial AUM" />
-              <DashboardTable
-                daoResume={daoResumeWithLido}
-                latestMonth={latestMonth}
-                latestYear={latestYear}
-              />
-            </BoxWrapperColumn>
-          </AnimatePresenceWrapper>
-        )}
       </BoxWrapperColumn>
     </BoxWrapperColumn>
   )

@@ -10,6 +10,9 @@ const nextConfig = {
   },
   images: {
     domains: ['reports.karpatkey.com', 'localhost', 'reports.karpatkey.dev']
+  },
+  experimental: {
+    externalDir: true
   }
 }
 

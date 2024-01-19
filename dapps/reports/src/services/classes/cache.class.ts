@@ -11,19 +11,14 @@ export default class Cache {
     return Cache.instance
   }
 
-  getReport(reportName: Report) {
-    const filePath = `${process.cwd()}/public/cache/${reportName}.json`
+  getFile(fileName: string) {
+    const filePath = `${process.cwd()}/cache/${fileName}.json`
     const data = fs.readFileSync(filePath, 'utf8')
     return JSON.parse(data)
   }
 
-  writeConsole(reportName: Report, data: any) {
-    const filePath = `${process.cwd()}/public/cache/${reportName}.json`
-    fs.writeFileSync(filePath, JSON.stringify(data), 'utf8')
-  }
-
-  writeApi(reportName: any, data: any) {
-    const filePath = `${process.cwd()}/public/cache/${reportName}.json`
-    fs.writeFileSync(filePath, JSON.stringify(data), 'utf8')
+  writeFile(fileName: string, data: any) {
+    const filePath = `${process.cwd()}/cache/${fileName}.json`
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8')
   }
 }

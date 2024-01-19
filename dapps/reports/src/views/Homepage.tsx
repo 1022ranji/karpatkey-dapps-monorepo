@@ -10,33 +10,9 @@ import BoxContainerWrapper from '@karpatkey-monorepo/shared/components/Wrappers/
 import * as React from 'react'
 
 const HomepageContent = (props: ReportProps) => {
-  const {
-    month,
-    dao,
-    year,
-    totalFunds,
-    capitalUtilization,
-    farmingResults,
-    globalROI,
-    fundsByTokenCategory,
-    fundsByType,
-    fundsByBlockchain,
-    fundsByProtocol,
-    balanceOverviewType,
-    balanceOverviewBlockchain,
-    treasuryVariationData,
-    historicVariationData,
-    treasuryVariationForThePeriodDetailData,
-    totalFarmingResultsFarmSwaps,
-    farmingFundsByProtocol,
-    defiResults,
-    farmingResultsDetailsByProtocol,
-    tokenDetails,
-    tokenDetailsGrouped,
-    tokenDetailByPosition,
-    walletTokenDetail,
-    operationDetails
-  } = props
+  const { month, dao, year, report } = props
+
+  const { summary, balanceOverview, treasuryVariation, farmingFunds, tokenDetails } = report
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { state, dispatch } = useFilter()
@@ -45,21 +21,6 @@ const HomepageContent = (props: ReportProps) => {
     dispatch({ type: ActionKind.UPDATE, payload: { value: { month, dao, year }, error: null } })
   }, [month, dao, year, dispatch])
 
-  const farmingFundsResultsProps = {
-    totalFarmingResultsFarmSwaps,
-    farmingFundsByProtocol,
-    farmingResultsDetailsByProtocol,
-    fundsByProtocol,
-    operationDetails,
-    defiResults
-  }
-
-  const treasuryVariationProps = {
-    treasuryVariationData,
-    historicVariationData,
-    treasuryVariationForThePeriodDetailData
-  }
-
   return (
     <BoxContainerWrapper>
       <Hero />
@@ -67,26 +28,39 @@ const HomepageContent = (props: ReportProps) => {
         dao={dao}
         month={month}
         year={year}
-        totalFunds={totalFunds}
-        capitalUtilization={capitalUtilization}
-        globalROI={globalROI}
-        farmingResults={farmingResults}
-        fundsByTokenCategory={fundsByTokenCategory}
-        fundsByType={fundsByType}
-        fundsByBlockchain={fundsByBlockchain}
-        balanceOverviewType={balanceOverviewType}
+        totalFunds={summary?.totalFunds}
+        capitalUtilization={summary?.allocatedFunds}
+        globalROI={summary?.APY}
+        farmingResults={summary?.deFiResults}
+        fundsByTokenCategory={summary?.fundsByTokenCategory}
+        fundsByType={summary?.fundsByType}
+        fundsByBlockchain={summary?.fundsByBlockchain}
+        balanceOverviewType={summary?.fundsByProtocol}
       />
       <BalanceOverview
-        balanceOverviewType={balanceOverviewType}
-        balanceOverviewBlockchain={balanceOverviewBlockchain}
+        balanceOverviewType={balanceOverview?.balanceOverviewType}
+        balanceOverviewBlockchain={balanceOverview?.balanceOverviewBlockchain}
       />
-      <TreasuryVariation {...treasuryVariationProps} />
-      <FarmingFunds {...farmingFundsResultsProps} />
+      <TreasuryVariation
+        treasuryVariationData={treasuryVariation?.treasuryVariationData}
+        historicVariationData={treasuryVariation?.historicVariationData}
+        treasuryVariationForThePeriodDetailData={
+          treasuryVariation?.treasuryVariationForThePeriodDetailData
+        }
+      />
+      <FarmingFunds
+        totalFarmingResultsFarmSwaps={farmingFunds?.totalFarmingResultsFarmSwaps}
+        farmingResultsDetailsByProtocol={farmingFunds?.farmingResultsDetailsByProtocol}
+        farmingFundsByProtocol={farmingFunds?.farmingFundsByProtocol}
+        fundsByProtocol={summary?.fundsByProtocol}
+        operationDetails={farmingFunds?.operationDetails}
+        defiResults={farmingFunds?.deFiResults}
+      />
       <TokenDetails
-        tokenDetails={tokenDetails}
-        tokenDetailsGrouped={tokenDetailsGrouped}
-        tokenDetailByPosition={tokenDetailByPosition}
-        walletTokenDetail={walletTokenDetail}
+        tokenDetails={tokenDetails?.tokenDetails}
+        tokenDetailsGrouped={tokenDetails?.tokenDetailsGrouped}
+        tokenDetailByPosition={tokenDetails?.tokenDetailByPosition}
+        walletTokenDetail={tokenDetails?.walletTokenDetail}
       />
     </BoxContainerWrapper>
   )
