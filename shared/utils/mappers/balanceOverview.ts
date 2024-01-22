@@ -15,8 +15,8 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
       const metricKey = metric.includes('unclaim')
         ? 'Unclaimed rewards'
         : metric.includes('balance') && protocol.includes('Wallet')
-          ? 'Wallet'
-          : 'Farming funds'
+        ? 'Wallet'
+        : 'Farming funds'
 
       if (!acc[tokenCategory]) acc[tokenCategory] = {}
       if (!acc[tokenCategory][metricKey])
@@ -54,10 +54,10 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
         metric.includes('balance') && protocol.includes('Wallet')
           ? 'Wallet'
           : nonfarmingPosition === 'TRUE'
-            ? 'Operations funds'
-            : nonfarmingPosition === 'FALSE'
-              ? 'DeFi funds'
-              : metric
+          ? 'Operations funds'
+          : nonfarmingPosition === 'FALSE'
+          ? 'DeFi funds'
+          : metric
 
       if (!acc[tokenCategory]) acc[tokenCategory] = {}
       if (!acc[tokenCategory][metricKey])
@@ -115,4 +115,17 @@ export const getBalanceOverviewByBlockchain = (data: any) => {
   }, [])
 
   return flatRows
+}
+
+export const balanceOverviewData = ({ variationMetricsDetail, params }: any) => {
+  // Funds by token category / Type
+  const balanceOverviewType = getBalanceOverviewByType(variationMetricsDetail, params)
+
+  // Funds by token category / Blockchain
+  const balanceOverviewBlockchain = getBalanceOverviewByBlockchain(variationMetricsDetail)
+
+  return {
+    balanceOverviewType,
+    balanceOverviewBlockchain
+  }
 }

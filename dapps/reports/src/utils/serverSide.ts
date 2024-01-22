@@ -258,30 +258,16 @@ export const getCommonServerSideProps = async (params: Filter) => {
   const cache = Cache.getInstance()
 
   // Step 2: Query the data
-  const variationMetricsDetail = await cache.getReport(
-    'getTreasuryVariationMetricsDetail' as unknown as Report
+  const variationMetricsDetail = await cache.getFile('getTreasuryVariationMetricsDetail')
+  const financialMetrics = await cache.getFile('getTreasuryFinancialMetrics')
+  const financialPositions = await cache.getFile('getTreasuryFinancialPositions')
+  const historicVariation = await cache.getFile('getTreasuryHistoricVariation')
+  const financialMetricAndVarDetail = await cache.getFile('getFinancialMetricAndVarDetail')
+  const treasuryFinancialMetricsWaterfall = await cache.getFile(
+    'getTreasuryFinancialMetricsWaterfall'
   )
-  const financialMetrics = await cache.getReport('getTreasuryFinancialMetrics' as unknown as Report)
-  const financialPositions = await cache.getReport(
-    'getTreasuryFinancialPositions' as unknown as Report
-  )
-  const historicVariation = await cache.getReport(
-    'getTreasuryHistoricVariation' as unknown as Report
-  )
-
-  const financialMetricAndVarDetail = await cache.getReport(
-    'getFinancialMetricAndVarDetail' as unknown as Report
-  )
-
-  const treasuryFinancialMetricsWaterfall = await cache.getReport(
-    'getTreasuryFinancialMetricsWaterfall' as unknown as Report
-  )
-
-  const waterfall1Report = await cache.getReport('getWaterfall1Report' as unknown as Report)
-
-  const totalFundsByTokenCategory = await cache.getReport(
-    'getTotalFundsByTokenCategory' as unknown as Report
-  )
+  const waterfall1Report = await cache.getFile('getWaterfall1Report')
+  const totalFundsByTokenCategory = await cache.getFile('getTotalFundsByTokenCategory')
 
   // Step 3: Get filter data like daoName, periodType and period
   const DAO = getDAO(dao)

@@ -254,3 +254,34 @@ export const getOperationsDetailTotals = (data: any) => {
     }
   )
 }
+
+export const farmingFundsData = ({
+  waterfall1Report,
+  financialPositions,
+  financialMetrics,
+  financialMetricsWaterfall,
+  params
+}: any) => {
+  // Allocated funds by protocol
+  const farmingFundsByProtocol = getFarmingFundsByProtocol(financialPositions, params)
+
+  // DeFi results, not used anymore
+  const deFiResults = getDeFiFundsTotal(waterfall1Report)
+
+  // DeFi results from DeFi-Swaps
+  const totalFarmingResultsFarmSwaps = getFarmingResultsFarmSwapsTotal(financialMetricsWaterfall)
+
+  // Operations details
+  const operationDetails = getOperationDetails(financialPositions)
+
+  // DeFi funds/results by position
+  const farmingResultsDetailsByProtocol = getFarmingResultsDetailsByProtocol(financialMetrics)
+
+  return {
+    deFiResults,
+    farmingFundsByProtocol,
+    totalFarmingResultsFarmSwaps,
+    farmingResultsDetailsByProtocol,
+    operationDetails
+  }
+}

@@ -51,45 +51,79 @@ export class DataWarehouse {
   }
 
   // DONE
-  async getTotalFundsByTokenCategory() {
+  async getTotalFundsByTokenCategory(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getTotalFundsByTokenCategory'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
-  async getWaterfall1Report() {
+  async getWaterfall1Report(DAO: Maybe<string>, metricPeriod: Maybe<string>) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getWaterfall1Report'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    if (DAO && metricPeriod) {
+      viewQuery = viewQuery.concat(` WHERE dao = '${DAO}' AND year_month = '${metricPeriod}'`)
+    }
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
-  async getTreasuryFinancialMetricsWaterfall() {
+  async getTreasuryFinancialMetricsWaterfall(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getTreasuryFinancialMetricsWaterfall'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
-  async getTreasuryFinancialMetrics() {
+  async getTreasuryFinancialMetrics(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getTreasuryFinancialMetrics'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return this.executeCommonJobQuery(viewQuery)
   }
@@ -104,45 +138,83 @@ export class DataWarehouse {
   }
 
   // DONE
-  async getTreasuryVariationMetricsDetail() {
+  async getTreasuryVariationMetricsDetail(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getTreasuryVariationMetricsDetail'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return await this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
-  async getTreasuryFinancialPositions() {
+  async getTreasuryFinancialPositions(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getTreasuryFinancialPositions'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
-  async getTreasuryHistoricVariation() {
+  async getTreasuryHistoricVariation(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getTreasuryHistoricVariation'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return await this.executeCommonJobQuery(viewQuery)
   }
 
   // DONE
-  async getFinancialMetricAndVarDetail() {
+  async getFinancialMetricAndVarDetail(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
     const table =
       REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment][
         'getFinancialMetricAndVarDetail'
       ]
-    const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return await this.executeCommonJobQuery(viewQuery)
   }
