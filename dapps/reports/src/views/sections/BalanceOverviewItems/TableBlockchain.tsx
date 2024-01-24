@@ -62,14 +62,18 @@ const TableBlockchain = (props: TableBlockchainProps) => {
 
   return (
     <TableContainer component={Box}>
-      <Table sx={{ width: '100%' }}>
+      <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
         <TableHead>
           <TableRow>
             <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
               Token category
             </TableHeadCellCustom>
             {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => (
-              <TableHeadCellCustom key={index} sx={{ width: columnWidthPercentage }} align="left">
+              <TableHeadCellCustom
+                key={index}
+                sx={{ width: columnWidthPercentage, paddingLeft: '20px', paddingRight: '20px' }}
+                align="left"
+              >
                 {blockchainName}
               </TableHeadCellCustom>
             ))}
@@ -89,7 +93,15 @@ const TableBlockchain = (props: TableBlockchainProps) => {
                 {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => {
                   const value = item[blockchainName] ?? 0
                   return (
-                    <TableCellCustom key={index} sx={{ width: columnWidthPercentage }} align="left">
+                    <TableCellCustom
+                      key={index}
+                      sx={{
+                        width: columnWidthPercentage,
+                        paddingLeft: '20px',
+                        paddingRight: '20px'
+                      }}
+                      align="left"
+                    >
                       {formatCurrency(Math.round(value))}
                     </TableCellCustom>
                   )
@@ -109,7 +121,7 @@ const TableBlockchain = (props: TableBlockchainProps) => {
               return (
                 <TableFooterCellCustom
                   key={index}
-                  sx={{ width: columnWidthPercentage }}
+                  sx={{ width: columnWidthPercentage, paddingLeft: '20px', paddingRight: '20px' }}
                   align="left"
                 >
                   {formatCurrency(Math.round(total))}
