@@ -87,6 +87,48 @@ export const CHAINS: CHAIN[] = [
     short: 'gno',
     explorer: 'https://gnosisscan.io/address',
     logo: '/images/chains/gnosis.svg'
+  },
+  {
+    id: 42161,
+    name: 'Arbitrum',
+    short: '',
+    explorer: 'https://arbiscan.io/address',
+    logo: '/images/chains/arbitrum.svg'
+  },
+  {
+    id: 43114,
+    name: 'Avalanche',
+    short: '',
+    explorer: 'https://subnets.avax.network/c-chain/address',
+    logo: '/images/chains/avalanche.svg'
+  },
+  {
+    id: 10,
+    name: 'Optimism',
+    short: '',
+    explorer: 'https://optimistic.etherscan.io/address',
+    logo: '/images/chains/optimism.svg'
+  },
+  {
+    id: 137,
+    name: 'Polygon',
+    short: '',
+    explorer: 'https://polygonscan.com/address',
+    logo: '/images/chains/polygon.svg'
+  },
+  {
+    id: 8453,
+    name: 'Base',
+    short: '',
+    explorer: 'https://basescan.org/address',
+    logo: '/images/chains/base.svg'
+  },
+  {
+    id: 1088,
+    name: 'Metis',
+    short: '',
+    explorer: 'https://explorer.metis.io/address',
+    logo: '/images/chains/metis.svg'
   }
 ]
 
@@ -98,7 +140,8 @@ export const enum DAO_NAME_KEY {
   'CoW DAO' = 5,
   'karpatkey DAO' = 6,
   'Gnosis Guild' = 7,
-  'Lido' = 8
+  'Lido' = 8,
+  'Aave DAO' = 9
 }
 
 export const getDAONumberByName = (daoName: string): number => {
@@ -119,6 +162,8 @@ export const getDAONumberByName = (daoName: string): number => {
       return DAO_NAME_KEY['Gnosis Guild']
     case 'Lido':
       return DAO_NAME_KEY['Lido']
+    case 'Aave':
+      return DAO_NAME_KEY['Aave DAO']
     default:
       return -1
   }
@@ -535,9 +580,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     sinceMonth: 7,
     sinceYear: 2023,
     shouldBeDisplayedHomepage: false,
-    isEnabled: false,
+    isEnabled: true,
     addresses: [
-      // TODO: update theses addresses
       {
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
@@ -575,6 +619,76 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         year: 2023,
         id: 11_2023
       },
+      {
+        label: 'December',
+        month: 12,
+        year: 2023,
+        id: 12_2023
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['Aave DAO'],
+    name: 'Aave',
+    icon: '/images/protocols/aave.svg',
+    keyName: 'Aave DAO',
+    sinceMonth: 7,
+    sinceYear: 2023,
+    shouldBeDisplayedHomepage: true,
+    isEnabled: true,
+    addresses: [
+      {
+        address: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
+        chainId: 1,
+        isSafe: false
+      },
+      {
+        address: '0x25f2226b597e8f9514b3f68f00f494cf4f286491',
+        chainId: 1,
+        isSafe: false
+      },
+      {
+        address: '0x205e795336610f5131be52f09218af19f0f3ec60',
+        chainId: 1,
+        isSafe: true
+      },
+      {
+        address: '0x3e652e97ff339b73421f824f5b03d75b62f1fb51',
+        chainId: 100,
+        isSafe: false
+      },
+      {
+        address: '0x053d55f9b5af8694c503eb288a1b7e552f590710',
+        chainId: 42161,
+        isSafe: false
+      },
+      {
+        address: '0xb2289e329d2f85f1ed31adbb30ea345278f21bcf',
+        chainId: 10,
+        isSafe: false
+      },
+      {
+        address: '0xe8599f3cc5d38a9ad6f3684cd5cea72f10dbc383',
+        chainId: 137,
+        isSafe: false
+      },
+      {
+        address: '0x5ba7fd868c40c16f7adfae6cf87121e13fc2f7a0',
+        chainId: 43114,
+        isSafe: false
+      },
+      {
+        address: '0xba9424d650a4f5c80a0da641254d1acce2a37057',
+        chainId: 8453,
+        isSafe: false
+      },
+      {
+        address: '0xb5b64c7e00374e766272f8b442cd261412d4b118',
+        chainId: 1088,
+        isSafe: false
+      }
+    ],
+    datesAllowed: [
       {
         label: 'December',
         month: 12,
