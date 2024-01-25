@@ -64,7 +64,10 @@ export interface FILTER_DAO {
   sinceMonth: number
   sinceYear: number
   addresses: DAO_ADDRESS[]
-  shouldBeDisplayedHomepage?: boolean
+  shouldBeIncludedDashboardOne: boolean
+  shouldBeIncludedDashboardTwo: boolean
+  shouldBeIncludedNCAum: boolean
+  shouldBeIncludedLastMonthDeFiResults: boolean
   isEnabled: boolean
   datesAllowed?: {
     label: string
@@ -178,7 +181,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis DAO',
     sinceMonth: 1,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
@@ -240,7 +246,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis LTD',
     sinceMonth: 1,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: false,
+    shouldBeIncludedDashboardOne: false,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: false,
+    shouldBeIncludedLastMonthDeFiResults: false,
     isEnabled: false,
     addresses: [
       // TODO: update theses addresses
@@ -297,7 +306,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Balancer DAO',
     sinceMonth: 2,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
@@ -353,7 +365,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'ENS DAO',
     sinceMonth: 3,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
@@ -409,7 +424,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'CoW DAO',
     sinceMonth: 2,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
@@ -471,7 +489,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'karpatkey DAO',
     sinceMonth: 1,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
@@ -533,7 +554,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis Guild',
     sinceMonth: 7,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: false,
+    shouldBeIncludedDashboardOne: false,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: false,
+    shouldBeIncludedLastMonthDeFiResults: false,
     isEnabled: false,
     addresses: [
       // TODO: update theses addresses
@@ -590,7 +614,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Lido',
     sinceMonth: 7,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: false,
+    shouldBeIncludedDashboardOne: false,
+    shouldBeIncludedDashboardTwo: true,
+    shouldBeIncludedNCAum: false,
+    shouldBeIncludedLastMonthDeFiResults: false,
     isEnabled: true,
     addresses: [
       {
@@ -646,7 +673,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Aave DAO',
     sinceMonth: 12,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
