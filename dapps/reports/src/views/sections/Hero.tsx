@@ -43,7 +43,8 @@ const Hero = () => {
         </BoxWrapperRow>
         <BoxWrapperRow gap={1} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
           {dao?.addresses
-            ?.sort((a: DAO_ADDRESS) => (a.isSafe ? -1 : 1))
+            // sort by item order
+            .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
             .map((daoAddress: DAO_ADDRESS, index: number) => (
               <ButtonAddress key={index} daoAddress={daoAddress} />
             ))}

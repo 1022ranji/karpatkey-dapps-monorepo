@@ -53,6 +53,7 @@ export type DAO_ADDRESS = {
   address: string
   chainId: number
   isSafe: boolean
+  order: number
 }
 
 export interface FILTER_DAO {
@@ -183,12 +184,14 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x849d52316331967b6ff1198e5e32a0eb168d039d',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       },
       {
         address: '0x458cd345b4c05e8df39d0a07220feb4ec19f5e6f',
         chainId: 100,
-        isSafe: true
+        isSafe: true,
+        order: 2
       }
     ],
     datesAllowed: [
@@ -244,7 +247,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -299,7 +303,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x0efccbb9e2c09ea29551879bd9da32362b32fc89',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -354,7 +359,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x4f2083f5fbede34c2714affb3105539775f7fe64',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -409,12 +415,14 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       },
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
         chainId: 100,
-        isSafe: true
+        isSafe: true,
+        order: 2
       }
     ],
     datesAllowed: [
@@ -469,12 +477,14 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       },
       {
         address: '0x54e191B01aA9C1F61AA5C3BCe8d00956F32D3E71',
         chainId: 100,
-        isSafe: true
+        isSafe: true,
+        order: 2
       }
     ],
     datesAllowed: [
@@ -530,7 +540,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -585,7 +596,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -640,52 +652,62 @@ export const FILTER_DAOS: FILTER_DAO[] = [
       {
         address: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 2
       },
       {
         address: '0x25f2226b597e8f9514b3f68f00f494cf4f286491',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       },
       {
         address: '0x205e795336610f5131be52f09218af19f0f3ec60',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 3
       },
       {
         address: '0x3e652e97ff339b73421f824f5b03d75b62f1fb51',
         chainId: 100,
-        isSafe: false
+        isSafe: false,
+        order: 10
       },
       {
         address: '0x053d55f9b5af8694c503eb288a1b7e552f590710',
         chainId: 42161,
-        isSafe: false
+        isSafe: false,
+        order: 6
       },
       {
         address: '0xb2289e329d2f85f1ed31adbb30ea345278f21bcf',
         chainId: 10,
-        isSafe: false
+        isSafe: false,
+        order: 7
       },
       {
         address: '0xe8599f3cc5d38a9ad6f3684cd5cea72f10dbc383',
         chainId: 137,
-        isSafe: false
+        isSafe: false,
+        order: 5
       },
       {
         address: '0x5ba7fd868c40c16f7adfae6cf87121e13fc2f7a0',
         chainId: 43114,
-        isSafe: false
+        isSafe: false,
+        order: 4
       },
       {
         address: '0xba9424d650a4f5c80a0da641254d1acce2a37057',
         chainId: 8453,
-        isSafe: false
+        isSafe: false,
+        order: 9
       },
       {
         address: '0xb5b64c7e00374e766272f8b442cd261412d4b118',
         chainId: 1088,
-        isSafe: false
+        isSafe: false,
+        order: 8
       }
     ],
     datesAllowed: [
