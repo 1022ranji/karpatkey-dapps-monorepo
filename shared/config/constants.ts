@@ -632,7 +632,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Aave',
     icon: '/images/protocols/aave.svg',
     keyName: 'Aave DAO',
-    sinceMonth: 7,
+    sinceMonth: 12,
     sinceYear: 2023,
     shouldBeDisplayedHomepage: true,
     isEnabled: true,
