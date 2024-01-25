@@ -180,7 +180,28 @@ export const getSummaryFundsByBlockchain = (data: any) => {
       }
     })
 
-  return fundsByBlockchain
+  const fundsByBlockchainWithOthers = fundsByBlockchain.reduce((result: any, currentValue: any) => {
+    if (currentValue.allocation * 100 > OTHERS_SUMMARY_LIMIT && result.length < 5) {
+      result.push(currentValue)
+    } else {
+      const other = result.find((item: any) => item.label === 'Others')
+      if (other) {
+        other.funds = other.funds + currentValue.funds
+        other.allocation = other.allocation + currentValue.allocation
+      } else {
+        result.push({
+          value: 'Others',
+          allocation: currentValue.allocation,
+          funds: currentValue.funds,
+          label: 'Others',
+          color: SUMMARY_COLORS[5]
+        })
+      }
+    }
+    return result
+  }, [])
+
+  return fundsByBlockchainWithOthers
 }
 
 export const getSummaryFundsByProtocol = (data: any) => {

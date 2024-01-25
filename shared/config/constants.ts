@@ -53,6 +53,7 @@ export type DAO_ADDRESS = {
   address: string
   chainId: number
   isSafe: boolean
+  order: number
 }
 
 export interface FILTER_DAO {
@@ -63,7 +64,10 @@ export interface FILTER_DAO {
   sinceMonth: number
   sinceYear: number
   addresses: DAO_ADDRESS[]
-  shouldBeDisplayedHomepage?: boolean
+  shouldBeIncludedDashboardOne: boolean
+  shouldBeIncludedDashboardTwo: boolean
+  shouldBeIncludedNCAum: boolean
+  shouldBeIncludedLastMonthDeFiResults: boolean
   isEnabled: boolean
   datesAllowed?: {
     label: string
@@ -177,18 +181,23 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis DAO',
     sinceMonth: 1,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
         address: '0x849d52316331967b6ff1198e5e32a0eb168d039d',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       },
       {
         address: '0x458cd345b4c05e8df39d0a07220feb4ec19f5e6f',
         chainId: 100,
-        isSafe: true
+        isSafe: true,
+        order: 2
       }
     ],
     datesAllowed: [
@@ -237,14 +246,18 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis LTD',
     sinceMonth: 1,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: false,
+    shouldBeIncludedDashboardOne: false,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: false,
+    shouldBeIncludedLastMonthDeFiResults: false,
     isEnabled: false,
     addresses: [
       // TODO: update theses addresses
       {
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -293,13 +306,17 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Balancer DAO',
     sinceMonth: 2,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
         address: '0x0efccbb9e2c09ea29551879bd9da32362b32fc89',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -348,13 +365,17 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'ENS DAO',
     sinceMonth: 3,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
         address: '0x4f2083f5fbede34c2714affb3105539775f7fe64',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -403,18 +424,23 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'CoW DAO',
     sinceMonth: 2,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       },
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
         chainId: 100,
-        isSafe: true
+        isSafe: true,
+        order: 2
       }
     ],
     datesAllowed: [
@@ -463,18 +489,23 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'karpatkey DAO',
     sinceMonth: 1,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
         address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 1
       },
       {
         address: '0x54e191B01aA9C1F61AA5C3BCe8d00956F32D3E71',
         chainId: 100,
-        isSafe: true
+        isSafe: true,
+        order: 2
       }
     ],
     datesAllowed: [
@@ -523,14 +554,18 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis Guild',
     sinceMonth: 7,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: false,
+    shouldBeIncludedDashboardOne: false,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: false,
+    shouldBeIncludedLastMonthDeFiResults: false,
     isEnabled: false,
     addresses: [
       // TODO: update theses addresses
       {
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -579,13 +614,17 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Lido',
     sinceMonth: 7,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: false,
+    shouldBeIncludedDashboardOne: false,
+    shouldBeIncludedDashboardTwo: true,
+    shouldBeIncludedNCAum: false,
+    shouldBeIncludedLastMonthDeFiResults: false,
     isEnabled: true,
     addresses: [
       {
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       }
     ],
     datesAllowed: [
@@ -632,60 +671,73 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Aave',
     icon: '/images/protocols/aave.svg',
     keyName: 'Aave DAO',
-    sinceMonth: 7,
+    sinceMonth: 12,
     sinceYear: 2023,
-    shouldBeDisplayedHomepage: true,
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
     isEnabled: true,
     addresses: [
       {
         address: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 2
       },
       {
         address: '0x25f2226b597e8f9514b3f68f00f494cf4f286491',
         chainId: 1,
-        isSafe: false
+        isSafe: false,
+        order: 1
       },
       {
         address: '0x205e795336610f5131be52f09218af19f0f3ec60',
         chainId: 1,
-        isSafe: true
+        isSafe: true,
+        order: 3
       },
       {
         address: '0x3e652e97ff339b73421f824f5b03d75b62f1fb51',
         chainId: 100,
-        isSafe: false
+        isSafe: false,
+        order: 10
       },
       {
         address: '0x053d55f9b5af8694c503eb288a1b7e552f590710',
         chainId: 42161,
-        isSafe: false
+        isSafe: false,
+        order: 6
       },
       {
         address: '0xb2289e329d2f85f1ed31adbb30ea345278f21bcf',
         chainId: 10,
-        isSafe: false
+        isSafe: false,
+        order: 7
       },
       {
         address: '0xe8599f3cc5d38a9ad6f3684cd5cea72f10dbc383',
         chainId: 137,
-        isSafe: false
+        isSafe: false,
+        order: 5
       },
       {
         address: '0x5ba7fd868c40c16f7adfae6cf87121e13fc2f7a0',
         chainId: 43114,
-        isSafe: false
+        isSafe: false,
+        order: 4
       },
       {
         address: '0xba9424d650a4f5c80a0da641254d1acce2a37057',
         chainId: 8453,
-        isSafe: false
+        isSafe: false,
+        order: 9
       },
       {
         address: '0xb5b64c7e00374e766272f8b442cd261412d4b118',
         chainId: 1088,
-        isSafe: false
+        isSafe: false,
+        order: 8
       }
     ],
     datesAllowed: [
@@ -935,6 +987,150 @@ export const TOKEN_COINGECKO_PRICE_URL = [
   {
     tokenName: 'ELK',
     url: 'https://www.coingecko.com/en/coins/elk-finance'
+  },
+  {
+    tokenName: 'SNX',
+    url: 'https://www.coingecko.com/en/coins/synthetix-network-token'
+  },
+  {
+    tokenName: 'WAVAX',
+    url: 'https://www.coingecko.com/en/coins/wrapped-avax'
+  },
+  {
+    tokenName: 'LINK',
+    url: 'https://www.coingecko.com/en/coins/chainlink'
+  },
+  {
+    tokenName: 'WMATIC',
+    url: 'https://www.coingecko.com/en/coins/wmatic'
+  },
+  {
+    tokenName: 'TUSD',
+    url: 'https://www.coingecko.com/en/coins/true-usd'
+  },
+  {
+    tokenName: 'BUSD',
+    url: 'https://www.coingecko.com/en/coins/busd'
+  },
+  {
+    tokenName: 'DPI',
+    url: 'https://www.coingecko.com/en/coins/defi-pulse-index'
+  },
+  {
+    tokenName: 'BTC.b',
+    url: 'https://www.coingecko.com/en/coins/bitcoin-avalanche-bridged-btc-b'
+  },
+  {
+    tokenName: 'AMPL',
+    url: 'https://www.coingecko.com/en/coins/ampleforth'
+  },
+  {
+    tokenName: 'METIS',
+    url: 'https://www.coingecko.com/en/coins/metis-token'
+  },
+  {
+    tokenName: '1INCH',
+    url: 'https://www.coingecko.com/en/coins/1inch'
+  },
+  {
+    tokenName: 'stMatic',
+    url: 'https://www.coingecko.com/en/coins/lido-staked-matic'
+  },
+  {
+    tokenName: 'sUSD',
+    url: 'https://www.coingecko.com/en/coins/susd'
+  },
+  {
+    tokenName: 'gUSD',
+    url: 'https://www.coingecko.com/en/coins/gemini-dollar'
+  },
+  {
+    tokenName: 'miMatic',
+    url: 'https://www.coingecko.com/en/coins/mai'
+  },
+  {
+    tokenName: 'cbETH',
+    url: 'https://www.coingecko.com/en/coins/coinbase-wrapped-staked-eth'
+  },
+  {
+    tokenName: 'GHST',
+    url: 'https://www.coingecko.com/en/coins/aavegotchi'
+  },
+  {
+    tokenName: 'EURS',
+    url: 'https://www.coingecko.com/en/coins/stasis-eurs'
+  },
+  {
+    tokenName: 'USDbC',
+    url: 'https://www.coingecko.com/en/coins/bridged-usd-coin-base'
+  },
+  {
+    tokenName: 'jEUR',
+    url: 'https://www.coingecko.com/en/coins/jarvis-synthetic-euro'
+  },
+  {
+    tokenName: 'MANA',
+    url: 'https://www.coingecko.com/en/coins/decentraland'
+  },
+  {
+    tokenName: 'BAT',
+    url: 'https://www.coingecko.com/en/coins/basic-attention-token'
+  },
+  {
+    tokenName: 'ENJ',
+    url: 'https://www.coingecko.com/en/coins/enjin-coin'
+  },
+  {
+    tokenName: 'UNI',
+    url: 'https://www.coingecko.com/en/coins/uniswap'
+  },
+  {
+    tokenName: 'MaticX',
+    url: 'https://www.coingecko.com/en/coins/stader-maticx'
+  },
+  {
+    tokenName: 'RAI',
+    url: 'https://www.coingecko.com/en/coins/rai'
+  },
+  {
+    tokenName: 'OP',
+    url: 'https://www.coingecko.com/en/coins/optimism'
+  },
+  {
+    tokenName: 'ZRX',
+    url: 'https://www.coingecko.com/en/coins/0x'
+  },
+  {
+    tokenName: 'KNC',
+    url: 'https://www.coingecko.com/en/coins/kyber-network-crystal'
+  },
+  {
+    tokenName: 'FEI',
+    url: 'https://www.coingecko.com/en/coins/fei-usd'
+  },
+  {
+    tokenName: 'REN',
+    url: 'https://www.coingecko.com/en/coins/ren'
+  },
+  {
+    tokenName: 'YFI',
+    url: 'https://www.coingecko.com/en/coins/yearn-finance'
+  },
+  {
+    tokenName: 'crvUSD',
+    url: 'https://www.coingecko.com/en/coins/crvusd'
+  },
+  {
+    tokenName: 'UST',
+    url: 'https://www.coingecko.com/en/coins/terrausd-wormhole'
+  },
+  {
+    tokenName: 'xSUSHI',
+    url: 'https://www.coingecko.com/en/coins/xsushi'
+  },
+  {
+    tokenName: 'STG',
+    url: 'https://www.coingecko.com/en/coins/stargate-finance'
   }
 ]
 

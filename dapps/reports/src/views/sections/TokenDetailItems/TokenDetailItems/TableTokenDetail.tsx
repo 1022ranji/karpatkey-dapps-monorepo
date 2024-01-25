@@ -35,16 +35,16 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
         <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '40%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '30%' }} align="left">
                 Token symbol
               </TableHeadCellCustom>
               <TableHeadCellCustom
-                sx={{ width: '15%', paddingLeft: '20px', paddingRight: '20px' }}
+                sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
                 align="left"
               >
                 Price
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Token balance
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '15%' }} align="left">
@@ -78,7 +78,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
 
                   return (
                     <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                      <TableCellCustom sx={{ width: '40%' }} align="left">
+                      <TableCellCustom sx={{ width: '30%' }} align="left">
                         <BoxWrapperColumn>
                           {row.tokenSymbol}
                           <CustomTypography variant="tableCellSubData">
@@ -95,7 +95,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom
-                        sx={{ width: '15%', paddingLeft: '20px', paddingRight: '20px' }}
+                        sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
                         align="left"
                       >
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
@@ -110,7 +110,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                           )}
                         </BoxWrapperRow>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
+                      <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapperColumn
                           sx={{
                             minWidth: 'max-content',

@@ -3,7 +3,16 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import React from 'react'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import Image from 'next/image'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
+import {
+  Box,
+  Divider,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip
+} from '@mui/material'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import { NumberBlock } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/NumberBlock'
 import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
@@ -16,6 +25,7 @@ import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import { LinkWrapper } from '@karpatkey-monorepo/reports/src/components/LinkWrapper'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
+import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Title'
 
 interface TableProps {
   daoResume: any
@@ -299,6 +309,9 @@ const Dashboard = (props: DashboardProps) => {
 
   const screenSize = useScreenSize()
 
+  const daoResumeDashboardOne = daoResume.filter((dao: any) => dao.shouldBeIncludedDashboardOne)
+  const daoResumeDashboardTwo = daoResume.filter((dao: any) => dao.shouldBeIncludedDashboardTwo)
+
   return (
     <BoxWrapperColumn
       sx={{
@@ -355,11 +368,30 @@ const Dashboard = (props: DashboardProps) => {
           gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
         }}
       >
-        <AnimatePresenceWrapper>
-          <BoxWrapperColumn>
-            <DashboardTable daoResume={daoResume} latestMonth={month} latestYear={year} />
-          </BoxWrapperColumn>
-        </AnimatePresenceWrapper>
+        {daoResumeDashboardOne.length === 0 ? null : (
+          <AnimatePresenceWrapper>
+            <BoxWrapperColumn>
+              <DashboardTable
+                daoResume={daoResumeDashboardOne}
+                latestMonth={month}
+                latestYear={year}
+              />
+            </BoxWrapperColumn>
+          </AnimatePresenceWrapper>
+        )}
+        {daoResumeDashboardTwo.length === 0 ? null : (
+          <AnimatePresenceWrapper>
+            <Divider sx={{ borderBottomWidth: 5, marginBottom: 5 }} />
+            <BoxWrapperColumn gap={4}>
+              <Title title="Other treasuries not considered in non-custodial AUM" />
+              <DashboardTable
+                daoResume={daoResumeDashboardTwo}
+                latestMonth={month}
+                latestYear={year}
+              />
+            </BoxWrapperColumn>
+          </AnimatePresenceWrapper>
+        )}
       </BoxWrapperColumn>
     </BoxWrapperColumn>
   )
