@@ -28,7 +28,10 @@ const Common = ({ title, tokens }: ListItemsProps) => {
         <Divider sx={{ borderBottomWidth: 5 }} />
       </BoxWrapperColumn>
       {tokens
-        ?.sort((a: { symbol: string }, b: { symbol: string }) => a.symbol.localeCompare(b.symbol))
+        ?.sort(
+          (a: { usdValue?: number }, b: { usdValue?: number }) =>
+            (b?.usdValue ?? 0) - (a?.usdValue ?? 0)
+        )
         .map((token: { symbol: string; balance?: number; usdValue?: number }, index: number) => {
           const { symbol, usdValue, balance } = token
           const formatUsdValue = usdValue ? formatCurrency(usdValue, 2) : ''

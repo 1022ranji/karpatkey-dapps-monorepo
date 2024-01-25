@@ -935,6 +935,150 @@ export const TOKEN_COINGECKO_PRICE_URL = [
   {
     tokenName: 'ELK',
     url: 'https://www.coingecko.com/en/coins/elk-finance'
+  },
+  {
+    tokenName: 'SNX',
+    url: 'https://www.coingecko.com/en/coins/synthetix-network-token'
+  },
+  {
+    tokenName: 'WAVAX',
+    url: 'https://www.coingecko.com/en/coins/wrapped-avax'
+  },
+  {
+    tokenName: 'LINK',
+    url: 'https://www.coingecko.com/en/coins/chainlink'
+  },
+  {
+    tokenName: 'WMATIC',
+    url: 'https://www.coingecko.com/en/coins/wmatic'
+  },
+  {
+    tokenName: 'TUSD',
+    url: 'https://www.coingecko.com/en/coins/true-usd'
+  },
+  {
+    tokenName: 'BUSD',
+    url: 'https://www.coingecko.com/en/coins/busd'
+  },
+  {
+    tokenName: 'DPI',
+    url: 'https://www.coingecko.com/en/coins/defi-pulse-index'
+  },
+  {
+    tokenName: 'BTC.b',
+    url: 'https://www.coingecko.com/en/coins/bitcoin-avalanche-bridged-btc-b'
+  },
+  {
+    tokenName: 'AMPL',
+    url: 'https://www.coingecko.com/en/coins/ampleforth'
+  },
+  {
+    tokenName: 'METIS',
+    url: 'https://www.coingecko.com/en/coins/metis-token'
+  },
+  {
+    tokenName: '1INCH',
+    url: 'https://www.coingecko.com/en/coins/1inch'
+  },
+  {
+    tokenName: 'stMatic',
+    url: 'https://www.coingecko.com/en/coins/lido-staked-matic'
+  },
+  {
+    tokenName: 'sUSD',
+    url: 'https://www.coingecko.com/en/coins/susd'
+  },
+  {
+    tokenName: 'gUSD',
+    url: 'https://www.coingecko.com/en/coins/gemini-dollar'
+  },
+  {
+    tokenName: 'miMatic',
+    url: 'https://www.coingecko.com/en/coins/mai'
+  },
+  {
+    tokenName: 'cbETH',
+    url: 'https://www.coingecko.com/en/coins/coinbase-wrapped-staked-eth'
+  },
+  {
+    tokenName: 'GHST',
+    url: 'https://www.coingecko.com/en/coins/aavegotchi'
+  },
+  {
+    tokenName: 'EURS',
+    url: 'https://www.coingecko.com/en/coins/stasis-eurs'
+  },
+  {
+    tokenName: 'USDbC',
+    url: 'https://www.coingecko.com/en/coins/bridged-usd-coin-base'
+  },
+  {
+    tokenName: 'jEUR',
+    url: 'https://www.coingecko.com/en/coins/jarvis-synthetic-euro'
+  },
+  {
+    tokenName: 'MANA',
+    url: 'https://www.coingecko.com/en/coins/decentraland'
+  },
+  {
+    tokenName: 'BAT',
+    url: 'https://www.coingecko.com/en/coins/basic-attention-token'
+  },
+  {
+    tokenName: 'ENJ',
+    url: 'https://www.coingecko.com/en/coins/enjin-coin'
+  },
+  {
+    tokenName: 'UNI',
+    url: 'https://www.coingecko.com/en/coins/uniswap'
+  },
+  {
+    tokenName: 'MaticX',
+    url: 'https://www.coingecko.com/en/coins/stader-maticx'
+  },
+  {
+    tokenName: 'RAI',
+    url: 'https://www.coingecko.com/en/coins/rai'
+  },
+  {
+    tokenName: 'OP',
+    url: 'https://www.coingecko.com/en/coins/optimism'
+  },
+  {
+    tokenName: 'ZRX',
+    url: 'https://www.coingecko.com/en/coins/0x'
+  },
+  {
+    tokenName: 'KNC',
+    url: 'https://www.coingecko.com/en/coins/kyber-network-crystal'
+  },
+  {
+    tokenName: 'FEI',
+    url: 'https://www.coingecko.com/en/coins/fei-usd'
+  },
+  {
+    tokenName: 'REN',
+    url: 'https://www.coingecko.com/en/coins/ren'
+  },
+  {
+    tokenName: 'YFI',
+    url: 'https://www.coingecko.com/en/coins/yearn-finance'
+  },
+  {
+    tokenName: 'crvUSD',
+    url: 'https://www.coingecko.com/en/coins/crvusd'
+  },
+  {
+    tokenName: 'UST',
+    url: 'https://www.coingecko.com/en/coins/terrausd-wormhole'
+  },
+  {
+    tokenName: 'xSUSHI',
+    url: 'https://www.coingecko.com/en/coins/xsushi'
+  },
+  {
+    tokenName: 'STG',
+    url: 'https://www.coingecko.com/en/coins/stargate-finance'
   }
 ]
 
