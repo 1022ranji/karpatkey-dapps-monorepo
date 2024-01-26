@@ -13,15 +13,6 @@ type TableBlockchainProps = {
 const TableBlockchain = (props: TableBlockchainProps) => {
   const { balanceOverviewBlockchain = [] } = props
 
-  const balanceOverviewBlockchainSorted = balanceOverviewBlockchain
-    .reduce((acc: any, cur: any) => {
-      if (!acc.includes(cur.column)) {
-        acc.push(cur.column)
-      }
-      return acc
-    }, [])
-    .sort((a: any, b: any) => a.localeCompare(b))
-
   const balanceOverviewBlockchainFlattened = balanceOverviewBlockchain.reduce(
     (acc: any, cur: any) => {
       const category = cur.row
@@ -58,18 +49,26 @@ const TableBlockchain = (props: TableBlockchainProps) => {
     return acc
   }, {})
 
-  const columnWidthPercentage = 100 / ((balanceOverviewBlockchainSorted?.length ?? 0) + 2) + '%'
+  const columns = Object.keys(totals)
+    .filter((column: any) => column !== 'total')
+    .sort((a, b) => totals[b] - totals[a])
+
+  const columnWidthPercentage = 100 / ((columns?.length ?? 0) + 2) + '%'
 
   return (
     <TableContainer component={Box}>
-      <Table sx={{ width: '100%' }}>
+      <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
         <TableHead>
           <TableRow>
             <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
               Token category
             </TableHeadCellCustom>
-            {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => (
-              <TableHeadCellCustom key={index} sx={{ width: columnWidthPercentage }} align="left">
+            {columns.map((blockchainName: any, index: number) => (
+              <TableHeadCellCustom
+                key={index}
+                sx={{ width: columnWidthPercentage, paddingLeft: '20px', paddingRight: '20px' }}
+                align="left"
+              >
                 {blockchainName}
               </TableHeadCellCustom>
             ))}
@@ -86,10 +85,18 @@ const TableBlockchain = (props: TableBlockchainProps) => {
                 <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
                   {category}
                 </TableCellCustom>
-                {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => {
+                {columns.map((blockchainName: any, index: number) => {
                   const value = item[blockchainName] ?? 0
                   return (
-                    <TableCellCustom key={index} sx={{ width: columnWidthPercentage }} align="left">
+                    <TableCellCustom
+                      key={index}
+                      sx={{
+                        width: columnWidthPercentage,
+                        paddingLeft: '20px',
+                        paddingRight: '20px'
+                      }}
+                      align="left"
+                    >
                       {formatCurrency(Math.round(value))}
                     </TableCellCustom>
                   )
@@ -104,12 +111,12 @@ const TableBlockchain = (props: TableBlockchainProps) => {
             <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
               Total
             </TableFooterCellCustom>
-            {balanceOverviewBlockchainSorted.map((blockchainName: any, index: number) => {
+            {columns.map((blockchainName: any, index: number) => {
               const total = totals[blockchainName] ?? 0
               return (
                 <TableFooterCellCustom
                   key={index}
-                  sx={{ width: columnWidthPercentage }}
+                  sx={{ width: columnWidthPercentage, paddingLeft: '20px', paddingRight: '20px' }}
                   align="left"
                 >
                   {formatCurrency(Math.round(total))}

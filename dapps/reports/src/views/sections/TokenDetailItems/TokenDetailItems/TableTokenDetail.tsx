@@ -32,22 +32,25 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
-        <Table sx={{ width: '100%' }}>
+        <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '30%' }} align="left">
                 Token symbol
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom
+                sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
+                align="left"
+              >
                 Price
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Token balance
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
                 {isDDay ? 'Share' : 'Allocation'}
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
                 Price variation
               </TableHeadCellCustom>
             </TableRow>
@@ -75,18 +78,26 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
 
                   return (
                     <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: '30%' }} align="left">
                         <BoxWrapperColumn>
                           {row.tokenSymbol}
                           <CustomTypography variant="tableCellSubData">
                             {row.tokenCategory}
                           </CustomTypography>
                           <CustomTypography variant="tableCellSubData">
-                            {row.blockchain}
+                            {row.blockchain.split('|').slice(0, 5).join('|')}
                           </CustomTypography>
+                          {row.blockchain.split('|').length > 5 ? (
+                            <CustomTypography variant="tableCellSubData">
+                              {row.blockchain.split('|').slice(5).join('|')}
+                            </CustomTypography>
+                          ) : null}
                         </BoxWrapperColumn>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom
+                        sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
+                        align="left"
+                      >
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
                           <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
                             <span>{formatCurrencyWithPrecision(row.priceAvg)}</span>
@@ -114,10 +125,10 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: '15%' }} align="left">
                         {formatPercentage(row.allocation)}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: '15%' }} align="left">
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
                           {formatPercentage(row.priceVariation) === '0.00%' ? (
                             <Tooltip

@@ -41,10 +41,13 @@ const Hero = () => {
             </CustomTypography>
           </BoxWrapperColumn>
         </BoxWrapperRow>
-        <BoxWrapperRow gap={4}>
-          {dao?.addresses.map((daoAddress: DAO_ADDRESS, index: number) => (
-            <ButtonAddress key={index} daoAddress={daoAddress} />
-          ))}
+        <BoxWrapperRow gap={1} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+          {dao?.addresses
+            // sort by item order
+            .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
+            .map((daoAddress: DAO_ADDRESS, index: number) => (
+              <ButtonAddress key={index} daoAddress={daoAddress} />
+            ))}
         </BoxWrapperRow>
       </BoxWrapperColumn>
     </AnimatePresenceWrapper>

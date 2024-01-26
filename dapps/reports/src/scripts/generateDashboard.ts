@@ -43,10 +43,18 @@ const getDAOResume = async ({
   }
 }
 
-const daoResumePromises = FILTER_DAOS.filter(
-  (DAO: FILTER_DAO) => DAO.isEnabled && DAO.shouldBeDisplayedHomepage
-).map(
-  async ({ id: DAO_ID, name, icon, keyName, shouldBeDisplayedHomepage, isEnabled }: FILTER_DAO) => {
+const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).map(
+  async ({
+    id: DAO_ID,
+    name,
+    icon,
+    keyName,
+    shouldBeIncludedDashboardOne,
+    shouldBeIncludedDashboardTwo,
+    shouldBeIncludedNCAum,
+    shouldBeIncludedLastMonthDeFiResults,
+    isEnabled
+  }: FILTER_DAO) => {
     const variationMetricsDetail = await dataWarehouse.getTreasuryVariationMetricsDetail(
       keyName,
       metricPeriod,
@@ -77,7 +85,10 @@ const daoResumePromises = FILTER_DAOS.filter(
       name,
       keyName,
       icon,
-      shouldBeDisplayedHomepage,
+      shouldBeIncludedDashboardOne,
+      shouldBeIncludedDashboardTwo,
+      shouldBeIncludedNCAum,
+      shouldBeIncludedLastMonthDeFiResults,
       isEnabled,
       ...daoResume
     }
@@ -88,8 +99,15 @@ const daoResumePromises = FILTER_DAOS.filter(
   try {
     const daoResume = await Promise.all(daoResumePromises)
 
-    const nonCustodialAum = daoResume.reduce((acc, item) => acc + item.totalFunds, 0)
-    const lastMonthDeFiResults = daoResume.reduce((acc, dao) => acc + dao.deFiResults, 0)
+    const nonCustodialAum = daoResume.reduce((acc, item) => {
+      if (!item.shouldBeIncludedNCAum) return acc
+      return acc + item.totalFunds
+    }, 0)
+
+    const lastMonthDeFiResults = daoResume.reduce((acc, dao) => {
+      if (!dao.shouldBeIncludedLastMonthDeFiResults) return acc
+      return acc + dao.deFiResults
+    }, 0)
     const daoResumeSorted = daoResume.sort((a, b) => {
       if (a.keyName === 'karpatkey DAO') return 1
       if (b.keyName === 'karpatkey DAO') return -1
