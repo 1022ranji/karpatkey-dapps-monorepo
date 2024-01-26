@@ -63,21 +63,30 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // We validate the params here to avoid any errors in the page
   await filterSchemaValidation.validate(params)
 
-  const pathFile = path.resolve(process.cwd(), './cache/dashboard.json')
-  const dashboard = JSON.parse(readFileSync(pathFile, 'utf8'))
+  try {
+    const pathFile = path.resolve(process.cwd(), './cache/dashboard.json')
+    const dashboard = JSON.parse(readFileSync(pathFile, 'utf8'))
 
-  let report = null
-  if (dao && month && year) {
-    const pathFile = path.resolve(process.cwd(), `./cache/${dao}.json`)
-    const reports = JSON.parse(readFileSync(pathFile, 'utf8'))
-    report = reports[+year as number][+month as number]
-  }
+    let report = null
+    if (dao && month && year) {
+      const pathFile = path.resolve(process.cwd(), `./cache/${dao}.json`)
+      const reports = JSON.parse(readFileSync(pathFile, 'utf8'))
+      report = reports[+year][+month]
+    }
 
-  return {
-    props: {
-      ...dashboard,
-      report,
-      ...params
+    return {
+      props: {
+        ...dashboard,
+        report,
+        ...params
+      }
+    }
+  } catch (error) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/400'
+      }
     }
   }
 }

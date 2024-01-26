@@ -13,6 +13,7 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Router, { useRouter } from 'next/router'
 import Loading from '@karpatkey-monorepo/reports/src/components/Loading'
+import { AppProvider } from '../contexts/app.context'
 import * as React from 'react'
 
 import '../styles/globals.css'
@@ -60,16 +61,18 @@ export default function MyApp(props: MyAppProps) {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <ErrorBoundaryWrapper>
-            <FilterProvider>
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
-              <NoSsr>
-                {isPasswordProtected ? <Component {...pageProps} /> : null}
-                {!isPasswordProtected ? (
-                  <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
-                ) : null}
-              </NoSsr>
-            </FilterProvider>
+            <AppProvider>
+              <FilterProvider>
+                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                <CssBaseline />
+                <NoSsr>
+                  {isPasswordProtected ? <Component {...pageProps} /> : null}
+                  {!isPasswordProtected ? (
+                    <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
+                  ) : null}
+                </NoSsr>
+              </FilterProvider>
+            </AppProvider>
           </ErrorBoundaryWrapper>
         </ThemeProvider>
       </LocalizationProvider>

@@ -2,10 +2,7 @@
 import '@karpatkey-monorepo/reports/src/scripts/loadEnv'
 import { DataWarehouse } from '@karpatkey-monorepo/reports/src/services/classes/dataWarehouse.class'
 import Cache from '@karpatkey-monorepo/reports/src/services/classes/cache.class'
-import {
-  getLatestMonthAndYear,
-  getLatestMonthAndYearInCommonForEveryDAO
-} from '@karpatkey-monorepo/shared/utils'
+import { getLatestMonthAndYearInCommonForEveryDAO } from '@karpatkey-monorepo/shared/utils'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
 import {
   getCapitalUtilization,
@@ -22,7 +19,6 @@ const metricPeriod = `${year}_${month}`
 
 const getDAOResume = async ({
   variationMetricsDetail,
-  financialMetricsWaterfall,
   financialMetricAndVarDetail,
   waterfall1Report,
   financialMetrics,
@@ -67,16 +63,10 @@ const daoResumePromises = FILTER_DAOS.filter(
       metricPeriod,
       metricPeriodType
     )
-    const financialMetricsWaterfall = await dataWarehouse.getTreasuryFinancialMetricsWaterfall(
-      keyName,
-      metricPeriod,
-      metricPeriodType
-    )
 
     const daoResume = await getDAOResume({
       variationMetricsDetail,
       financialMetricAndVarDetail,
-      financialMetricsWaterfall,
       waterfall1Report,
       financialMetrics,
       DAO_ID,
@@ -100,7 +90,6 @@ const daoResumePromises = FILTER_DAOS.filter(
 
     const nonCustodialAum = daoResume.reduce((acc, item) => acc + item.totalFunds, 0)
     const lastMonthDeFiResults = daoResume.reduce((acc, dao) => acc + dao.deFiResults, 0)
-    // sort daoResume by total funds, but keep the item with keyName equal to "karpatkey DAO" at the last item
     const daoResumeSorted = daoResume.sort((a, b) => {
       if (a.keyName === 'karpatkey DAO') return 1
       if (b.keyName === 'karpatkey DAO') return -1
