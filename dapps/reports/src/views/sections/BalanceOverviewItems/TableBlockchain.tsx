@@ -1,10 +1,11 @@
-import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
+import { formatCurrency, formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
 import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import Box from '@mui/material/Box'
 import * as React from 'react'
+import { useApp } from '../../../contexts/app.context'
 
 type TableBlockchainProps = {
   balanceOverviewBlockchain: { funds: number; row: string; column: string }[]
@@ -12,6 +13,9 @@ type TableBlockchainProps = {
 
 const TableBlockchain = (props: TableBlockchainProps) => {
   const { balanceOverviewBlockchain = [] } = props
+
+  const { state } = useApp()
+  const { currency } = state
 
   const balanceOverviewBlockchainFlattened = balanceOverviewBlockchain.reduce(
     (acc: any, cur: any) => {
@@ -97,12 +101,12 @@ const TableBlockchain = (props: TableBlockchainProps) => {
                       }}
                       align="left"
                     >
-                      {formatCurrency(Math.round(value))}
+                      {currency === 'USD' ? formatCurrency(value) : formatNumber(value, 0)}
                     </TableCellCustom>
                   )
                 })}
                 <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
-                  {formatCurrency(Math.round(total || 0))}
+                  {currency === 'USD' ? formatCurrency(total || 0) : formatNumber(total || 0, 0)}
                 </TableCellCustom>
               </TableRow>
             )
@@ -119,12 +123,14 @@ const TableBlockchain = (props: TableBlockchainProps) => {
                   sx={{ width: columnWidthPercentage, paddingLeft: '20px', paddingRight: '20px' }}
                   align="left"
                 >
-                  {formatCurrency(Math.round(total))}
+                  {currency === 'USD' ? formatCurrency(total) : formatNumber(total, 0)}
                 </TableFooterCellCustom>
               )
             })}
             <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
-              {formatCurrency(totals['total'] || 0)}
+              {currency === 'USD'
+                ? formatCurrency(totals['total'] || 0)
+                : formatNumber(totals['total'] || 0, 0)}
             </TableFooterCellCustom>
           </TableRow>
         </TableBody>

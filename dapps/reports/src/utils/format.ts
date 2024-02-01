@@ -21,6 +21,7 @@ export const formatPercentage = (value: number, mantissa = 2) => {
 }
 
 export const formatNumber = (value: number, mantissa = 2) => {
+  if (value === 0 && mantissa === 0) return '-'
   return numbro(value).format({
     spaceSeparated: false,
     thousandSeparated: true,
@@ -38,6 +39,22 @@ export const formatCurrencyWithPrecision = (value: number) => {
   } else {
     const valueWithPrecision = value.toPrecision(3)
     return numbro(valueWithPrecision).formatCurrency({
+      spaceSeparated: false,
+      thousandSeparated: true
+    })
+  }
+}
+
+export const formatNumberWithPrecision = (value: number) => {
+  if (value > 1) {
+    return numbro(value).format({
+      spaceSeparated: false,
+      thousandSeparated: true,
+      mantissa: 2
+    })
+  } else {
+    const valueWithPrecision = value.toPrecision(3)
+    return numbro(valueWithPrecision).format({
       spaceSeparated: false,
       thousandSeparated: true
     })

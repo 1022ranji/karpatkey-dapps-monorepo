@@ -30,16 +30,26 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         metricPeriodType
       ) //OK
       const waterfall1Report = await dataWarehouse.getWaterfall1Report(keyName, metricPeriod)
+      const waterfall1ReportETH = await dataWarehouse.getWaterfall1ReportETH(keyName, metricPeriod)
+
       const financialMetricAndVarDetail = await dataWarehouse.getFinancialMetricAndVarDetail(
         keyName,
         metricPeriod,
         metricPeriodType
       )
+
       const financialMetricsWaterfall = await dataWarehouse.getTreasuryFinancialMetricsWaterfall(
         keyName,
         metricPeriod,
         metricPeriodType
       )
+      const financialMetricsWaterfallETH =
+        await dataWarehouse.getTreasuryFinancialMetricsWaterfallETH(
+          keyName,
+          metricPeriod,
+          metricPeriodType
+        )
+
       const totalFundsByTokenCategory = await dataWarehouse.getTotalFundsByTokenCategory(
         keyName,
         metricPeriod,
@@ -60,8 +70,13 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         metricPeriod,
         metricPeriodType
       )
+      const historicVariationETH = await dataWarehouse.getTreasuryHistoricVariationETH(
+        keyName,
+        metricPeriod,
+        metricPeriodType
+      )
 
-      // Summary block
+      // Summary block DONE
       const summary = summaryData({
         variationMetricsDetail,
         financialMetricAndVarDetail,
@@ -73,7 +88,7 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         params
       })
 
-      // Balance Overview block
+      // Balance Overview block DONE
       const balanceOverview = balanceOverviewData({
         variationMetricsDetail,
         params
@@ -82,17 +97,18 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
       // Treasury Variation block
       const treasuryVariation = treasuryVariationData({
         waterfall1Report,
+        waterfall1ReportETH,
         historicVariation,
+        historicVariationETH,
         financialMetricsWaterfall,
+        financialMetricsWaterfallETH,
         financialMetrics,
         params
       })
 
       // Farming Funds block
       const farmingFunds = farmingFundsData({
-        waterfall1Report,
         financialPositions,
-        financialMetrics,
         financialMetricsWaterfall,
         params
       })
@@ -108,11 +124,20 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         DAO_ID,
         year,
         month,
-        summary,
-        balanceOverview,
-        treasuryVariation,
-        farmingFunds,
-        tokenDetails
+        ETH: {
+          summary: summary.ETH,
+          balanceOverview: balanceOverview.ETH,
+          treasuryVariation: treasuryVariation.ETH,
+          farmingFunds: farmingFunds.ETH,
+          tokenDetails: tokenDetails.ETH
+        },
+        USD: {
+          summary: summary.USD,
+          balanceOverview: balanceOverview.USD,
+          treasuryVariation: treasuryVariation.USD,
+          farmingFunds: farmingFunds.USD,
+          tokenDetails: tokenDetails.USD
+        }
       })
     }
 
@@ -128,11 +153,8 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         acc[DAO_ID][year][month] = {}
       }
       acc[DAO_ID][year][month] = {
-        summary: report.summary,
-        balanceOverview: report.balanceOverview,
-        treasuryVariation: report.treasuryVariation,
-        farmingFunds: report.farmingFunds,
-        tokenDetails: report.tokenDetails
+        ETH: report['ETH'],
+        USD: report['USD']
       }
       return acc
     }, {} as any)

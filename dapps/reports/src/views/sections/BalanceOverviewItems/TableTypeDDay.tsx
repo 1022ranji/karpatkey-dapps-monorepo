@@ -1,4 +1,4 @@
-import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
+import { formatCurrency, formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import TableFooterCellCustom from '@karpatkey-monorepo/shared/components/Table/TableFooterCellCustom'
 import TableHeadCellCustom from '@karpatkey-monorepo/shared/components/Table/TableHeadCellCustom'
@@ -9,12 +9,16 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
+import { useApp } from '../../../contexts/app.context'
 
 type TableTypeProps = { balanceOverviewType: any } & BoxProps
 
 const TableTypeDDay = (props: TableTypeProps) => {
   const { balanceOverviewType } = props
   const dataFooterType = {} as any
+
+  const { state } = useApp()
+  const { currency } = state
 
   const haveOperationsFundsField = balanceOverviewType.some(
     (row: any) => row['Operations funds'] !== 0
@@ -95,24 +99,32 @@ const TableTypeDDay = (props: TableTypeProps) => {
                     sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
                     align="left"
                   >
-                    {formatCurrency(Math.round(row['DeFi funds'] || 0))}
+                    {currency === 'USD'
+                      ? formatCurrency(row['DeFi funds'] || 0)
+                      : formatNumber(row['DeFi funds'] || 0, 0)}
                   </TableCellCustom>
                   {haveOperationsFundsField ? (
                     <TableCellCustom sx={{ width: '20%' }} align="left">
-                      {formatCurrency(Math.round(row['Operations funds'] || 0))}
+                      {currency === 'USD'
+                        ? formatCurrency(row['Operations funds'] || 0)
+                        : formatNumber(row['Operations funds'] || 0, 0)}
                     </TableCellCustom>
                   ) : null}
                   <TableCellCustom
                     sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
                     align="left"
                   >
-                    {formatCurrency(Math.round(row['Wallet'] || 0))}
+                    {currency === 'USD'
+                      ? formatCurrency(row['Wallet'] || 0)
+                      : formatNumber(row['Wallet'] || 0, 0)}
                   </TableCellCustom>
                   <TableCellCustom
                     sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
                     align="left"
                   >
-                    {formatCurrency(Math.round(row['Total'] || 0))}
+                    {currency === 'USD'
+                      ? formatCurrency(row['Total'] || 0)
+                      : formatNumber(row['Total'] || 0, 0)}
                   </TableCellCustom>
                 </TableRow>
               )
@@ -128,24 +140,32 @@ const TableTypeDDay = (props: TableTypeProps) => {
                 sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
                 align="left"
               >
-                {formatCurrency(Math.round(dataFooterType['DeFi funds'] || 0))}
+                {currency === 'USD'
+                  ? formatCurrency(dataFooterType['DeFi funds'] || 0)
+                  : formatNumber(dataFooterType['DeFi funds'] || 0, 0)}
               </TableFooterCellCustom>
               {haveOperationsFundsField ? (
                 <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                  {formatCurrency(Math.round(dataFooterType['Operations funds'] || 0))}
+                  {currency === 'USD'
+                    ? formatCurrency(dataFooterType['Operations funds'] || 0)
+                    : formatNumber(dataFooterType['Operations funds'] || 0, 0)}
                 </TableFooterCellCustom>
               ) : null}
               <TableFooterCellCustom
                 sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
                 align="left"
               >
-                {formatCurrency(Math.round(dataFooterType['Wallet'] || 0))}
+                {currency === 'USD'
+                  ? formatCurrency(dataFooterType['Wallet'] || 0)
+                  : formatNumber(dataFooterType['Wallet'] || 0, 0)}
               </TableFooterCellCustom>
               <TableFooterCellCustom
                 sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
                 align="left"
               >
-                {formatCurrency(Math.round(dataFooterType['Total'] || 0))}
+                {currency === 'USD'
+                  ? formatCurrency(dataFooterType['Total'] || 0)
+                  : formatNumber(dataFooterType['Total'] || 0, 0)}
               </TableFooterCellCustom>
             </TableRow>
           </TableBody>

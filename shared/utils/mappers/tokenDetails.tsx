@@ -1,11 +1,11 @@
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
 export const getTokenDetails = (data: any) => {
-  const rowsFiltered = data.filter((row: any) => {
+  const rowsFilteredUSD = data.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
-  const rows = rowsFiltered.reduce(
+  const rowsUSD = rowsFilteredUSD.reduce(
     (
       acc: any,
       obj: any
@@ -63,16 +63,16 @@ export const getTokenDetails = (data: any) => {
     []
   )
 
-  const rowsFlat: any = []
-  for (const blockchain in rows) {
-    for (const tokenCategory in rows[blockchain]) {
-      for (const tokenSymbol in rows[blockchain][tokenCategory]) {
-        rowsFlat.push(rows[blockchain][tokenCategory][tokenSymbol])
+  let rowsFlatUSD: any = []
+  for (const blockchain in rowsUSD) {
+    for (const tokenCategory in rowsUSD[blockchain]) {
+      for (const tokenSymbol in rowsUSD[blockchain][tokenCategory]) {
+        rowsFlatUSD.push(rowsUSD[blockchain][tokenCategory][tokenSymbol])
       }
     }
   }
 
-  return rowsFlat
+  rowsFlatUSD = rowsFlatUSD
     .map((row: any) => {
       return {
         ...row,
@@ -82,14 +82,105 @@ export const getTokenDetails = (data: any) => {
       }
     })
     .sort((a: any, b: any) => b.allocation - a.allocation)
-}
 
-export const getTokenDetailsGrouped = (data: any) => {
-  const rowsFiltered = data.filter((row: any) => {
+  // ########################################
+
+  const rowsFilteredETH = data.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
-  const rows = rowsFiltered.reduce(
+  const rowsETH = rowsFilteredETH.reduce(
+    (
+      acc: any,
+      obj: any
+    ): {
+      price: number
+      priceItemsQuantity: number
+      balance: number
+      usdValue: number
+      nextPeriodFirstPrice: number
+      periodFirstPrice: number
+      tokenCategory: string
+      blockchain: string
+      tokenSymbol: string
+    }[][] => {
+      const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '').trim()
+      const blockchain = obj?.blockchain?.trim()
+      const tokenSymbol = obj?.token_symbol?.trim()
+
+      if (!tokenCategory || !blockchain || !tokenSymbol) return acc
+
+      if (!acc[blockchain]) acc[blockchain] = {}
+      if (!acc[blockchain][tokenCategory]) acc[blockchain][tokenCategory] = {}
+      if (!acc[blockchain][tokenCategory][tokenSymbol])
+        acc[blockchain][tokenCategory][tokenSymbol] = {
+          price: 0,
+          priceItemsQuantity: 0,
+          balance: 0,
+          usdValue: 0,
+          nextPeriodFirstPrice: 0,
+          periodFirstPrice: 0,
+          tokenCategory,
+          blockchain,
+          tokenSymbol
+        }
+
+      acc[blockchain][tokenCategory][tokenSymbol].price =
+        acc[blockchain][tokenCategory][tokenSymbol].price +
+        obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
+
+      acc[blockchain][tokenCategory][tokenSymbol].priceItemsQuantity =
+        acc[blockchain][tokenCategory][tokenSymbol].priceItemsQuantity + 1
+      acc[blockchain][tokenCategory][tokenSymbol].balance =
+        acc[blockchain][tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
+      acc[blockchain][tokenCategory][tokenSymbol].usdValue =
+        acc[blockchain][tokenCategory][tokenSymbol].usdValue +
+        (obj['bal_1'] * obj['next_period_first_price']) / (obj['eth_next_month_first_price'] ?? 1)
+
+      acc[blockchain][tokenCategory][tokenSymbol].nextPeriodFirstPrice =
+        acc[blockchain][tokenCategory][tokenSymbol].nextPeriodFirstPrice +
+        obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
+      acc[blockchain][tokenCategory][tokenSymbol].periodFirstPrice =
+        acc[blockchain][tokenCategory][tokenSymbol].periodFirstPrice +
+        obj['period_first_price'] / (obj['eth_month_first_price'] ?? 1)
+
+      return acc
+    },
+    []
+  )
+
+  let rowsFlatETH: any = []
+  for (const blockchain in rowsETH) {
+    for (const tokenCategory in rowsETH[blockchain]) {
+      for (const tokenSymbol in rowsETH[blockchain][tokenCategory]) {
+        rowsFlatETH.push(rowsETH[blockchain][tokenCategory][tokenSymbol])
+      }
+    }
+  }
+
+  rowsFlatETH = rowsFlatETH
+    .map((row: any) => {
+      return {
+        ...row,
+        price: row.price,
+        priceAvg: row.price / (row.priceItemsQuantity ?? 1),
+        priceVariation: row.nextPeriodFirstPrice / (row.periodFirstPrice - 1 ?? 1)
+      }
+    })
+    .sort((a: any, b: any) => b.allocation - a.allocation)
+
+  return {
+    rowsFlatUSD,
+    rowsFlatETH
+  }
+}
+
+export const getTokenDetailsGrouped = (data: any) => {
+  const rowsFilteredUSD = data.filter((row: any) => {
+    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
+  })
+
+  const rowsUSD = rowsFilteredUSD.reduce(
     (
       acc: any,
       obj: any
@@ -148,15 +239,15 @@ export const getTokenDetailsGrouped = (data: any) => {
     []
   )
 
-  const rowsFlat: any = []
+  let rowsFlatUSD: any = []
 
-  for (const tokenCategory in rows) {
-    for (const tokenSymbol in rows[tokenCategory]) {
-      rowsFlat.push(rows[tokenCategory][tokenSymbol])
+  for (const tokenCategory in rowsUSD) {
+    for (const tokenSymbol in rowsUSD[tokenCategory]) {
+      rowsFlatUSD.push(rowsUSD[tokenCategory][tokenSymbol])
     }
   }
 
-  return rowsFlat.map((row: any) => {
+  rowsFlatUSD = rowsFlatUSD.map((row: any) => {
     return {
       ...row,
       blockchain: row.blockchain.sort((a: any, b: any) => a.localeCompare(b)).join('|'),
@@ -165,6 +256,96 @@ export const getTokenDetailsGrouped = (data: any) => {
       priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1
     }
   })
+
+  //////////////////////////// USD
+  const rowsFilteredETH = data.filter((row: any) => {
+    return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
+  })
+
+  const rowsETH = rowsFilteredETH.reduce(
+    (
+      acc: any,
+      obj: any
+    ): {
+      price: number
+      priceItemsQuantity: number
+      balance: number
+      usdValue: number
+      nextPeriodFirstPrice: number
+      periodFirstPrice: number
+      blockchain: string[]
+      tokenCategory: string
+      tokenSymbol: string
+    }[][] => {
+      const tokenCategory = obj?.token_category?.replace(/[0-9][0-9] /g, '').trim()
+      const tokenSymbol = obj?.token_symbol?.trim()
+
+      if (!tokenCategory || !tokenSymbol) return acc
+
+      if (!acc[tokenCategory]) acc[tokenCategory] = {}
+      if (!acc[tokenCategory][tokenSymbol])
+        acc[tokenCategory][tokenSymbol] = {
+          price: 0,
+          priceItemsQuantity: 0,
+          balance: 0,
+          usdValue: 0,
+          nextPeriodFirstPrice: 0,
+          periodFirstPrice: 0,
+          blockchain: [],
+          tokenCategory,
+          tokenSymbol
+        }
+
+      acc[tokenCategory][tokenSymbol].price =
+        acc[tokenCategory][tokenSymbol].price +
+        (obj['next_period_first_price'] && obj['eth_next_month_first_price']
+          ? obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
+          : 0)
+      acc[tokenCategory][tokenSymbol].priceItemsQuantity =
+        acc[tokenCategory][tokenSymbol].priceItemsQuantity + 1
+      acc[tokenCategory][tokenSymbol].balance =
+        acc[tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
+      acc[tokenCategory][tokenSymbol].usdValue =
+        acc[tokenCategory][tokenSymbol].usdValue +
+        (((obj['bal_1'] ?? 0) * obj['next_period_first_price']) /
+          (obj['eth_next_month_first_price'] ?? 1) ?? 0)
+      acc[tokenCategory][tokenSymbol].nextPeriodFirstPrice =
+        acc[tokenCategory][tokenSymbol].nextPeriodFirstPrice +
+        (obj['next_period_first_price'] ? obj['next_period_first_price'] : 0)
+      acc[tokenCategory][tokenSymbol].periodFirstPrice =
+        acc[tokenCategory][tokenSymbol].periodFirstPrice +
+        (obj['period_first_price'] ? obj['period_first_price'] : 0)
+
+      if (!acc[tokenCategory][tokenSymbol].blockchain.includes(obj['blockchain']))
+        acc[tokenCategory][tokenSymbol].blockchain.push(obj['blockchain'])
+
+      return acc
+    },
+    []
+  )
+
+  let rowsFlatETH: any = []
+
+  for (const tokenCategory in rowsETH) {
+    for (const tokenSymbol in rowsETH[tokenCategory]) {
+      rowsFlatETH.push(rowsETH[tokenCategory][tokenSymbol])
+    }
+  }
+
+  rowsFlatETH = rowsFlatETH.map((row: any) => {
+    return {
+      ...row,
+      blockchain: row.blockchain.sort((a: any, b: any) => a.localeCompare(b)).join('|'),
+      price: row.price,
+      priceAvg: row.price / row.priceItemsQuantity,
+      priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1
+    }
+  })
+
+  return {
+    rowsFlatUSD,
+    rowsFlatETH
+  }
 }
 
 export const getTokenDetailByPosition = (data: any, params: any) => {
@@ -512,13 +693,13 @@ export const getTokenDetailByPosition = (data: any, params: any) => {
 }
 
 export const getWalletTokenDetails = (data: any) => {
-  const rowsFiltered = data.filter((row: any) => {
+  const rowsFilteredUSD = data.filter((row: any) => {
     return (
       row.protocol.includes('Wallet') && row.metric.includes('balances_monthly') && +row.bal_1 !== 0
     )
   })
 
-  const rows = rowsFiltered.reduce((acc: any, obj: any): any => {
+  const rowsUSD = rowsFilteredUSD.reduce((acc: any, obj: any): any => {
     const blockchain = obj['blockchain'].trim()
     const tokenSymbol = obj['token_symbol'].trim()
 
@@ -541,14 +722,55 @@ export const getWalletTokenDetails = (data: any) => {
     return acc
   }, {})
 
-  const rowsFlat: any = []
-  for (const blockchain in rows) {
-    for (const tokenSymbol in rows[blockchain]) {
-      rowsFlat.push(rows[blockchain][tokenSymbol])
+  const rowsFlatUSD: any = []
+  for (const blockchain in rowsUSD) {
+    for (const tokenSymbol in rowsUSD[blockchain]) {
+      rowsFlatUSD.push(rowsUSD[blockchain][tokenSymbol])
     }
   }
 
-  return rowsFlat
+  /////////////////// ETH
+
+  const rowsFilteredETH = data.filter((row: any) => {
+    return (
+      row.protocol.includes('Wallet') && row.metric.includes('balances_monthly') && +row.bal_1 !== 0
+    )
+  })
+
+  const rowsETH = rowsFilteredETH.reduce((acc: any, obj: any): any => {
+    const blockchain = obj['blockchain'].trim()
+    const tokenSymbol = obj['token_symbol'].trim()
+
+    if (!acc[blockchain]) acc[blockchain] = {}
+    if (!acc[blockchain][tokenSymbol])
+      acc[blockchain][tokenSymbol] = {
+        tokenBalance: 0,
+        usdValue: 0,
+        blockchain,
+        tokenSymbol
+      }
+
+    acc[blockchain][tokenSymbol].tokenBalance =
+      acc[blockchain][tokenSymbol].tokenBalance + (obj['bal_1'] ? obj['bal_1'] : 0)
+
+    acc[blockchain][tokenSymbol].usdValue =
+      acc[blockchain][tokenSymbol].usdValue +
+      ((obj['bal_1'] ?? 0) *
+        ((obj['next_period_first_price'] ?? 0) / (obj['eth_next_month_first_price'] ?? 1)) ?? 0)
+    return acc
+  }, {})
+
+  const rowsFlatETH: any = []
+  for (const blockchain in rowsETH) {
+    for (const tokenSymbol in rowsETH[blockchain]) {
+      rowsFlatETH.push(rowsETH[blockchain][tokenSymbol])
+    }
+  }
+
+  return {
+    rowsFlatUSD,
+    rowsFlatETH
+  }
 }
 
 export const tokenDetailsData = ({
@@ -566,9 +788,17 @@ export const tokenDetailsData = ({
   const walletTokenDetail = getWalletTokenDetails(variationMetricsDetail)
 
   return {
-    tokenDetails,
-    tokenDetailsGrouped,
-    tokenDetailByPosition,
-    walletTokenDetail
+    USD: {
+      tokenDetails: tokenDetails.rowsFlatUSD,
+      tokenDetailsGrouped: tokenDetailsGrouped.rowsFlatUSD,
+      walletTokenDetail: walletTokenDetail.rowsFlatUSD,
+      tokenDetailByPosition
+    },
+    ETH: {
+      tokenDetails: tokenDetails.rowsFlatETH,
+      tokenDetailsGrouped: tokenDetailsGrouped.rowsFlatETH,
+      walletTokenDetail: walletTokenDetail.rowsFlatETH,
+      tokenDetailByPosition
+    }
   }
 }

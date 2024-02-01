@@ -1,4 +1,8 @@
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
@@ -14,6 +18,7 @@ import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constan
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
+import { useApp } from '../../../contexts/app.context'
 
 interface TableFundsProps {
   funds: any
@@ -33,6 +38,9 @@ const TableFunds = (props: TableFundsProps) => {
 
   const isDDay = isYearAndMonthValid()
 
+  const { state } = useApp()
+  const { currency } = state
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
@@ -46,7 +54,13 @@ const TableFunds = (props: TableFundsProps) => {
                 Position
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                {isDDay ? 'DeFi funds' : 'Farming funds'}
+                {isDDay
+                  ? currency === 'USD'
+                    ? 'DeFi funds'
+                    : 'DeFi funds (ETH)'
+                  : currency === 'USD'
+                  ? 'Farming funds'
+                  : 'Farming funds (ETH)'}
               </TableHeadCellCustom>
               {!isDDay ? (
                 <TableHeadCellCustom sx={{ width: '20%' }} align="left">
@@ -55,7 +69,13 @@ const TableFunds = (props: TableFundsProps) => {
               ) : null}
               <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                 <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
-                  {isDDay ? 'DeFi results' : 'Farming results'}
+                  {isDDay
+                    ? currency === 'USD'
+                      ? 'DeFi results'
+                      : 'DeFi funds (ETH)'
+                    : currency === 'USD'
+                    ? 'Farming results'
+                    : 'Farming results (ETH)'}
                   <Tooltip
                     title={
                       isDDay
@@ -106,7 +126,9 @@ const TableFunds = (props: TableFundsProps) => {
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         <BoxWrapper>
-                          {formatCurrency(Math.round(row.funds || 0))}
+                          {currency === 'USD'
+                            ? formatCurrency(row.funds || 0)
+                            : formatNumber(row.funds, 0)}
                           {row?.allocation > 0 ? (
                             <CustomTypography variant="tableCellSubData">
                               {formatPercentage(row.allocation / 100)}
@@ -116,11 +138,15 @@ const TableFunds = (props: TableFundsProps) => {
                       </TableCellCustom>
                       {!isDDay ? (
                         <TableCellCustom sx={{ width: '20%' }} align="left">
-                          {formatCurrency(Math.round(row.unclaimed || 0))}
+                          {currency === 'USD'
+                            ? formatCurrency(row.unclaimed || 0)
+                            : formatNumber(row.unclaimed, 0)}
                         </TableCellCustom>
                       ) : null}
                       <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                        {formatCurrency(Math.round(row.results || 0))}
+                        {currency === 'USD'
+                          ? formatCurrency(row.results || 0)
+                          : formatNumber(row.results, 0)}
                       </TableCellCustom>
                     </TableRow>
                   )
@@ -161,15 +187,23 @@ const TableFunds = (props: TableFundsProps) => {
                     Total
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                    <BoxWrapper>{formatCurrency(Math.round(totals?.fundsTotal || 0))}</BoxWrapper>
+                    <BoxWrapper>
+                      {currency === 'USD'
+                        ? formatCurrency(totals?.fundsTotal || 0)
+                        : formatNumber(totals?.fundsTotal || 0, 0)}
+                    </BoxWrapper>
                   </TableFooterCellCustom>
                   {!isDDay ? (
                     <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                      {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
+                      {currency === 'USD'
+                        ? formatCurrency(totals?.unclaimedTotal || 0)
+                        : formatNumber(totals?.unclaimedTotal || 0, 0)}
                     </TableFooterCellCustom>
                   ) : null}
                   <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                    {formatCurrency(Math.round(totals?.resultsTotal || 0))}
+                    {currency === 'USD'
+                      ? formatCurrency(totals?.resultsTotal || 0)
+                      : formatNumber(totals?.resultsTotal || 0, 0)}
                   </TableFooterCellCustom>
                 </TableRow>
               </>

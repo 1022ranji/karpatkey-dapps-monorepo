@@ -1,4 +1,4 @@
-import { Dashboard, InitialState } from './state'
+import { Report, Currency, Dashboard, initialState, InitialState } from './state'
 import {
   Actions,
   ActionType,
@@ -6,11 +6,48 @@ import {
   UpdateDashboard,
   UpdateMonth,
   UpdateReport,
-  UpdateYear
+  UpdateYear,
+  ClearState,
+  UpdateCurrency
 } from './actions'
 
 export const mainReducer = (state: InitialState, action: Actions): InitialState => {
   switch (action.type) {
+    case ActionType.UpdateDAO:
+      return {
+        ...state,
+        DAO: action.payload
+      }
+    case ActionType.UpdateYear:
+      return {
+        ...state,
+        year: action.payload
+      }
+    case ActionType.UpdateMonth:
+      return {
+        ...state,
+        month: action.payload
+      }
+    case ActionType.UpdateDashboard:
+      return {
+        ...state,
+        dashboard: action.payload
+      }
+    case ActionType.UpdateReport:
+      return {
+        ...state,
+        report: action.payload
+      }
+    case ActionType.ClearState:
+      return {
+        ...state,
+        ...initialState
+      }
+    case ActionType.UpdateCurrency:
+      return {
+        ...state,
+        currency: action.payload
+      }
     default:
       return state
   }
@@ -37,7 +74,16 @@ export const updateDashboard = (dashboard: Dashboard): UpdateDashboard => ({
   payload: dashboard
 })
 
-export const updateReport = (report: any): UpdateReport => ({
+export const updateReport = (report: Report): UpdateReport => ({
   type: ActionType.UpdateReport,
   payload: report
+})
+
+export const clearState = (): ClearState => ({
+  type: ActionType.ClearState
+})
+
+export const updateCurrency = (currency: Currency): UpdateCurrency => ({
+  type: ActionType.UpdateCurrency,
+  payload: currency
 })

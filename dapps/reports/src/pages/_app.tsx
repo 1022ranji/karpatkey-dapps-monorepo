@@ -1,6 +1,5 @@
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import Layout from '@karpatkey-monorepo/reports/src/components/Layout/Layout'
-import { FilterProvider } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
 import { TITLE } from '@karpatkey-monorepo/shared/config/constants'
 import createEmotionCache from '@karpatkey-monorepo/shared/config/createEmotionCache'
@@ -62,16 +61,14 @@ export default function MyApp(props: MyAppProps) {
         <ThemeProvider theme={theme}>
           <ErrorBoundaryWrapper>
             <AppProvider>
-              <FilterProvider>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <NoSsr>
-                  {isPasswordProtected ? <Component {...pageProps} /> : null}
-                  {!isPasswordProtected ? (
-                    <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
-                  ) : null}
-                </NoSsr>
-              </FilterProvider>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <NoSsr>
+                {isPasswordProtected ? <Component {...pageProps} /> : null}
+                {!isPasswordProtected ? (
+                  <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
+                ) : null}
+              </NoSsr>
             </AppProvider>
           </ErrorBoundaryWrapper>
         </ThemeProvider>

@@ -8,17 +8,54 @@ import DashboardContent from '@karpatkey-monorepo/reports/src/views/Dashboard'
 import HomepageContent from '@karpatkey-monorepo/reports/src/views/Homepage'
 import { readFileSync } from 'fs'
 import path from 'path'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
+import {
+  clearState,
+  updateCurrency,
+  updateDAO,
+  updateDashboard,
+  updateMonth,
+  updateReport,
+  updateYear
+} from '@karpatkey-monorepo/reports/src/contexts/reducers'
+import { Currency, Dashboard, Report } from '@karpatkey-monorepo/reports/src/contexts/state'
 
 const Homepage = (props: ReportProps) => {
-  const { month, dao, year, metrics, daoResume } = props
+  const { month, dao, year, metrics, daoResume, report, currency } = props
   const isFilterEmpty = !month && !dao && !year
 
+  const { dispatch } = useApp()
+
+  React.useEffect(() => {
+    const start = () => {
+      dispatch(clearState())
+
+      if (dao) dispatch(updateDAO(+dao))
+      if (year) dispatch(updateYear(+year))
+      if (month) dispatch(updateMonth(+month))
+
+      if (metrics && daoResume) {
+        const dashboard = { metrics, daoResume } as unknown as Dashboard
+        dispatch(updateDashboard(dashboard))
+      }
+
+      if (report) {
+        dispatch(updateReport(report as Report))
+      }
+
+      if (currency) {
+        dispatch(updateCurrency(currency))
+      }
+    }
+
+    start()
+  }, [dispatch, dao, year, month, metrics, daoResume, report, currency])
+
   if (isFilterEmpty) {
-    const params = { metrics, daoResume }
-    return <DashboardContent {...params} />
+    return <DashboardContent />
   }
 
-  return <HomepageContent {...props} />
+  return <HomepageContent />
 }
 
 Homepage.getTitle = 'Home'
@@ -71,16 +108,22 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     if (dao && month && year) {
       const pathFile = path.resolve(process.cwd(), `./cache/${dao}.json`)
       const reports = JSON.parse(readFileSync(pathFile, 'utf8'))
+
       report = reports[+year][+month]
     }
 
-    return {
-      props: {
-        ...dashboard,
-        report,
-        ...params
-      }
+    // Get allowed currencies from FILTER_DAOS
+    const currenciesAllowed = FILTER_DAOS.find((daoItem) => dao && +daoItem.id === +dao)
+      ?.currenciesAllowed
+
+    const props = {
+      ...dashboard,
+      report,
+      currency: currenciesAllowed?.[0] ?? Currency.USD,
+      ...params
     }
+
+    return { props }
   } catch (error) {
     return {
       redirect: {

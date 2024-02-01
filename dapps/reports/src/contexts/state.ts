@@ -53,6 +53,10 @@ export type TreasuryVariationForThePeriodDetailDataType = {
 } & TreasuryVariationType
 
 export type Report = {
+  [key in Currency]: ReportContent
+}
+
+export type ReportContent = {
   summary: {
     totalFunds: number
     allocatedFunds: number
@@ -83,7 +87,6 @@ export type Report = {
     treasuryVariationForThePeriodDetailData: TreasuryVariationForThePeriodDetailDataType[]
   }
   farmingFunds: {
-    deFiResults: number
     farmingFundsByProtocol: {
       funds: number
       allocation: number
@@ -94,14 +97,6 @@ export type Report = {
       position: string
     }[]
     totalFarmingResultsFarmSwaps: number
-    farmingResultsDetailsByProtocol: {
-      rewards: number
-      fees: number
-      total: number
-      blockchain: string
-      protocol: string
-      position: string
-    }[]
     operationDetails: {
       blockchain: string
       protocol: string
@@ -163,19 +158,23 @@ export type Report = {
         >
       }
     }[]
-    totalUsdValue: number
+    walletTokenDetail: {
+      tokenBalance: number
+      usdValue: number
+      blockchain: string
+      tokenSymbol: string
+    }[]
   }
-  walletTokenDetail: {
-    tokenBalance: number
-    usdValue: number
-    blockchain: string
-    tokenSymbol: string
-  }[]
 }
 
 export type Dashboard = {
   metrics: Metrics
   daoResume: DAOResume[]
+}
+
+export enum Currency {
+  USD = 'USD',
+  ETH = 'ETH'
 }
 
 export type InitialState = {
@@ -184,4 +183,5 @@ export type InitialState = {
   month: Maybe<number>
   dashboard: Maybe<Dashboard>
   report: Maybe<Report>
+  currency: Currency
 }

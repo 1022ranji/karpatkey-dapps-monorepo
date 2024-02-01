@@ -1,3 +1,5 @@
+import { Currency } from '@karpatkey-monorepo/reports/src/contexts/state'
+
 export const TITLE = 'karpatkey'
 
 export const NONE = 'None'
@@ -64,6 +66,8 @@ export interface FILTER_DAO {
   sinceMonth: number
   sinceYear: number
   addresses: DAO_ADDRESS[]
+  defaultCurrency: Currency
+  currenciesAllowed: Currency[]
   shouldBeIncludedDashboardOne: boolean
   shouldBeIncludedDashboardTwo: boolean
   shouldBeIncludedNCAum: boolean
@@ -200,6 +204,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 2
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -260,6 +266,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 1
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -319,6 +327,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 1
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -378,6 +388,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 1
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -443,6 +455,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 2
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -508,6 +522,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 2
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -568,6 +584,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 1
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -627,6 +645,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 1
       }
     ],
+    defaultCurrency: 'ETH' as Currency,
+    currenciesAllowed: ['ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'July',
@@ -740,6 +760,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         order: 8
       }
     ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
     datesAllowed: [
       {
         label: 'December',
