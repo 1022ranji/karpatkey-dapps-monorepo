@@ -601,8 +601,6 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
         const metricCode = obj?.metric_code.trim()
         const nonfarmingPosition = obj?.nonfarming_position.trim()
 
-        console.log('metric', metric)
-        console.log('metricCode', metricCode)
         const metricKey =
           metricCode === 'm07_eth'
             ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
