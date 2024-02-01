@@ -7,7 +7,6 @@ import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/param
 
 interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
-  defiResults: number
 }
 
 const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {

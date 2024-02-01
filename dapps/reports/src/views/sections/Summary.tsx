@@ -1,4 +1,8 @@
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import * as React from 'react'
@@ -8,6 +12,7 @@ import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewP
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { getDAO } from '@karpatkey-monorepo/shared/utils'
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '../../contexts/app.context'
 
 interface SummaryProps {
   dao: Maybe<number>
@@ -38,6 +43,9 @@ const Summary = (props: SummaryProps) => {
     balanceOverviewType
   } = props
 
+  const { state } = useApp()
+  const { currency } = state
+
   // Logic for ENS DAO only for the month of October 2023
   const DAO_OBJ = getDAO(dao)
   const isDAOEnsOctober =
@@ -63,14 +71,27 @@ const Summary = (props: SummaryProps) => {
             gap: 10
           }}
         >
-          <BoxInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
+          <BoxInfoCard
+            title={currency === 'USD' ? 'Total funds' : 'Total funds (ETH)'}
+            value={currency === 'USD' ? formatCurrency(totalFunds) : formatNumber(totalFunds, 0)}
+          />
           <BoxInfoCard
             title={isDDay ? 'Allocated funds' : 'Capital utilisation'}
             value={formatPercentage(capitalUtilization, 1)}
           />
           <BoxInfoCard
-            title={isDDay ? 'DeFi results' : 'Farming results'}
-            value={formatCurrency(farmingResults)}
+            title={
+              isDDay
+                ? currency === 'USD'
+                  ? 'DeFi results'
+                  : 'DeFi results (ETH)'
+                : currency === 'USD'
+                ? 'Farming results'
+                : 'Farming results (ETH)'
+            }
+            value={
+              currency === 'USD' ? formatCurrency(farmingResults) : formatNumber(farmingResults, 0)
+            }
           />
           <BoxInfoCard
             title="APY"

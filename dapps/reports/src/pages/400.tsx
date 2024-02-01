@@ -7,13 +7,13 @@ const PageWrapper = styled(Box)({
   margin: '100px auto'
 })
 
-const Custom500Page = () => {
+const Custom401Page = () => {
   return (
     <PageWrapper>
       <Box height="100%" display="flex" position="relative" alignItems="center">
-        <Box display="block" height="calc(100vh - 360px)" width="100%" position="relative">
+        <Box display="block" height="100%" width="100%" position="relative">
           <CustomTypography color="textSecondary" variant="h3" textAlign="center">
-            Internal server error
+            Please regenerate cache
           </CustomTypography>
         </Box>
       </Box>
@@ -21,4 +21,4 @@ const Custom500Page = () => {
   )
 }
 
-export default Custom500Page
+export default Custom401Page

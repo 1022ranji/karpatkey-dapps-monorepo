@@ -10,6 +10,7 @@ import {
   getGlobalROI,
   getTotalFunds
 } from '@karpatkey-monorepo/shared/utils/mappers/summary'
+import { Currency } from '../contexts/state'
 
 const dataWarehouse = DataWarehouse.getInstance()
 
@@ -34,10 +35,13 @@ const getDAOResume = async ({
 
   const urlToReport = `?dao=${DAO_ID}&month=${month}&year=${year}`
 
+  const shouldBeETH = FILTER_DAOS.find((DAO: FILTER_DAO) => DAO.id === DAO_ID)
+    ?.shouldBeIncludedDashboardTwo
+
   return {
-    totalFunds,
+    totalFunds: shouldBeETH ? totalFunds.totalFundsETH : totalFunds.totalFundsUSD,
     allocatedFunds,
-    deFiResults,
+    deFiResults: shouldBeETH ? deFiResults.deFiResultsETH : deFiResults.deFiResultsUSD,
     APY,
     urlToReport
   }
@@ -108,7 +112,6 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
       if (!dao.shouldBeIncludedLastMonthDeFiResults) return acc
       return acc + dao.deFiResults
     }, 0)
-
     const daoResumeSorted = daoResume.sort((a, b) => {
       if (a.keyName === 'karpatkey DAO') return 1
       if (b.keyName === 'karpatkey DAO') return -1
