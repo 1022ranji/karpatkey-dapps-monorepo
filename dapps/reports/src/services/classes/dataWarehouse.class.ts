@@ -27,7 +27,7 @@ const REPORTS_DATASET = {
     getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions', // OK
     getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation', // OK
     getTreasuryHistoricVariationETH: 'reports_production.dm_treasury_historic_variation_eth',
-    getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail', // OK
+    getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail', // OK mvw_treasury_variation_metrics_detail
     getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr', // OK
     getTreasuryFinancialMetricsWaterfall: 'reports.vw_treasury_financial_metrics_waterfall', // OK
     getTreasuryFinancialMetricsWaterfallETH: 'reports.vw_treasury_financial_metrics_waterfall_eth',

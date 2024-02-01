@@ -76,7 +76,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
               }}
             >
               <Value
-                value={`Total funds (${currency === 'USD' ? 'ncAUM' : 'ETH'})`}
+                value={`Total funds \n(${currency === 'USD' ? 'ncAUM' : 'ETH'})`}
                 fontWeight={600}
                 fontSize={'16px'}
               />
@@ -104,7 +104,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
               }}
             >
               <Value
-                value={`DeFi results ${currency === 'ETH' ? '(ETH)' : ''}`}
+                value={`DeFi \nresults ${currency === 'ETH' ? '(ETH)' : ''}`}
                 fontWeight={600}
                 fontSize={'16px'}
               />

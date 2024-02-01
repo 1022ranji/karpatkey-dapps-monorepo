@@ -291,7 +291,7 @@ export const getTotalFunds = (data: any) => {
       acc =
         acc +
         ((obj['bal_1'] ?? 0) *
-          (obj['next_period_first_price'] / obj['eth_next_month_first_price']) ?? 0)
+          (obj['next_period_first_price'] / obj['eth_next_month_first_price']) ?? 1)
       return acc
     }, 0)
 

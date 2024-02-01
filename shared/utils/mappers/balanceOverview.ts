@@ -110,7 +110,7 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
       acc[tokenCategory][metricKey].funds =
         acc[tokenCategory][metricKey].funds +
         (obj?.bal_1 ?? 0) *
-          ((obj?.next_period_first_price ?? 0) / obj?.eth_next_month_first_price ?? 0)
+          ((obj?.next_period_first_price ?? 0) / obj?.eth_next_month_first_price ?? 1)
 
       return acc
     }, [])
@@ -152,7 +152,7 @@ export const getBalanceOverviewByType = (data: any, params: any) => {
       acc[tokenCategory][metricKey].funds =
         acc[tokenCategory][metricKey].funds +
         (obj?.bal_1 ?? 0) *
-          ((obj?.next_period_first_price ?? 0) / obj?.eth_next_month_first_price ?? 0)
+          ((obj?.next_period_first_price ?? 0) / obj?.eth_next_month_first_price ?? 1)
 
       return acc
     }, [])
@@ -221,7 +221,7 @@ export const getBalanceOverviewByBlockchain = (data: any) => {
       acc[tokenCategory][blockchain].funds =
         acc[tokenCategory][blockchain].funds +
         (obj?.bal_1 ?? 0) *
-          ((obj?.next_period_first_price ?? 0) / obj?.eth_next_month_first_price ?? 0)
+          ((obj?.next_period_first_price ?? 0) / obj?.eth_next_month_first_price ?? 1)
       return acc
     }, [])
 
