@@ -11,8 +11,8 @@ import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpTe
 import Common from './Common'
 import Ratios from './Ratios'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
-import { isYearAndMonthValid } from '../../../../../utils/params'
-import { useApp } from '../../../../../contexts/app.context'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface CardItemProps {
   id: number
@@ -59,7 +59,7 @@ const Card = (props: CardItemProps) => {
           itemText={
             currency === 'USD'
               ? formatCurrency(totalUsdValue || 0, 2)
-              : formatNumber(totalUsdValue, 2)
+              : `${formatNumber(totalUsdValue, 2)} ETH`
           }
         />
       </BoxWrapperColumn>

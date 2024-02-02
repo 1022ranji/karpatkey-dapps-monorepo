@@ -39,7 +39,15 @@ const FarmingFunds = (props: FarmingFundsProps) => {
       </AnimatePresenceWrapper>
       <AnimatePresenceWrapper>
         <PaperSection
-          subTitle={isDDay ? 'DeFi results from DeFi-Swaps' : 'Farming results from Farm-Swaps'}
+          subTitle={
+            isDDay
+              ? currency === 'USD'
+                ? 'DeFi results from DeFi-Swaps'
+                : 'DeFi results from DeFi-Swaps (ETH)'
+              : currency === 'USD'
+              ? 'Farming results from Farm-Swaps'
+              : 'Farming results from Farm-Swaps (ETH)'
+          }
         >
           <CustomTypography variant="farmSwapsValue">
             {totalFarmSwaps === 0 ? (

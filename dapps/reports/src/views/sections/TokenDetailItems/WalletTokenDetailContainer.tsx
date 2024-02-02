@@ -9,6 +9,7 @@ import { WALLET_COLORS } from '@karpatkey-monorepo/shared/config/theme'
 import { PaperProps } from '@mui/material'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
+import { useApp } from '../../../contexts/app.context'
 
 const DynamicTableWalletTokenDetail = dynamic(
   () => import('./TokenDetailItems/TableWalletTokenDetail')
@@ -159,8 +160,14 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
       return result
     }, [])
 
+  const { state } = useApp()
+  const { currency } = state
+
   return (
-    <PaperSection subTitle="Wallet token detail" filter={filter}>
+    <PaperSection
+      subTitle={currency === 'USD' ? 'Wallet token detail' : 'Wallet token detail (ETH)'}
+      filter={filter}
+    >
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
         <EmptyData />
       ) : (

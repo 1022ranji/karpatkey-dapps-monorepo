@@ -235,11 +235,9 @@ export const getTreasuryVariationForThePeriod = (
 }
 
 export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any) => {
-  const valuesForThisYearUSD: any[] = []
-  const valuesForThisYearETH: any[] = []
-
   const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
 
+  const valuesForThisYearUSD: any[] = []
   const rowsUSD = data
     .map((row: any) => {
       const value = row?.metric?.replace(/[0-9][0-9] /g, '')?.trim()
@@ -314,6 +312,7 @@ export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any
     })
   }
 
+  const valuesForThisYearETH: any[] = []
   const rowsETH = dataETH
     .map((row: any) => {
       const value = row?.metric?.replace(/[0-9][0-9] /g, '')?.trim()
@@ -323,30 +322,16 @@ export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any
       let key = 0
       if (isDDay) {
         valueCustom = value
-        key = value?.includes('Initial Balance')
-          ? 1
-          : value?.includes('Operations')
-          ? 2
-          : value?.includes('DeFi')
-          ? 3
-          : 4
+        key = value?.includes('Operations') ? 1 : value?.includes('DeFi') ? 2 : 3
       } else {
-        valueCustom = value.includes('Initial Balance')
-          ? 'Initial Balance'
-          : value?.includes('Operations')
+        valueCustom = value?.includes('Operations')
           ? 'NonFarming Results'
           : value?.includes('DeFi')
           ? 'Farming Results'
           : value?.includes('Final Balance')
           ? 'Final Balance'
           : value
-        key = value?.includes('Initial Balance')
-          ? 1
-          : value?.includes('Operations')
-          ? 2
-          : value?.includes('DeFi')
-          ? 3
-          : 4
+        key = value?.includes('Operations') ? 1 : value?.includes('DeFi') ? 2 : 3
       }
 
       return {
@@ -382,7 +367,7 @@ export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any
     rowsETH.push({
       funds: total,
       value: 'Final Balance',
-      key: rowsUSD.length + 1,
+      key: rowsETH.length + 1,
       uv: total,
       pv: 0
     })

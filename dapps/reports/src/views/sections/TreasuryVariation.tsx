@@ -71,8 +71,8 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
           }
           helpInfo={
             isDDay
-              ? 'USD balance variation for the period (also year to period), results separated into Operations and DeFi results'
-              : 'USD balance variation for the period (also year to period), results separated into Non Farming and Farming Results.'
+              ? 'Balance variation for the period (also year to period), results separated into Operations and DeFi results'
+              : 'Balance variation for the period (also year to period), results separated into Non Farming and Farming Results.'
           }
           filter={filter}
         >

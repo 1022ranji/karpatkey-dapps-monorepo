@@ -41,7 +41,7 @@ const Common = ({ title, tokens }: ListItemsProps) => {
           const formatUsdValue = usdValue
             ? currency === 'USD'
               ? formatCurrency(usdValue, 2)
-              : formatNumber(usdValue, 2)
+              : `${formatNumber(usdValue, 2)} ETH`
             : ''
           const formatBalance = balance ? formatNumber(balance) : ''
           return (

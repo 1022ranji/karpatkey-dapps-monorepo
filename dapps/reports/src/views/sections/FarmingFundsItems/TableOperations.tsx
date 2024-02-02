@@ -49,11 +49,11 @@ const TableOperations = (props: TableResultsProps) => {
                 Position
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Operations funds {currency === 'USD' ? '' : '(ETH)'}
+                Operations funds
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%', paddingRight: '5px' }} align="left">
                 <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
-                  Operation <br /> results {currency === 'USD' ? '' : '(ETH)'}
+                  Operation <br /> results
                   <Tooltip
                     title={
                       'Operations results include fees, rebasing, pool token variation and rewards from Operations positions'
@@ -66,7 +66,7 @@ const TableOperations = (props: TableResultsProps) => {
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Price variation <br />
-                for initial balance {currency === 'USD' ? '' : '(ETH)'}
+                for initial balance
               </TableHeadCellCustom>
             </TableRow>
           </TableHead>

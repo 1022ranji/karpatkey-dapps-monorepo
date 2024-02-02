@@ -139,7 +139,7 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                           <CustomTypography variant="tableCellSubData">
                             {currency === 'USD'
                               ? formatCurrency(row.usdValue, 2)
-                              : formatNumber(row.usdValue, 2)}
+                              : `${formatNumber(row.usdValue, 2)} ETH`}
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
