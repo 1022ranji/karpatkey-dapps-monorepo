@@ -59,7 +59,7 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         keyName,
         metricPeriod,
         metricPeriodType
-      ) //OK
+      )
       const financialMetrics = await dataWarehouse.getTreasuryFinancialMetrics(
         keyName,
         metricPeriod,
@@ -71,6 +71,11 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         metricPeriodType
       )
       const historicVariationETH = await dataWarehouse.getTreasuryHistoricVariationETH(
+        keyName,
+        metricPeriod,
+        metricPeriodType
+      )
+      const variationMetricsDetailV2 = await dataWarehouse.getTreasuryVariationMetricsDetailV2(
         keyName,
         metricPeriod,
         metricPeriodType
@@ -117,6 +122,7 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
       const tokenDetails = tokenDetailsData({
         variationMetricsDetail,
         financialMetricAndVarDetail,
+        variationMetricsDetailV2,
         params
       })
 

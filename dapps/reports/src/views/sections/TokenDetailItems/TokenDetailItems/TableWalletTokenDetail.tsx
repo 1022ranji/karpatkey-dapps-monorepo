@@ -12,6 +12,7 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Box, BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import * as React from 'react'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface TableWalletTokenDetailProps {
   filteredWalletTokenDetail: any[]
@@ -20,6 +21,9 @@ interface TableWalletTokenDetailProps {
 const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxProps) => {
   const { filteredWalletTokenDetail, ...moreProps } = props
   const [displayAll, setDisplayAll] = React.useState(false)
+
+  const { state } = useApp()
+  const { currency } = state
 
   return (
     <BoxWrapperColumn gap={4} {...moreProps}>
@@ -74,7 +78,9 @@ const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxProps) =
                         >
                           {formatNumber(row.tokenBalance)}
                           <CustomTypography variant="tableCellSubData">
-                            {formatCurrency(row.usdValue, 2)}
+                            {currency === 'USD'
+                              ? formatCurrency(row.usdValue, 2)
+                              : `${formatNumber(row.usdValue, 2)} ETH`}
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>

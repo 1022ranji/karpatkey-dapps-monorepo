@@ -7,8 +7,6 @@ import TreasuryVariation from '@karpatkey-monorepo/reports/src/views/sections/Tr
 import BoxContainerWrapper from '@karpatkey-monorepo/shared/components/Wrappers/BoxContainerWrapper'
 import * as React from 'react'
 import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
-import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { FilterByCurrency } from '@karpatkey-monorepo/reports/src/components/FilterByCurrency'
 
 const HomepageContent = () => {
   const { state } = useApp()
@@ -23,16 +21,6 @@ const HomepageContent = () => {
 
   return (
     <BoxContainerWrapper>
-      <BoxWrapperRow
-        sx={{
-          backgroundColor: 'background.default',
-          justifyContent: 'flex-end',
-          paddingX: '26px',
-          height: '100px'
-        }}
-      >
-        <FilterByCurrency />
-      </BoxWrapperRow>
       <Hero />
       <Summary
         dao={DAO}

@@ -1,6 +1,6 @@
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
-export const getTokenDetails = (data: any) => {
+export const getTokenDetails = (data: any, dataV2: any) => {
   const rowsFilteredUSD = data.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
@@ -85,7 +85,7 @@ export const getTokenDetails = (data: any) => {
 
   // ########################################
 
-  const rowsFilteredETH = data.filter((row: any) => {
+  const rowsFilteredETH = dataV2.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
@@ -139,10 +139,10 @@ export const getTokenDetails = (data: any) => {
 
       acc[blockchain][tokenCategory][tokenSymbol].nextPeriodFirstPrice =
         acc[blockchain][tokenCategory][tokenSymbol].nextPeriodFirstPrice +
-        obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
+        +obj['next_period_first_price'] / +(obj['eth_next_month_first_price'] ?? 1)
       acc[blockchain][tokenCategory][tokenSymbol].periodFirstPrice =
         acc[blockchain][tokenCategory][tokenSymbol].periodFirstPrice +
-        obj['period_first_price'] / (obj['eth_month_first_price'] ?? 1)
+        +obj['period_first_price'] / +(obj['eth_month_first_price'] ?? 1)
 
       return acc
     },
@@ -164,10 +164,11 @@ export const getTokenDetails = (data: any) => {
         ...row,
         price: row.price,
         priceAvg: row.price / (row.priceItemsQuantity ?? 1),
-        priceVariation: row.nextPeriodFirstPrice / (row.periodFirstPrice - 1 ?? 1)
+        priceVariation: row.nextPeriodFirstPrice / (row.periodFirstPrice ?? 1) - 1
       }
     })
     .sort((a: any, b: any) => b.allocation - a.allocation)
+  // (sum(next_period_first_price/eth_next_month_first_price)/sum(period_first_price/eth_month_first_price))-1
 
   return {
     rowsFlatUSD,
@@ -175,7 +176,7 @@ export const getTokenDetails = (data: any) => {
   }
 }
 
-export const getTokenDetailsGrouped = (data: any) => {
+export const getTokenDetailsGrouped = (data: any, dataV2: any) => {
   const rowsFilteredUSD = data.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
@@ -257,8 +258,8 @@ export const getTokenDetailsGrouped = (data: any) => {
     }
   })
 
-  //////////////////////////// USD
-  const rowsFilteredETH = data.filter((row: any) => {
+  //////////////////////////// ETH
+  const rowsFilteredETH = dataV2.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
@@ -338,7 +339,7 @@ export const getTokenDetailsGrouped = (data: any) => {
       blockchain: row.blockchain.sort((a: any, b: any) => a.localeCompare(b)).join('|'),
       price: row.price,
       priceAvg: row.price / row.priceItemsQuantity,
-      priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1
+      priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice
     }
   })
 
@@ -1120,10 +1121,14 @@ export const getWalletTokenDetails = (data: any) => {
 export const tokenDetailsData = ({
   variationMetricsDetail,
   financialMetricAndVarDetail,
+  variationMetricsDetailV2,
   params
 }: any) => {
-  const tokenDetails = getTokenDetails(variationMetricsDetail)
-  const tokenDetailsGrouped = getTokenDetailsGrouped(variationMetricsDetail)
+  const tokenDetails = getTokenDetails(variationMetricsDetail, variationMetricsDetailV2)
+  const tokenDetailsGrouped = getTokenDetailsGrouped(
+    variationMetricsDetail,
+    variationMetricsDetailV2
+  )
 
   // Token detail by position
   const tokenDetailByPositionUSD = getTokenDetailByPositionUSD(financialMetricAndVarDetail, params)

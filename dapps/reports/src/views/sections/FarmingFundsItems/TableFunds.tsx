@@ -18,7 +18,7 @@ import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constan
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
-import { useApp } from '../../../contexts/app.context'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface TableFundsProps {
   funds: any
@@ -54,13 +54,7 @@ const TableFunds = (props: TableFundsProps) => {
                 Position
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                {isDDay
-                  ? currency === 'USD'
-                    ? 'DeFi funds'
-                    : 'DeFi funds (ETH)'
-                  : currency === 'USD'
-                  ? 'Farming funds'
-                  : 'Farming funds (ETH)'}
+                {isDDay ? 'DeFi funds' : 'Farming funds'}
               </TableHeadCellCustom>
               {!isDDay ? (
                 <TableHeadCellCustom sx={{ width: '20%' }} align="left">
@@ -69,13 +63,7 @@ const TableFunds = (props: TableFundsProps) => {
               ) : null}
               <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                 <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
-                  {isDDay
-                    ? currency === 'USD'
-                      ? 'DeFi results'
-                      : 'DeFi funds (ETH)'
-                    : currency === 'USD'
-                    ? 'Farming results'
-                    : 'Farming results (ETH)'}
+                  {isDDay ? 'DeFi results' : 'Farming results'}
                   <Tooltip
                     title={
                       isDDay

@@ -54,7 +54,9 @@ const Ratios = ({ title, ratios }: RatiosProps) => {
           }
           if (name === 'Collateral liquidation price') {
             formatValue =
-              currency === 'USD' ? formatCurrency(value || 0, 0) : formatNumber(value || 0, 0)
+              currency === 'USD'
+                ? formatCurrency(value || 0, 0)
+                : `${formatNumber(value || 0, 0)} ETH`
           }
           return (
             <BoxWrapperColumn key={index} gap={1}>

@@ -7,6 +7,7 @@ import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/const
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useApp } from '../../contexts/app.context'
+import { FilterByCurrency } from '../FilterByCurrency'
 
 const Menu = () => {
   const { state } = useApp()
@@ -120,11 +121,10 @@ const Menu = () => {
   )
 
   return (
-    <BoxWrapperRow gap={2}>
-      <BoxWrapperRow id={id || ''} gap={2}>
-        {filterElement}
-        <Share dao={filterDAO} year={year} month={month} />
-      </BoxWrapperRow>
+    <BoxWrapperRow id={id || ''} gap={2} sx={{ justifyContent: 'space-between' }}>
+      {filterElement}
+      <FilterByCurrency />
+      <Share dao={filterDAO} year={year} month={month} />
     </BoxWrapperRow>
   )
 }
