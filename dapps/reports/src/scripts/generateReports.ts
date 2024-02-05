@@ -81,6 +81,12 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         metricPeriodType
       )
 
+      const tokenDetailV2 = await dataWarehouse.getTokenDetail(
+        keyName,
+        metricPeriod,
+        metricPeriodType
+      )
+
       // Summary block DONE
       const summary = summaryData({
         variationMetricsDetail,
@@ -123,6 +129,7 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         variationMetricsDetail,
         financialMetricAndVarDetail,
         variationMetricsDetailV2,
+        tokenDetailV2,
         params
       })
 

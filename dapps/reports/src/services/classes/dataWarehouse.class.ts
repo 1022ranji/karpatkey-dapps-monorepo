@@ -19,7 +19,9 @@ const REPORTS_DATASET = {
     getWaterfall1Report: 'reports.vw_waterfall1_report',
     getWaterfall1ReportETH: 'reports.vw_waterfall1_report_eth',
     getTotalFundsByTokenCategory: 'reports.vw_total_funds_by_token_category',
-    getTreasuryVariationMetricsDetailV2: 'reports.mvw_treasury_variation_metrics_detail'
+    getTreasuryVariationMetricsDetailV2:
+      'reports.dm_treasury_variation_metrics_detail_report_tokens',
+    getTokenDetail: 'reports.vw_dev_token_detail'
   },
   production: {
     getTreasuryFinancialMetrics: 'reports_production.prod_treasury_financial_metrics', // OK
@@ -35,7 +37,9 @@ const REPORTS_DATASET = {
     getWaterfall1Report: 'reports.vw_waterfall1_report', // OK
     getWaterfall1ReportETH: 'reports.vw_waterfall1_report_eth',
     getTotalFundsByTokenCategory: 'reports.vw_total_funds_by_token_category',
-    getTreasuryVariationMetricsDetailV2: 'reports.mvw_treasury_variation_metrics_detail'
+    getTreasuryVariationMetricsDetailV2:
+      'reports.dm_treasury_variation_metrics_detail_report_tokens',
+    getTokenDetail: 'reports.vw_dev_token_detail'
   }
 }
 
@@ -306,6 +310,24 @@ export class DataWarehouse {
         'getOurDAOTreasury'
       ]
     const viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    return await this.executeCommonJobQuery(viewQuery)
+  }
+
+  async getTokenDetail(
+    DAO: Maybe<string>,
+    metricPeriod: Maybe<string>,
+    metricPeriodType: Maybe<string>
+  ) {
+    const table =
+      REPORTS_DATASET[DATA_WAREHOUSE_ENV as unknown as DataWarehouseEnvironment]['getTokenDetail']
+    let viewQuery = `SELECT * FROM  \`karpatkey-data-warehouse.${table}\``
+
+    if (DAO && metricPeriod && metricPeriodType) {
+      viewQuery = viewQuery.concat(
+        ` WHERE dao = '${DAO}' AND date_type = '${metricPeriodType}' AND year_month = '${metricPeriod}'`
+      )
+    }
 
     return await this.executeCommonJobQuery(viewQuery)
   }
