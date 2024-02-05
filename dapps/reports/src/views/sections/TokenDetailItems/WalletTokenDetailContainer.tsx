@@ -9,7 +9,7 @@ import { WALLET_COLORS } from '@karpatkey-monorepo/shared/config/theme'
 import { PaperProps } from '@mui/material'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
-import { useApp } from '../../../contexts/app.context'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 const DynamicTableWalletTokenDetail = dynamic(
   () => import('./TokenDetailItems/TableWalletTokenDetail')

@@ -4,8 +4,8 @@ import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import * as React from 'react'
-import { isYearAndMonthValid } from '../../../utils/params'
-import { useApp } from '../../../contexts/app.context'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface TokenDetailByPositionContainerProps {
   tokenDetailByPosition: any[]

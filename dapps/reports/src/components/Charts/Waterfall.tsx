@@ -127,16 +127,12 @@ const Waterfall = ({
   barSize = 60,
   ...props
 }: BoxProps & WaterfallProps) => {
-  // check if data has 'Initial Balance' value
-  const hasDataInitialBalance = data.some((item) => item.value === 'Initial Balance')
-
-  const keyToCheck = hasDataInitialBalance ? 'Initial Balance' : 'Operations results'
-
-  const initialBalanceFunds = data.find((item) => item.value === keyToCheck)?.uv
+  console.log('DATA', data)
+  const initialBalanceFunds = data.find((item) => item.value === 'Initial Balance')?.uv
 
   const { minValue } = data.reduce(
     (acc, item) => {
-      if (item.value !== keyToCheck && item.value !== 'Final Balance') {
+      if (item.value !== 'Initial Balance' && item.value !== 'Final Balance') {
         acc.value += item.uv
         if (acc.value < acc.minValue) {
           acc.minValue = acc.value
@@ -149,7 +145,7 @@ const Waterfall = ({
 
   const { maxValue } = data.reduce(
     (acc, item) => {
-      if (item.value !== keyToCheck && item.value !== 'Final Balance') {
+      if (item.value !== 'Initial Balance' && item.value !== 'Final Balance') {
         acc.value += item.uv
         if (acc.value > acc.maxValue) {
           acc.maxValue = acc.value

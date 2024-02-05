@@ -322,16 +322,30 @@ export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any
       let key = 0
       if (isDDay) {
         valueCustom = value
-        key = value?.includes('Operations') ? 1 : value?.includes('DeFi') ? 2 : 3
+        key = value?.includes('Initial Balance')
+          ? 1
+          : value?.includes('Operations')
+          ? 2
+          : value?.includes('DeFi')
+          ? 3
+          : 4
       } else {
-        valueCustom = value?.includes('Operations')
+        valueCustom = value.includes('Initial Balance')
+          ? 'Initial Balance'
+          : value?.includes('Operations')
           ? 'NonFarming Results'
           : value?.includes('DeFi')
           ? 'Farming Results'
           : value?.includes('Final Balance')
           ? 'Final Balance'
           : value
-        key = value?.includes('Operations') ? 1 : value?.includes('DeFi') ? 2 : 3
+        key = value?.includes('Initial Balance')
+          ? 1
+          : value?.includes('Operations')
+          ? 2
+          : value?.includes('DeFi')
+          ? 3
+          : 4
       }
 
       return {
