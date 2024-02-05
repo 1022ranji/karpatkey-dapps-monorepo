@@ -10,7 +10,7 @@ import { PaperProps } from '@mui/material'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
-import { useApp } from '../../../contexts/app.context'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 const DynamicTableWalletTokenDetail = dynamic(
   () => import('./TokenDetailItems/TableWalletTokenDetail')

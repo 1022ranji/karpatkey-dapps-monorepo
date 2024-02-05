@@ -75,11 +75,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                 paddingX: '20px'
               }}
             >
-              <Value
-                value={`Total funds \n(${currency === 'USD' ? 'ncAUM' : 'ETH'})`}
-                fontWeight={600}
-                fontSize={'16px'}
-              />
+              <Value value={`Total funds`} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -103,11 +99,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                 ...(matchesFarmingResults ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value
-                value={`DeFi \nresults ${currency === 'ETH' ? '(ETH)' : ''}`}
-                fontWeight={600}
-                fontSize={'16px'}
-              />
+              <Value value={`DeFi results`} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -237,7 +229,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                             value={
                               currency === 'USD'
                                 ? formatCurrency(totalFunds)
-                                : formatNumber(totalFunds, 0)
+                                : `${formatNumber(totalFunds, 0)} ETH`
                             }
                           />
                         </LinkWrapper>
@@ -275,7 +267,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                             value={
                               currency === 'USD'
                                 ? formatCurrency(deFiResults)
-                                : formatNumber(deFiResults, 0)
+                                : `${formatNumber(deFiResults, 0)} ETH`
                             }
                           />
                         </LinkWrapper>

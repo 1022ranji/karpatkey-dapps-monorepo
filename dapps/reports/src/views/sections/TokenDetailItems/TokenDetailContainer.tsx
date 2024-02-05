@@ -5,7 +5,7 @@ import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
-import { useApp } from '../../../contexts/app.context'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 const DynamicTableTokenDetail = dynamic(
   () =>
