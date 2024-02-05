@@ -127,7 +127,6 @@ const Waterfall = ({
   barSize = 60,
   ...props
 }: BoxProps & WaterfallProps) => {
-  console.log('DATA', data)
   const initialBalanceFunds = data.find((item) => item.value === 'Initial Balance')?.uv
 
   const { minValue } = data.reduce(
