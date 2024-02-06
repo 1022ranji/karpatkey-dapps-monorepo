@@ -18,7 +18,6 @@ const Menu = () => {
 
   const param = year && month ? { yearArg: year + '', monthArg: month + '' } : undefined
 
-  console.log('param', param)
   const isDDay = isYearAndMonthValid(param)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
