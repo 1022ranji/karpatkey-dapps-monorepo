@@ -625,7 +625,8 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
                 shortedValue: 'OFRP',
                 key: 8
               }
-            : metric === 'farming executed only swaps eth'
+            : metric === 'farming executed only swaps eth' ||
+              metric === 'farming executed only swaps'
             ? { value: 'DeFi-Swaps', shortedValue: 'FS', key: 9 }
             : metric === 'farming rewards'
             ? { value: 'DeFi-Rewards', shortedValue: 'FR', key: 10 }
@@ -661,6 +662,7 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
         obj: any
       ): { funds: number; value: string; shortedValue: string; key: number }[] => {
         const metric = obj?.metric.trim()
+
         const metricKey =
           metric === 'eth initial balance & UR'
             ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
@@ -678,7 +680,8 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
             ? { value: 'NonFarm-Swaps', shortedValue: 'NFS', key: 5 }
             : metric === 'nonfarming_bridge eth'
             ? { value: 'NonFarm-Bridges', shortedValue: 'NFB', key: 6 }
-            : metric === 'farming executed only swaps eth'
+            : metric === 'farming executed only swaps eth' ||
+              metric === 'farming executed only swaps'
             ? { value: 'Farm-Swaps', shortedValue: 'FS', key: 7 }
             : metric === 'farming rewards'
             ? { value: 'Farm-Rewards', shortedValue: 'FR', key: 8 }

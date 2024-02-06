@@ -8,12 +8,17 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { useApp } from '../../contexts/app.context'
 import { FilterByCurrency } from '../FilterByCurrency'
+import { isYearAndMonthValid } from '../../utils/params'
 
 const Menu = () => {
   const { state } = useApp()
   const router = useRouter()
 
   const { year, month, DAO: filterDAO } = state
+
+  const param = year && month ? { yearArg: year + '', monthArg: month + '' } : undefined
+
+  const isDDay = isYearAndMonthValid(param)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -123,7 +128,7 @@ const Menu = () => {
   return (
     <BoxWrapperRow id={id || ''} gap={2} sx={{ justifyContent: 'space-between' }}>
       {filterElement}
-      <FilterByCurrency />
+      {isDDay && <FilterByCurrency />}
       <Share dao={filterDAO} year={year} month={month} />
     </BoxWrapperRow>
   )
