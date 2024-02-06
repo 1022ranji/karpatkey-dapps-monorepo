@@ -242,6 +242,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -304,6 +310,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -365,6 +377,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -426,6 +444,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -493,6 +517,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -560,6 +590,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -622,6 +658,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -649,30 +691,6 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     currenciesAllowed: ['ETH'] as Currency[],
     datesAllowed: [
       {
-        label: 'July',
-        month: 7,
-        year: 2023,
-        id: 7_2023
-      },
-      {
-        label: 'August',
-        month: 8,
-        year: 2023,
-        id: 8_2023
-      },
-      {
-        label: 'September',
-        month: 9,
-        year: 2023,
-        id: 9_2023
-      },
-      {
-        label: 'October',
-        month: 10,
-        year: 2023,
-        id: 10_2023
-      },
-      {
         label: 'November',
         month: 11,
         year: 2023,
@@ -683,6 +701,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -768,6 +792,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   }
