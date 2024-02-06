@@ -129,7 +129,6 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         variationMetricsDetail,
         financialMetricAndVarDetail,
         variationMetricsDetailV2,
-        tokenDetailV2,
         params
       })
 

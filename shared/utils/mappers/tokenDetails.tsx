@@ -1,7 +1,7 @@
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
 
-export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
-  const rowsFilteredUSD = tokenDetailV2.filter((row: any) => {
+export const getTokenDetails = (data: any, dataV2: any) => {
+  const rowsFilteredUSD = dataV2.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
@@ -11,7 +11,6 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
       obj: any
     ): {
       price: number
-      priceItemsQuantity: number
       balance: number
       usdValue: number
       nextPeriodFirstPrice: number
@@ -31,7 +30,6 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
       if (!acc[blockchain][tokenCategory][tokenSymbol])
         acc[blockchain][tokenCategory][tokenSymbol] = {
           price: 0,
-          priceItemsQuantity: 0,
           balance: 0,
           usdValue: 0,
           nextPeriodFirstPrice: 0,
@@ -41,11 +39,7 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
           tokenSymbol
         }
 
-      acc[blockchain][tokenCategory][tokenSymbol].price =
-        acc[blockchain][tokenCategory][tokenSymbol].price +
-        (obj['next_period_first_price'] ? obj['next_period_first_price'] : 0)
-      acc[blockchain][tokenCategory][tokenSymbol].priceItemsQuantity =
-        acc[blockchain][tokenCategory][tokenSymbol].priceItemsQuantity + 1
+      acc[blockchain][tokenCategory][tokenSymbol].price = obj['next_period_first_price']
       acc[blockchain][tokenCategory][tokenSymbol].balance =
         acc[blockchain][tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[blockchain][tokenCategory][tokenSymbol].usdValue =
@@ -77,7 +71,7 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
       return {
         ...row,
         price: row.price,
-        priceAvg: row.price / row.priceItemsQuantity,
+        priceAvg: row.price,
         priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1
       }
     })
@@ -85,7 +79,7 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
 
   // ########################################
 
-  const rowsFilteredETH = tokenDetailV2.filter((row: any) => {
+  const rowsFilteredETH = dataV2.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
@@ -95,7 +89,6 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
       obj: any
     ): {
       price: number
-      priceItemsQuantity: number
       balance: number
       usdValue: number
       nextPeriodFirstPrice: number
@@ -115,7 +108,6 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
       if (!acc[blockchain][tokenCategory][tokenSymbol])
         acc[blockchain][tokenCategory][tokenSymbol] = {
           price: 0,
-          priceItemsQuantity: 0,
           balance: 0,
           usdValue: 0,
           nextPeriodFirstPrice: 0,
@@ -126,11 +118,7 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
         }
 
       acc[blockchain][tokenCategory][tokenSymbol].price =
-        acc[blockchain][tokenCategory][tokenSymbol].price +
         obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
-
-      acc[blockchain][tokenCategory][tokenSymbol].priceItemsQuantity =
-        acc[blockchain][tokenCategory][tokenSymbol].priceItemsQuantity + 1
       acc[blockchain][tokenCategory][tokenSymbol].balance =
         acc[blockchain][tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[blockchain][tokenCategory][tokenSymbol].usdValue =
@@ -163,7 +151,7 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
       return {
         ...row,
         price: row.price,
-        priceAvg: row.price / (row.priceItemsQuantity || 1),
+        priceAvg: row.price,
         priceVariation: row.nextPeriodFirstPrice / (row.periodFirstPrice || 1) - 1
       }
     })
@@ -175,8 +163,8 @@ export const getTokenDetails = (data: any, dataV2: any, tokenDetailV2: any) => {
   }
 }
 
-export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: any) => {
-  const rowsFilteredUSD = tokenDetailV2.filter((row: any) => {
+export const getTokenDetailsGrouped = (data: any, dataV2: any) => {
+  const rowsFilteredUSD = dataV2.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
@@ -186,7 +174,6 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
       obj: any
     ): {
       price: number
-      priceItemsQuantity: number
       balance: number
       usdValue: number
       nextPeriodFirstPrice: number
@@ -204,7 +191,6 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
       if (!acc[tokenCategory][tokenSymbol])
         acc[tokenCategory][tokenSymbol] = {
           price: 0,
-          priceItemsQuantity: 0,
           balance: 0,
           usdValue: 0,
           nextPeriodFirstPrice: 0,
@@ -214,11 +200,7 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
           tokenSymbol
         }
 
-      acc[tokenCategory][tokenSymbol].price =
-        acc[tokenCategory][tokenSymbol].price +
-        (obj['next_period_first_price'] ? obj['next_period_first_price'] : 0)
-      acc[tokenCategory][tokenSymbol].priceItemsQuantity =
-        acc[tokenCategory][tokenSymbol].priceItemsQuantity + 1
+      acc[tokenCategory][tokenSymbol].price = obj['next_period_first_price']
       acc[tokenCategory][tokenSymbol].balance =
         acc[tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[tokenCategory][tokenSymbol].usdValue =
@@ -252,13 +234,13 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
       ...row,
       blockchain: row.blockchain.sort((a: any, b: any) => a.localeCompare(b)).join('|'),
       price: row.price,
-      priceAvg: row.price / row.priceItemsQuantity,
+      priceAvg: row.price,
       priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1
     }
   })
 
   //////////////////////////// ETH
-  const rowsFilteredETH = tokenDetailV2.filter((row: any) => {
+  const rowsFilteredETH = dataV2.filter((row: any) => {
     return (row.metric.includes('balances') || row.metric.includes('unclaim')) && +row.bal_1 !== 0
   })
 
@@ -268,7 +250,6 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
       obj: any
     ): {
       price: number
-      priceItemsQuantity: number
       balance: number
       usdValue: number
       nextPeriodFirstPrice: number
@@ -286,7 +267,6 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
       if (!acc[tokenCategory][tokenSymbol])
         acc[tokenCategory][tokenSymbol] = {
           price: 0,
-          priceItemsQuantity: 0,
           balance: 0,
           usdValue: 0,
           nextPeriodFirstPrice: 0,
@@ -297,17 +277,12 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
         }
 
       acc[tokenCategory][tokenSymbol].price =
-        acc[tokenCategory][tokenSymbol].price +
-        (obj['next_period_first_price'] && obj['eth_next_month_first_price']
-          ? obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
-          : 0)
-      acc[tokenCategory][tokenSymbol].priceItemsQuantity =
-        acc[tokenCategory][tokenSymbol].priceItemsQuantity + 1
+        obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
       acc[tokenCategory][tokenSymbol].balance =
         acc[tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[tokenCategory][tokenSymbol].usdValue =
         acc[tokenCategory][tokenSymbol].usdValue +
-        (((obj['bal_1'] ?? 0) * obj['next_period_first_price']) /
+        ((obj['bal_1'] * obj['next_period_first_price']) /
           (obj['eth_next_month_first_price'] ?? 1) ?? 0)
       acc[tokenCategory][tokenSymbol].nextPeriodFirstPrice =
         acc[tokenCategory][tokenSymbol].nextPeriodFirstPrice +
@@ -337,7 +312,7 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any, tokenDetailV2: an
       ...row,
       blockchain: row.blockchain.sort((a: any, b: any) => a.localeCompare(b)).join('|'),
       price: row.price,
-      priceAvg: row.price / row.priceItemsQuantity,
+      priceAvg: row.price,
       priceVariation: row.nextPeriodFirstPrice / row.periodFirstPrice - 1
     }
   })
@@ -1121,18 +1096,12 @@ export const tokenDetailsData = ({
   variationMetricsDetail,
   financialMetricAndVarDetail,
   variationMetricsDetailV2,
-  tokenDetailV2,
   params
 }: any) => {
-  const tokenDetailsRows = getTokenDetails(
-    variationMetricsDetail,
-    variationMetricsDetailV2,
-    tokenDetailV2
-  )
+  const tokenDetailsRows = getTokenDetails(variationMetricsDetail, variationMetricsDetailV2)
   const tokenDetailsGrouped = getTokenDetailsGrouped(
     variationMetricsDetail,
-    variationMetricsDetailV2,
-    tokenDetailV2
+    variationMetricsDetailV2
   )
 
   // Token detail by position
