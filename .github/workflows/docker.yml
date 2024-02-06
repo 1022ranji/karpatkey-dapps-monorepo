@@ -121,4 +121,6 @@ jobs:
       - uses: tale/kubectl-action@v1
         with:
           base64-kube-config: ${{ secrets.KUBE_CONFIG }}
-      - run: kubectl delete pod -n develop-karpatkey-dapps-monorepo -l app=develop-karpatkey-dapps-monorepo --force
+      - run: |
+          kubectl delete pod -n develop-karpatkey-dapps-monorepo -l app=develop-karpatkey-dapps-monorepo --force
+          kubectl delete pod -n devprod-karpatkey-dapps-monorepo -l app=devprod-karpatkey-dapps-monorepo --force
