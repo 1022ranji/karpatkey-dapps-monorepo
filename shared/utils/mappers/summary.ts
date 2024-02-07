@@ -308,6 +308,7 @@ export const getCapitalUtilization = (data: any) => {
 
 export const getFarmingResults = (
   waterfall1ReportFiltered: any,
+  waterfall1ReportETHFiltered: any,
   financialMetricsFiltered: any,
   params: any
 ) => {
@@ -331,7 +332,7 @@ export const getFarmingResults = (
   }
 
   if (isDDay) {
-    deFiResultsETH = waterfall1ReportFiltered.reduce((acc: any, obj: any): number => {
+    deFiResultsETH = waterfall1ReportETHFiltered.reduce((acc: any, obj: any): number => {
       const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value_eth : 0
       acc = acc + value
       return acc
@@ -361,6 +362,7 @@ export const summaryData = ({
   financialMetricAndVarDetail,
   financialMetricsWaterfall,
   waterfall1Report,
+  waterfall1ReportETH,
   totalFundsByTokenCategory,
   financialMetrics,
   params
@@ -380,7 +382,12 @@ export const summaryData = ({
   // Summary blocks
   const totalFunds = getTotalFunds(financialMetricAndVarDetail)
   const allocatedFunds = getCapitalUtilization(financialMetricsWaterfall)
-  const deFiResults = getFarmingResults(waterfall1Report, financialMetrics, params)
+  const deFiResults = getFarmingResults(
+    waterfall1Report,
+    waterfall1ReportETH,
+    financialMetrics,
+    params
+  )
   const APY = getGlobalROI(financialMetricsWaterfall)
 
   return {

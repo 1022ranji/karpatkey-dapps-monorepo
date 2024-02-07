@@ -18,10 +18,13 @@ const metricPeriodType = 'month'
 const { month, year } = getLatestMonthAndYearInCommonForEveryDAO()
 const metricPeriod = `${year}_${month}`
 
+console.log('metricPeriod', metricPeriod)
+
 const getDAOResume = async ({
   variationMetricsDetail,
   financialMetricAndVarDetail,
   waterfall1Report,
+  waterfall1ReportETH,
   financialMetrics,
   DAO_ID,
   month,
@@ -29,7 +32,10 @@ const getDAOResume = async ({
 }: any) => {
   const totalFunds = getTotalFunds(variationMetricsDetail)
   const allocatedFunds = getCapitalUtilization(financialMetrics)
-  const deFiResults = getFarmingResults(waterfall1Report, financialMetrics, { year, month })
+  const deFiResults = getFarmingResults(waterfall1Report, waterfall1ReportETH, financialMetrics, {
+    year,
+    month
+  })
 
   const APY = getGlobalROI(financialMetricAndVarDetail)
 
@@ -65,6 +71,7 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
       metricPeriodType
     )
     const waterfall1Report = await dataWarehouse.getWaterfall1Report(keyName, metricPeriod)
+    const waterfall1ReportETH = await dataWarehouse.getWaterfall1ReportETH(keyName, metricPeriod)
     const financialMetricAndVarDetail = await dataWarehouse.getFinancialMetricAndVarDetail(
       keyName,
       metricPeriod,
@@ -80,6 +87,7 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
       variationMetricsDetail,
       financialMetricAndVarDetail,
       waterfall1Report,
+      waterfall1ReportETH,
       financialMetrics,
       DAO_ID,
       month,
