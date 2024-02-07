@@ -39,7 +39,7 @@ export const getTokenDetails = (data: any, dataV2: any) => {
           tokenSymbol
         }
 
-      acc[blockchain][tokenCategory][tokenSymbol].price = obj['next_period_first_price']
+      acc[blockchain][tokenCategory][tokenSymbol].price = obj['next_period_first_price'] ?? 0
       acc[blockchain][tokenCategory][tokenSymbol].balance =
         acc[blockchain][tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[blockchain][tokenCategory][tokenSymbol].usdValue =
@@ -118,7 +118,7 @@ export const getTokenDetails = (data: any, dataV2: any) => {
         }
 
       acc[blockchain][tokenCategory][tokenSymbol].price =
-        obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
+        (obj['next_period_first_price'] ?? 0) / (obj['eth_next_month_first_price'] ?? 1)
       acc[blockchain][tokenCategory][tokenSymbol].balance =
         acc[blockchain][tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[blockchain][tokenCategory][tokenSymbol].usdValue =
@@ -200,7 +200,7 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any) => {
           tokenSymbol
         }
 
-      acc[tokenCategory][tokenSymbol].price = obj['next_period_first_price']
+      acc[tokenCategory][tokenSymbol].price = obj['next_period_first_price'] ?? 0
       acc[tokenCategory][tokenSymbol].balance =
         acc[tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[tokenCategory][tokenSymbol].usdValue =
@@ -277,7 +277,7 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any) => {
         }
 
       acc[tokenCategory][tokenSymbol].price =
-        obj['next_period_first_price'] / (obj['eth_next_month_first_price'] ?? 1)
+        (obj['next_period_first_price'] ?? 0) / (obj['eth_next_month_first_price'] ?? 1)
       acc[tokenCategory][tokenSymbol].balance =
         acc[tokenCategory][tokenSymbol].balance + (obj['bal_1'] ? obj['bal_1'] : 0)
       acc[tokenCategory][tokenSymbol].usdValue =
@@ -286,10 +286,10 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any) => {
           (obj['eth_next_month_first_price'] ?? 1) ?? 0)
       acc[tokenCategory][tokenSymbol].nextPeriodFirstPrice =
         acc[tokenCategory][tokenSymbol].nextPeriodFirstPrice +
-        +obj['next_period_first_price'] / (+obj['eth_next_month_first_price'] || 1)
+        (+obj['next_period_first_price'] ?? 0) / (+obj['eth_next_month_first_price'] || 1)
       acc[tokenCategory][tokenSymbol].periodFirstPrice =
         acc[tokenCategory][tokenSymbol].periodFirstPrice +
-        +obj['period_first_price'] / (+obj['eth_month_first_price'] || 1)
+        (+obj['period_first_price'] ?? 0) / (+obj['eth_month_first_price'] || 1)
 
       if (!acc[tokenCategory][tokenSymbol].blockchain.includes(obj['blockchain']))
         acc[tokenCategory][tokenSymbol].blockchain.push(obj['blockchain'])
