@@ -75,7 +75,11 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                 paddingX: '20px'
               }}
             >
-              <Value value={`Total funds`} fontWeight={600} fontSize={'16px'} />
+              <Value
+                value={`Total funds \n${currency === 'USD' ? '(ncAUM)' : ''}`}
+                fontWeight={600}
+                fontSize={'16px'}
+              />
             </TableCellCustom>
             <TableCellCustom
               align="left"
