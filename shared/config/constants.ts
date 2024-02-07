@@ -64,6 +64,7 @@ export interface FILTER_DAO {
   icon: string
   keyName: DAO_NAME
   sinceMonth: number
+  sinceYearToPeriod: number
   sinceYear: number
   addresses: DAO_ADDRESS[]
   defaultCurrency: Currency
@@ -183,8 +184,9 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Gnosis',
     icon: '/images/protocols/gnosis.svg',
     keyName: 'Gnosis DAO',
-    sinceMonth: 1,
+    sinceMonth: 7,
     sinceYear: 2023,
+    sinceYearToPeriod: 1,
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -242,6 +244,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -250,8 +258,9 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Gnosis LTD',
     icon: '/images/protocols/gnosis.svg',
     keyName: 'Gnosis LTD',
-    sinceMonth: 1,
+    sinceMonth: 7,
     sinceYear: 2023,
+    sinceYearToPeriod: 1,
     shouldBeIncludedDashboardOne: false,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: false,
@@ -312,8 +321,9 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Balancer',
     icon: '/images/protocols/balancer.svg',
     keyName: 'Balancer DAO',
-    sinceMonth: 2,
+    sinceMonth: 7,
     sinceYear: 2023,
+    sinceYearToPeriod: 2,
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -373,8 +383,9 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'ENS',
     icon: '/images/protocols/ens.svg',
     keyName: 'ENS DAO',
-    sinceMonth: 3,
+    sinceMonth: 7,
     sinceYear: 2023,
+    sinceYearToPeriod: 3,
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -434,8 +445,9 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'CoW Protocol',
     icon: '/images/protocols/cow.svg',
     keyName: 'CoW DAO',
-    sinceMonth: 2,
+    sinceMonth: 7,
     sinceYear: 2023,
+    sinceYearToPeriod: 2,
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -501,8 +513,9 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'karpatkey',
     icon: '/images/protocols/karpatkey.svg',
     keyName: 'karpatkey DAO',
-    sinceMonth: 1,
+    sinceMonth: 7,
     sinceYear: 2023,
+    sinceYearToPeriod: 1,
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -570,6 +583,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis Guild',
     sinceMonth: 7,
     sinceYear: 2023,
+    sinceYearToPeriod: 7,
     shouldBeIncludedDashboardOne: false,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: false,
@@ -632,6 +646,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Lido',
     sinceMonth: 11,
     sinceYear: 2023,
+    sinceYearToPeriod: 11,
     shouldBeIncludedDashboardOne: false,
     shouldBeIncludedDashboardTwo: true,
     shouldBeIncludedNCAum: false,
@@ -669,6 +684,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Aave DAO',
     sinceMonth: 12,
     sinceYear: 2023,
+    sinceYearToPeriod: 12,
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,

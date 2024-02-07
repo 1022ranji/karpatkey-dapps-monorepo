@@ -39,7 +39,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
   }
 
   const DAO_MONTH = MONTHS.find((month) => month.id === DAO?.sinceMonth)
-  const helpText = DAO ? `Treasury variation since ${DAO_MONTH?.label}-${DAO.sinceYear}` : ''
+  const helpText = DAO ? `Treasury variation since ${DAO_MONTH?.label} ${DAO.sinceYear}` : ''
 
   const filter = (
     <ToggleButtonGroup

@@ -19,5 +19,5 @@ export const isYearAndMonthValid = (param?: { yearArg: string; monthArg: string 
   const monthReference = 11
   const yearReference = 2023
 
-  return year > yearReference || (year === yearReference && month > monthReference)
+  return year > yearReference || (year === yearReference && month >= monthReference)
 }
