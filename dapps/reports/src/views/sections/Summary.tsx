@@ -89,7 +89,9 @@ const Summary = (props: SummaryProps) => {
                 : 'Farming results (ETH)'
             }
             value={
-              currency === 'USD' ? formatCurrency(farmingResults) : formatNumber(farmingResults, 0)
+              currency === 'USD'
+                ? formatCurrency(farmingResults || 0)
+                : formatNumber(farmingResults || 0, 0)
             }
           />
           <BoxInfoCard

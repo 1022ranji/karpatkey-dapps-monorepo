@@ -137,10 +137,10 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                   icon,
                   name,
                   keyName,
-                  totalFunds,
-                  allocatedFunds,
-                  deFiResults,
-                  APY,
+                  totalFunds = 0,
+                  allocatedFunds = 0,
+                  deFiResults = 0,
+                  APY = 0,
                   urlToReport
                 } = dao
 
@@ -232,8 +232,8 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                           <Value
                             value={
                               currency === 'USD'
-                                ? formatCurrency(totalFunds)
-                                : `${formatNumber(totalFunds, 0)} ETH`
+                                ? formatCurrency(totalFunds || 0)
+                                : `${formatNumber(totalFunds || 0, 0)} ETH`
                             }
                           />
                         </LinkWrapper>
@@ -251,7 +251,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatPercentage(allocatedFunds, 0)} />
+                          <Value value={formatPercentage(allocatedFunds || 0, 0)} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -270,8 +270,8 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                           <Value
                             value={
                               currency === 'USD'
-                                ? formatCurrency(deFiResults)
-                                : `${formatNumber(deFiResults, 0)} ETH`
+                                ? formatCurrency(deFiResults || 0)
+                                : `${formatNumber(deFiResults || 0, 0)} ETH`
                             }
                           />
                         </LinkWrapper>

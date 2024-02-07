@@ -29,16 +29,18 @@ const REPORTS_DATASET = {
     getTreasuryVariationMetricsDetail: 'reports_production.vw_prod_token_detail', // vw_prod_token_detail
     getTreasuryFinancialPositions: 'reports_production.prod_treasury_financial_positions', // OK
     getTreasuryHistoricVariation: 'reports_production.prod_treasury_historic_variation', // OK
-    getTreasuryHistoricVariationETH: 'reports_production.dm_treasury_historic_variation_eth',
+    getTreasuryHistoricVariationETH: 'reports_production.prod_treasury_historic_variation_eth',
     getFinancialMetricAndVarDetail: 'reports_production.vw_financial_metric_and_var_detail', // OK mvw_treasury_variation_metrics_detail
     getOurDAOTreasury: 'reports_production.vw_prod_our_dao_tr', // OK
-    getTreasuryFinancialMetricsWaterfall: 'reports.vw_treasury_financial_metrics_waterfall', // OK
-    getTreasuryFinancialMetricsWaterfallETH: 'reports.vw_treasury_financial_metrics_waterfall_eth',
-    getWaterfall1Report: 'reports.vw_waterfall1_report', // OK
-    getWaterfall1ReportETH: 'reports.vw_waterfall1_report_eth',
-    getTotalFundsByTokenCategory: 'reports.vw_total_funds_by_token_category',
+    getTreasuryFinancialMetricsWaterfall:
+      'reports_production.vw_treasury_financial_metrics_waterfall', // OK
+    getTreasuryFinancialMetricsWaterfallETH:
+      'reports_production.vw_treasury_financial_metrics_waterfall_eth',
+    getWaterfall1Report: 'reports_production.vw_waterfall1_report', // OK
+    getWaterfall1ReportETH: 'reports_production.vw_waterfall1_report_eth',
+    getTotalFundsByTokenCategory: 'reports_production.vw_total_funds_by_token_category',
     getTreasuryVariationMetricsDetailV2:
-      'reports.dm_treasury_variation_metrics_detail_report_tokens',
+      'reports_production.prod_treasury_variation_metrics_detail',
     getTokenDetail: 'reports.vw_dev_token_detail'
   }
 }

@@ -313,6 +313,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -375,6 +381,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -437,6 +449,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -505,6 +523,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -573,6 +597,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -636,6 +666,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -674,6 +710,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   },
@@ -760,6 +802,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 12,
         year: 2023,
         id: 12_2023
+      },
+      {
+        label: 'January',
+        month: 1,
+        year: 2024,
+        id: 1_2024
       }
     ]
   }
