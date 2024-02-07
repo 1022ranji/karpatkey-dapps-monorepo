@@ -672,7 +672,7 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     name: 'Lido',
     icon: '/images/protocols/lido.svg',
     keyName: 'Lido',
-    sinceMonth: 7,
+    sinceMonth: 11,
     sinceYear: 2023,
     shouldBeIncludedDashboardOne: false,
     shouldBeIncludedDashboardTwo: true,
