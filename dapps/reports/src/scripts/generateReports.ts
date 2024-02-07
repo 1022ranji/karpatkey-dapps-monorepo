@@ -93,6 +93,7 @@ const reportPromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled).ma
         financialMetricAndVarDetail,
         financialMetricsWaterfall,
         waterfall1Report,
+        waterfall1ReportETH,
         totalFundsByTokenCategory,
         financialPositions,
         financialMetrics,
