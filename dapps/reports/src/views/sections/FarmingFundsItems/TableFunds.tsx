@@ -134,7 +134,7 @@ const TableFunds = (props: TableFundsProps) => {
                       <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         {currency === 'USD'
                           ? formatCurrency(row.results || 0)
-                          : formatNumber(row.results, 0)}
+                          : formatNumber(row.results, 1)}
                       </TableCellCustom>
                     </TableRow>
                   )
@@ -191,7 +191,7 @@ const TableFunds = (props: TableFundsProps) => {
                   <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                     {currency === 'USD'
                       ? formatCurrency(totals?.resultsTotal || 0)
-                      : formatNumber(totals?.resultsTotal || 0, 0)}
+                      : formatNumber(totals?.resultsTotal || 0, 1)}
                   </TableFooterCellCustom>
                 </TableRow>
               </>
