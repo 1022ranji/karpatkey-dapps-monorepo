@@ -110,7 +110,7 @@ const TableOperations = (props: TableResultsProps) => {
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         {currency === 'USD'
                           ? formatCurrency(row?.operationResults?.toFixed(2) || 0)
-                          : formatNumber(row?.operationResults?.toFixed(2) || 0, 0)}
+                          : formatNumber(row?.operationResults?.toFixed(2) || 0, 1)}
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         {currency === 'USD'
@@ -166,7 +166,7 @@ const TableOperations = (props: TableResultsProps) => {
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                     {currency === 'USD'
                       ? formatCurrency(totals?.operationResultsTotal || 0)
-                      : formatNumber(totals?.operationResultsTotal || 0, 0)}
+                      : formatNumber(totals?.operationResultsTotal || 0, 1)}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
                     {currency === 'USD'
