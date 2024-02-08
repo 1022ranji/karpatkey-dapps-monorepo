@@ -1,5 +1,4 @@
 import ButtonAddress from '@karpatkey-monorepo/reports/src/components/ButtonAddress'
-import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
@@ -8,19 +7,19 @@ import { DAO_ADDRESS, FILTER_DAO } from '@karpatkey-monorepo/shared/config/const
 import { getDAO, getMonthName } from '@karpatkey-monorepo/shared/utils'
 import Image from 'next/image'
 import * as React from 'react'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 const Hero = () => {
-  const { state } = useFilter()
+  const { state } = useApp()
 
-  const filter = state.value
+  const { DAO: filterDAO, month } = state
 
   const { dao, monthName } = React.useMemo(() => {
-    const daoParam = filter?.dao ? +filter.dao : null
-    const dao: FILTER_DAO | undefined = getDAO(daoParam)
-    const monthName = filter && filter.month ? getMonthName(+filter.month) : null
+    const dao: FILTER_DAO | undefined = getDAO(filterDAO)
+    const monthName = month ? getMonthName(+month) : null
 
     return { dao, monthName }
-  }, [filter])
+  }, [filterDAO, month])
 
   if (!dao || !monthName) {
     return null

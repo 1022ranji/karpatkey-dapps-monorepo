@@ -23,7 +23,11 @@ const CustomPopover = (props: CustomPopoverProps) => {
         container={containerRef.current}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left'
+          horizontal: 'center'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center'
         }}
         PaperProps={{
           style: {

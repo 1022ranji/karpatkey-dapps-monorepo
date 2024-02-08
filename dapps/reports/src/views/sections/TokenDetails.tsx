@@ -13,6 +13,7 @@ interface TokenDetailsProps {
 
 const TokenDetails = (props: TokenDetailsProps) => {
   const { tokenDetails, tokenDetailsGrouped, tokenDetailByPosition, walletTokenDetail } = props
+
   return (
     <>
       <AnimatePresenceWrapper>

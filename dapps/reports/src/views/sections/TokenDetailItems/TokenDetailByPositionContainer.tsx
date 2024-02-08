@@ -4,7 +4,8 @@ import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import * as React from 'react'
-import { isYearAndMonthValid } from '../../../utils/params'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface TokenDetailByPositionContainerProps {
   tokenDetailByPosition: any[]
@@ -75,8 +76,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -117,8 +118,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
           key.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : key.toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: key,
         id: key
       }
@@ -213,9 +214,14 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
       />
     </Filter>
   )
+  const { state } = useApp()
+  const { currency } = state
 
   return (
-    <PaperSection subTitle="Token detail by position" filter={filter}>
+    <PaperSection
+      subTitle={currency === 'USD' ? 'Token detail by position' : 'Token detail by position (ETH)'}
+      filter={filter}
+    >
       {filteredDataByBlockchainAndProtocolAndToken &&
       filteredDataByBlockchainAndProtocolAndToken.length > 0 ? (
         <CardList tokenDetailByPosition={filteredDataByBlockchainAndProtocolAndToken} />

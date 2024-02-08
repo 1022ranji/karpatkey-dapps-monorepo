@@ -22,7 +22,8 @@ export const Value = (props: ValueProps) => {
         fontWeight,
         fontSize,
         lineHeight: '24px',
-        color: '#1A1A1A'
+        color: '#1A1A1A',
+        whiteSpace: 'pre-line'
       }}
     >
       {value}

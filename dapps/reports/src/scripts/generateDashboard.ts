@@ -10,6 +10,7 @@ import {
   getGlobalROI,
   getTotalFunds
 } from '@karpatkey-monorepo/shared/utils/mappers/summary'
+import { Currency } from '../contexts/state'
 
 const dataWarehouse = DataWarehouse.getInstance()
 
@@ -17,10 +18,13 @@ const metricPeriodType = 'month'
 const { month, year } = getLatestMonthAndYearInCommonForEveryDAO()
 const metricPeriod = `${year}_${month}`
 
+console.log('metricPeriod', metricPeriod)
+
 const getDAOResume = async ({
   variationMetricsDetail,
   financialMetricAndVarDetail,
   waterfall1Report,
+  waterfall1ReportETH,
   financialMetrics,
   DAO_ID,
   month,
@@ -28,16 +32,22 @@ const getDAOResume = async ({
 }: any) => {
   const totalFunds = getTotalFunds(variationMetricsDetail)
   const allocatedFunds = getCapitalUtilization(financialMetrics)
-  const deFiResults = getFarmingResults(waterfall1Report, financialMetrics, { year, month })
+  const deFiResults = getFarmingResults(waterfall1Report, waterfall1ReportETH, financialMetrics, {
+    year,
+    month
+  })
 
   const APY = getGlobalROI(financialMetricAndVarDetail)
 
   const urlToReport = `?dao=${DAO_ID}&month=${month}&year=${year}`
 
+  const shouldBeETH = FILTER_DAOS.find((DAO: FILTER_DAO) => DAO.id === DAO_ID)
+    ?.shouldBeIncludedDashboardTwo
+
   return {
-    totalFunds,
+    totalFunds: shouldBeETH ? totalFunds.totalFundsETH : totalFunds.totalFundsUSD,
     allocatedFunds,
-    deFiResults,
+    deFiResults: shouldBeETH ? deFiResults.deFiResultsETH : deFiResults.deFiResultsUSD,
     APY,
     urlToReport
   }
@@ -61,6 +71,7 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
       metricPeriodType
     )
     const waterfall1Report = await dataWarehouse.getWaterfall1Report(keyName, metricPeriod)
+    const waterfall1ReportETH = await dataWarehouse.getWaterfall1ReportETH(keyName, metricPeriod)
     const financialMetricAndVarDetail = await dataWarehouse.getFinancialMetricAndVarDetail(
       keyName,
       metricPeriod,
@@ -76,6 +87,7 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
       variationMetricsDetail,
       financialMetricAndVarDetail,
       waterfall1Report,
+      waterfall1ReportETH,
       financialMetrics,
       DAO_ID,
       month,
@@ -108,7 +120,6 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
       if (!dao.shouldBeIncludedLastMonthDeFiResults) return acc
       return acc + dao.deFiResults
     }, 0)
-
     const daoResumeSorted = daoResume.sort((a, b) => {
       if (a.keyName === 'karpatkey DAO') return 1
       if (b.keyName === 'karpatkey DAO') return -1

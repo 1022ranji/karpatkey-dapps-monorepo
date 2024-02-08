@@ -1,5 +1,4 @@
 import Share from '@karpatkey-monorepo/reports//src/components/Share'
-import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form, { SubmitValues } from '@karpatkey-monorepo/shared/components/Filter/Form'
@@ -7,12 +6,19 @@ import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWra
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useApp } from '../../contexts/app.context'
+import { FilterByCurrency } from '../FilterByCurrency'
+import { isYearAndMonthValid } from '../../utils/params'
 
 const Menu = () => {
-  const { state } = useFilter()
+  const { state } = useApp()
   const router = useRouter()
 
-  const filter = state.value
+  const { year, month, DAO: filterDAO } = state
+
+  const param = year && month ? { yearArg: year + '', monthArg: month + '' } : undefined
+
+  const isDDay = isYearAndMonthValid(param)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -33,7 +39,7 @@ const Menu = () => {
 
   // DAO default value
   const filterDaoOption = FILTER_DAOS.find(
-    (option: FILTER_DAO) => filter?.dao && option.id === +filter?.dao
+    (option: FILTER_DAO) => filterDAO && option.id === +filterDAO
   )
 
   const defaultDAOValue = filterDaoOption
@@ -47,14 +53,9 @@ const Menu = () => {
   // Month default value
   const filterMonthOption =
     FILTER_DAOS.find((option) => {
-      return filter?.dao && +option.id === +filter?.dao
+      return filterDAO && +option.id === +filterDAO
     })?.datesAllowed?.find((option) => {
-      return (
-        filter?.year &&
-        filter.month &&
-        +option.month === +filter.month &&
-        +option.year === +filter?.year
-      )
+      return year && month && +option.month === month && +option.year === year
     }) ?? null
   const defaultMonthValue = filterMonthOption
     ? {
@@ -66,9 +67,9 @@ const Menu = () => {
   // Year default value
   const filterYearOption =
     FILTER_DAOS.find((option) => {
-      return filter?.dao && +option.id === +filter?.dao
+      return filterDAO && +option.id === filterDAO
     })?.datesAllowed?.find((option) => {
-      return filter?.year && +option.year === +filter?.year
+      return year && +option.year === year
     }) ?? null
   const defaultYearValue = filterYearOption
     ? {
@@ -125,11 +126,10 @@ const Menu = () => {
   )
 
   return (
-    <BoxWrapperRow gap={2}>
-      <BoxWrapperRow id={id || ''} gap={2}>
-        {filterElement}
-        <Share {...filter} />
-      </BoxWrapperRow>
+    <BoxWrapperRow id={id || ''} gap={2} sx={{ justifyContent: 'space-between' }}>
+      {filterElement}
+      {isDDay && <FilterByCurrency />}
+      <Share dao={filterDAO} year={year} month={month} />
     </BoxWrapperRow>
   )
 }

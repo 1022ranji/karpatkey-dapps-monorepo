@@ -1,6 +1,5 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import { Box, styled } from '@mui/material'
-import { NextPage } from 'next'
 import * as React from 'react'
 
 const PageWrapper = styled(Box)({
@@ -8,7 +7,7 @@ const PageWrapper = styled(Box)({
   margin: '100px auto'
 })
 
-const Custom401Page: NextPage = () => {
+const Custom401Page = () => {
   return (
     <PageWrapper>
       <Box height="100%" display="flex" position="relative" alignItems="center">

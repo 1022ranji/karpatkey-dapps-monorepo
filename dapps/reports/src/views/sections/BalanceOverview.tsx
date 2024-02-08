@@ -11,11 +11,15 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import * as React from 'react'
 import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 type BalanceOverview = { balanceOverviewType: any; balanceOverviewBlockchain: any } & BoxProps
 
 const BalanceOverview = (props: BalanceOverview) => {
   const { balanceOverviewType, balanceOverviewBlockchain } = props
+
+  const { state } = useApp()
+  const { currency } = state
 
   const [toggleType, setToggleType] = React.useState(1)
 
@@ -48,7 +52,9 @@ const BalanceOverview = (props: BalanceOverview) => {
       <PaperSection
         id="Balance overview"
         title="Balance overview"
-        subTitle="Funds by token category and type/blockchain"
+        subTitle={`Funds by token category and type/blockchain ${
+          currency === 'ETH' ? '(ETH)' : ''
+        }`}
         filter={Filter}
       >
         <BoxWrapperColumn>

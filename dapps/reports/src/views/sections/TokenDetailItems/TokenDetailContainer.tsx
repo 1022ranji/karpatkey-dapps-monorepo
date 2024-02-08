@@ -5,6 +5,7 @@ import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 const DynamicTableTokenDetail = dynamic(
   () =>
@@ -121,11 +122,18 @@ const TokenDetailContainer = (props: TokenDetailContainerProps) => {
 
   const isFilterApplied = blockchainFilter !== null
 
+  const { state } = useApp()
+  const { currency } = state
+
   return (
     <PaperSection
       id="Token detail"
       title="Token detail"
-      subTitle="Token detail with price variation"
+      subTitle={
+        currency === 'USD'
+          ? 'Token detail with price variation'
+          : 'Token detail with price variation (ETH)'
+      }
       helpInfo="Token balances, price variations, detail by position and wallet"
       filter={filter}
     >

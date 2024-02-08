@@ -11,7 +11,6 @@ const DynamicPieChart = dynamic(
 
 interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
-  defiResults: number
 }
 
 const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
