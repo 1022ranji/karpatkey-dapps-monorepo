@@ -180,7 +180,28 @@ export const getSummaryFundsByBlockchain = (data: any) => {
       }
     })
 
-  return fundsByBlockchain
+  const fundsByBlockchainWithOthers = fundsByBlockchain.reduce((result: any, currentValue: any) => {
+    if (currentValue.allocation * 100 > OTHERS_SUMMARY_LIMIT && result.length < 5) {
+      result.push(currentValue)
+    } else {
+      const other = result.find((item: any) => item.label === 'Others')
+      if (other) {
+        other.funds = other.funds + currentValue.funds
+        other.allocation = other.allocation + currentValue.allocation
+      } else {
+        result.push({
+          value: 'Others',
+          allocation: currentValue.allocation,
+          funds: currentValue.funds,
+          label: 'Others',
+          color: SUMMARY_COLORS[5]
+        })
+      }
+    }
+    return result
+  }, [])
+
+  return fundsByBlockchainWithOthers
 }
 
 export const getSummaryFundsByProtocol = (data: any) => {
@@ -253,7 +274,7 @@ export const getSummaryFundsByProtocol = (data: any) => {
 }
 
 export const getTotalFunds = (data: any) => {
-  return data
+  const totalFundsUSD = data
     .filter((row: any) => {
       return row.metric.includes('balances') || row.metric.includes('unclaim')
     })
@@ -261,6 +282,20 @@ export const getTotalFunds = (data: any) => {
       acc = acc + ((obj['bal_1'] ?? 0) * obj['next_period_first_price'] ?? 0)
       return acc
     }, 0)
+
+  const totalFundsETH = data
+    .filter((row: any) => {
+      return row.metric.includes('balances') || row.metric.includes('unclaim')
+    })
+    .reduce((acc: any, obj: any): number => {
+      acc =
+        acc +
+        ((obj['bal_1'] ?? 0) *
+          (obj['next_period_first_price'] / obj['eth_next_month_first_price']) ?? 1)
+      return acc
+    }, 0)
+
+  return { totalFundsUSD, totalFundsETH }
 }
 
 export const getCapitalUtilization = (data: any) => {
@@ -273,24 +308,44 @@ export const getCapitalUtilization = (data: any) => {
 
 export const getFarmingResults = (
   waterfall1ReportFiltered: any,
+  waterfall1ReportETHFiltered: any,
   financialMetricsFiltered: any,
   params: any
 ) => {
   const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
 
+  let deFiResultsUSD = 0
+  let deFiResultsETH = 0
+
   if (isDDay) {
-    return waterfall1ReportFiltered.reduce((acc: any, obj: any): number => {
+    deFiResultsUSD = waterfall1ReportFiltered.reduce((acc: any, obj: any): number => {
       const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
       acc = acc + value
       return acc
     }, 0)
   } else {
-    return financialMetricsFiltered.reduce((acc: any, obj: any): number => {
+    deFiResultsUSD = financialMetricsFiltered.reduce((acc: any, obj: any): number => {
       const value = obj?.metric_code === 'm09' ? obj?.metric_value : 0
       acc = acc + value
       return acc
     }, 0)
   }
+
+  if (isDDay) {
+    deFiResultsETH = waterfall1ReportETHFiltered.reduce((acc: any, obj: any): number => {
+      const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
+      acc = acc + value
+      return acc
+    }, 0)
+  } else {
+    deFiResultsETH = financialMetricsFiltered.reduce((acc: any, obj: any): number => {
+      const value = obj?.metric_code === 'm09' ? obj?.metric_value : 0
+      acc = acc + value
+      return acc
+    }, 0)
+  }
+
+  return { deFiResultsUSD, deFiResultsETH }
 }
 
 export const getGlobalROI = (data: any) => {
@@ -307,6 +362,7 @@ export const summaryData = ({
   financialMetricAndVarDetail,
   financialMetricsWaterfall,
   waterfall1Report,
+  waterfall1ReportETH,
   totalFundsByTokenCategory,
   financialMetrics,
   params
@@ -326,17 +382,34 @@ export const summaryData = ({
   // Summary blocks
   const totalFunds = getTotalFunds(financialMetricAndVarDetail)
   const allocatedFunds = getCapitalUtilization(financialMetricsWaterfall)
-  const deFiResults = getFarmingResults(waterfall1Report, financialMetrics, params)
+  const deFiResults = getFarmingResults(
+    waterfall1Report,
+    waterfall1ReportETH,
+    financialMetrics,
+    params
+  )
   const APY = getGlobalROI(financialMetricsWaterfall)
 
   return {
-    totalFunds,
-    allocatedFunds,
-    deFiResults,
-    APY,
-    fundsByTokenCategory,
-    fundsByType,
-    fundsByBlockchain,
-    fundsByProtocol
+    ETH: {
+      totalFunds: totalFunds.totalFundsETH,
+      allocatedFunds: allocatedFunds,
+      deFiResults: deFiResults.deFiResultsETH,
+      APY: APY,
+      fundsByTokenCategory: fundsByTokenCategory,
+      fundsByType: fundsByType,
+      fundsByBlockchain: fundsByBlockchain,
+      fundsByProtocol: fundsByProtocol
+    },
+    USD: {
+      totalFunds: totalFunds.totalFundsUSD,
+      allocatedFunds: allocatedFunds,
+      deFiResults: deFiResults.deFiResultsUSD,
+      APY: APY,
+      fundsByTokenCategory: fundsByTokenCategory,
+      fundsByType: fundsByType,
+      fundsByBlockchain: fundsByBlockchain,
+      fundsByProtocol: fundsByProtocol
+    }
   }
 }

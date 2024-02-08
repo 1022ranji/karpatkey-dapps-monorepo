@@ -1,4 +1,4 @@
-import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
+import { formatCurrency, formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
 import ItemText from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/ItemText'
 import Position from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/Position'
 import ProtocolIcon from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/ProtocolIcon'
@@ -11,7 +11,8 @@ import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpTe
 import Common from './Common'
 import Ratios from './Ratios'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
-import { isYearAndMonthValid } from '../../../../../utils/params'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface CardItemProps {
   id: number
@@ -23,6 +24,9 @@ const Card = (props: CardItemProps) => {
   const { blockchain, protocol, position, totalUsdValue, cardType, categories, deFiType } = card
 
   const isDDay = isYearAndMonthValid()
+
+  const { state } = useApp()
+  const { currency } = state
 
   const helpText = <UniswapHelpText />
 
@@ -50,7 +54,14 @@ const Card = (props: CardItemProps) => {
       )}
       <BoxWrapperColumn gap={1}>
         <Position position={position} {...(protocol === UNISWAP_PROTOCOL ? { helpText } : {})} />
-        <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUsdValue || 0, 2)} />
+        <ItemText
+          maxWidth={'fit-content'}
+          itemText={
+            currency === 'USD'
+              ? formatCurrency(totalUsdValue || 0, 2)
+              : `${formatNumber(totalUsdValue, 2)} ETH`
+          }
+        />
       </BoxWrapperColumn>
       {cardType === 'common' &&
         categories

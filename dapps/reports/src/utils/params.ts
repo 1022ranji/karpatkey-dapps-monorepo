@@ -14,5 +14,10 @@ export const getYearAndMonth = (param?: { yearArg: string; monthArg: string }) =
 
 export const isYearAndMonthValid = (param?: { yearArg: string; monthArg: string }) => {
   const { year, month } = getYearAndMonth(param)
-  return year && month && year >= 2023 && month >= 11
+  if (!year || !month) return false
+
+  const monthReference = 11
+  const yearReference = 2023
+
+  return year > yearReference || (year === yearReference && month >= monthReference)
 }

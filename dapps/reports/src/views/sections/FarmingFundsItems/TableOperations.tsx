@@ -1,4 +1,8 @@
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
@@ -11,6 +15,7 @@ import { Box, styled, Table, TableBody, TableContainer, TableHead, TableRow } fr
 import * as React from 'react'
 import Tooltip from '@mui/material/Tooltip'
 import InfoIcon from '@mui/icons-material/Info'
+import { useApp } from '../../../contexts/app.context'
 
 interface TableResultsProps {
   operationDetails: any
@@ -27,6 +32,9 @@ const BoxWrapper = styled(BoxWrapperColumn)({
 const TableOperations = (props: TableResultsProps) => {
   const { operationDetails, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
+
+  const { state } = useApp()
+  const { currency } = state
 
   return (
     <BoxWrapperColumn gap={4}>
@@ -89,7 +97,9 @@ const TableOperations = (props: TableResultsProps) => {
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
                         <BoxWrapper>
-                          {formatCurrency(Math.round(row?.operationsFunds || 0))}
+                          {currency === 'USD'
+                            ? formatCurrency(row?.operationsFunds || 0)
+                            : formatNumber(row?.operationsFunds || 0, 0)}
                           {row?.allocation > 0 ? (
                             <CustomTypography variant="tableCellSubData">
                               {formatPercentage(row.allocation)}
@@ -98,10 +108,14 @@ const TableOperations = (props: TableResultsProps) => {
                         </BoxWrapper>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {formatCurrency(row?.operationResults?.toFixed(2) || 0)}
+                        {currency === 'USD'
+                          ? formatCurrency(row?.operationResults?.toFixed(2) || 0)
+                          : formatNumber(row?.operationResults?.toFixed(2) || 0, 1)}
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {formatCurrency(row?.priceVariation?.toFixed(2) || 0)}
+                        {currency === 'USD'
+                          ? formatCurrency(row?.priceVariation?.toFixed(2) || 0)
+                          : formatNumber(row?.priceVariation?.toFixed(2) || 0, 0)}
                       </TableCellCustom>
                     </TableRow>
                   )
@@ -143,13 +157,21 @@ const TableOperations = (props: TableResultsProps) => {
                     Total
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    <BoxWrapper>{formatCurrency(totals?.operationsFundsTotal || 0)}</BoxWrapper>
+                    <BoxWrapper>
+                      {currency === 'USD'
+                        ? formatCurrency(totals?.operationsFundsTotal || 0)
+                        : formatNumber(totals?.operationsFundsTotal || 0, 0)}
+                    </BoxWrapper>
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(totals?.operationResultsTotal || 0)}
+                    {currency === 'USD'
+                      ? formatCurrency(totals?.operationResultsTotal || 0)
+                      : formatNumber(totals?.operationResultsTotal || 0, 1)}
                   </TableFooterCellCustom>
                   <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(totals?.priceVariationTotal || 0)}
+                    {currency === 'USD'
+                      ? formatCurrency(totals?.priceVariationTotal || 0)
+                      : formatNumber(totals?.priceVariationTotal || 0, 0)}
                   </TableFooterCellCustom>
                 </TableRow>
               </>

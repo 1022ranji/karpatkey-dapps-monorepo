@@ -3,10 +3,23 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import React from 'react'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import Image from 'next/image'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
+import {
+  Box,
+  Divider,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip
+} from '@mui/material'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import { NumberBlock } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/NumberBlock'
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
@@ -16,14 +29,18 @@ import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import { LinkWrapper } from '@karpatkey-monorepo/reports/src/components/LinkWrapper'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
+import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Title'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
+import { Currency } from '@karpatkey-monorepo/reports/src/contexts/state'
 
 interface TableProps {
   daoResume: any
   latestMonth: number
   latestYear: number
+  currency: Currency
 }
 
-const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
+const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableProps) => {
   const router = useRouter()
 
   const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
@@ -58,7 +75,11 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                 paddingX: '20px'
               }}
             >
-              <Value value={'Total funds (ncAUM)'} fontWeight={600} fontSize={'16px'} />
+              <Value
+                value={`Total funds \n${currency === 'USD' ? '(ncAUM)' : ''}`}
+                fontWeight={600}
+                fontSize={'16px'}
+              />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -82,7 +103,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                 ...(matchesFarmingResults ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value value={'DeFi results'} fontWeight={600} fontSize={'16px'} />
+              <Value value={`DeFi results`} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
@@ -116,10 +137,10 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                   icon,
                   name,
                   keyName,
-                  totalFunds,
-                  allocatedFunds,
-                  deFiResults,
-                  APY,
+                  totalFunds = 0,
+                  allocatedFunds = 0,
+                  deFiResults = 0,
+                  APY = 0,
                   urlToReport
                 } = dao
 
@@ -208,7 +229,13 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatCurrency(totalFunds)} />
+                          <Value
+                            value={
+                              currency === 'USD'
+                                ? formatCurrency(totalFunds || 0)
+                                : `${formatNumber(totalFunds || 0, 0)} ETH`
+                            }
+                          />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -224,7 +251,7 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatPercentage(allocatedFunds, 0)} />
+                          <Value value={formatPercentage(allocatedFunds || 0, 0)} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -240,7 +267,13 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatCurrency(deFiResults)} />
+                          <Value
+                            value={
+                              currency === 'USD'
+                                ? formatCurrency(deFiResults || 0)
+                                : `${formatNumber(deFiResults || 0, 0)} ETH`
+                            }
+                          />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -287,17 +320,28 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear }: TableProps) => {
   )
 }
 
-interface DashboardProps {
-  metrics: any
-  daoResume: any
-}
-const Dashboard = (props: DashboardProps) => {
-  const { metrics, daoResume } = props
-  const { ourDaoTreasuries, nonCustodialAum, lastMonthDeFiResults, year, month } = metrics
+const Dashboard = () => {
+  const { state } = useApp()
+
+  const defaultMetrics = {
+    ourDaoTreasuries: 0,
+    nonCustodialAum: 0,
+    lastMonthDeFiResults: 0,
+    year: 0,
+    month: 0
+  }
+
+  const { dashboard } = state
+  const { daoResume = [], metrics = defaultMetrics } = dashboard || {}
+
+  const { ourDaoTreasuries, nonCustodialAum, lastMonthDeFiResults, year, month } = metrics || {}
 
   const matchesQuery = useMediaQuery('(min-width:1000px)')
 
   const screenSize = useScreenSize()
+
+  const daoResumeDashboardOne = daoResume.filter((dao: any) => dao.shouldBeIncludedDashboardOne)
+  const daoResumeDashboardTwo = daoResume.filter((dao: any) => dao.shouldBeIncludedDashboardTwo)
 
   return (
     <BoxWrapperColumn
@@ -355,11 +399,32 @@ const Dashboard = (props: DashboardProps) => {
           gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
         }}
       >
-        <AnimatePresenceWrapper>
-          <BoxWrapperColumn>
-            <DashboardTable daoResume={daoResume} latestMonth={month} latestYear={year} />
-          </BoxWrapperColumn>
-        </AnimatePresenceWrapper>
+        {daoResumeDashboardOne.length === 0 ? null : (
+          <AnimatePresenceWrapper>
+            <BoxWrapperColumn>
+              <DashboardTable
+                daoResume={daoResumeDashboardOne}
+                latestMonth={month}
+                latestYear={year}
+                currency={'USD' as Currency}
+              />
+            </BoxWrapperColumn>
+          </AnimatePresenceWrapper>
+        )}
+        {daoResumeDashboardTwo.length === 0 ? null : (
+          <AnimatePresenceWrapper>
+            <Divider sx={{ borderBottomWidth: 5, marginBottom: 5 }} />
+            <BoxWrapperColumn gap={4}>
+              <Title title="Other treasuries not considered in non-custodial AUM" />
+              <DashboardTable
+                daoResume={daoResumeDashboardTwo}
+                latestMonth={month}
+                latestYear={year}
+                currency={'ETH' as Currency}
+              />
+            </BoxWrapperColumn>
+          </AnimatePresenceWrapper>
+        )}
       </BoxWrapperColumn>
     </BoxWrapperColumn>
   )

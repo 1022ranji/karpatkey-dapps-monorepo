@@ -1,6 +1,5 @@
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import Layout from '@karpatkey-monorepo/reports/src/components/Layout/Layout'
-import { FilterProvider } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import ErrorBoundaryWrapper from '@karpatkey-monorepo/shared/components/ErrorBoundary/ErrorBoundaryWrapper'
 import { TITLE } from '@karpatkey-monorepo/shared/config/constants'
 import createEmotionCache from '@karpatkey-monorepo/shared/config/createEmotionCache'
@@ -13,6 +12,7 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Router, { useRouter } from 'next/router'
 import Loading from '@karpatkey-monorepo/reports/src/components/Loading'
+import { AppProvider } from '../contexts/app.context'
 import * as React from 'react'
 
 import '../styles/globals.css'
@@ -60,7 +60,7 @@ export default function MyApp(props: MyAppProps) {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <ErrorBoundaryWrapper>
-            <FilterProvider>
+            <AppProvider>
               {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
               <CssBaseline />
               <NoSsr>
@@ -69,7 +69,7 @@ export default function MyApp(props: MyAppProps) {
                   <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
                 ) : null}
               </NoSsr>
-            </FilterProvider>
+            </AppProvider>
           </ErrorBoundaryWrapper>
         </ThemeProvider>
       </LocalizationProvider>

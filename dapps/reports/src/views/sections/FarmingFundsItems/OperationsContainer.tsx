@@ -6,6 +6,7 @@ import * as React from 'react'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form from '@karpatkey-monorepo/shared/components/Filter/Form'
+import { useApp } from '../../../contexts/app.context'
 
 const DynamicTableOperations = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableOperations')
@@ -40,8 +41,8 @@ const OperationsContainer = (props: ResultsContainerProps) => {
             currentValue?.blockchain.toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue?.blockchain.toLowerCase() === 'gnosis'
-                ? '/images/chains/gnosis.svg'
-                : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
           label: currentValue?.blockchain,
           id: currentValue?.blockchain
         })
@@ -91,8 +92,8 @@ const OperationsContainer = (props: ResultsContainerProps) => {
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+            ? '/images/chains/gnosis.svg'
+            : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -135,8 +136,18 @@ const OperationsContainer = (props: ResultsContainerProps) => {
 
   const isFilterActive = blockchainFilter || protocolFilter
 
+  const { state } = useApp()
+  const { currency } = state
+
   return (
-    <PaperSection subTitle="Operations funds/results by position" filter={filter}>
+    <PaperSection
+      subTitle={
+        currency === 'USD'
+          ? 'Operations funds/results by position'
+          : 'Operations funds/results by position (ETH)'
+      }
+      filter={filter}
+    >
       {filteredOperationDetails.length === 0 && !isFilterActive ? (
         <EmptyData />
       ) : (
