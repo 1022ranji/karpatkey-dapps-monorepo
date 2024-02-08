@@ -3,7 +3,7 @@ import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/Animat
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import TabPanel from '@karpatkey-monorepo/shared/components/TabPanel'
-import { FILTER_DAO, MONTHS } from '@karpatkey-monorepo/shared/config/constants'
+import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
 import { getDAO } from '@karpatkey-monorepo/shared/utils'
 import InfoIcon from '@mui/icons-material/Info'
 import ToggleButton from '@mui/material/ToggleButton'
@@ -25,7 +25,7 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
     props
 
   const { state } = useApp()
-  const { DAO: filterDAO, currency } = state
+  const { DAO: filterDAO, currency, year } = state
   const DAO: Maybe<FILTER_DAO> = getDAO(filterDAO) || null
 
   const [toggleType, setToggleType] = React.useState(0)
@@ -38,8 +38,13 @@ const TreasuryVariation = (props: TreasuryVariationProps) => {
     setToggleType(newToggleType)
   }
 
-  const DAO_MONTH = MONTHS.find((month) => month.id === DAO?.sinceMonth)
-  const helpText = DAO ? `Treasury variation since ${DAO_MONTH?.label} ${DAO.sinceYear}` : ''
+  // Get actual year
+  const yearNow = new Date().getFullYear()
+  const sinceText =
+    FILTER_DAOS.find((dao) => dao.id === filterDAO)?.sinceYearToPeriod[year || yearNow] ??
+    `January ${yearNow}`
+
+  const helpText = DAO ? `Treasury variation since ${sinceText}` : ''
 
   const filter = (
     <ToggleButtonGroup
