@@ -333,13 +333,13 @@ export const getFarmingResults = (
 
   if (isDDay) {
     deFiResultsETH = waterfall1ReportETHFiltered.reduce((acc: any, obj: any): number => {
-      const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value_eth : 0
+      const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
       acc = acc + value
       return acc
     }, 0)
   } else {
     deFiResultsETH = financialMetricsFiltered.reduce((acc: any, obj: any): number => {
-      const value = obj?.metric_code === 'm09' ? obj?.metric_value_eth : 0
+      const value = obj?.metric_code === 'm09' ? obj?.metric_value : 0
       acc = acc + value
       return acc
     }, 0)
