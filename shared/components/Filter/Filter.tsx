@@ -20,15 +20,13 @@ interface FilterProps {
   token?: Maybe<string>
   deFiType?: Maybe<string>
   DAO?: Maybe<string>
-  year?: Maybe<string>
-  month?: Maybe<string>
+  yearMonth?: Maybe<string>
   enableProtocol?: boolean
   enableBlockchain?: boolean
   enableToken?: boolean
   enableDeFiType?: boolean
   enableDAO?: boolean
-  enableYear?: boolean
-  enableMonth?: boolean
+  enableYearMonth?: boolean
   position?: 'left' | 'right' | 'middle'
   tooltipText?: string
 }
@@ -48,15 +46,13 @@ const Filter = (props: FilterProps) => {
     token,
     deFiType,
     DAO,
-    year,
-    month,
+    yearMonth,
     enableToken,
     enableBlockchain,
     enableProtocol,
     enableDeFiType,
     enableDAO,
-    enableYear,
-    enableMonth,
+    enableYearMonth,
     position = 'middle',
     tooltipText
   } = props
@@ -68,24 +64,21 @@ const Filter = (props: FilterProps) => {
       (enableToken && token) ||
       (enableDeFiType && deFiType) ||
       (enableDAO && DAO) ||
-      (enableYear && year) ||
-      (enableMonth && month)
+      (enableYearMonth && yearMonth)
     )
   }, [
     blockchain,
     DAO,
     enableBlockchain,
     enableDAO,
-    enableMonth,
     enableProtocol,
     enableToken,
     enableDeFiType,
-    enableYear,
-    month,
+    enableYearMonth,
     protocol,
     deFiType,
     token,
-    year
+    yearMonth
   ])
 
   return (
@@ -124,16 +117,10 @@ const Filter = (props: FilterProps) => {
         {enableDAO ? (
           <FilterTextOption title={DAO || 'DAO'} {...(DAO ? { fontWeight: 'extra-bold' } : {})} />
         ) : null}
-        {enableMonth ? (
+        {enableYearMonth ? (
           <FilterTextOption
-            title={month || 'Month'}
-            {...(month ? { fontWeight: 'extra-bold' } : {})}
-          />
-        ) : null}
-        {enableYear ? (
-          <FilterTextOption
-            title={year || 'Year'}
-            {...(year ? { fontWeight: 'extra-bold' } : {})}
+            title={yearMonth || 'Period'}
+            {...(yearMonth ? { fontWeight: 'extra-bold' } : {})}
           />
         ) : null}
       </BoxWrapperRow>
