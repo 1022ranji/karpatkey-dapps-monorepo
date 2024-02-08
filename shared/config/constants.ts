@@ -64,8 +64,10 @@ export interface FILTER_DAO {
   icon: string
   keyName: DAO_NAME
   sinceMonth: number
-  sinceYearToPeriod: number
   sinceYear: number
+  sinceYearToPeriod: {
+    [key: number]: string
+  }
   addresses: DAO_ADDRESS[]
   defaultCurrency: Currency
   currenciesAllowed: Currency[]
@@ -186,7 +188,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis DAO',
     sinceMonth: 7,
     sinceYear: 2023,
-    sinceYearToPeriod: 1,
+    sinceYearToPeriod: {
+      2023: 'January 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -260,7 +265,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis LTD',
     sinceMonth: 7,
     sinceYear: 2023,
-    sinceYearToPeriod: 1,
+    sinceYearToPeriod: {
+      2023: 'January 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: false,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: false,
@@ -329,7 +337,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Balancer DAO',
     sinceMonth: 7,
     sinceYear: 2023,
-    sinceYearToPeriod: 2,
+    sinceYearToPeriod: {
+      2023: 'February 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -397,7 +408,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'ENS DAO',
     sinceMonth: 7,
     sinceYear: 2023,
-    sinceYearToPeriod: 3,
+    sinceYearToPeriod: {
+      2023: 'March 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -465,7 +479,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'CoW DAO',
     sinceMonth: 7,
     sinceYear: 2023,
-    sinceYearToPeriod: 2,
+    sinceYearToPeriod: {
+      2023: 'February 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -539,7 +556,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'karpatkey DAO',
     sinceMonth: 7,
     sinceYear: 2023,
-    sinceYearToPeriod: 1,
+    sinceYearToPeriod: {
+      2023: 'January 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
@@ -613,7 +633,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Gnosis Guild',
     sinceMonth: 7,
     sinceYear: 2023,
-    sinceYearToPeriod: 7,
+    sinceYearToPeriod: {
+      2023: 'January 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: false,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: false,
@@ -682,7 +705,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Lido',
     sinceMonth: 11,
     sinceYear: 2023,
-    sinceYearToPeriod: 11,
+    sinceYearToPeriod: {
+      2023: 'July 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: false,
     shouldBeIncludedDashboardTwo: true,
     shouldBeIncludedNCAum: false,
@@ -726,7 +752,10 @@ export const FILTER_DAOS: FILTER_DAO[] = [
     keyName: 'Aave DAO',
     sinceMonth: 12,
     sinceYear: 2023,
-    sinceYearToPeriod: 12,
+    sinceYearToPeriod: {
+      2023: 'December 2023',
+      2024: 'January 2024'
+    },
     shouldBeIncludedDashboardOne: true,
     shouldBeIncludedDashboardTwo: false,
     shouldBeIncludedNCAum: true,
