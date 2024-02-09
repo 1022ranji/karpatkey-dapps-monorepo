@@ -3,7 +3,7 @@ import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/Custom
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form, { SubmitValues } from '@karpatkey-monorepo/shared/components/Filter/Form'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
+import { FILTER_DAO, FILTER_DAOS, MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useApp } from '../../contexts/app.context'
@@ -51,41 +51,33 @@ const Menu = () => {
     : null
 
   // Month default value
-  const filterMonthOption =
+  const filterYearMonthOption =
     FILTER_DAOS.find((option) => {
       return filterDAO && +option.id === +filterDAO
     })?.datesAllowed?.find((option) => {
       return year && month && +option.month === month && +option.year === year
     }) ?? null
-  const defaultMonthValue = filterMonthOption
-    ? {
-        id: filterMonthOption.month,
-        label: filterMonthOption.label
-      }
-    : null
 
-  // Year default value
-  const filterYearOption =
-    FILTER_DAOS.find((option) => {
-      return filterDAO && +option.id === filterDAO
-    })?.datesAllowed?.find((option) => {
-      return year && +option.year === year
-    }) ?? null
-  const defaultYearValue = filterYearOption
+  const monthString =
+    MONTHS.find((option) => {
+      return filterYearMonthOption && +option.id === +filterYearMonthOption?.month
+    })?.label ?? ''
+
+  const defaultYearMonthValue = filterYearMonthOption
     ? {
-        id: filterYearOption.year,
-        label: filterYearOption.year + ''
+        id: `${filterYearMonthOption.year}-${filterYearMonthOption.month}`,
+        label: `${year} ${monthString}`
       }
     : null
 
   const onSubmitClose = (data: SubmitValues) => {
-    const month = data?.month
     const dao = data?.DAO
-    const year = data?.year
+    const yearMonth = (data?.yearMonth ?? '') + ''
+    const [year, month] = yearMonth.split('-')
 
     if (month === undefined || dao === undefined || year === undefined) return
-
     const query = new URLSearchParams()
+
     if (dao !== null && dao !== undefined) query.append('dao', dao + '')
     if (month !== null && month !== undefined) query.append('month', month + '')
     if (year !== null && year !== undefined) query.append('year', year + '')
@@ -104,22 +96,18 @@ const Menu = () => {
       anchorEl={anchorEl}
       open={open}
       enableDAO
-      enableMonth
-      enableYear
+      enableYearMonth
       DAO={defaultDAOValue ? defaultDAOValue.label : ''}
-      year={defaultYearValue ? defaultYearValue.label : ''}
-      month={defaultMonthValue ? defaultMonthValue.label : ''}
+      yearMonth={defaultYearMonthValue ? defaultYearMonthValue.label : ''}
       tooltipText={'Clear selected report'}
     >
       <Form
         onRequestClose={handleClose}
         onSubmitClose={onSubmitClose}
         defaultDAOValue={defaultDAOValue}
-        defaultYearValue={defaultYearValue}
-        defaultMonthValue={defaultMonthValue}
+        defaultYearMonthValue={defaultYearMonthValue}
         enableDAO
-        enableYear
-        enableMonth
+        enableYearMonth
         buttonTitle={'Apply selection'}
       />
     </Filter>
