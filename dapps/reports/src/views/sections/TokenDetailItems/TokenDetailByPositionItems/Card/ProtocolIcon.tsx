@@ -112,6 +112,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
     case 'Swapr':
       icon = <Swapr width={24} height={24} />
       break
+    case 'SwaprV3':
+      icon = <Swapr width={24} height={24} />
+      break
     case 'Spark':
       icon = <Spark width={24} height={24} />
       break
