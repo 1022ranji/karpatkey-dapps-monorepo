@@ -108,14 +108,14 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                             title={
                               currency === 'USD'
                                 ? formatCurrency(row?.price, 4)
-                                : formatNumber(row?.price, 4)
+                                : formatNumber(row?.price, 10)
                             }
                             sx={{ ml: 1 }}
                           >
                             <span>
                               {currency === 'USD'
                                 ? formatCurrencyWithPrecision(row.price)
-                                : formatNumberWithPrecision(row.price)}
+                                : formatNumberWithPrecision(+row.price?.toFixed(6))}
                             </span>
                           </Tooltip>
                           {TOKEN && (
