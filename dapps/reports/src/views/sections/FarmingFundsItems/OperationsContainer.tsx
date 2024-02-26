@@ -41,8 +41,8 @@ const OperationsContainer = (props: ResultsContainerProps) => {
             currentValue?.blockchain.toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue?.blockchain.toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+                ? '/images/chains/gnosis.svg'
+                : '/images/chains/all.svg',
           label: currentValue?.blockchain,
           id: currentValue?.blockchain
         })
@@ -92,8 +92,8 @@ const OperationsContainer = (props: ResultsContainerProps) => {
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }

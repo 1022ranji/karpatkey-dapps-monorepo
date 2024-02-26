@@ -76,8 +76,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -118,8 +118,8 @@ const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerPro
           key.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : key.toLowerCase() === 'gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: key,
         id: key
       }

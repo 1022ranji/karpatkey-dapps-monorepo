@@ -247,8 +247,8 @@ const Waterfall = ({
                 item.value === 'Initial Balance' || item.value === 'Final Balance'
                   ? '#222222'
                   : item.uv < 0
-                  ? '#DF5C64'
-                  : '#54B9A1'
+                    ? '#DF5C64'
+                    : '#54B9A1'
 
               return <Cell key={`cell-${index}`} fill={color} />
             })}

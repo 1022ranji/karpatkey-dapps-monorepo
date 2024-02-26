@@ -151,8 +151,8 @@ const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableP
                 const CUSTOM_APY = isDAOEnsOctober
                   ? '2.04%'
                   : isDAOEnsNovember
-                  ? '2.9%'
-                  : formatPercentage(APY)
+                    ? '2.9%'
+                    : formatPercentage(APY)
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const onClick = (e: any) => {

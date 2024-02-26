@@ -44,8 +44,8 @@ const FundsContainer = (props: FundsContainerProps) => {
             currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue['blockchain'].toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+                ? '/images/chains/gnosis.svg'
+                : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -95,8 +95,8 @@ const FundsContainer = (props: FundsContainerProps) => {
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -150,8 +150,8 @@ const FundsContainer = (props: FundsContainerProps) => {
             ? 'DeFi funds/results by position'
             : 'DeFi funds/results by position (ETH)'
           : currency === 'USD'
-          ? 'Farming funds/results by position'
-          : 'Farming funds/results by position (ETH)'
+            ? 'Farming funds/results by position'
+            : 'Farming funds/results by position (ETH)'
       }
       filter={filter}
     >
