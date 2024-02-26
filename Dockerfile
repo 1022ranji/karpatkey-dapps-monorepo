@@ -12,6 +12,8 @@ COPY . .
 
 RUN yarn install
 
+RUN yarn generate:cache
+
 # Production image
 FROM node:20.0.0-alpine
 
