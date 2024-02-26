@@ -6,6 +6,8 @@ import PaperSection from '@karpatkey-monorepo/shared/components/PaperSection'
 import { getFarmingFundsByProtocolTotals } from '@karpatkey-monorepo/shared/utils/mappers/farmingFunds'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 const DynamicTableFunds = dynamic(
   () => import('@karpatkey-monorepo/reports/src/views/sections/FarmingFundsItems/TableFunds')
@@ -19,6 +21,9 @@ const FundsContainer = (props: FundsContainerProps) => {
   const { funds } = props
   const [blockchainFilter, setBlockchainFilter] = React.useState<Maybe<string>>(null)
   const [protocolFilter, setProtocolFilter] = React.useState<Maybe<string>>(null)
+
+  const { state } = useApp()
+  const { currency } = state
 
   const filteredFunds = funds.filter((fund) => {
     const blockchain = blockchainFilter ? blockchainFilter === fund['blockchain'] : true
@@ -39,8 +44,8 @@ const FundsContainer = (props: FundsContainerProps) => {
             currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue['blockchain'].toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+                ? '/images/chains/gnosis.svg'
+                : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -90,8 +95,8 @@ const FundsContainer = (props: FundsContainerProps) => {
           blockchainFilter.toLowerCase() === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter.toLowerCase() === 'gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -134,10 +139,20 @@ const FundsContainer = (props: FundsContainerProps) => {
 
   const isFilterActive = blockchainFilter || protocolFilter
 
+  const isDDay = isYearAndMonthValid()
+
   return (
     <PaperSection
-      id="Farming funds and results"
-      subTitle="Farming funds/results by position"
+      id={isDDay ? 'Funds and results by position' : 'Farming funds and results'}
+      subTitle={
+        isDDay
+          ? currency === 'USD'
+            ? 'DeFi funds/results by position'
+            : 'DeFi funds/results by position (ETH)'
+          : currency === 'USD'
+            ? 'Farming funds/results by position'
+            : 'Farming funds/results by position (ETH)'
+      }
       filter={filter}
     >
       {filteredFunds.length === 0 && !isFilterActive ? (

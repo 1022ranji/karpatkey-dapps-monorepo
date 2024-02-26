@@ -3,30 +3,44 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import React from 'react'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import Image from 'next/image'
-import { ReportProps } from '@karpatkey-monorepo/reports/src/types'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
+import {
+  Box,
+  Divider,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip
+} from '@mui/material'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
 import { NumberBlock } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/NumberBlock'
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import TableEmptyCellCustom from '@karpatkey-monorepo/shared/components/Table/TableEmptyCellCustom'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import { useRouter } from 'next/router'
 import { Value } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Value'
-import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Title'
-import Divider from '@mui/material/Divider'
 import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
-import Tooltip from '@mui/material/Tooltip'
 import { LinkWrapper } from '@karpatkey-monorepo/reports/src/components/LinkWrapper'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
+import { Title } from '@karpatkey-monorepo/reports/src/views/sections/Dashboard/Title'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
+import { Currency } from '@karpatkey-monorepo/reports/src/contexts/state'
 
 interface TableProps {
   daoResume: any
   latestMonth: number
+  latestYear: number
+  currency: Currency
 }
 
-const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
+const DashboardTable = ({ daoResume, latestMonth, latestYear, currency }: TableProps) => {
   const router = useRouter()
 
   const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
@@ -34,7 +48,10 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
   const matchesCapitalUtilization = useMediaQuery('(min-width:710px)')
   const matchesFarmingResults = useMediaQuery('(min-width:780px)')
   const matchesAPY = useMediaQuery('(min-width:900px)')
-  const matchesIcon = useMediaQuery('(min-width:960px)')
+  const matchesIcon = useMediaQuery('(min-width:1050px)')
+
+  const screenSize = useScreenSize()
+  const isMobile = screenSize.width < 550
 
   return (
     <TableContainer component={Box}>
@@ -42,43 +59,57 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
         <TableHead>
           <TableRow sx={{ '& th': { borderBottom: 'none !important' } }}>
             <TableEmptyCellCustom
-              sx={{ minWidth: '260px', maxWidth: '260px', paddingY: '4px', paddingLeft: '5px' }}
+              sx={{
+                minWidth: isMobile ? '170px' : '260px',
+                maxWidth: isMobile ? '170px' : '260px',
+                paddingY: '4px',
+                paddingLeft: '5px'
+              }}
             />
             <TableCellCustom
               align="left"
-              sx={{ minWidth: '205px', maxWidth: '205px', paddingY: '4px', paddingX: '20px' }}
+              sx={{
+                minWidth: isMobile ? '190px' : '205px',
+                maxWidth: isMobile ? '190px' : '205px',
+                paddingY: '4px',
+                paddingX: '20px'
+              }}
             >
-              <Value value={'Total funds'} fontWeight={600} fontSize={'16px'} />
+              <Value
+                value={`Total funds \n${currency === 'USD' ? '(ncAUM)' : ''}`}
+                fontWeight={600}
+                fontSize={'16px'}
+              />
             </TableCellCustom>
             <TableCellCustom
               align="left"
               sx={{
-                minWidth: '165px',
-                maxWidth: '165px',
+                minWidth: isMobile ? '150px' : '165px',
+                maxWidth: isMobile ? '150px' : '165px',
                 paddingY: '4px',
                 paddingX: '20px',
                 ...(matchesCapitalUtilization ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value value={'Capital utilisation'} fontWeight={600} fontSize={'16px'} />
+              <Value value={'Allocated funds'} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
               sx={{
-                minWidth: '145px',
-                maxWidth: '145px',
+                minWidth: isMobile ? '130px' : '145px',
+                maxWidth: isMobile ? '130px' : '145px',
                 paddingY: '4px',
                 paddingX: '20px',
                 ...(matchesFarmingResults ? { display: 'table-cell' } : { display: 'none' })
               }}
             >
-              <Value value={'Farming results'} fontWeight={600} fontSize={'16px'} />
+              <Value value={`DeFi results`} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
             <TableCellCustom
               align="left"
               sx={{
-                minWidth: '115px',
-                maxWidth: '115px',
+                minWidth: isMobile ? '100px' : '115px',
+                maxWidth: isMobile ? '100px' : '115px',
                 paddingY: '4px',
                 paddingLeft: '20px',
                 marginRight: '5px',
@@ -105,12 +136,23 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                 const {
                   icon,
                   name,
-                  totalFunds,
-                  capitalUtilization,
-                  farmingResults,
-                  globalROI,
+                  keyName,
+                  totalFunds = 0,
+                  allocatedFunds = 0,
+                  deFiResults = 0,
+                  APY = 0,
                   urlToReport
                 } = dao
+
+                const isDAOEnsOctober =
+                  keyName === 'ENS DAO' && +latestYear === 2023 && +latestMonth === 10
+                const isDAOEnsNovember =
+                  keyName === 'ENS DAO' && +latestYear === 2023 && +latestMonth === 11
+                const CUSTOM_APY = isDAOEnsOctober
+                  ? '2.04%'
+                  : isDAOEnsNovember
+                    ? '2.9%'
+                    : formatPercentage(APY)
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const onClick = (e: any) => {
@@ -159,15 +201,20 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '260px',
-                          maxWidth: '260px',
+                          minWidth: isMobile ? '170px' : '260px',
+                          maxWidth: isMobile ? '170px' : '260px',
                           paddingY: '4px',
                           paddingLeft: '5px'
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
                           <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
-                            <Image src={icon} alt={name} width={48} height={48} />
+                            <Image
+                              src={icon}
+                              alt={name}
+                              width={isMobile ? 32 : 48}
+                              height={isMobile ? 32 : 48}
+                            />
                             <Value value={name} fontWeight={600} />
                           </BoxWrapperRow>
                         </LinkWrapper>
@@ -175,21 +222,27 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '205px',
-                          maxWidth: '205px',
+                          minWidth: isMobile ? '190px' : '205px',
+                          maxWidth: isMobile ? '190px' : '205px',
                           paddingY: '4px',
                           paddingX: '20px'
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatCurrency(totalFunds)} />
+                          <Value
+                            value={
+                              currency === 'USD'
+                                ? formatCurrency(totalFunds || 0)
+                                : `${formatNumber(totalFunds || 0, 0)} ETH`
+                            }
+                          />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '165px',
-                          maxWidth: '165px',
+                          minWidth: isMobile ? '150px' : '165px',
+                          maxWidth: isMobile ? '150px' : '165px',
                           paddingY: '4px',
                           paddingX: '20px',
                           ...(matchesCapitalUtilization
@@ -198,14 +251,14 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatPercentage(capitalUtilization, 0)} />
+                          <Value value={formatPercentage(allocatedFunds || 0, 0)} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '145px',
-                          maxWidth: '145px',
+                          minWidth: isMobile ? '130px' : '145px',
+                          maxWidth: isMobile ? '130px' : '145px',
                           paddingY: '4px',
                           paddingX: '20px',
                           ...(matchesFarmingResults
@@ -214,14 +267,20 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatCurrency(farmingResults)} />
+                          <Value
+                            value={
+                              currency === 'USD'
+                                ? formatCurrency(deFiResults || 0)
+                                : `${formatNumber(deFiResults || 0, 0)} ETH`
+                            }
+                          />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
                         align="left"
                         sx={{
-                          minWidth: '115px',
-                          maxWidth: '115px',
+                          minWidth: isMobile ? '100px' : '115px',
+                          maxWidth: isMobile ? '100px' : '115px',
                           paddingY: '4px',
                           paddingLeft: '20px',
                           marginRight: '5px',
@@ -229,7 +288,7 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
                         }}
                       >
                         <LinkWrapper url={urlToReport}>
-                          <Value value={formatPercentage(globalROI, 1)} />
+                          <Value value={CUSTOM_APY} />
                         </LinkWrapper>
                       </TableCellCustom>
                       <TableCellCustom
@@ -261,40 +320,60 @@ const DashboardTable = ({ daoResume, latestMonth }: TableProps) => {
   )
 }
 
-const Dashboard = (props: ReportProps) => {
-  const { daoResume, nonCustodialAum, lastMonthFarmingResults, latestMonth } = props
+const Dashboard = () => {
+  const { state } = useApp()
 
-  const daoResumeWithoutLido = daoResume.filter((dao: any) => dao.shouldBeDisplayedHomepage)
-  const daoResumeWithLido = daoResume.filter((dao: any) => !dao.shouldBeDisplayedHomepage)
+  const defaultMetrics = {
+    ourDaoTreasuries: 0,
+    nonCustodialAum: 0,
+    lastMonthDeFiResults: 0,
+    year: 0,
+    month: 0
+  }
 
-  const matchesQuery = useMediaQuery('(min-width:750px)')
+  const { dashboard } = state
+  const { daoResume = [], metrics = defaultMetrics } = dashboard || {}
+
+  const { ourDaoTreasuries, nonCustodialAum, lastMonthDeFiResults, year, month } = metrics || {}
+
+  const matchesQuery = useMediaQuery('(min-width:1000px)')
 
   const screenSize = useScreenSize()
+
+  const daoResumeDashboardOne = daoResume.filter((dao: any) => dao.shouldBeIncludedDashboardOne)
+  const daoResumeDashboardTwo = daoResume.filter((dao: any) => dao.shouldBeIncludedDashboardTwo)
 
   return (
     <BoxWrapperColumn
       sx={{
         alignItems: 'center',
-        justifyContent: 'space-between',
-        maxHeight: '740px !important',
-        paddingBottom: 5,
-        paddingTop: 5,
+        justifyContent: 'center',
+        maxHeight: '840px !important',
+        marginBottom: '110px',
+        marginTop: screenSize.width > 1050 ? '110px' : '40px',
         marginRight: '10%',
         marginLeft: '10%',
-        gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+        gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
       }}
     >
       <BoxWrapperColumn
         sx={{
-          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+          display: screenSize.width < 1050 ? 'flex' : 'none',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
         <AnimatePresenceWrapper>
-          <CustomTypography variant="h1" textAlign="center">
-            DAO treasury reports
-          </CustomTypography>
+          <Value value={'Available in desktop view only.'} fontWeight={400} fontSize={'16px'} />
+          <Value value={'Responsive view is coming soon!'} fontWeight={400} fontSize={'16px'} />
         </AnimatePresenceWrapper>
+      </BoxWrapperColumn>
 
+      <BoxWrapperColumn
+        sx={{
+          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
+        }}
+      >
         <BoxWrapperRow
           sx={{
             ...(matchesQuery
@@ -306,42 +385,47 @@ const Dashboard = (props: ReportProps) => {
               : { flexDirection: 'column', alignItems: 'center', gap: '40px' })
           }}
         >
+          <NumberBlock amount={formatCurrency(ourDaoTreasuries)} title="Our DAO treasuries" />
           <NumberBlock amount={formatCurrency(nonCustodialAum)} title="Non-custodial AUM" />
           <NumberBlock
-            amount={formatCurrency(lastMonthFarmingResults)}
-            title="Last month farming results"
+            amount={formatCurrency(lastMonthDeFiResults)}
+            title={'Last month DeFi results'}
           />
         </BoxWrapperRow>
       </BoxWrapperColumn>
 
       <BoxWrapperColumn
         sx={{
-          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1000 ? '80px' : '40px'
+          gap: screenSize.height > 1200 ? '120px' : screenSize.height > 1050 ? '80px' : '40px'
         }}
       >
-        <AnimatePresenceWrapper>
-          <BoxWrapperColumn>
-            <DashboardTable daoResume={daoResumeWithoutLido} latestMonth={latestMonth} />
-          </BoxWrapperColumn>
-        </AnimatePresenceWrapper>
-        {daoResumeWithLido.length === 0 ? null : (
+        {daoResumeDashboardOne.length === 0 ? null : (
           <AnimatePresenceWrapper>
-            <Divider sx={{ borderBottomWidth: 5 }} />
+            <BoxWrapperColumn>
+              <DashboardTable
+                daoResume={daoResumeDashboardOne}
+                latestMonth={month}
+                latestYear={year}
+                currency={'USD' as Currency}
+              />
+            </BoxWrapperColumn>
+          </AnimatePresenceWrapper>
+        )}
+        {daoResumeDashboardTwo.length === 0 ? null : (
+          <AnimatePresenceWrapper>
+            <Divider sx={{ borderBottomWidth: 5, marginBottom: 5 }} />
             <BoxWrapperColumn gap={4}>
               <Title title="Other treasuries not considered in non-custodial AUM" />
-              <DashboardTable daoResume={daoResumeWithLido} latestMonth={latestMonth} />
+              <DashboardTable
+                daoResume={daoResumeDashboardTwo}
+                latestMonth={month}
+                latestYear={year}
+                currency={'ETH' as Currency}
+              />
             </BoxWrapperColumn>
           </AnimatePresenceWrapper>
         )}
       </BoxWrapperColumn>
-
-      <AnimatePresenceWrapper>
-        <Value
-          value={'Reports are available in desktop view only. Responsive view is coming soon!'}
-          fontWeight={400}
-          fontSize={'16px'}
-        />
-      </AnimatePresenceWrapper>
     </BoxWrapperColumn>
   )
 }

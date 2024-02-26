@@ -26,6 +26,11 @@ import Swapr from '@karpatkey-monorepo/shared/components/Icons/Protocols/Swapr'
 import UniswapV3 from '@karpatkey-monorepo/shared/components/Icons/Protocols/UniswapV3'
 import Validators from '@karpatkey-monorepo/shared/components/Icons/Protocols/Validators'
 import CoW from '@karpatkey-monorepo/shared/components/Icons/Protocols/CoW'
+import Enzyme from '@karpatkey-monorepo/shared/components/Icons/Protocols/Enzyme'
+import Gnosis from '@karpatkey-monorepo/shared/components/Icons/Protocols/Gnosis'
+import RocketPool from '@karpatkey-monorepo/shared/components/Icons/Protocols/RocketPool'
+import KarpatkeyIcon from '@karpatkey-monorepo/shared/components/Icons/Protocols/Karpatkey'
+import Stader from '@karpatkey-monorepo/shared/components/Icons/Protocols/Stader'
 import * as React from 'react'
 
 interface ProtocolIconProps {
@@ -107,6 +112,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
     case 'Swapr':
       icon = <Swapr width={24} height={24} />
       break
+    case 'SwaprV3':
+      icon = <Swapr width={24} height={24} />
+      break
     case 'Spark':
       icon = <Spark width={24} height={24} />
       break
@@ -121,6 +129,21 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'UniswapV3':
       icon = <UniswapV3 width={24} height={24} />
+      break
+    case 'Enzyme':
+      icon = <Enzyme width={24} height={24} />
+      break
+    case 'Gnosis':
+      icon = <Gnosis width={24} height={24} />
+      break
+    case 'Rocket':
+      icon = <RocketPool width={24} height={24} />
+      break
+    case 'Arbitrage Bot':
+      icon = <KarpatkeyIcon width={24} height={24} />
+      break
+    case 'Stader':
+      icon = <Stader width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />

@@ -17,6 +17,10 @@ declare type Report =
   | 'getTreasuryFinancialPositions'
   | 'getTreasuryHistoricVariation'
   | 'getFinancialMetricAndVarDetail'
+  | 'getOurDAOTreasury'
+  | 'getTreasuryFinancialMetricsWaterfall'
+  | 'getWaterfall1Report'
+  | 'getTotalFundsByTokenCategory'
 
 declare type DAO_NAME =
   'Gnosis DAO'
@@ -27,3 +31,4 @@ declare type DAO_NAME =
   | 'karpatkey DAO'
   | 'Gnosis Guild'
   | 'Lido'
+  | 'Aave DAO'

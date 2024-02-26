@@ -1,5 +1,3 @@
-import { ActionKind, useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
-import { ReportProps } from '@karpatkey-monorepo/reports/src/types'
 import BalanceOverview from '@karpatkey-monorepo/reports/src/views/sections/BalanceOverview'
 import FarmingFunds from '@karpatkey-monorepo/reports/src/views/sections/FarmingFunds'
 import Hero from '@karpatkey-monorepo/reports/src/views/sections/Hero'
@@ -8,78 +6,57 @@ import TokenDetails from '@karpatkey-monorepo/reports/src/views/sections/TokenDe
 import TreasuryVariation from '@karpatkey-monorepo/reports/src/views/sections/TreasuryVariation'
 import BoxContainerWrapper from '@karpatkey-monorepo/shared/components/Wrappers/BoxContainerWrapper'
 import * as React from 'react'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
-const HomepageContent = (props: ReportProps) => {
-  const {
-    month,
-    dao,
-    year,
-    totalFunds,
-    capitalUtilization,
-    farmingResults,
-    globalROI,
-    fundsByTokenCategory,
-    fundsByType,
-    fundsByBlockchain,
-    fundsByProtocol,
-    balanceOverviewType,
-    balanceOverviewBlockchain,
-    treasuryVariationData,
-    historicVariationData,
-    treasuryVariationForThePeriodDetailData,
-    totalFarmingResultsFarmSwaps,
-    farmingFundsByProtocol,
-    farmingResultsDetailsByProtocol,
-    tokenDetails,
-    tokenDetailsGrouped,
-    tokenDetailByPosition,
-    walletTokenDetail
-  } = props
+const HomepageContent = () => {
+  const { state } = useApp()
+  const { month, DAO, year, report, currency } = state
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { state, dispatch } = useFilter()
-
-  React.useEffect(() => {
-    dispatch({ type: ActionKind.UPDATE, payload: { value: { month, dao, year }, error: null } })
-  }, [month, dao, year, dispatch])
-
-  const farmingFundsResultsProps = {
-    totalFarmingResultsFarmSwaps,
-    farmingFundsByProtocol,
-    farmingResultsDetailsByProtocol,
-    fundsByProtocol
+  if (!report) {
+    return null
   }
 
-  const treasuryVariationProps = {
-    treasuryVariationData,
-    historicVariationData,
-    treasuryVariationForThePeriodDetailData
-  }
+  const { summary, balanceOverview, treasuryVariation, farmingFunds, tokenDetails } =
+    report[currency]
 
   return (
     <BoxContainerWrapper>
       <Hero />
       <Summary
-        totalFunds={totalFunds}
-        capitalUtilization={capitalUtilization}
-        globalROI={globalROI}
-        farmingResults={farmingResults}
-        fundsByTokenCategory={fundsByTokenCategory}
-        fundsByType={fundsByType}
-        fundsByBlockchain={fundsByBlockchain}
-        balanceOverviewType={balanceOverviewType}
+        dao={DAO}
+        month={month}
+        year={year}
+        totalFunds={summary?.totalFunds}
+        capitalUtilization={summary?.allocatedFunds}
+        globalROI={summary?.APY}
+        farmingResults={summary?.deFiResults}
+        fundsByTokenCategory={summary?.fundsByTokenCategory}
+        fundsByType={summary?.fundsByType}
+        fundsByBlockchain={summary?.fundsByBlockchain}
+        balanceOverviewType={summary?.fundsByProtocol}
       />
       <BalanceOverview
-        balanceOverviewType={balanceOverviewType}
-        balanceOverviewBlockchain={balanceOverviewBlockchain}
+        balanceOverviewType={balanceOverview?.balanceOverviewType}
+        balanceOverviewBlockchain={balanceOverview?.balanceOverviewBlockchain}
       />
-      <TreasuryVariation {...treasuryVariationProps} />
-      <FarmingFunds {...farmingFundsResultsProps} />
+      <TreasuryVariation
+        treasuryVariationData={treasuryVariation?.treasuryVariationData}
+        historicVariationData={treasuryVariation?.historicVariationData}
+        treasuryVariationForThePeriodDetailData={
+          treasuryVariation?.treasuryVariationForThePeriodDetailData
+        }
+      />
+      <FarmingFunds
+        farmingFundsByProtocol={farmingFunds?.farmingFundsByProtocol}
+        totalFarmingResultsFarmSwaps={farmingFunds?.totalFarmingResultsFarmSwaps}
+        fundsByProtocol={summary?.fundsByProtocol}
+        operationDetails={farmingFunds?.operationDetails}
+      />
       <TokenDetails
-        tokenDetails={tokenDetails}
-        tokenDetailsGrouped={tokenDetailsGrouped}
-        tokenDetailByPosition={tokenDetailByPosition}
-        walletTokenDetail={walletTokenDetail}
+        tokenDetails={tokenDetails?.tokenDetails}
+        tokenDetailsGrouped={tokenDetails?.tokenDetailsGrouped}
+        tokenDetailByPosition={tokenDetails?.tokenDetailByPosition}
+        walletTokenDetail={tokenDetails?.walletTokenDetail}
       />
     </BoxContainerWrapper>
   )

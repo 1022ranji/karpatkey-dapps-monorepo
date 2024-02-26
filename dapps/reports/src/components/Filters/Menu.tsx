@@ -1,20 +1,24 @@
 import Share from '@karpatkey-monorepo/reports//src/components/Share'
-import { useFilter } from '@karpatkey-monorepo/reports/src/contexts/filter.context'
 import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/CustomAutocomplete'
 import Filter from '@karpatkey-monorepo/shared/components/Filter/Filter'
 import Form, { SubmitValues } from '@karpatkey-monorepo/shared/components/Filter/Form'
-import { YEARS } from '@karpatkey-monorepo/shared/components/Form/YearAutocomplete'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { MONTHS } from '@karpatkey-monorepo/shared/config/constants'
-import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
+import { FILTER_DAO, FILTER_DAOS, MONTHS } from '@karpatkey-monorepo/shared/config/constants'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { useApp } from '../../contexts/app.context'
+import { FilterByCurrency } from '../FilterByCurrency'
+import { isYearAndMonthValid } from '../../utils/params'
 
 const Menu = () => {
-  const { state } = useFilter()
+  const { state } = useApp()
   const router = useRouter()
 
-  const filter = state.value
+  const { year, month, DAO: filterDAO } = state
+
+  const param = year && month ? { yearArg: year + '', monthArg: month + '' } : undefined
+
+  const isDDay = isYearAndMonthValid(param)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -35,7 +39,7 @@ const Menu = () => {
 
   // DAO default value
   const filterDaoOption = FILTER_DAOS.find(
-    (option: FILTER_DAO) => filter.dao && option.id === Number(filter.dao)
+    (option: FILTER_DAO) => filterDAO && option.id === +filterDAO
   )
 
   const defaultDAOValue = filterDaoOption
@@ -47,21 +51,33 @@ const Menu = () => {
     : null
 
   // Month default value
-  const filterMonthOption = MONTHS.find((option) => option.id === Number(filter.month))
-  const defaultMonthValue = filterMonthOption ? filterMonthOption : null
+  const filterYearMonthOption =
+    FILTER_DAOS.find((option) => {
+      return filterDAO && +option.id === +filterDAO
+    })?.datesAllowed?.find((option) => {
+      return year && month && +option.month === month && +option.year === year
+    }) ?? null
 
-  // Year default value
-  const filterYearOption = YEARS.find((option) => option.id === Number(filter.year))
-  const defaultYearValue = filterYearOption ? filterYearOption : null
+  const monthString =
+    MONTHS.find((option) => {
+      return filterYearMonthOption && +option.id === +filterYearMonthOption?.month
+    })?.label ?? ''
+
+  const defaultYearMonthValue = filterYearMonthOption
+    ? {
+        id: `${filterYearMonthOption.year}-${filterYearMonthOption.month}`,
+        label: `${year} ${monthString}`
+      }
+    : null
 
   const onSubmitClose = (data: SubmitValues) => {
-    const month = data?.month
     const dao = data?.DAO
-    const year = data?.year
+    const yearMonth = (data?.yearMonth ?? '') + ''
+    const [year, month] = yearMonth.split('-')
 
     if (month === undefined || dao === undefined || year === undefined) return
-
     const query = new URLSearchParams()
+
     if (dao !== null && dao !== undefined) query.append('dao', dao + '')
     if (month !== null && month !== undefined) query.append('month', month + '')
     if (year !== null && year !== undefined) query.append('year', year + '')
@@ -80,33 +96,28 @@ const Menu = () => {
       anchorEl={anchorEl}
       open={open}
       enableDAO
-      enableMonth
-      enableYear
+      enableYearMonth
       DAO={defaultDAOValue ? defaultDAOValue.label : ''}
-      year={defaultYearValue ? defaultYearValue.label : ''}
-      month={defaultMonthValue ? defaultMonthValue.label : ''}
+      yearMonth={defaultYearMonthValue ? defaultYearMonthValue.label : ''}
       tooltipText={'Clear selected report'}
     >
       <Form
         onRequestClose={handleClose}
         onSubmitClose={onSubmitClose}
         defaultDAOValue={defaultDAOValue}
-        defaultYearValue={defaultYearValue}
-        defaultMonthValue={defaultMonthValue}
+        defaultYearMonthValue={defaultYearMonthValue}
         enableDAO
-        enableYear
-        enableMonth
+        enableYearMonth
         buttonTitle={'Apply selection'}
       />
     </Filter>
   )
 
   return (
-    <BoxWrapperRow gap={2}>
-      <BoxWrapperRow id={id || ''} gap={2}>
-        {filterElement}
-        <Share {...filter} />
-      </BoxWrapperRow>
+    <BoxWrapperRow id={id || ''} gap={2} sx={{ justifyContent: 'space-between' }}>
+      {filterElement}
+      {isDDay && <FilterByCurrency />}
+      <Share dao={filterDAO} year={year} month={month} />
     </BoxWrapperRow>
   )
 }

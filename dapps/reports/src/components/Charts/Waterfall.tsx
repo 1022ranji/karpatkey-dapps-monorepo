@@ -15,7 +15,8 @@ import {
   YAxis
 } from 'recharts'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
+import { formatCurrency, formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
+import { useApp } from '../../contexts/app.context'
 
 export type WaterfallProps = {
   title?: string
@@ -25,6 +26,9 @@ export type WaterfallProps = {
 }
 
 const CustomTooltip = ({ active, payload }: any) => {
+  const { state } = useApp()
+  const { currency } = state
+
   if (active && payload && payload.length) {
     return (
       <Paper
@@ -48,7 +52,9 @@ const CustomTooltip = ({ active, payload }: any) => {
           color="textSecondary"
           sx={{ padding: 1, textAlign: 'left' }}
         >
-          {formatCurrency(payload[1].value, 0, true)}
+          {currency === 'USD'
+            ? formatCurrency(payload[1].value, 0, true)
+            : formatNumber(payload[1].value, 0)}
         </CustomTypography>
       </Paper>
     )
@@ -241,8 +247,8 @@ const Waterfall = ({
                 item.value === 'Initial Balance' || item.value === 'Final Balance'
                   ? '#222222'
                   : item.uv < 0
-                  ? '#DF5C64'
-                  : '#54B9A1'
+                    ? '#DF5C64'
+                    : '#54B9A1'
 
               return <Cell key={`cell-${index}`} fill={color} />
             })}

@@ -10,6 +10,7 @@ import { PaperProps } from '@mui/material'
 import dynamic from 'next/dynamic'
 import * as React from 'react'
 import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 const DynamicTableWalletTokenDetail = dynamic(
   () => import('./TokenDetailItems/TableWalletTokenDetail')
@@ -54,8 +55,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
             currentValue['blockchain'].toLowerCase() === 'ethereum'
               ? '/images/chains/ethereum.svg'
               : currentValue['blockchain'].toLowerCase() === 'gnosis'
-              ? '/images/chains/gnosis.svg'
-              : '/images/chains/all.svg',
+                ? '/images/chains/gnosis.svg'
+                : '/images/chains/all.svg',
           label: currentValue['blockchain'],
           id: currentValue['blockchain']
         })
@@ -90,8 +91,8 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
           blockchainFilter === 'ethereum'
             ? '/images/chains/ethereum.svg'
             : blockchainFilter === 'Gnosis'
-            ? '/images/chains/gnosis.svg'
-            : '/images/chains/all.svg',
+              ? '/images/chains/gnosis.svg'
+              : '/images/chains/all.svg',
         label: blockchainFilter,
         id: blockchainFilter
       }
@@ -156,8 +157,14 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
       return result
     }, [])
 
+  const { state } = useApp()
+  const { currency } = state
+
   return (
-    <PaperSection subTitle="Wallet token detail" filter={filter}>
+    <PaperSection
+      subTitle={currency === 'USD' ? 'Wallet token detail' : 'Wallet token detail (ETH)'}
+      filter={filter}
+    >
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
         <EmptyData />
       ) : (

@@ -1,1 +1,2 @@
 ./src/scripts/generateCache.ts
+./public/cache/*

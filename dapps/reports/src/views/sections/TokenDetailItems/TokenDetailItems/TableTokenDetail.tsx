@@ -2,6 +2,7 @@ import {
   formatCurrency,
   formatCurrencyWithPrecision,
   formatNumber,
+  formatNumberWithPrecision,
   formatPercentage
 } from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
@@ -17,6 +18,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import * as React from 'react'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '../../../../contexts/app.context'
 
 interface TableTokenDetailProps {
   filteredTokenDetails: any[]
@@ -26,25 +29,33 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
   const { filteredTokenDetails } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
+  const isDDay = isYearAndMonthValid()
+
+  const { state } = useApp()
+  const { currency } = state
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
-        <Table sx={{ width: '100%' }}>
+        <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '30%' }} align="left">
                 Token symbol
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Price
+              <TableHeadCellCustom
+                sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
+                align="left"
+              >
+                {currency === 'USD' ? 'Price' : 'ETH Price'}
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">
                 Token balance
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Allocation
+              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
+                {isDDay ? 'Share' : 'Allocation'}
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
                 Price variation
               </TableHeadCellCustom>
             </TableRow>
@@ -72,21 +83,40 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
 
                   return (
                     <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: '30%' }} align="left">
                         <BoxWrapperColumn>
                           {row.tokenSymbol}
                           <CustomTypography variant="tableCellSubData">
                             {row.tokenCategory}
                           </CustomTypography>
                           <CustomTypography variant="tableCellSubData">
-                            {row.blockchain}
+                            {row.blockchain.split('|').slice(0, 5).join('|')}
                           </CustomTypography>
+                          {row.blockchain.split('|').length > 5 ? (
+                            <CustomTypography variant="tableCellSubData">
+                              {row.blockchain.split('|').slice(5).join('|')}
+                            </CustomTypography>
+                          ) : null}
                         </BoxWrapperColumn>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom
+                        sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
+                        align="left"
+                      >
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
-                          <Tooltip title={formatCurrency(row.priceAvg, 4)} sx={{ ml: 1 }}>
-                            <span>{formatCurrencyWithPrecision(row.priceAvg)}</span>
+                          <Tooltip
+                            title={
+                              currency === 'USD'
+                                ? formatCurrency(row?.price, 4)
+                                : formatNumber(row?.price, 10)
+                            }
+                            sx={{ ml: 1 }}
+                          >
+                            <span>
+                              {currency === 'USD'
+                                ? formatCurrencyWithPrecision(row.price)
+                                : formatNumberWithPrecision(+row.price?.toFixed(6))}
+                            </span>
                           </Tooltip>
                           {TOKEN && (
                             <OpenInNewIcon
@@ -107,14 +137,16 @@ const TableTokenDetail = (props: TableTokenDetailProps) => {
                         >
                           {formatNumber(row.balance)}
                           <CustomTypography variant="tableCellSubData">
-                            {formatCurrency(row.usdValue, 2)}
+                            {currency === 'USD'
+                              ? formatCurrency(row.usdValue, 2)
+                              : `${formatNumber(row.usdValue, 2)} ETH`}
                           </CustomTypography>
                         </BoxWrapperColumn>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: '15%' }} align="left">
                         {formatPercentage(row.allocation)}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: '15%' }} align="left">
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
                           {formatPercentage(row.priceVariation) === '0.00%' ? (
                             <Tooltip

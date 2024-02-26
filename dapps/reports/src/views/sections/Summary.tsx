@@ -1,4 +1,8 @@
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import * as React from 'react'
@@ -6,8 +10,14 @@ import { Box } from '@mui/material'
 import BoxInfoCard from '@karpatkey-monorepo/shared/components/InfoCard'
 import { PieChart } from '@karpatkey-monorepo/reports/src/components/Charts/NewPie'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
+import { getDAO } from '@karpatkey-monorepo/shared/utils'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '../../contexts/app.context'
 
 interface SummaryProps {
+  dao: Maybe<number>
+  month: Maybe<number>
+  year: Maybe<number>
   totalFunds: number
   capitalUtilization: number
   globalROI: number
@@ -20,6 +30,9 @@ interface SummaryProps {
 
 const Summary = (props: SummaryProps) => {
   const {
+    month,
+    year,
+    dao,
     totalFunds,
     capitalUtilization,
     globalROI,
@@ -30,10 +43,22 @@ const Summary = (props: SummaryProps) => {
     balanceOverviewType
   } = props
 
+  const { state } = useApp()
+  const { currency } = state
+
+  // Logic for ENS DAO only for the month of October 2023
+  const DAO_OBJ = getDAO(dao)
+  const isDAOEnsOctober =
+    DAO_OBJ?.keyName === 'ENS DAO' && year && month && +year === 2023 && +month === 10
+  const isDAOEnsNovember =
+    DAO_OBJ?.keyName === 'ENS DAO' && year && month && +year === 2023 && +month === 11
+  const APY = isDAOEnsOctober ? '2.04%' : isDAOEnsNovember ? '2.9%' : formatPercentage(globalROI)
+
   /* eslint-disable */
   const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
 
-  console.log('fundsByTokenCategory', fundsByTokenCategory)
+  const isDDay = isYearAndMonthValid()
+
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
@@ -46,16 +71,38 @@ const Summary = (props: SummaryProps) => {
             gap: 10
           }}
         >
-          <BoxInfoCard title="Total funds" value={formatCurrency(totalFunds)} />
           <BoxInfoCard
-            title="Capital utilisation"
+            title={currency === 'USD' ? 'Total funds' : 'Total funds (ETH)'}
+            value={currency === 'USD' ? formatCurrency(totalFunds) : formatNumber(totalFunds, 0)}
+          />
+          <BoxInfoCard
+            title={isDDay ? 'Allocated funds' : 'Capital utilisation'}
             value={formatPercentage(capitalUtilization, 1)}
           />
-          <BoxInfoCard title="Farming results" value={formatCurrency(farmingResults)} />
+          <BoxInfoCard
+            title={
+              isDDay
+                ? currency === 'USD'
+                  ? 'DeFi results'
+                  : 'DeFi results (ETH)'
+                : currency === 'USD'
+                  ? 'Farming results'
+                  : 'Farming results (ETH)'
+            }
+            value={
+              currency === 'USD'
+                ? formatCurrency(farmingResults || 0)
+                : formatNumber(farmingResults || 0, 0)
+            }
+          />
           <BoxInfoCard
             title="APY"
-            value={formatPercentage(globalROI)}
-            helpInfo="This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1."
+            value={APY}
+            helpInfo={
+              isDDay
+                ? 'Calculated as (1+(DeFi results / DeFi initial funds at final prices))^12-1.'
+                : 'This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1.'
+            }
           />
         </Box>
         <Box

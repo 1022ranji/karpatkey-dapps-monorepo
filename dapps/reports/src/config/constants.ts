@@ -9,6 +9,7 @@ export const GOOGLE_CREDS = {
 }
 
 export const DATA_WAREHOUSE_ENV = process.env.REACT_DATA_WAREHOUSE_ENV || 'production'
+
 export const PASSWORD_PROTECT = process.env.PASSWORD_PROTECT
 
 export const UNISWAP_PROTOCOL = 'UniswapV3'

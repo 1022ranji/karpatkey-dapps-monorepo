@@ -18,15 +18,15 @@ interface FilterProps {
   blockchain?: Maybe<string>
   protocol?: Maybe<string>
   token?: Maybe<string>
+  deFiType?: Maybe<string>
   DAO?: Maybe<string>
-  year?: Maybe<string>
-  month?: Maybe<string>
+  yearMonth?: Maybe<string>
   enableProtocol?: boolean
   enableBlockchain?: boolean
   enableToken?: boolean
+  enableDeFiType?: boolean
   enableDAO?: boolean
-  enableYear?: boolean
-  enableMonth?: boolean
+  enableYearMonth?: boolean
   position?: 'left' | 'right' | 'middle'
   tooltipText?: string
 }
@@ -44,15 +44,15 @@ const Filter = (props: FilterProps) => {
     blockchain,
     protocol,
     token,
+    deFiType,
     DAO,
-    year,
-    month,
+    yearMonth,
     enableToken,
     enableBlockchain,
     enableProtocol,
+    enableDeFiType,
     enableDAO,
-    enableYear,
-    enableMonth,
+    enableYearMonth,
     position = 'middle',
     tooltipText
   } = props
@@ -62,29 +62,34 @@ const Filter = (props: FilterProps) => {
       (enableBlockchain && blockchain) ||
       (enableProtocol && protocol) ||
       (enableToken && token) ||
+      (enableDeFiType && deFiType) ||
       (enableDAO && DAO) ||
-      (enableYear && year) ||
-      (enableMonth && month)
+      (enableYearMonth && yearMonth)
     )
   }, [
     blockchain,
     DAO,
     enableBlockchain,
     enableDAO,
-    enableMonth,
     enableProtocol,
     enableToken,
-    enableYear,
-    month,
+    enableDeFiType,
+    enableYearMonth,
     protocol,
+    deFiType,
     token,
-    year
+    yearMonth
   ])
 
   return (
-    <BoxWrapperRow gap={2}>
+    <BoxWrapperRow>
       <CustomTypography variant="filterTitle">{title}</CustomTypography>
-      <BoxWrapperRow gap={2} onClick={handleClick} id={id || ''}>
+      <BoxWrapperRow
+        gap={2}
+        onClick={handleClick}
+        id={id || ''}
+        sx={{ marginRight: '16px', marginLeft: '16px' }}
+      >
         {enableBlockchain ? (
           <FilterTextOption
             title={blockchain || 'Blockchain'}
@@ -103,19 +108,19 @@ const Filter = (props: FilterProps) => {
             {...(token ? { fontWeight: 'extra-bold' } : {})}
           />
         ) : null}
+        {enableDeFiType ? (
+          <FilterTextOption
+            title={deFiType || 'Type'}
+            {...(deFiType ? { fontWeight: 'extra-bold' } : {})}
+          />
+        ) : null}
         {enableDAO ? (
           <FilterTextOption title={DAO || 'DAO'} {...(DAO ? { fontWeight: 'extra-bold' } : {})} />
         ) : null}
-        {enableMonth ? (
+        {enableYearMonth ? (
           <FilterTextOption
-            title={month || 'Month'}
-            {...(month ? { fontWeight: 'extra-bold' } : {})}
-          />
-        ) : null}
-        {enableYear ? (
-          <FilterTextOption
-            title={year || 'Year'}
-            {...(year ? { fontWeight: 'extra-bold' } : {})}
+            title={yearMonth || 'Period'}
+            {...(yearMonth ? { fontWeight: 'extra-bold' } : {})}
           />
         ) : null}
       </BoxWrapperRow>

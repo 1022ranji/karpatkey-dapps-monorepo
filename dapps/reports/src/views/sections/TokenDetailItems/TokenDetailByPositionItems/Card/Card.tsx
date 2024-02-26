@@ -1,4 +1,4 @@
-import { formatCurrency } from '@karpatkey-monorepo/reports/src/utils/format'
+import { formatCurrency, formatNumber } from '@karpatkey-monorepo/reports/src/utils/format'
 import ItemText from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/ItemText'
 import Position from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/Position'
 import ProtocolIcon from '@karpatkey-monorepo/reports/src/views/sections/TokenDetailItems/TokenDetailByPositionItems/Card/ProtocolIcon'
@@ -11,6 +11,8 @@ import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpTe
 import Common from './Common'
 import Ratios from './Ratios'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface CardItemProps {
   id: number
@@ -19,22 +21,47 @@ interface CardItemProps {
 
 const Card = (props: CardItemProps) => {
   const { card } = props
-  const { blockchain, protocol, position, totalUsdValue, cardType, categories } = card
+  const { blockchain, protocol, position, totalUsdValue, cardType, categories, deFiType } = card
+
+  const isDDay = isYearAndMonthValid()
+
+  const { state } = useApp()
+  const { currency } = state
 
   const helpText = <UniswapHelpText />
 
   return (
     <BoxWrapperColumn gap={4}>
-      <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-        <Title title={blockchain} />
-        <BoxWrapperRow gap={1}>
-          <ProtocolIcon protocol={protocol} />
-          <Title title={protocol} />
+      {!isDDay ? (
+        <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
+          <Title title={blockchain} />
+          <BoxWrapperRow gap={1}>
+            <ProtocolIcon protocol={protocol} />
+            <Title title={protocol} />
+          </BoxWrapperRow>
         </BoxWrapperRow>
-      </BoxWrapperRow>
+      ) : (
+        <BoxWrapperRow sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <BoxWrapperColumn gap={1}>
+            <Title title={blockchain} />
+            <BoxWrapperRow gap={1}>
+              <ProtocolIcon protocol={protocol} />
+              <Title title={protocol} />
+            </BoxWrapperRow>
+          </BoxWrapperColumn>
+          <Title title={deFiType} />
+        </BoxWrapperRow>
+      )}
       <BoxWrapperColumn gap={1}>
         <Position position={position} {...(protocol === UNISWAP_PROTOCOL ? { helpText } : {})} />
-        <ItemText maxWidth={'fit-content'} itemText={formatCurrency(totalUsdValue || 0, 2)} />
+        <ItemText
+          maxWidth={'fit-content'}
+          itemText={
+            currency === 'USD'
+              ? formatCurrency(totalUsdValue || 0, 2)
+              : `${formatNumber(totalUsdValue, 2)} ETH`
+          }
+        />
       </BoxWrapperColumn>
       {cardType === 'common' &&
         categories

@@ -1,3 +1,10 @@
+import {
+  Currency,
+  DAOResume,
+  Metrics,
+  Report
+} from '@karpatkey-monorepo/reports/src/contexts/state'
+
 export type Filter = {
   dao: Maybe<number>
   month: Maybe<number>
@@ -6,30 +13,10 @@ export type Filter = {
 
 // TODO: improve types without the use of "any"
 export type ReportData = {
-  totalFunds: number
-  capitalUtilization: number
-  farmingResults: number
-  globalROI: number
-  fundsByTokenCategory: any[]
-  fundsByType: any[]
-  fundsByBlockchain: any[]
-  fundsByProtocol: any[]
-  balanceOverviewType: any[]
-  balanceOverviewBlockchain: any[]
-  treasuryVariationData: any[]
-  historicVariationData: any[]
-  treasuryVariationForThePeriodDetailData: any[]
-  totalFarmingResultsFarmSwaps: number
-  farmingFundsByProtocol: any[]
-  farmingResultsDetailsByProtocol: any[]
-  tokenDetails: any[]
-  tokenDetailsGrouped: any[]
-  tokenDetailByPosition: any[]
-  walletTokenDetail: any[]
-  daoResume: any[]
-  nonCustodialAum: number
-  lastMonthFarmingResults: number
-  latestMonth: number
+  metrics: Metrics
+  daoResume: DAOResume
+  report: Report
+  currency: Currency
 }
 
 export type ReportProps = ReportData & Filter

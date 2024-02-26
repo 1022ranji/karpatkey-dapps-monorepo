@@ -1,4 +1,8 @@
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import EmptyData from '@karpatkey-monorepo/shared/components/EmptyData'
 import TableCellCustom from '@karpatkey-monorepo/shared/components/Table/TableCellCustom'
@@ -11,6 +15,10 @@ import { Box, Table, TableBody, TableContainer, TableHead, TableRow, styled } fr
 import * as React from 'react'
 import UniswapHelpText from '@karpatkey-monorepo/shared/components/UniswapHelpText'
 import { UNISWAP_PROTOCOL } from '@karpatkey-monorepo/reports/src/config/constants'
+import { isYearAndMonthValid } from '@karpatkey-monorepo/reports/src/utils/params'
+import Tooltip from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/Info'
+import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
 
 interface TableFundsProps {
   funds: any
@@ -28,26 +36,45 @@ const TableFunds = (props: TableFundsProps) => {
   const { funds, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
+  const isDDay = isYearAndMonthValid()
+
+  const { state } = useApp()
+  const { currency } = state
+
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
         <Table sx={{ width: '100%' }}>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                 Blockchain
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                 Position
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Farming funds
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                {isDDay ? 'DeFi funds' : 'Farming funds'}
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Unclaimed rewards
-              </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Farming results *
+              {!isDDay ? (
+                <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                  Unclaimed rewards
+                </TableHeadCellCustom>
+              ) : null}
+              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
+                  {isDDay ? 'DeFi results' : 'Farming results'}
+                  <Tooltip
+                    title={
+                      isDDay
+                        ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'
+                        : 'Farming results include results from fees, rebasing, pool token variation and rewards'
+                    }
+                    sx={{ ml: 1, cursor: 'pointer' }}
+                  >
+                    <InfoIcon />
+                  </Tooltip>
+                </BoxWrapperRow>
               </TableHeadCellCustom>
             </TableRow>
           </TableHead>
@@ -65,10 +92,10 @@ const TableFunds = (props: TableFundsProps) => {
 
                   return (
                     <TableRow key={index}>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         {row.blockchain}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         <BoxWrapperRow
                           sx={{
                             width: '90%',
@@ -85,9 +112,11 @@ const TableFunds = (props: TableFundsProps) => {
                           {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
                         </BoxWrapperRow>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
                         <BoxWrapper>
-                          {formatCurrency(Math.round(row.funds || 0))}
+                          {currency === 'USD'
+                            ? formatCurrency(row.funds || 0)
+                            : formatNumber(row.funds, 0)}
                           {row?.allocation > 0 ? (
                             <CustomTypography variant="tableCellSubData">
                               {formatPercentage(row.allocation / 100)}
@@ -95,11 +124,17 @@ const TableFunds = (props: TableFundsProps) => {
                           ) : null}
                         </BoxWrapper>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {formatCurrency(Math.round(row.unclaimed || 0))}
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        {formatCurrency(Math.round(row.results || 0))}
+                      {!isDDay ? (
+                        <TableCellCustom sx={{ width: '20%' }} align="left">
+                          {currency === 'USD'
+                            ? formatCurrency(row.unclaimed || 0)
+                            : formatNumber(row.unclaimed, 0)}
+                        </TableCellCustom>
+                      ) : null}
+                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                        {currency === 'USD'
+                          ? formatCurrency(row.results || 0)
+                          : formatNumber(row.results, 1)}
                       </TableCellCustom>
                     </TableRow>
                   )
@@ -139,14 +174,24 @@ const TableFunds = (props: TableFundsProps) => {
                   <TableFooterCellCustom colSpan={2} align="left">
                     Total
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    <BoxWrapper>{formatCurrency(Math.round(totals?.fundsTotal || 0))}</BoxWrapper>
+                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                    <BoxWrapper>
+                      {currency === 'USD'
+                        ? formatCurrency(totals?.fundsTotal || 0)
+                        : formatNumber(totals?.fundsTotal || 0, 0)}
+                    </BoxWrapper>
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(Math.round(totals?.unclaimedTotal || 0))}
-                  </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: '20%' }} align="left">
-                    {formatCurrency(Math.round(totals?.resultsTotal || 0))}
+                  {!isDDay ? (
+                    <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                      {currency === 'USD'
+                        ? formatCurrency(totals?.unclaimedTotal || 0)
+                        : formatNumber(totals?.unclaimedTotal || 0, 0)}
+                    </TableFooterCellCustom>
+                  ) : null}
+                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                    {currency === 'USD'
+                      ? formatCurrency(totals?.resultsTotal || 0)
+                      : formatNumber(totals?.resultsTotal || 0, 1)}
                   </TableFooterCellCustom>
                 </TableRow>
               </>
@@ -154,14 +199,6 @@ const TableFunds = (props: TableFundsProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <CustomTypography
-        variant="body2"
-        color="textSecondary"
-        align="left"
-        sx={{ fontStyle: 'italic' }}
-      >
-        * Farming Results include results from fees, rebasing, pool token variation and rewards
-      </CustomTypography>
     </BoxWrapperColumn>
   )
 }

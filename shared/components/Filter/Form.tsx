@@ -2,10 +2,9 @@ import { AutocompleteOption } from '@karpatkey-monorepo/shared/components/Custom
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import BlockchainAutocomplete from '@karpatkey-monorepo/shared/components/Form/BlockchainAutocomplete'
 import DAOAutocomplete from '@karpatkey-monorepo/shared/components/Form/DAOAutocomplete'
-import MonthAutocomplete from '@karpatkey-monorepo/shared/components/Form/MonthAutocomplete'
 import ProtocolAutocomplete from '@karpatkey-monorepo/shared/components/Form/ProtocolAutocomplete'
 import TokenAutocomplete from '@karpatkey-monorepo/shared/components/Form/TokenAutocomplete'
-import YearAutocomplete from '@karpatkey-monorepo/shared/components/Form/YearAutocomplete'
+import DeFiTypeAutocomplete from '@karpatkey-monorepo/shared/components/Form/DeFiTypeAutocomplete'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { FILTER_DAO, FILTER_DAOS } from '@karpatkey-monorepo/shared/config/constants'
@@ -17,6 +16,7 @@ import { DateTime } from 'luxon'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
+import YearMonthAutocomplete from '../Form/YearMonthAutocomplete'
 
 const ButtonStyled = styled(Button)({
   padding: '6px 14px',
@@ -28,18 +28,18 @@ type FormValues = {
   blockchain: Maybe<AutocompleteOption>
   protocol: Maybe<AutocompleteOption>
   token: Maybe<AutocompleteOption>
+  deFiType: Maybe<AutocompleteOption>
   DAO: Maybe<AutocompleteOption>
-  year: Maybe<AutocompleteOption>
-  month: Maybe<AutocompleteOption>
+  yearMonth: Maybe<AutocompleteOption>
 }
 
 const validationSchema = yup.object({
   blockchain: yup.object().notRequired(),
   protocol: yup.object().notRequired(),
   token: yup.object().notRequired(),
+  deFiType: yup.object().notRequired(),
   DAO: yup.object().notRequired(),
-  year: yup.object().notRequired(),
-  month: yup.object().notRequired()
+  yearMonth: yup.object().notRequired()
 })
 
 const useYupValidationResolver = (validationSchema: any, shouldCheckDAOFilter: boolean) =>
@@ -65,35 +65,36 @@ const useYupValidationResolver = (validationSchema: any, shouldCheckDAOFilter: b
               }
             }
 
-          if (!values?.month?.id) {
+          if (!values?.yearMonth?.id) {
             errors = {
               inner: {
-                type: 'MONTH_REQUIRED',
-                message: `Month is required`
+                type: 'YEAR_MONTH_REQUIRED',
+                message: `Period is required`
               }
             }
           }
 
-          if (!values?.year?.id) {
-            errors = {
-              inner: {
-                type: 'YEAR_REQUIRED',
-                message: `Year is required`
-              }
-            }
-          }
+          if (dao && values?.yearMonth?.id) {
+            const [year, month] = values?.yearMonth?.id.split('-')
+            const periodAllowed =
+              FILTER_DAOS.find((option: FILTER_DAO) => {
+                return option.id === values?.DAO?.id
+              })?.datesAllowed?.find((option) => {
+                return +option.year === +year && +option.month === +month
+              }) ?? null
 
-          if (dao && (values?.month?.id < dao.sinceMonth || values?.year?.id < dao.sinceYear)) {
-            const month = MONTHS.find((option: AutocompleteOption) => {
-              return +option.id === +dao.sinceMonth
-            })
+            const monthLabel =
+              MONTHS.find((option) => {
+                return +option.id === +month
+              })?.label ?? ''
 
-            errors = {
-              inner: {
-                type: 'REPORT_NOT_AVAILABLE_FOR_THE_PERIOD',
-                message: `Report not available for the period. Should be since ${month?.label}/${dao.sinceYear}`
+            if (!periodAllowed)
+              errors = {
+                inner: {
+                  type: 'REPORT_NOT_AVAILABLE_FOR_THE_PERIOD',
+                  message: `Report not available for the period. Should be since ${monthLabel} ${dao.sinceYear}`
+                }
               }
-            }
           }
 
           const actualMonth = DateTime.local().month
@@ -135,9 +136,9 @@ export type SubmitValues = {
   blockchain?: string | number
   protocol?: string | number
   token?: string | number
+  deFiType?: string | number
   DAO?: string | number
-  year?: string | number
-  month?: string | number
+  yearMonth?: string | number
 }
 
 interface FormProps {
@@ -146,18 +147,19 @@ interface FormProps {
   defaultBlockchainValue?: Maybe<AutocompleteOption>
   defaultProtocolValue?: Maybe<AutocompleteOption>
   defaultTokenValue?: Maybe<AutocompleteOption>
+  defaultDeFiTypeValue?: Maybe<AutocompleteOption>
   defaultDAOValue?: Maybe<AutocompleteOption>
-  defaultMonthValue?: Maybe<AutocompleteOption>
-  defaultYearValue?: Maybe<AutocompleteOption>
+  defaultYearMonthValue?: Maybe<AutocompleteOption>
   blockchainOptions?: AutocompleteOption[]
   protocolOptions?: AutocompleteOption[]
   tokenOptions?: AutocompleteOption[]
+  deFiTypeOptions?: AutocompleteOption[]
   enableProtocol?: boolean
   enableBlockchain?: boolean
   enableToken?: boolean
+  enableDeFiType?: boolean
   enableDAO?: boolean
-  enableYear?: boolean
-  enableMonth?: boolean
+  enableYearMonth?: boolean
   buttonTitle?: string
 }
 
@@ -167,40 +169,40 @@ const Form = (props: FormProps) => {
     defaultBlockchainValue = null,
     defaultTokenValue = null,
     defaultProtocolValue = null,
+    defaultDeFiTypeValue = null,
     defaultDAOValue = null,
-    defaultYearValue = null,
-    defaultMonthValue = null,
+    defaultYearMonthValue = null,
     blockchainOptions = [],
     protocolOptions = [],
     tokenOptions = [],
+    deFiTypeOptions = [],
     onSubmitClose,
     enableToken = false,
     enableBlockchain = false,
     enableProtocol = false,
+    enableDeFiType = false,
     enableDAO = false,
-    enableYear = false,
-    enableMonth = false,
+    enableYearMonth = false,
     buttonTitle
   } = props
 
   // Yup validation
-  const resolver = useYupValidationResolver(
-    validationSchema,
-    enableDAO && enableYear && enableMonth
-  )
+  const resolver = useYupValidationResolver(validationSchema, enableDAO && enableYearMonth)
 
   const defaultValues: FormValues = {
     blockchain: defaultBlockchainValue,
     protocol: defaultProtocolValue,
     token: defaultTokenValue,
+    deFiType: defaultDeFiTypeValue,
     DAO: defaultDAOValue,
-    year: defaultYearValue,
-    month: defaultMonthValue
+    yearMonth: defaultYearMonthValue
   }
 
   const {
     handleSubmit,
     control,
+    watch,
+    setValue,
     formState: { errors }
   } = useForm<FormValues>({
     defaultValues,
@@ -211,9 +213,9 @@ const Form = (props: FormProps) => {
     const blockchain = data?.blockchain?.id ?? ''
     const protocol = data?.protocol?.id ?? ''
     const token = data?.token?.id ?? ''
+    const deFiType = data?.deFiType?.id ?? ''
     const DAO = data?.DAO?.id ?? ''
-    const year = data?.year?.id ?? ''
-    const month = data?.month?.id ?? ''
+    const yearMonth = data?.yearMonth?.id ?? ''
 
     onRequestClose()
 
@@ -221,11 +223,19 @@ const Form = (props: FormProps) => {
       blockchain,
       protocol,
       token,
+      deFiType,
       DAO,
-      year,
-      month
+      yearMonth
     }
     onSubmitClose(params)
+  }
+
+  const DAOWatched = watch('DAO')
+  const yearMonthWatched = watch('yearMonth')
+
+  const selectedValues = {
+    DAO: DAOWatched?.id,
+    yearMonth: yearMonthWatched?.id
   }
 
   return (
@@ -265,19 +275,37 @@ const Form = (props: FormProps) => {
                   <TokenAutocomplete options={tokenOptions} control={control} name={'token'} />
                 </Stack>
               ) : null}
+              {enableDeFiType ? (
+                <Stack width={200}>
+                  <DeFiTypeAutocomplete
+                    options={deFiTypeOptions}
+                    control={control}
+                    name={'deFiType'}
+                  />
+                </Stack>
+              ) : null}
               {enableDAO ? (
                 <Stack width={200}>
-                  <DAOAutocomplete control={control} name={'DAO'} />
+                  <DAOAutocomplete
+                    control={control}
+                    name={'DAO'}
+                    onChangeProps={
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      (value: any) => {
+                        // Selected DAO changed, reset yearMonth
+                        setValue('yearMonth', null)
+                      }
+                    }
+                  />
                 </Stack>
               ) : null}
-              {enableMonth ? (
+              {enableYearMonth ? (
                 <Stack width={200}>
-                  <MonthAutocomplete control={control} name={'month'} />
-                </Stack>
-              ) : null}
-              {enableYear ? (
-                <Stack width={200}>
-                  <YearAutocomplete control={control} name={'year'} />
+                  <YearMonthAutocomplete
+                    control={control}
+                    name={'yearMonth'}
+                    selectedValues={selectedValues}
+                  />
                 </Stack>
               ) : null}
             </BoxWrapperRow>

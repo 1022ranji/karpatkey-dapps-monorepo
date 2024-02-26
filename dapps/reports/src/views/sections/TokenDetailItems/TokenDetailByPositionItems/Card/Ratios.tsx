@@ -1,10 +1,15 @@
-import { formatCurrency, formatPercentage } from '@karpatkey-monorepo/reports/src/utils/format'
+import {
+  formatCurrency,
+  formatNumber,
+  formatPercentage
+} from '@karpatkey-monorepo/reports/src/utils/format'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
 import { Divider } from '@mui/material'
 import * as React from 'react'
 
 import ItemText from './ItemText'
+import { useApp } from '../../../../../contexts/app.context'
 
 interface RatiosProps {
   title: string
@@ -28,6 +33,9 @@ const sortOrder = [
 ]
 
 const Ratios = ({ title, ratios }: RatiosProps) => {
+  const { state } = useApp()
+  const { currency } = state
+
   return (
     <BoxWrapperColumn sx={{ gap: 2 }}>
       <BoxWrapperColumn gap={1}>
@@ -45,7 +53,10 @@ const Ratios = ({ title, ratios }: RatiosProps) => {
             formatValue = formatPercentage((value || 0) / 100, 0)
           }
           if (name === 'Collateral liquidation price') {
-            formatValue = formatCurrency(value || 0, 0)
+            formatValue =
+              currency === 'USD'
+                ? formatCurrency(value || 0, 0)
+                : `${formatNumber(value || 0, 0)} ETH`
           }
           return (
             <BoxWrapperColumn key={index} gap={1}>
