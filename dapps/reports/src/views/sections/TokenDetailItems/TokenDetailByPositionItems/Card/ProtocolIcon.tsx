@@ -1,5 +1,7 @@
 import Aave from '@karpatkey-monorepo/shared/components/Icons/Protocols/Aave'
 import AaveV3 from '@karpatkey-monorepo/shared/components/Icons/Protocols/AaveV3'
+import AaveV2 from '@karpatkey-monorepo/shared/components/Icons/Protocols/AaveV3'
+import AaveAMM from '@karpatkey-monorepo/shared/components/Icons/Protocols/AaveV3'
 import Angle from '@karpatkey-monorepo/shared/components/Icons/Protocols/Angle'
 import Agave from '@karpatkey-monorepo/shared/components/Icons/Protocols/Agave'
 import Ankr from '@karpatkey-monorepo/shared/components/Icons/Protocols/Ankr'
@@ -31,6 +33,7 @@ import Gnosis from '@karpatkey-monorepo/shared/components/Icons/Protocols/Gnosis
 import RocketPool from '@karpatkey-monorepo/shared/components/Icons/Protocols/RocketPool'
 import KarpatkeyIcon from '@karpatkey-monorepo/shared/components/Icons/Protocols/Karpatkey'
 import Stader from '@karpatkey-monorepo/shared/components/Icons/Protocols/Stader'
+import StakeDAO from '@karpatkey-monorepo/shared/components/Icons/Protocols/StakeDAO'
 import * as React from 'react'
 
 interface ProtocolIconProps {
@@ -46,8 +49,14 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
     case 'Aave':
       icon = <Aave width={24} height={24} />
       break
+    case 'AaveV2':
+      icon = <AaveV2 width={24} height={24} />
+      break
     case 'AaveV3':
       icon = <AaveV3 width={24} height={24} />
+      break
+    case 'Aave (AMM)':
+      icon = <AaveAMM width={24} height={24} />
       break
     case 'Angle':
       icon = <Angle width={24} height={24} />
@@ -144,6 +153,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Stader':
       icon = <Stader width={24} height={24} />
+      break
+    case 'StakeDAO':
+      icon = <StakeDAO width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />
