@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+  name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+  namespace: reports-pr-review
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+  template:
+    metadata:
+      labels:
+        app: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/agent-inject-status: 'update'
+        vault.hashicorp.com/role: 'internal-app'
+        vault.hashicorp.com/agent-inject-secret-reports: 'internal/data/reports'
+        vault.hashicorp.com/agent-inject-template-reports: |
+          {{- with secret "internal/data/reports" -}}
+            {{- range $key, $value := .Data.data }}
+              export {{ $key }}={{ $value }}
+            {{- end }}
+          {{- end -}}
+    spec:
+      volumes:
+      - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+        persistentVolumeClaim:
+          claimName: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+      containers:
+      - image: registry.digitalocean.com/karpatkey/karpatkey-dapps-monorepo:pr{{DOCKER_TAG}}
+        imagePullPolicy: Always
+        name: develop-karpatkey-dapps-monorepo
+        command:
+          ['/bin/sh', '-c']
+        args:
+          ['source /vault/secrets/reports && yarn dev']
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        - containerPort: 3001
+          protocol: TCP
+        env: 
+        - name: AUTH0_BASE_URL
+          value: "{{PR_SUBDOMAIN}}"
+
+        - name: REACT_DAO_DEFAULT
+          value: "5"
+        - name: REACT_DATA_WAREHOUSE_ENV
+          value: 'development'
+
+
+        volumeMounts:
+        - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+          mountPath: /app/dapps/reports/public/cache
+      
+      - name: cron-container
+        image: registry.digitalocean.com/karpatkey/karpatkey-dapps-monorepo:pr{{DOCKER_TAG}}
+        imagePullPolicy: Always
+        command:
+          ['/bin/sh', '-c']
+        args:
+          ['source /vault/secrets/reports && while true; do yarn generate:cache; sleep 3600; done']
+        
+        volumeMounts:
+        - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+          mountPath: /app/dapps/reports/public/cache
+
+        env: 
+        
+        - name: AUTH0_BASE_URL
+          value: "{{PR_SUBDOMAIN}}"
+
+        - name: REACT_DAO_DEFAULT
+          value: "5"
+
+        - name: REACT_DATA_WAREHOUSE_ENV
+          value: 'development'
+        
+
+      restartPolicy: Always
+      
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+  namespace: reports-pr-review
+spec:
+  ports:
+  - port: 3000
+    name: one
+    protocol: TCP
+    targetPort: 3000
+  - port: 3001
+    name: two
+    protocol: TCP
+    targetPort: 3001
+  
+  selector:
+    app: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+  
+---
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+  namespace: reports-pr-review
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: do-block-storage
