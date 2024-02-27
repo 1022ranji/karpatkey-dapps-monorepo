@@ -1,4 +1,3 @@
-
 FROM node:20.0.0-alpine as builder
 
 RUN apk update && \

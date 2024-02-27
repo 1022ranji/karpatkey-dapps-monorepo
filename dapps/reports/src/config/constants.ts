@@ -13,3 +13,5 @@ export const DATA_WAREHOUSE_ENV = process.env.REACT_DATA_WAREHOUSE_ENV || 'produ
 export const PASSWORD_PROTECT = process.env.PASSWORD_PROTECT
 
 export const UNISWAP_PROTOCOL = 'UniswapV3'
+
+export const APP_URL = process.env.APP_URL || 'karpatkey'
