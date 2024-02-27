@@ -559,12 +559,15 @@ export const getTokenDetailByPositionUSD = (data: any, params: any) => {
 
       const balance = obj.bal_1 ? obj.bal_1 : 0
 
-      const positiveBalanceLabel = isDDay
-        ? `${deFiType} funds: collateral`
-        : 'Farming funds: collateral'
-      const negativeBalanceLabel = isDDay ? `${deFiType} funds: debt` : 'Farming funds: debt'
-
-      const categoryName = balance > 0 ? positiveBalanceLabel : negativeBalanceLabel
+      let categoryName = 'Operations'
+      if (obj?.farming_type?.includes('DeFi funds')) {
+        const positiveBalanceLabel = isDDay ? `DeFi funds: collateral` : `Farming funds: collateral`
+        const negativeBalanceLabel = isDDay ? `DeFi funds: debt` : `Farming funds: debt`
+        categoryName = balance > 0 ? positiveBalanceLabel : negativeBalanceLabel
+      }
+      if (obj?.farming_type?.includes('unclaim')) {
+        categoryName = isDDay ? `DeFi unclaimed rewards` : `Unclaimed rewards`
+      }
 
       const cardFound = acc.find((card: any) => {
         return (
