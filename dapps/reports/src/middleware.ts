@@ -1,4 +1,4 @@
-import { PASSWORD_PROTECT } from './config/constants'
+import { APP_URL, PASSWORD_PROTECT } from './config/constants'
 import { NextRequest, NextResponse } from 'next/server'
 
 const isPasswordEnabled = !!PASSWORD_PROTECT
@@ -14,7 +14,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = url
 
   if (pathname.startsWith(`/api/`)) {
-    if (!req.headers.get('referer')?.includes(process.env.APP_URL as string)) {
+    if (!req.headers.get('referer')?.includes(APP_URL as string)) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
   }
