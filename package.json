@@ -9,9 +9,9 @@
   },
   "scripts": {
     "dev:reports": "cd dapps/reports && yarn dev",
-    "dev": "yarn dev:reports & yarn dev:panic-button",
+    "dev": "yarn dev:reports",
     "start:reports": "cd dapps/reports && yarn install && yarn build && yarn start",
-    "start": "yarn start:reports & yarn start:panic-button",
+    "start": "yarn start:reports",
     "update:reports": "cd dapps/reports && yarn",
     "update:shared": "cd shared && yarn",
     "update:tools": "cd tools && yarn",
