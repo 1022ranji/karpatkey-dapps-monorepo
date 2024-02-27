@@ -29,9 +29,6 @@ WORKDIR /app/dapps/reports
 # Build app
 RUN --mount=type=secret,id=env,dst=/.env yarn run build
 
-# Generate cache
-RUN yarn generate:cache
-
 # Expose the listening port
 EXPOSE ${PORT}
 

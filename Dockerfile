@@ -1,4 +1,3 @@
-
 FROM node:20.0.0-alpine as builder
 
 RUN apk update && \
@@ -11,8 +10,6 @@ WORKDIR /app
 COPY . .
 
 RUN yarn install
-
-RUN yarn generate:cache
 
 # Production image
 FROM node:20.0.0-alpine
