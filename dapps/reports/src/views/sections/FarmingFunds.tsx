@@ -45,8 +45,8 @@ const FarmingFunds = (props: FarmingFundsProps) => {
                 ? 'DeFi results from DeFi-Swaps'
                 : 'DeFi results from DeFi-Swaps (ETH)'
               : currency === 'USD'
-              ? 'Farming results from Farm-Swaps'
-              : 'Farming results from Farm-Swaps (ETH)'
+                ? 'Farming results from Farm-Swaps'
+                : 'Farming results from Farm-Swaps (ETH)'
           }
         >
           <CustomTypography variant="farmSwapsValue">

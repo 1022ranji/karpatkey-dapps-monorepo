@@ -86,8 +86,8 @@ const Summary = (props: SummaryProps) => {
                   ? 'DeFi results'
                   : 'DeFi results (ETH)'
                 : currency === 'USD'
-                ? 'Farming results'
-                : 'Farming results (ETH)'
+                  ? 'Farming results'
+                  : 'Farming results (ETH)'
             }
             value={
               currency === 'USD'

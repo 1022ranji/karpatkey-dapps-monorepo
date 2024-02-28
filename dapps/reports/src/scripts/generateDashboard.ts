@@ -18,8 +18,6 @@ const metricPeriodType = 'month'
 const { month, year } = getLatestMonthAndYearInCommonForEveryDAO()
 const metricPeriod = `${year}_${month}`
 
-console.log('metricPeriod', metricPeriod)
-
 const getDAOResume = async ({
   variationMetricsDetail,
   financialMetricAndVarDetail,
@@ -41,8 +39,9 @@ const getDAOResume = async ({
 
   const urlToReport = `?dao=${DAO_ID}&month=${month}&year=${year}`
 
-  const shouldBeETH = FILTER_DAOS.find((DAO: FILTER_DAO) => DAO.id === DAO_ID)
-    ?.shouldBeIncludedDashboardTwo
+  const shouldBeETH = FILTER_DAOS.find(
+    (DAO: FILTER_DAO) => DAO.id === DAO_ID
+  )?.shouldBeIncludedDashboardTwo
 
   return {
     totalFunds: shouldBeETH ? totalFunds.totalFundsETH : totalFunds.totalFundsUSD,

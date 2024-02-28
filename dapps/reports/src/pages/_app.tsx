@@ -6,8 +6,6 @@ import createEmotionCache from '@karpatkey-monorepo/shared/config/createEmotionC
 import theme from '@karpatkey-monorepo/shared/config/theme'
 import { CssBaseline, NoSsr } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Router, { useRouter } from 'next/router'
@@ -57,22 +55,20 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>{TITLE}</title>
       </Head>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeProvider theme={theme}>
-          <ErrorBoundaryWrapper>
-            <AppProvider>
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
-              <NoSsr>
-                {isPasswordProtected ? <Component {...pageProps} /> : null}
-                {!isPasswordProtected ? (
-                  <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
-                ) : null}
-              </NoSsr>
-            </AppProvider>
-          </ErrorBoundaryWrapper>
-        </ThemeProvider>
-      </LocalizationProvider>
+      <ThemeProvider theme={theme}>
+        <ErrorBoundaryWrapper>
+          <AppProvider>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <NoSsr>
+              {isPasswordProtected ? <Component {...pageProps} /> : null}
+              {!isPasswordProtected ? (
+                <Layout>{loading ? <Loading /> : <Component {...pageProps} />}</Layout>
+              ) : null}
+            </NoSsr>
+          </AppProvider>
+        </ErrorBoundaryWrapper>
+      </ThemeProvider>
     </CacheProvider>
   )
 }

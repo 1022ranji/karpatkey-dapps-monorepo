@@ -113,8 +113,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
 
     // Get allowed currencies from FILTER_DAOS
-    const currenciesAllowed = FILTER_DAOS.find((daoItem) => dao && +daoItem.id === +dao)
-      ?.currenciesAllowed
+    const currenciesAllowed = FILTER_DAOS.find(
+      (daoItem) => dao && +daoItem.id === +dao
+    )?.currenciesAllowed
 
     const props = {
       ...dashboard,

@@ -29,12 +29,6 @@ WORKDIR /app/dapps/reports
 # Build app
 RUN --mount=type=secret,id=env,dst=/.env yarn run build
 
-# Generate cache
-RUN yarn generate:cache
-
-# Setup cron job
-RUN echo "*/5 * * * * wget --quiet -O /dev/null http://127.0.0.1:3000/api/cache" >> /var/spool/cron/crontabs/root
-
 # Expose the listening port
 EXPOSE ${PORT}
 
