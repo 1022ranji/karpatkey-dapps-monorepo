@@ -452,18 +452,19 @@ export const SUMMARY_COLORS = [
 export const WALLET_COLORS = [
   '#111111',
   '#222222',
-  '#333333',
+  '#383838',
   '#444444',
   '#555555',
-  '#666666',
+  '#696969',
   '#777777',
   '#888888',
-  '#999999',
-  '#aaaaaa',
-  '#bbbbbb',
-  '#cccccc',
-  '#dddddd',
-  '#eeeeee'
+  '#989898',
+  '#B0B0B0',
+  '#C0C0C0',
+  '#DEDEDE',
+  '#E0E0E0',
+  '#F0F0F0',
+  '#F8F8F8'
 ]
 
 export default theme
