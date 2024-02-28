@@ -114,7 +114,7 @@ const Summary = (props: SummaryProps) => {
           }}
         >
           <PieChart
-            title="Total funds by token category"
+            titleMessage="Total funds by token category"
             data={fundsByTokenCategory.map((item) => {
               return {
                 name: item.label,
@@ -145,7 +145,7 @@ const Summary = (props: SummaryProps) => {
               : {})}
           />
           <PieChart
-            title="Total funds by blockchain"
+            titleMessage="Total funds by blockchain"
             data={fundsByBlockchain.map((item) => {
               return {
                 name: item.label,
@@ -157,7 +157,7 @@ const Summary = (props: SummaryProps) => {
             height={400}
           />
           <PieChart
-            title="Total funds by type"
+            titleMessage="Total funds by type"
             data={fundsByType.map((item) => {
               return {
                 name: item.label,
