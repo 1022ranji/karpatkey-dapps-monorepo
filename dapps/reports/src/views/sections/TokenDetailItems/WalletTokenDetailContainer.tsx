@@ -178,9 +178,9 @@ const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProps & Pap
               }
             })}
             width={550}
-            height={450}
+            height={440}
             innerSize="60%"
-            outerSize="82%"
+            outerSize="80%"
           />
           <DynamicTableWalletTokenDetail
             filteredWalletTokenDetail={filteredWalletTokenDetail}

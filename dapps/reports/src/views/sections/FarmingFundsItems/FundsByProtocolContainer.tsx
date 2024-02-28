@@ -38,9 +38,9 @@ const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
               }
             })}
             innerSize="60%"
-            outerSize="90%"
-            width={550}
-            height={450}
+            outerSize="80%"
+            width={'550px'}
+            height={'440px'}
           />
         </BoxWrapperRow>
       )}

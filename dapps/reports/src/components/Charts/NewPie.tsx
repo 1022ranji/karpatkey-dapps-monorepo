@@ -23,7 +23,7 @@ interface PieChartProps {
     y: string
     name: string
   }[]
-  title?: string
+  titleMessage?: string
   footerMessage?: React.ReactNode
   width?: string | number
   height?: string | number
@@ -34,7 +34,7 @@ interface PieChartProps {
 export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
   const {
     data,
-    title,
+    titleMessage,
     footerMessage,
     width = 440,
     height = 400,
@@ -63,6 +63,13 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
     ],
     plotOptions: {
       series: {
+        startAngle: 90,
+        events: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          click: function (e: any) {
+            e.preventDefault() // prevent any action from occuring on "click" event
+          }
+        },
         borderWidth: 0,
         colorByPoint: true,
         type: 'pie',
@@ -71,15 +78,18 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         dataLabels: {
           enabled: true,
           crop: false,
-          distance: '35%',
+          distance: '25%',
           style: {
             fontSize: '12px',
             fontFamily: 'IBM Plex Sans',
             color: '#222222',
             textOutline: '0px',
-            fontWeight: 'normal'
+            fontWeight: 'normal',
+            width: '100px'
           },
-          connectorWidth: 2
+          connectorWidth: 2,
+          connectorShape: 'fixedOffset',
+          shadow: false
         }
       },
       pie: {
@@ -87,9 +97,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         cursor: 'pointer',
         borderRadius: 0,
         borderWidth: 0,
-        minSize: 20,
         dataLabels: {
-          enabled: true,
           format:
             '<span class="highcharts-data-label">{point.name}</span><br>{point.percentage:.2f} %',
           useHTML: true,
@@ -135,8 +143,8 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
   const containerProps = {
     style: {
       marginTop: '40px',
-      height: `${+height * 0.8}px`,
-      width: `${+width * 0.95}px`
+      height: `${height}px`,
+      width: `${width}px`
     }
   }
 
@@ -148,7 +156,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         width: `${width}px`
       }}
     >
-      {title ? <PieChartTitle title={title} /> : null}
+      {titleMessage ? <PieChartTitle title={titleMessage} /> : null}
       {data.length > 0 ? (
         <HighchartsReact
           highcharts={Highcharts}
