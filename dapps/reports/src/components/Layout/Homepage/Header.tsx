@@ -5,18 +5,17 @@ import { styled, Box, Link, css } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import clsx from 'clsx'
-
-//drawer elements used
 import ListItemButton from '@mui/material/ListItemButton'
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import { Modal as BaseModal } from '@mui/base/Modal'
+import Slide from '@mui/material/Slide'
 
 const NavbarLogoLeftContainer = styled(Box)(() => ({
   justifyContent: 'center',
   marginLeft: 'auto',
   marginRight: 'auto',
   display: 'flex',
-  zIndex: 2
+  zIndex: 1302
 }))
 
 const NavbarLeft = styled(Box)(() => ({
@@ -26,7 +25,7 @@ const NavbarLeft = styled(Box)(() => ({
   display: 'flex',
   position: 'sticky',
   top: '0',
-  zIndex: 5,
+  zIndex: 1301,
   marginLeft: 'auto',
   marginRight: 'auto',
   padding: '20px 20px',
@@ -35,13 +34,13 @@ const NavbarLeft = styled(Box)(() => ({
     position: 'fixed',
     top: '-80px',
     transition: '0.3s linear',
-    zIndex: 40
+    zIndex: 1301
   },
   '&.show , &.down': {
     position: 'fixed',
     top: '0px',
     transition: '0.3s linear',
-    zIndex: 40
+    zIndex: 1301
   }
 }))
 
@@ -87,7 +86,7 @@ Backdrop.displayName = 'Backdrop'
 
 const Modal = styled(BaseModal)`
   position: fixed;
-  z-index: 1300;
+  z-index: 50;
   inset: 0;
   display: flex;
   align-items: center;
@@ -110,19 +109,6 @@ const ModalContent = styled('div')(
     gap: 8px;
     overflow: hidden;
     padding: 24px;
-
-    & .modal-title {
-      margin: 0;
-      line-height: 1.5rem;
-      margin-bottom: 8px;
-    }
-
-    & .modal-description {
-      margin: 0;
-      line-height: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 4px;
-    }
   `
 )
 
@@ -153,7 +139,10 @@ export const Header = () => {
   }, [lastScrollY])
 
   const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    // handle open but close if already open
+    setOpen(!open)
+  }
   const handleClose = () => setOpen(false)
 
   return (
@@ -211,51 +200,52 @@ export const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
-
-              <Modal
-                aria-labelledby="unstyled-modal-title"
-                aria-describedby="unstyled-modal-description"
-                open={open}
-                onClose={handleClose}
-                slots={{ backdrop: StyledBackdrop }}
-              >
-                <ModalContent sx={{ width: '100%', height: '100%', top: '88px' }}>
-                  <Box sx={{ p: 2 }}>
-                    <BoxWrapperColumn sx={{ mb: 2 }} gap={4}>
-                      <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
-                        <LinkStyled href="https://www.karpatkey.com/contributions">
-                          Contributions
-                        </LinkStyled>
-                      </ListItemButton>
-
-                      <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
-                        <LinkStyled
-                          sx={{ fontWeight: 700, opacity: 100 }}
-                          href="https://reports.karpatkey.com/"
-                        >
-                          Reports
-                        </LinkStyled>
-                      </ListItemButton>
-
-                      <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
-                        <LinkStyled href="https://www.karpatkey.com/writing">Writing</LinkStyled>
-                      </ListItemButton>
-
-                      <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
-                        <LinkStyled href="https://www.karpatkey.com/jobs">Jobs</LinkStyled>
-                      </ListItemButton>
-
-                      <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
-                        <LinkStyled href="https://www.karpatkey.com/contact">Contact</LinkStyled>
-                      </ListItemButton>
-                    </BoxWrapperColumn>
-                  </Box>
-                </ModalContent>
-              </Modal>
             </NavbarWrapper>
           </Container>
         </NavbarLeft>
       </NavbarLogoLeftContainer>
+      <Modal
+        aria-labelledby="unstyled-modal-title"
+        aria-describedby="unstyled-modal-description"
+        open={open}
+        onClose={handleClose}
+        slots={{ backdrop: StyledBackdrop }}
+      >
+        <Slide direction="down" in={open} mountOnEnter unmountOnExit>
+          <ModalContent sx={{ width: '100%', height: '100%', top: '88px' }}>
+            <Box sx={{ p: 2 }}>
+              <BoxWrapperColumn sx={{ mb: 2 }} gap={4}>
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                  <LinkStyled href="https://www.karpatkey.com/contributions">
+                    Contributions
+                  </LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                  <LinkStyled
+                    sx={{ fontWeight: 700, opacity: 100 }}
+                    href="https://reports.karpatkey.com/"
+                  >
+                    Reports
+                  </LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                  <LinkStyled href="https://www.karpatkey.com/writing">Writing</LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                  <LinkStyled href="https://www.karpatkey.com/jobs">Jobs</LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                  <LinkStyled href="https://www.karpatkey.com/contact">Contact</LinkStyled>
+                </ListItemButton>
+              </BoxWrapperColumn>
+            </Box>
+          </ModalContent>
+        </Slide>
+      </Modal>
     </AnimatePresenceWrapper>
   )
 }
