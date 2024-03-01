@@ -87,16 +87,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
   const params = { dao, month, year } as Filter
 
-  // Throw an error if the dao is LIDO
-  if (dao && +dao === 7) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/500'
-      }
-    }
-  }
-
   // We validate the params here to avoid any errors in the page
   await filterSchemaValidation.validate(params)
 
