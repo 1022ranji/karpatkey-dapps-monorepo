@@ -15,7 +15,7 @@ export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
 
   return (
     <AnimatePresenceWrapper>
-      <BoxWrapperColumn sx={{ justifyContent: 'center' }} gap={'10px'}>
+      <BoxWrapperColumn sx={{ justifyContent: 'center' }} gap={'20px'}>
         <CustomTypography
           textAlign="center"
           variant="h2"
