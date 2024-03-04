@@ -18,18 +18,18 @@ spec:
         vault.hashicorp.com/agent-inject: 'true'
         vault.hashicorp.com/agent-inject-status: 'update'
         vault.hashicorp.com/role: 'internal-app'
-        vault.hashicorp.com/agent-inject-secret-reports: 'internal/data/reports'
-        vault.hashicorp.com/agent-inject-template-reports: |
-          {{- with secret "internal/data/reports" -}}
+        vault.hashicorp.com/agent-inject-secret-pr-review-deployment-reports: 'internal/data/pr-review-deployment-reports'
+        vault.hashicorp.com/agent-inject-template-pr-review-deployment-reports: |
+          {{- with secret "internal/data/pr-review-deployment-reports" -}}
             {{- range $key, $value := .Data.data }}
               export {{ $key }}={{ $value }}
             {{- end }}
           {{- end -}}
     spec:
-      volumes:
-      - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
-        persistentVolumeClaim:
-          claimName: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+      # volumes:
+      # - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+      #   persistentVolumeClaim:
+      #     claimName: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
       containers:
       - image: registry.digitalocean.com/karpatkey/karpatkey-dapps-monorepo:pr{{DOCKER_TAG}}
         imagePullPolicy: Always
@@ -37,7 +37,7 @@ spec:
         command:
           ['/bin/sh', '-c']
         args:
-          ['source /vault/secrets/reports && yarn dev']
+          ['source /vault/secrets/pr-review-deployment-reports && yarn generate:cache && yarn dev']
         ports:
         - containerPort: 3000
           protocol: TCP
@@ -53,32 +53,32 @@ spec:
           value: 'development'
 
 
-        volumeMounts:
-        - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
-          mountPath: /app/dapps/reports/public/cache
+      #   volumeMounts:
+      #   - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+      #     mountPath: /app/dapps/reports/public/cache
       
-      - name: cron-container
-        image: registry.digitalocean.com/karpatkey/karpatkey-dapps-monorepo:pr{{DOCKER_TAG}}
-        imagePullPolicy: Always
-        command:
-          ['/bin/sh', '-c']
-        args:
-          ['source /vault/secrets/reports && while true; do yarn generate:cache; sleep 3600; done']
+      # - name: cron-container
+      #   image: registry.digitalocean.com/karpatkey/karpatkey-dapps-monorepo:pr{{DOCKER_TAG}}
+      #   imagePullPolicy: Always
+      #   command:
+      #     ['/bin/sh', '-c']
+      #   args:
+      #     ['source /vault/secrets/pr-review-deployment-reports && while true; do yarn generate:cache; sleep 3600; done']
         
-        volumeMounts:
-        - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
-          mountPath: /app/dapps/reports/public/cache
+      #   volumeMounts:
+      #   - name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+      #     mountPath: /app/dapps/reports/public/cache
 
-        env: 
+      #   env: 
         
-        - name: AUTH0_BASE_URL
-          value: "{{PR_SUBDOMAIN}}"
+      #   - name: AUTH0_BASE_URL
+      #     value: "{{PR_SUBDOMAIN}}"
 
-        - name: REACT_DAO_DEFAULT
-          value: "5"
+      #   - name: REACT_DAO_DEFAULT
+      #     value: "5"
 
-        - name: REACT_DATA_WAREHOUSE_ENV
-          value: 'development'
+      #   - name: REACT_DATA_WAREHOUSE_ENV
+      #     value: 'development'
         
 
       restartPolicy: Always
@@ -107,16 +107,16 @@ spec:
   
 ---
 
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
-  namespace: reports-pr-review
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-  storageClassName: do-block-storage
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: develop-karpatkey-dapps-monorepo-{{PR_NUMBER}}
+#   namespace: reports-pr-review
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 2Gi
+#   storageClassName: do-block-storage
