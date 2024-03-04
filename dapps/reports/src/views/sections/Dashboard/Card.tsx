@@ -1,6 +1,5 @@
 import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
 import BoxWrapperRow from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperRow'
-import { Title } from './Title'
 import Image from 'next/image'
 import React from 'react'
 import { LinkWrapper } from '../../../components/LinkWrapper'
@@ -10,6 +9,7 @@ import { NumberBlockCard } from './NumberBlockCard'
 import { Currency } from '../../../contexts/state'
 import { formatCurrency, formatNumber, formatPercentage } from '../../../utils/format'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
+import { Value } from './Value'
 
 interface CardProps {
   name: string
@@ -50,7 +50,7 @@ export const Card = (props: CardProps) => {
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <BoxWrapperRow gap={1}>
             <Image src={icon} alt={name} width={48} height={48} />
-            <Title title={name} />
+            <Value value={name} fontWeight={600} />
           </BoxWrapperRow>
           <LinkWrapper url={urlToReport}>
             <OpenInNewIcon onClick={onClick} sx={{ cursor: 'pointer', fontSize: '1.4rem' }} />

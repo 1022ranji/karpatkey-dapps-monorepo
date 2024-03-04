@@ -2,7 +2,6 @@ import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/Box
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import React from 'react'
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
-import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
 
 interface NumberBlockProps {
   amount: string
@@ -10,9 +9,6 @@ interface NumberBlockProps {
 }
 
 export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
-  const screenSize = useScreenSize()
-  const isMobile = screenSize.width < 400
-
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ justifyContent: 'center' }} gap={'20px'}>
@@ -21,8 +17,8 @@ export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
           variant="h2"
           sx={{
             fontFamily: 'IBM Plex Mono',
-            fontSize: isMobile ? '26px' : '36px',
-            lineHeight: isMobile ? '22px' : '24px',
+            fontSize: '36px',
+            lineHeight: '24px',
             fontStyle: 'normal',
             fontWeight: 600
           }}
@@ -33,8 +29,8 @@ export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
           textAlign="center"
           sx={{
             fontFamily: 'IBM Plex Mono',
-            fontSize: isMobile ? '20px' : '22px',
-            lineHeight: isMobile ? '22px' : '24px',
+            fontSize: '22px',
+            lineHeight: '24px',
             fontWeight: '400',
             fontStyle: 'normal'
           }}
