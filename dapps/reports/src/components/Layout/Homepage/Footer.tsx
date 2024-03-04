@@ -20,7 +20,9 @@ const Wrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   maxWidth: '1140px',
   padding: '20px 20px',
   marginLeft: 'auto',
-  marginRight: 'auto'
+  marginRight: 'auto',
+  marginBottom: '20px',
+  marginTop: '60px'
 }))
 
 const Container = styled(Box)(() => ({
@@ -29,7 +31,7 @@ const Container = styled(Box)(() => ({
   marginLeft: 'auto',
   marginRight: 'auto',
   width: '100%',
-  maxWidth: '980px'
+  maxWidth: '940px'
 }))
 
 const Title = styled(CustomTypography)({
@@ -43,7 +45,7 @@ const Title = styled(CustomTypography)({
 
 export const Footer = () => {
   const screenSize = useScreenSize()
-  const isMobile = screenSize.width < 600
+  const isMobile = screenSize.width < 767
 
   const year = new Date()
   const fullYear = year.getFullYear()
@@ -51,67 +53,71 @@ export const Footer = () => {
   return (
     <AnimatePresenceWrapper>
       <Wrapper>
-        <Container
-          sx={{ paddingLeft: isMobile ? 'none' : '20px', paddingRight: isMobile ? 'none' : '20px' }}
-        >
-          <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
-            <BoxWrapperRow>
+        <Container sx={{ paddingLeft: '20px', paddingRight: '20px', marginBottom: '20px' }}>
+          <Box
+            gap={4}
+            sx={{
+              display: 'flex',
+              flexDirection: !isMobile ? 'row' : 'column',
+              alignItems: 'center',
+              justifyContent: !isMobile ? 'space-between' : 'center'
+            }}
+          >
+            <BoxWrapperRow sx={{ justifyContent: 'center' }}>
               <Title>© {fullYear} karpatkey</Title>
-              {!isMobile && <Title>&nbsp;&nbsp;•&nbsp;&nbsp;</Title>}
-              {!isMobile && (
-                <Link
-                  href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
-                  target="_blank"
-                  sx={{ textDecoration: 'none' }}
+              <Title>&nbsp;&nbsp;•&nbsp;&nbsp;</Title>
+              <Link
+                href={`https://drive.google.com/drive/folders/1-RaGdsneMJ1sznUkzBw2CCWlLlO_EAJB`}
+                target="_blank"
+                sx={{ textDecoration: 'none' }}
+              >
+                <Title
+                  sx={{
+                    fontWeight: 500,
+                    '&:hover': {
+                      color: 'rgba(26, 27, 31, 0.6)'
+                    }
+                  }}
                 >
-                  <Title
-                    sx={{
-                      fontWeight: 500,
-                      '&:hover': {
-                        color: 'rgba(26, 27, 31, 0.6)'
-                      }
-                    }}
-                  >
-                    press kit
-                  </Title>
-                </Link>
-              )}
+                  press kit
+                </Title>
+              </Link>
             </BoxWrapperRow>
-            <BoxWrapperRow gap={isMobile ? 2 : 4}>
+            <BoxWrapperRow gap={4}>
               <Link
                 href={`https://github.com/karpatkey`}
                 target="_blank"
-                height={isMobile ? '20px' : '24px'}
-                width={isMobile ? '20px' : '24px'}
+                height={'20px'}
+                width={'20px'}
               >
-                <Github height={isMobile ? '14px' : '20px'} width={'100%'} />
+                <Github height={'20px'} width={'100%'} />
               </Link>
               <Link
                 href={`https://twitter.com/karpatkey`}
                 target="_blank"
-                height={isMobile ? '20px' : '24px'}
-                width={isMobile ? '20px' : '24px'}
+                height={'20px'}
+                width={'20px'}
               >
-                <Twitter height={isMobile ? '14px' : '20px'} width={'100%'} />
+                <Twitter height={'20px'} width={'100%'} />
               </Link>
               <Link
                 href={`https://mirror.xyz/karpatkey.eth`}
                 target="_blank"
-                height={isMobile ? '20px' : '24px'}
-                width={isMobile ? '20px' : '24px'}
+                height={'20px'}
+                width={'20px'}
               >
-                <Mirror height={isMobile ? '14px' : '20px'} width={'100%'} />
+                <Mirror height={'20px'} width={'100%'} />
               </Link>
               <Link
                 href={`https://www.linkedin.com/company/karpatkey/mycompany/`}
                 target="_blank"
-                height={isMobile ? '20px' : '24px'}
-                width={isMobile ? '20px' : '24px'}
+                height={'20px'}
+                width={'20px'}
               >
-                <Linkedin height={isMobile ? '14px' : '20px'} width={'100%'} />
+                <Linkedin height={'20px'} width={'100%'} />
               </Link>
             </BoxWrapperRow>
-          </BoxWrapperRow>
+          </Box>
         </Container>
       </Wrapper>
     </AnimatePresenceWrapper>
