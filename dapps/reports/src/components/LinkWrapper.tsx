@@ -4,15 +4,19 @@ import Link from '@karpatkey-monorepo/shared/components/Link'
 interface LinkWrapperProps {
   url: string
   children: React.ReactNode
+  isCentered?: boolean
 }
 
-export const LinkWrapper: React.FC<LinkWrapperProps> = ({ url, children }) => {
+export const LinkWrapper: React.FC<LinkWrapperProps> = ({ url, children, isCentered }) => {
   return (
     <Link
       href={url}
       rel="noopener noreferrer"
       onContextMenu={(e: any) => e.stopPropagation()}
-      sx={{ textDecoration: 'none' }}
+      sx={{
+        textDecoration: 'none',
+        ...(isCentered && { display: 'flex', justifyContent: 'center' })
+      }}
     >
       {children}
     </Link>
