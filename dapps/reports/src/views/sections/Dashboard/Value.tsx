@@ -1,6 +1,5 @@
 import CustomTypography from '@karpatkey-monorepo/shared/components/CustomTypography'
 import React from 'react'
-import { useScreenSize } from '@karpatkey-monorepo/reports/src/hooks/useScreenSize'
 
 interface ValueProps {
   value: string
@@ -9,10 +8,7 @@ interface ValueProps {
 }
 
 export const Value = (props: ValueProps) => {
-  const screenSize = useScreenSize()
-  const isMobile = screenSize.width < 400
-
-  const { value, fontWeight = 400, fontSize = isMobile ? '14px' : '18px' } = props
+  const { value, fontWeight = 400, fontSize = '18px' } = props
 
   return (
     <CustomTypography
