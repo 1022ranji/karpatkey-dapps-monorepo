@@ -52,7 +52,7 @@ export const Card = (props: CardProps) => {
             <Image src={icon} alt={name} width={48} height={48} />
             <Value value={name} fontWeight={600} />
           </BoxWrapperRow>
-          <LinkWrapper url={urlToReport}>
+          <LinkWrapper url={urlToReport} isCentered>
             <OpenInNewIcon onClick={onClick} sx={{ cursor: 'pointer', fontSize: '1.4rem' }} />
           </LinkWrapper>
         </BoxWrapperRow>

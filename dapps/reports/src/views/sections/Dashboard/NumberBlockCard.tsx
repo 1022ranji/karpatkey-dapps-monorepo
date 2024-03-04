@@ -14,8 +14,8 @@ export const NumberBlockCard = ({ amount, title }: NumberBlockProps) => {
         sx={{
           textAlign: 'flex-start',
           fontFamily: 'IBM Plex Mono',
-          fontSize: '18px',
-          lineHeight: '20px',
+          fontSize: '16px',
+          lineHeight: '24px',
           fontWeight: '600',
           fontStyle: 'normal'
         }}
@@ -27,7 +27,7 @@ export const NumberBlockCard = ({ amount, title }: NumberBlockProps) => {
           textAlign: 'flex-start',
           fontFamily: 'IBM Plex Mono',
           fontSize: '18px',
-          lineHeight: '20px',
+          lineHeight: '24px',
           fontWeight: '400',
           fontStyle: 'normal'
         }}
