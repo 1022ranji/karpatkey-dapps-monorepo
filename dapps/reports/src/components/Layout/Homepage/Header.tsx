@@ -1,40 +1,46 @@
 import AnimatePresenceWrapper from '@karpatkey-monorepo/shared/components/AnimatePresenceWrapper'
 import { LogoKarpatkey } from '@karpatkey-monorepo/reports/src/components/LogoKarpatkey'
 import React from 'react'
-import { styled, Box, Link } from '@mui/material'
-import { useScrollDirection } from '@karpatkey-monorepo/reports/src/hooks/useScrollDirection'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import { styled, Box, Link, css } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import clsx from 'clsx'
+import ListItemButton from '@mui/material/ListItemButton'
+import BoxWrapperColumn from '@karpatkey-monorepo/shared/components/Wrappers/BoxWrapperColumn'
+import { Modal as BaseModal } from '@mui/base/Modal'
+import Slide from '@mui/material/Slide'
 
 const NavbarLogoLeftContainer = styled(Box)(() => ({
   justifyContent: 'center',
   marginLeft: 'auto',
   marginRight: 'auto',
   display: 'flex',
-  zIndex: 2
+  zIndex: 1302
 }))
 
 const NavbarLeft = styled(Box)(() => ({
   width: '100%',
-  maxWidth: '1140px',
   justifyContent: 'center',
   alignItems: 'center',
-  fontFamily: 'IBM Plex Sans, sans-serif',
   display: 'flex',
   position: 'sticky',
   top: '0',
-  zIndex: '5',
+  zIndex: 1301,
   marginLeft: 'auto',
   marginRight: 'auto',
   padding: '20px 20px',
   backgroundColor: '#eeeded',
-  transitionProperty: 'all',
-  transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-  transitionDuration: '500ms',
   '&.hide': {
-    transform: 'translateY(-100%)'
+    position: 'fixed',
+    top: '-80px',
+    transition: '0.3s linear',
+    zIndex: 1301
   },
   '&.show , &.down': {
-    transform: 'translateY(0)'
+    position: 'fixed',
+    top: '0px',
+    transition: '0.3s linear',
+    zIndex: 1301
   }
 }))
 
@@ -43,19 +49,13 @@ const Container = styled(Box)(() => ({
   position: 'static',
   backgroundColor: 'transparent',
   marginLeft: 'auto',
-  marginRight: 'auto',
-  height: '30px',
-  width: '100%',
-  maxWidth: '940px',
-  fontFamily: 'IBM Plex Sans, sans-serif'
+  marginRight: 'auto'
 }))
 
 const NavbarWrapper = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
-  fontFamily: 'IBM Plex Sans, sans-serif'
+  justifyContent: 'space-between'
 }))
 
 const LinkStyled = styled(Link)(() => ({
@@ -75,48 +75,177 @@ const LinkStyled = styled(Link)(() => ({
   }
 }))
 
-export const Header = () => {
-  const scrollDirection = useScrollDirection()
+const Backdrop = React.forwardRef<HTMLDivElement, { open?: boolean; className: string }>(
+  (props, ref) => {
+    const { open, className, ...other } = props
+    return <div className={clsx({ 'base-Backdrop-open': open }, className)} ref={ref} {...other} />
+  }
+)
 
-  const matchesQuery = useMediaQuery('(min-width:710px)')
+Backdrop.displayName = 'Backdrop'
+
+const Modal = styled(BaseModal)`
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const StyledBackdrop = styled(Backdrop)`
+  z-index: -1;
+  position: fixed;
+  inset: 0;
+`
+
+const ModalContent = styled('div')(
+  ({ theme }) => css`
+    text-align: start;
+    background-color: ${theme.palette.background.default};
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    padding: 24px;
+  `
+)
+
+export const Header = () => {
+  const [show, setShow] = React.useState(true)
+  const [lastScrollY, setLastScrollY] = React.useState(0)
+
+  const controlNavbar = () => {
+    if (window.scrollY > lastScrollY) {
+      // if scroll down hide the navbar
+      setShow(false)
+    } else {
+      // if scroll up show the navbar
+      setShow(true)
+    }
+
+    // remember current page location to use in the next move
+    setLastScrollY(window.scrollY)
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', controlNavbar)
+
+    // cleanup function
+    return () => {
+      window.removeEventListener('scroll', controlNavbar)
+    }
+  }, [lastScrollY])
+
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => {
+    // handle open but close if already open
+    setOpen(!open)
+  }
+  const handleClose = () => setOpen(false)
 
   return (
     <AnimatePresenceWrapper>
       <NavbarLogoLeftContainer>
-        <NavbarLeft className={`header ${scrollDirection === 'down' ? 'hide' : 'show'}`}>
-          <Container>
+        <NavbarLeft
+          className={`header ${show ? 'show' : 'hide'}`}
+          sx={{ width: '100%', colorBackground: 'background.default' }}
+        >
+          <Container
+            sx={{ height: { xs: '48px', md: '30px' }, width: { xs: '728px', md: '940px' } }}
+          >
             <NavbarWrapper>
               <LogoKarpatkey />
-              {matchesQuery ? (
-                <Box
-                  sx={{
-                    gridColumnGap: '30px',
-                    gridRowGap: '30px',
-                    backgroundColor: 'transparent',
-                    alignItems: 'center',
-                    display: 'flex',
-                    position: 'relative',
-                    float: 'right'
-                  }}
+              <Box
+                sx={{
+                  gridColumnGap: '30px',
+                  gridRowGap: '30px',
+                  backgroundColor: 'transparent',
+                  alignItems: 'center',
+                  display: {
+                    xs: 'none',
+                    md: 'flex'
+                  },
+                  position: 'relative',
+                  float: 'right'
+                }}
+              >
+                <LinkStyled href="https://www.karpatkey.com/contributions">
+                  Contributions
+                </LinkStyled>
+                <LinkStyled
+                  sx={{ fontWeight: 700, opacity: 100 }}
+                  href="https://reports.karpatkey.com/"
                 >
+                  Reports
+                </LinkStyled>
+                <LinkStyled href="https://www.karpatkey.com/writing">Writing</LinkStyled>
+                <LinkStyled href="https://www.karpatkey.com/jobs">Jobs</LinkStyled>
+                <LinkStyled href="https://www.karpatkey.com/contact">Contact</LinkStyled>
+              </Box>
+
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleOpen}
+                sx={{
+                  justifyContent: 'center',
+                  display: {
+                    xs: 'flex',
+                    md: 'none'
+                  }
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </NavbarWrapper>
+          </Container>
+        </NavbarLeft>
+      </NavbarLogoLeftContainer>
+      <Modal
+        aria-labelledby="unstyled-modal-title"
+        aria-describedby="unstyled-modal-description"
+        open={open}
+        onClose={handleClose}
+        slots={{ backdrop: StyledBackdrop }}
+      >
+        <Slide direction="down" in={open} mountOnEnter unmountOnExit>
+          <ModalContent sx={{ width: '100%', height: '100%', top: '88px' }}>
+            <Box sx={{ p: 2 }}>
+              <BoxWrapperColumn sx={{ mb: 2 }} gap={4}>
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
                   <LinkStyled href="https://www.karpatkey.com/contributions">
                     Contributions
                   </LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
                   <LinkStyled
                     sx={{ fontWeight: 700, opacity: 100 }}
                     href="https://reports.karpatkey.com/"
                   >
                     Reports
                   </LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
                   <LinkStyled href="https://www.karpatkey.com/writing">Writing</LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
                   <LinkStyled href="https://www.karpatkey.com/jobs">Jobs</LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
                   <LinkStyled href="https://www.karpatkey.com/contact">Contact</LinkStyled>
-                </Box>
-              ) : null}
-            </NavbarWrapper>
-          </Container>
-        </NavbarLeft>
-      </NavbarLogoLeftContainer>
+                </ListItemButton>
+              </BoxWrapperColumn>
+            </Box>
+          </ModalContent>
+        </Slide>
+      </Modal>
     </AnimatePresenceWrapper>
   )
 }
