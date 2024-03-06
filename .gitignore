@@ -22,11 +22,12 @@
 # debug
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+dapps/reports/yarn-error.log
 .pnpm-debug.log*
 
 # local env files
 .env*.local
+../../.env
 
 # vercel
 .vercel
@@ -44,3 +45,6 @@ google-credentials.json
 
 github
 github.pub
+
+.env
+.env.local
