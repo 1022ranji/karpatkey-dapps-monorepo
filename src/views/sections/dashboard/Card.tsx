@@ -43,7 +43,7 @@ export const Card = (props: CardProps) => {
         sx={{
           maxWidth: '320px',
           minWidth: '320px',
-          height: 'content-fit',
+          height: 'fit-content',
           padding: '8px 8px',
           border: '1px solid #B6B6B6',
           background: 'background.paper'

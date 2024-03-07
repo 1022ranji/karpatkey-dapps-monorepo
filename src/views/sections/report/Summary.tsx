@@ -107,7 +107,6 @@ export const Summary = (props: SummaryProps) => {
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            alignContent: 'center',
             gap: 2
           }}
         >

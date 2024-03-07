@@ -9,7 +9,7 @@ interface PieChartTitleProps {
 
 const PieChartTitle = ({ title }: PieChartTitleProps) => {
   return (
-    <CustomTypography variant="infoCardTitle" textAlign="left">
+    <CustomTypography variant="infoCardTitle" textAlign="left" sx={{ width: 'fit-content' }}>
       {title}
     </CustomTypography>
   )
@@ -142,14 +142,15 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
     style: {
       marginTop: '40px',
       height: `${height}px`,
-      width: `${width}px`
+      width: `${+width + 40}px`
     }
   }
 
   return (
     <BoxWrapperColumn
       sx={{
-        justifyContent: 'flex-start',
+        display: 'flex',
+        justifyContent: 'center',
         height: `${height}px`,
         width: `${width}px`
       }}

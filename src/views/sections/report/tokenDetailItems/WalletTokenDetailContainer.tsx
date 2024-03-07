@@ -8,7 +8,7 @@ import {
   AutocompleteOption
 } from 'src/components'
 import { OTHERS_WALLET_LIMIT } from 'src/config/constants'
-import { WALLET_COLORS } from 'src/config/theme'
+import { SUMMARY_COLORS } from 'src/config/theme'
 import { PaperProps } from '@mui/material'
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
@@ -125,9 +125,9 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
     (item, index) => {
       return {
         allocation: item.allocation,
-        color: WALLET_COLORS[index]
-          ? WALLET_COLORS[index]
-          : WALLET_COLORS[Math.floor(Math.random() * 9) + 0],
+        color: SUMMARY_COLORS[index]
+          ? SUMMARY_COLORS[index]
+          : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0],
         label: item.tokenSymbol,
         value: item.usdValue
       }
@@ -166,7 +166,14 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
         <EmptyData />
       ) : (
-        <BoxWrapperRow sx={{ justifyContent: 'space-between', alignItems: 'start' }}>
+        <BoxWrapperRow
+          gap={4}
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-evenly'
+          }}
+        >
           <PieChart
             data={filteredWalletTokenDetailForPieChartWithColorsAndOthers.map((item: any) => {
               return {
@@ -175,15 +182,12 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
                 color: item.color
               }
             })}
-            width={550}
-            height={440}
             innerSize="60%"
             outerSize="80%"
+            width={'fit-content'}
+            height={440}
           />
-          <TableWalletTokenDetail
-            filteredWalletTokenDetail={filteredWalletTokenDetail}
-            sx={{ width: '50%' }}
-          />
+          <TableWalletTokenDetail filteredWalletTokenDetail={filteredWalletTokenDetail} />
         </BoxWrapperRow>
       )}
     </PaperSection>

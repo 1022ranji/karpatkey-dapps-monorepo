@@ -58,6 +58,7 @@ export const CardList = (props: CardListProps) => {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
+        justifyContent: 'center',
         alignContent: 'center',
         gap: '20px 20px'
       }}
@@ -73,7 +74,7 @@ export const CardList = (props: CardListProps) => {
               maxWidth: '320px',
               minWidth: '320px',
               minHeight: '440px',
-              height: 'content-fit',
+              height: 'fit-content',
               padding: '8px 8px',
               border: '1px solid #B6B6B6',
               background: 'background.paper'

@@ -11,6 +11,7 @@ import {
 import { Box, BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material'
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
+import { useScreenSize } from 'src/hooks/useScreenSize'
 
 interface TableWalletTokenDetailProps {
   filteredWalletTokenDetail: any[]
@@ -23,10 +24,16 @@ export const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxP
   const { state } = useApp()
   const { currency } = state
 
+  const screenSize = useScreenSize()
+
   return (
-    <BoxWrapperColumn gap={4} {...moreProps}>
+    <BoxWrapperColumn
+      gap={4}
+      sx={{ width: screenSize.width < 1650 ? '100%' : '50%' }}
+      {...moreProps}
+    >
       <TableContainer component={Box}>
-        <Table sx={{ width: '100%' }}>
+        <Table sx={{ width: '100%', overflow: 'scroll' }}>
           <TableHead>
             <TableRow>
               <TableHeadCellCustom sx={{ width: '20%' }} align="left">

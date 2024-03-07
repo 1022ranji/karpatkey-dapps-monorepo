@@ -34,10 +34,10 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
                 color: item.color
               }
             })}
-            innerSize="60%"
-            outerSize="80%"
-            width={'550px'}
-            height={'440px'}
+            innerSize="50%"
+            outerSize="70%"
+            height={560}
+            width={460}
           />
         </BoxWrapperRow>
       )}
