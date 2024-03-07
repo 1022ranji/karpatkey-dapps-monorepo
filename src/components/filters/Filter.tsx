@@ -1,7 +1,13 @@
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import * as React from 'react'
 import Tooltip from '@mui/material/Tooltip'
-import { CustomPopover, CustomTypography, FilterTextOption, BoxWrapperRow } from 'src/components'
+import {
+  AnimatePresenceWrapper,
+  CustomPopover,
+  CustomTypography,
+  FilterTextOption,
+  BoxWrapperRow
+} from 'src/components'
 
 interface FilterProps {
   id: string | undefined
@@ -79,75 +85,77 @@ export const Filter = (props: FilterProps) => {
   ])
 
   return (
-    <BoxWrapperRow>
-      <CustomTypography variant="filterTitle">{title}</CustomTypography>
-      <BoxWrapperRow
-        gap={2}
-        onClick={handleClick}
-        id={id || ''}
-        sx={{ marginRight: '16px', marginLeft: '16px' }}
-      >
-        {enableBlockchain ? (
-          <FilterTextOption
-            title={blockchain || 'Blockchain'}
-            {...(blockchain ? { fontWeight: 'extra-bold' } : {})}
+    <AnimatePresenceWrapper>
+      <BoxWrapperRow>
+        <CustomTypography variant="filterTitle">{title}</CustomTypography>
+        <BoxWrapperRow
+          gap={2}
+          onClick={handleClick}
+          id={id || ''}
+          sx={{ marginRight: '16px', marginLeft: '16px' }}
+        >
+          {enableBlockchain ? (
+            <FilterTextOption
+              title={blockchain || 'Blockchain'}
+              {...(blockchain ? { fontWeight: 'extra-bold' } : {})}
+            />
+          ) : null}
+          {enableProtocol ? (
+            <FilterTextOption
+              title={protocol || 'Protocol'}
+              {...(protocol ? { fontWeight: 'extra-bold' } : {})}
+            />
+          ) : null}
+          {enableToken ? (
+            <FilterTextOption
+              title={token || 'Token'}
+              {...(token ? { fontWeight: 'extra-bold' } : {})}
+            />
+          ) : null}
+          {enableDeFiType ? (
+            <FilterTextOption
+              title={deFiType || 'Type'}
+              {...(deFiType ? { fontWeight: 'extra-bold' } : {})}
+            />
+          ) : null}
+          {enableDAO ? (
+            <FilterTextOption title={DAO || 'DAO'} {...(DAO ? { fontWeight: 'extra-bold' } : {})} />
+          ) : null}
+          {enableYearMonth ? (
+            <FilterTextOption
+              title={yearMonth || 'Period'}
+              {...(yearMonth ? { fontWeight: 'extra-bold' } : {})}
+            />
+          ) : null}
+        </BoxWrapperRow>
+        <Tooltip title={tooltipText} sx={{ ml: 1 }}>
+          <HighlightOffIcon
+            sx={{
+              ...(isClearButtonEnabled
+                ? { color: 'custom.black.primary' }
+                : { color: 'custom.grey.secondary' }),
+              cursor: 'pointer',
+              width: 48,
+              height: 48
+            }}
+            onClick={() => {
+              if (isClearButtonEnabled) {
+                handleClear()
+              }
+            }}
+            fontSize={'small'}
           />
-        ) : null}
-        {enableProtocol ? (
-          <FilterTextOption
-            title={protocol || 'Protocol'}
-            {...(protocol ? { fontWeight: 'extra-bold' } : {})}
-          />
-        ) : null}
-        {enableToken ? (
-          <FilterTextOption
-            title={token || 'Token'}
-            {...(token ? { fontWeight: 'extra-bold' } : {})}
-          />
-        ) : null}
-        {enableDeFiType ? (
-          <FilterTextOption
-            title={deFiType || 'Type'}
-            {...(deFiType ? { fontWeight: 'extra-bold' } : {})}
-          />
-        ) : null}
-        {enableDAO ? (
-          <FilterTextOption title={DAO || 'DAO'} {...(DAO ? { fontWeight: 'extra-bold' } : {})} />
-        ) : null}
-        {enableYearMonth ? (
-          <FilterTextOption
-            title={yearMonth || 'Period'}
-            {...(yearMonth ? { fontWeight: 'extra-bold' } : {})}
-          />
-        ) : null}
+        </Tooltip>
+        <CustomPopover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          handleClose={handleClose}
+          position={position}
+        >
+          {children}
+        </CustomPopover>
       </BoxWrapperRow>
-      <Tooltip title={tooltipText} sx={{ ml: 1 }}>
-        <HighlightOffIcon
-          sx={{
-            ...(isClearButtonEnabled
-              ? { color: 'custom.black.primary' }
-              : { color: 'custom.grey.secondary' }),
-            cursor: 'pointer',
-            width: 48,
-            height: 48
-          }}
-          onClick={() => {
-            if (isClearButtonEnabled) {
-              handleClear()
-            }
-          }}
-          fontSize={'small'}
-        />
-      </Tooltip>
-      <CustomPopover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        handleClose={handleClose}
-        position={position}
-      >
-        {children}
-      </CustomPopover>
-    </BoxWrapperRow>
+    </AnimatePresenceWrapper>
   )
 }

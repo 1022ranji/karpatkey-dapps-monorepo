@@ -3,7 +3,7 @@ import { styled, Box, Link, css, IconButton, ListItemButton, Slide } from '@mui/
 import MenuIcon from '@mui/icons-material/Menu'
 import clsx from 'clsx'
 import { Modal as BaseModal } from '@mui/base/Modal'
-import { AnimatePresenceWrapper, BoxWrapperColumn, PNG } from 'src/components'
+import { AnimatePresenceWrapper, BoxWrapperColumn, PNG as Logo } from 'src/components'
 
 const NavbarLogoLeftContainer = styled(Box)(() => ({
   justifyContent: 'center',
@@ -151,7 +151,7 @@ export const Header = () => {
             sx={{ height: { xs: '48px', md: '30px' }, width: { xs: '728px', md: '940px' } }}
           >
             <NavbarWrapper>
-              <PNG />
+              <Logo />
               <Box
                 sx={{
                   gridColumnGap: '30px',

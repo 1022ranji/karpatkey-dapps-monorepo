@@ -89,36 +89,42 @@ export const Menu = () => {
     router.push(href)
   }
 
-  const filterElement = (
-    <Filter
-      id={id}
-      title="Select report"
-      handleClick={handleClick}
-      handleClose={handleClose}
-      handleClear={handleClear}
-      anchorEl={anchorEl}
-      open={open}
-      enableDAO
-      enableYearMonth
-      DAO={defaultDAOValue ? defaultDAOValue.label : ''}
-      yearMonth={defaultYearMonthValue ? defaultYearMonthValue.label : ''}
-      tooltipText={'Clear selected report'}
+  return (
+    <BoxWrapperRow
+      id={id || ''}
+      gap={2}
+      sx={{
+        justifyContent: 'space-between',
+        display: {
+          xs: 'none',
+          md: 'flex'
+        }
+      }}
     >
-      <Form
-        onRequestClose={handleClose}
-        onSubmitClose={onSubmitClose}
-        defaultDAOValue={defaultDAOValue}
-        defaultYearMonthValue={defaultYearMonthValue}
+      <Filter
+        id={id}
+        title="Select report"
+        handleClick={handleClick}
+        handleClose={handleClose}
+        handleClear={handleClear}
+        anchorEl={anchorEl}
+        open={open}
         enableDAO
         enableYearMonth
-        buttonTitle={'Apply selection'}
-      />
-    </Filter>
-  )
-
-  return (
-    <BoxWrapperRow id={id || ''} gap={2} sx={{ justifyContent: 'space-between' }}>
-      {filterElement}
+        DAO={defaultDAOValue ? defaultDAOValue.label : ''}
+        yearMonth={defaultYearMonthValue ? defaultYearMonthValue.label : ''}
+        tooltipText={'Clear selected report'}
+      >
+        <Form
+          onRequestClose={handleClose}
+          onSubmitClose={onSubmitClose}
+          defaultDAOValue={defaultDAOValue}
+          defaultYearMonthValue={defaultYearMonthValue}
+          enableDAO
+          enableYearMonth
+          buttonTitle={'Apply selection'}
+        />
+      </Filter>
       {isDDay && <FilterByCurrency />}
       <Share dao={filterDAO} year={year} month={month} />
     </BoxWrapperRow>

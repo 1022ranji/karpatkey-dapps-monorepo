@@ -98,51 +98,60 @@ export const Sidebar = () => {
   })
 
   return (
-    <AnimatePresenceWrapper>
-      <StyledSidebar>
-        <List ref={ref}>
-          {SECTIONS.map((text: Section, index: number) => {
-            const isActive = sectionVisible === slugify(text)
-            return (
-              <Box
-                onClick={() => {
-                  setSectionVisible(slugify(text))
-                  router.push(`#${slugify(text)}`).catch((e) => {
-                    // workaround for https://github.com/vercel/next.js/issues/37362
-                    if (!e.cancelled) {
-                      throw e
-                    }
-                  })
-                }}
-                key={index}
-                style={{ textDecoration: 'none', color: 'black' }}
-              >
-                <ListItem key={text}>
-                  <ListItemButton sx={{ padding: '0 0' }} disableTouchRipple>
-                    <ListItemIcon sx={{ justifyContent: 'flex-start', minWidth: '35px' }}>
-                      {isActive ? (
-                        <CircleIcon sx={{ color: 'custom.black.primary' }} />
-                      ) : (
-                        <CircleOutlinedIcon sx={{ color: 'custom.grey.secondary' }} />
-                      )}
-                    </ListItemIcon>
-                    <ListItemTextCustom
-                      primary={text}
-                      title={text}
-                      sx={{
-                        '& .MuiListItemText-primary': {
-                          color: isActive ? 'custom.black.primary' : 'custom.grey.secondary',
-                          fontWeight: isActive ? 700 : 600
-                        }
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              </Box>
-            )
-          })}
-        </List>
-      </StyledSidebar>
-    </AnimatePresenceWrapper>
+    <Box
+      sx={{
+        display: {
+          xs: 'none',
+          md: 'flex'
+        }
+      }}
+    >
+      <AnimatePresenceWrapper>
+        <StyledSidebar>
+          <List ref={ref}>
+            {SECTIONS.map((text: Section, index: number) => {
+              const isActive = sectionVisible === slugify(text)
+              return (
+                <Box
+                  onClick={() => {
+                    setSectionVisible(slugify(text))
+                    router.push(`#${slugify(text)}`).catch((e) => {
+                      // workaround for https://github.com/vercel/next.js/issues/37362
+                      if (!e.cancelled) {
+                        throw e
+                      }
+                    })
+                  }}
+                  key={index}
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  <ListItem key={text}>
+                    <ListItemButton sx={{ padding: '0 0' }} disableTouchRipple>
+                      <ListItemIcon sx={{ justifyContent: 'flex-start', minWidth: '35px' }}>
+                        {isActive ? (
+                          <CircleIcon sx={{ color: 'custom.black.primary' }} />
+                        ) : (
+                          <CircleOutlinedIcon sx={{ color: 'custom.grey.secondary' }} />
+                        )}
+                      </ListItemIcon>
+                      <ListItemTextCustom
+                        primary={text}
+                        title={text}
+                        sx={{
+                          '& .MuiListItemText-primary': {
+                            color: isActive ? 'custom.black.primary' : 'custom.grey.secondary',
+                            fontWeight: isActive ? 700 : 600
+                          }
+                        }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                </Box>
+              )
+            })}
+          </List>
+        </StyledSidebar>
+      </AnimatePresenceWrapper>
+    </Box>
   )
 }

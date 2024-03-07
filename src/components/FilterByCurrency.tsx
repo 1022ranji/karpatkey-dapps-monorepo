@@ -4,6 +4,7 @@ import { useApp } from 'src/contexts/app.context'
 import { Currency } from 'src/contexts/state'
 import { updateCurrency } from 'src/contexts/reducers'
 import { FILTER_DAOS } from 'src/config/constants'
+import { AnimatePresenceWrapper } from 'src/components'
 
 export const FilterByCurrency = () => {
   const { state, dispatch } = useApp()
@@ -20,23 +21,25 @@ export const FilterByCurrency = () => {
   const currenciesAllowed = FILTER_DAOS.find((dao) => dao.id === DAO)?.currenciesAllowed
 
   return (
-    <ToggleButtonGroup
-      value={currency}
-      exclusive
-      onChange={handleToggleOnChange}
-      aria-label="Switch between USD and ETH"
-      disabled={currenciesAllowed?.length === 1}
-    >
-      {currenciesAllowed?.map((currencyAllowed: Currency, index: number) => (
-        <ToggleButton
-          disableRipple
-          value={currencyAllowed}
-          sx={{ textTransform: 'none' }}
-          key={index}
-        >
-          {currencyAllowed}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
+    <AnimatePresenceWrapper>
+      <ToggleButtonGroup
+        value={currency}
+        exclusive
+        onChange={handleToggleOnChange}
+        aria-label="Switch between USD and ETH"
+        disabled={currenciesAllowed?.length === 1}
+      >
+        {currenciesAllowed?.map((currencyAllowed: Currency, index: number) => (
+          <ToggleButton
+            disableRipple
+            value={currencyAllowed}
+            sx={{ textTransform: 'none' }}
+            key={index}
+          >
+            {currencyAllowed}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+    </AnimatePresenceWrapper>
   )
 }

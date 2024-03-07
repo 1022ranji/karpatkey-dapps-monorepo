@@ -3,6 +3,7 @@ import { Button, Snackbar } from '@mui/material'
 import * as React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { SnackbarOrigin } from '@mui/material/Snackbar'
+import { AnimatePresenceWrapper } from 'src/components'
 
 interface State extends SnackbarOrigin {
   open: boolean
@@ -42,7 +43,7 @@ export const Share = (props: Filter) => {
   }
 
   return (
-    <>
+    <AnimatePresenceWrapper>
       <CopyToClipboard text={value}>
         <Button
           sx={{
@@ -65,6 +66,6 @@ export const Share = (props: Filter) => {
         key={vertical + horizontal}
         autoHideDuration={2000}
       />
-    </>
+    </AnimatePresenceWrapper>
   )
 }

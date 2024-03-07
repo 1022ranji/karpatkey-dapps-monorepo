@@ -23,7 +23,7 @@ const TableResults = (props: TableResultsProps) => {
 
   return (
     <TableContainer component={Box}>
-      <Table sx={{ width: '100%' }}>
+      <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
         <TableHead>
           <TableRow>
             <TableHeadCellCustom sx={{ width: '20%' }} align="left">

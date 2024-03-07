@@ -1,6 +1,7 @@
 {
   "name": "reports",
   "version": "0.2.8",
+  "license": "MIT",
   "engines": {
     "node": ">=18.13.0",
     "yarn": ">=1.22.19"

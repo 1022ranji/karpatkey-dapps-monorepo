@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material/styles'
-import { Menu, BoxWrapperRow, AnimatePresenceWrapper, SVG as LogoKarpatkey } from 'src/components'
+import { Menu, BoxWrapperRow, AnimatePresenceWrapper, PNG as Logo } from 'src/components'
 
 export const HEADER_HEIGHT = 100
 
@@ -19,11 +19,9 @@ export const Header = () => {
   return (
     <StyledHeader>
       <AnimatePresenceWrapper>
-        <LogoKarpatkey />
+        <Logo />
       </AnimatePresenceWrapper>
-      <AnimatePresenceWrapper>
-        <Menu />
-      </AnimatePresenceWrapper>
+      <Menu />
     </StyledHeader>
   )
 }

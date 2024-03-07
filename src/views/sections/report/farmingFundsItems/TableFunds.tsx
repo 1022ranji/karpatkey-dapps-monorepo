@@ -42,7 +42,7 @@ const TableFunds = (props: TableFundsProps) => {
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
-        <Table sx={{ width: '100%' }}>
+        <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
           <TableHead>
             <TableRow>
               <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
