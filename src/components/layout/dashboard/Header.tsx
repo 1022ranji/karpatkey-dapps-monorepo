@@ -1,9 +1,8 @@
 import React from 'react'
-import { styled, Box, Link, css, IconButton, ListItemButton, Slide } from '@mui/material'
+import { styled, Box, IconButton, ListItemButton, Slide } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import clsx from 'clsx'
-import { Modal as BaseModal } from '@mui/base/Modal'
 import { AnimatePresenceWrapper, BoxWrapperColumn, PNG as Logo } from 'src/components'
+import { Modal, StyledBackdrop, ModalContent, LinkStyled } from '../Common'
 
 const NavbarLogoLeftContainer = styled(Box)(() => ({
   justifyContent: 'center',
@@ -52,60 +51,6 @@ const NavbarWrapper = styled(Box)(() => ({
   alignItems: 'center',
   justifyContent: 'space-between'
 }))
-
-const LinkStyled = styled(Link)(() => ({
-  opacity: '.7',
-  color: '#1a1b1f',
-  letterSpacing: '.25px',
-  marginLeft: '5px',
-  marginRight: '5px',
-  padding: '5px 10px',
-  fontFamily: 'IBM Plex Sans, sans-serif',
-  fontSize: '16px',
-  fontWeight: '600 !important',
-  lineHeight: '20px',
-  textDecoration: 'none',
-  '&:hover': {
-    color: 'rgba(26, 27, 31, 0.6)'
-  }
-}))
-
-const Backdrop = React.forwardRef<HTMLDivElement, { open?: boolean; className: string }>(
-  (props, ref) => {
-    const { open, className, ...other } = props
-    return <div className={clsx({ 'base-Backdrop-open': open }, className)} ref={ref} {...other} />
-  }
-)
-
-Backdrop.displayName = 'Backdrop'
-
-const Modal = styled(BaseModal)`
-  position: fixed;
-  z-index: 50;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const StyledBackdrop = styled(Backdrop)`
-  z-index: -1;
-  position: fixed;
-  inset: 0;
-`
-
-const ModalContent = styled('div')(
-  ({ theme }) => css`
-    text-align: start;
-    background-color: ${theme.palette.background.default};
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow: hidden;
-    padding: 24px;
-  `
-)
 
 export const Header = () => {
   const [show, setShow] = React.useState(true)
@@ -235,6 +180,14 @@ export const Header = () => {
 
                 <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
                   <LinkStyled href="https://www.karpatkey.com/contact">Contact</LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                  <LinkStyled>Funds and results by position</LinkStyled>
+                </ListItemButton>
+
+                <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                  <LinkStyled>Token detail</LinkStyled>
                 </ListItemButton>
               </BoxWrapperColumn>
             </Box>

@@ -10,6 +10,7 @@ import { getDAO, getMonthName } from 'src/utils'
 import Image from 'next/image'
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
+import { Box } from '@mui/material'
 
 export const Hero = () => {
   const { state } = useApp()
@@ -30,8 +31,15 @@ export const Hero = () => {
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn sx={{ margin: '30px 30px 30px 30px', alignItems: 'flex-start' }} gap={4}>
-        <BoxWrapperRow gap={2}>
-          <Image src={dao?.icon ?? ''} alt={dao?.name} width={116} height={116} key={dao?.icon} />
+        <BoxWrapperRow>
+          <Box
+            sx={{
+              display: { xs: 'none', md: 'block' },
+              gap: { xs: 0, md: 2 }
+            }}
+          >
+            <Image src={dao?.icon ?? ''} alt={dao?.name} width={116} height={116} key={dao?.icon} />
+          </Box>
           <a className="anchor" id="summary" />
           <BoxWrapperColumn
             sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}

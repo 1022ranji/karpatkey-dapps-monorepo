@@ -24,7 +24,6 @@ export const PNG = () => {
       <Box
         onClick={onClick}
         alignItems="center"
-        display="flex"
         sx={{
           textDecoration: 'none',
           cursor: 'pointer',
