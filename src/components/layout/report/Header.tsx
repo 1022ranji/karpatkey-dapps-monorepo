@@ -14,32 +14,36 @@ export const HEADER_HEIGHT = 100
 
 const NavbarLogoLeftContainer = styled(Box)(() => ({
   justifyContent: 'space-between',
-  paddingRight: '26px',
-  paddingLeft: '26px',
   width: '100%',
   zIndex: 1302,
   display: 'flex',
   alignItems: 'center',
-  backgroundColor: '#eeeded'
+  backgroundColor: '#eeeded',
+  borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
 }))
 
 const NavbarLeft = styled(Box)(() => ({
   zIndex: 1301,
   marginLeft: 'auto',
   marginRight: 'auto',
-  backgroundColor: '#eeeded'
+  backgroundColor: '#eeeded',
+  display: 'flex',
+  alignItems: 'center',
+  height: '100%'
 }))
 
 const Container = styled(Box)(() => ({
   backgroundColor: 'transparent',
   marginLeft: 'auto',
-  marginRight: 'auto'
+  marginRight: 'auto',
+  width: '100%'
 }))
 
 const NavbarWrapper = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  width: '100%'
 }))
 
 export const Header = () => {
@@ -62,10 +66,18 @@ export const Header = () => {
   }
 
   return (
-    <AnimatePresenceWrapper>
+    <>
       <NavbarLogoLeftContainer
         sx={{
           display: 'flex',
+          paddingRight: {
+            xs: '20px',
+            md: '26px'
+          },
+          paddingLeft: {
+            xs: '20px',
+            md: '26px'
+          },
           height: {
             xs: '80px',
             md: HEADER_HEIGHT
@@ -78,25 +90,27 @@ export const Header = () => {
       >
         <NavbarLeft className={`header`} sx={{ width: '100%' }}>
           <Container>
-            <NavbarWrapper>
-              <Logo />
-              <Menu />
-              <IconButton
-                edge="end"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleOpen}
-                sx={{
-                  justifyContent: 'center',
-                  display: {
-                    xs: 'flex',
-                    md: 'none'
-                  }
-                }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </NavbarWrapper>
+            <AnimatePresenceWrapper>
+              <NavbarWrapper>
+                <Logo />
+                <Menu />
+                <IconButton
+                  edge="end"
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleOpen}
+                  sx={{
+                    justifyContent: 'center',
+                    display: {
+                      xs: 'flex',
+                      md: 'none'
+                    }
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </NavbarWrapper>
+            </AnimatePresenceWrapper>
           </Container>
         </NavbarLeft>
       </NavbarLogoLeftContainer>
@@ -137,6 +151,6 @@ export const Header = () => {
           </ModalContent>
         </Slide>
       </Modal>
-    </AnimatePresenceWrapper>
+    </>
   )
 }

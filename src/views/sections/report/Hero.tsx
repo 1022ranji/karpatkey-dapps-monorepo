@@ -30,27 +30,64 @@ export const Hero = () => {
 
   return (
     <AnimatePresenceWrapper>
-      <BoxWrapperColumn sx={{ margin: '30px 30px 30px 30px', alignItems: 'flex-start' }} gap={4}>
-        <BoxWrapperRow>
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'block' },
-              gap: { xs: 0, md: 2 }
-            }}
-          >
+      <BoxWrapperColumn
+        sx={{
+          margin: {
+            xs: '10px 10px 10px 20px',
+            md: '30px 30px 30px 30px'
+          },
+          alignItems: 'flex-start',
+          gap: { xs: 2, md: 4 }
+        }}
+      >
+        <BoxWrapperRow sx={{ gap: { xs: 0, md: 2 } }}>
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             <Image src={dao?.icon ?? ''} alt={dao?.name} width={116} height={116} key={dao?.icon} />
           </Box>
           <a className="anchor" id="summary" />
           <BoxWrapperColumn
-            sx={{ alignItems: 'flex-start', alignSelf: 'stretch', justifyContent: 'space-between' }}
+            sx={{
+              alignItems: 'flex-start',
+              alignSelf: 'stretch',
+              justifyContent: 'space-between',
+              gap: { xs: 0, md: 2 }
+            }}
           >
-            <CustomTypography variant="heroSectionTitle">{dao?.name?.trim()}</CustomTypography>
-            <CustomTypography variant="heroSectionSubtitle">
+            <CustomTypography
+              variant="heroSectionTitle"
+              sx={{
+                fontSize: {
+                  xs: '44px',
+                  md: '64px'
+                },
+                lineHeight: {
+                  xs: '44px',
+                  md: '64px'
+                }
+              }}
+            >
+              {dao?.name?.trim()}
+            </CustomTypography>
+            <CustomTypography
+              variant="heroSectionSubtitle"
+              sx={{
+                fontSize: {
+                  xs: '24px',
+                  md: '32px'
+                },
+                lineHeight: {
+                  xs: '44px',
+                  md: '64px'
+                }
+              }}
+            >
               {monthName.trim()} Treasury Report
             </CustomTypography>
           </BoxWrapperColumn>
         </BoxWrapperRow>
-        <BoxWrapperRow gap={1} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+        <BoxWrapperRow
+          sx={{ flexWrap: 'wrap', justifyContent: 'flex-start', gap: { xs: 1, md: 2 } }}
+        >
           {dao?.addresses
             // sort by item order
             .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)

@@ -66,7 +66,7 @@ export const Summary = (props: SummaryProps) => {
             display: 'flex',
             flexWrap: 'wrap',
             alignContent: 'center',
-            gap: 10
+            gap: { xs: 5, md: 10 }
           }}
         >
           <InfoCard

@@ -19,7 +19,9 @@ export const InfoCard = ({ title, value, helpInfo }: InfoCardProps) => {
       }}
     >
       <BoxWrapperRow gap={2} sx={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-        <CustomTypography variant={'infoCardTitle'}>{title}</CustomTypography>
+        <CustomTypography variant={'infoCardTitle'} sx={{ fontSize: { xs: '16px', md: '18px' } }}>
+          {title}
+        </CustomTypography>
         {helpInfo ? (
           <Tooltip
             title={
@@ -33,7 +35,9 @@ export const InfoCard = ({ title, value, helpInfo }: InfoCardProps) => {
           </Tooltip>
         ) : null}
       </BoxWrapperRow>
-      <CustomTypography variant={'infoCardValue'}>{value}</CustomTypography>
+      <CustomTypography variant={'infoCardValue'} sx={{ fontSize: { xs: '36px', md: '44px' } }}>
+        {value}
+      </CustomTypography>
     </BoxWrapperColumn>
   )
 }
