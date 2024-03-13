@@ -28,6 +28,7 @@ export const SafeButton = (props: SafeButtonProps) => {
         color: '#EEEDED',
         background: '#1A1A1A',
         borderRadius: '40px',
+        minWidth: '260px',
         '&:hover': {
           background: '#222222'
         }
@@ -60,6 +61,7 @@ const CommonButton = (props: CommonButtonProps) => {
         background: '#EEEDED',
         borderRadius: '40px',
         border: '1px solid #222222',
+        minWidth: '200px',
         '&:hover': {
           background: '#FFFFFF'
         }

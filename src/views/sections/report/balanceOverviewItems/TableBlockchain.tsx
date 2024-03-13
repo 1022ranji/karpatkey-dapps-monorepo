@@ -62,19 +62,45 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
       <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: columnWidthPercentage,
+                fontSize: {
+                  xs: '12px',
+                  md: '16px'
+                }
+              }}
+              align="left"
+            >
               Token category
             </TableHeadCellCustom>
             {columns.map((blockchainName: any, index: number) => (
               <TableHeadCellCustom
                 key={index}
-                sx={{ width: columnWidthPercentage, paddingLeft: '20px', paddingRight: '20px' }}
+                sx={{
+                  width: columnWidthPercentage,
+                  paddingLeft: '20px',
+                  paddingRight: '20px',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 {blockchainName}
               </TableHeadCellCustom>
             ))}
-            <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: columnWidthPercentage,
+                fontSize: {
+                  xs: '12px',
+                  md: '16px'
+                }
+              }}
+              align="left"
+            >
               Total
             </TableHeadCellCustom>
           </TableRow>
@@ -84,7 +110,16 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
             const { category, total = 0 } = item
             return (
               <TableRow key={index}>
-                <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
+                <TableCellCustom
+                  sx={{
+                    width: columnWidthPercentage,
+                    fontSize: {
+                      xs: '12px',
+                      md: '16px'
+                    }
+                  }}
+                  align="left"
+                >
                   {category}
                 </TableCellCustom>
                 {columns.map((blockchainName: any, index: number) => {
@@ -95,7 +130,11 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
                       sx={{
                         width: columnWidthPercentage,
                         paddingLeft: '20px',
-                        paddingRight: '20px'
+                        paddingRight: '20px',
+                        fontSize: {
+                          xs: '12px',
+                          md: '16px'
+                        }
                       }}
                       align="left"
                     >
@@ -103,14 +142,32 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
                     </TableCellCustom>
                   )
                 })}
-                <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
+                <TableCellCustom
+                  sx={{
+                    width: columnWidthPercentage,
+                    fontSize: {
+                      xs: '12px',
+                      md: '16px'
+                    }
+                  }}
+                  align="left"
+                >
                   {currency === 'USD' ? formatCurrency(total || 0) : formatNumber(total || 0, 0)}
                 </TableCellCustom>
               </TableRow>
             )
           })}
           <TableRow>
-            <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
+            <TableFooterCellCustom
+              sx={{
+                width: columnWidthPercentage,
+                fontSize: {
+                  xs: '12px',
+                  md: '16px'
+                }
+              }}
+              align="left"
+            >
               Total
             </TableFooterCellCustom>
             {columns.map((blockchainName: any, index: number) => {
@@ -118,14 +175,31 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
               return (
                 <TableFooterCellCustom
                   key={index}
-                  sx={{ width: columnWidthPercentage, paddingLeft: '20px', paddingRight: '20px' }}
+                  sx={{
+                    width: columnWidthPercentage,
+                    paddingLeft: '20px',
+                    paddingRight: '20px',
+                    fontSize: {
+                      xs: '12px',
+                      md: '16px'
+                    }
+                  }}
                   align="left"
                 >
                   {currency === 'USD' ? formatCurrency(total) : formatNumber(total, 0)}
                 </TableFooterCellCustom>
               )
             })}
-            <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
+            <TableFooterCellCustom
+              sx={{
+                width: columnWidthPercentage,
+                fontSize: {
+                  xs: '12px',
+                  md: '16px'
+                }
+              }}
+              align="left"
+            >
               {currency === 'USD'
                 ? formatCurrency(totals['total'] || 0)
                 : formatNumber(totals['total'] || 0, 0)}

@@ -159,7 +159,7 @@ const theme = createTheme({
       fontFamily: 'IBM Plex Mono',
       fontStyle: 'normal',
       fontWeight: '600 !important',
-      fontSize: '44px',
+      fontSize: '36px',
       lineHeight: '30px',
       color: '#222222'
     },

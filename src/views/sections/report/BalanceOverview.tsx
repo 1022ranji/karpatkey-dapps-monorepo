@@ -15,6 +15,34 @@ import { useApp } from 'src/contexts/app.context'
 
 type BalanceOverview = { balanceOverviewType: any; balanceOverviewBlockchain: any } & BoxProps
 
+interface FilterProps {
+  toggleType: number
+  handleToggleOnChange: (event: React.MouseEvent<HTMLElement>, newToggleType: number) => void
+}
+const Filter = ({ toggleType, handleToggleOnChange }: FilterProps) => (
+  <ToggleButtonGroup
+    value={toggleType}
+    exclusive
+    onChange={handleToggleOnChange}
+    aria-label="Balance overview type"
+  >
+    <ToggleButton
+      disableRipple
+      value={1}
+      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+    >
+      Type
+    </ToggleButton>
+    <ToggleButton
+      disableRipple
+      value={0}
+      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+    >
+      Blockchain
+    </ToggleButton>
+  </ToggleButtonGroup>
+)
+
 export const BalanceOverview = (props: BalanceOverview) => {
   const { balanceOverviewType, balanceOverviewBlockchain } = props
 
@@ -31,22 +59,6 @@ export const BalanceOverview = (props: BalanceOverview) => {
     setToggleType(newToggleType)
   }
 
-  const Filter = (
-    <ToggleButtonGroup
-      value={toggleType}
-      exclusive
-      onChange={handleToggleOnChange}
-      aria-label="Balance overview type"
-    >
-      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
-        Type
-      </ToggleButton>
-      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
-        Blockchain
-      </ToggleButton>
-    </ToggleButtonGroup>
-  )
-
   return (
     <AnimatePresenceWrapper>
       <PaperSection
@@ -55,7 +67,7 @@ export const BalanceOverview = (props: BalanceOverview) => {
         subTitle={`Funds by token category and type/blockchain ${
           currency === 'ETH' ? '(ETH)' : ''
         }`}
-        filter={Filter}
+        filter={<Filter toggleType={toggleType} handleToggleOnChange={handleToggleOnChange} />}
       >
         <BoxWrapperColumn>
           <TabPanel value={toggleType} index={1}>

@@ -42,25 +42,88 @@ const TableFunds = (props: TableFundsProps) => {
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
-        <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
+        <Table
+          sx={{
+            width: '100%',
+            minWidth: {
+              xs: '600px',
+              md: '1200px'
+            },
+            overflow: 'scroll'
+          }}
+        >
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+              <TableHeadCellCustom
+                sx={{
+                  width: isDDay ? '25%' : '20%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
+                align="left"
+              >
                 Blockchain
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+              <TableHeadCellCustom
+                sx={{
+                  width: isDDay ? '25%' : '20%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
+                align="left"
+              >
                 Position
               </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+              <TableHeadCellCustom
+                sx={{
+                  width: isDDay ? '25%' : '20%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
+                align="left"
+              >
                 {isDDay ? 'DeFi funds' : 'Farming funds'}
               </TableHeadCellCustom>
               {!isDDay ? (
-                <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                <TableHeadCellCustom
+                  sx={{
+                    width: '20%',
+                    fontSize: {
+                      xs: '12px',
+                      md: '16px'
+                    }
+                  }}
+                  align="left"
+                >
                   Unclaimed rewards
                 </TableHeadCellCustom>
               ) : null}
-              <TableHeadCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
+              <TableHeadCellCustom
+                sx={{
+                  width: isDDay ? '25%' : '20%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
+                align="left"
+              >
+                <BoxWrapperRow
+                  sx={{
+                    justifyContent: 'flex-start',
+                    fontSize: {
+                      xs: '12px',
+                      md: '16px'
+                    }
+                  }}
+                  gap={1}
+                >
                   {isDDay ? 'DeFi results' : 'Farming results'}
                   <Tooltip
                     title={
@@ -68,7 +131,14 @@ const TableFunds = (props: TableFundsProps) => {
                         ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'
                         : 'Farming results include results from fees, rebasing, pool token variation and rewards'
                     }
-                    sx={{ ml: 1, cursor: 'pointer' }}
+                    sx={{
+                      ml: 1,
+                      cursor: 'pointer',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
                   >
                     <InfoIcon />
                   </Tooltip>
@@ -90,10 +160,28 @@ const TableFunds = (props: TableFundsProps) => {
 
                   return (
                     <TableRow key={index}>
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                      <TableCellCustom
+                        sx={{
+                          width: isDDay ? '25%' : '20%',
+                          fontSize: {
+                            xs: '12px',
+                            md: '16px'
+                          }
+                        }}
+                        align="left"
+                      >
                         {row.blockchain}
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                      <TableCellCustom
+                        sx={{
+                          width: isDDay ? '25%' : '20%',
+                          fontSize: {
+                            xs: '12px',
+                            md: '16px'
+                          }
+                        }}
+                        align="left"
+                      >
                         <BoxWrapperRow
                           sx={{
                             width: '90%',
@@ -103,33 +191,76 @@ const TableFunds = (props: TableFundsProps) => {
                         >
                           <BoxWrapperColumn>
                             {row.position}
-                            <CustomTypography variant="tableCellSubData">
+                            <CustomTypography
+                              variant="tableCellSubData"
+                              sx={{
+                                fontSize: {
+                                  xs: '12px',
+                                  md: '16px'
+                                }
+                              }}
+                            >
                               {row.protocol}
                             </CustomTypography>
                           </BoxWrapperColumn>
                           {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
                         </BoxWrapperRow>
                       </TableCellCustom>
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                      <TableCellCustom
+                        sx={{
+                          width: isDDay ? '25%' : '20%',
+                          fontSize: {
+                            xs: '12px',
+                            md: '16px'
+                          }
+                        }}
+                        align="left"
+                      >
                         <BoxWrapper>
                           {currency === 'USD'
                             ? formatCurrency(row.funds || 0)
                             : formatNumber(row.funds, 0)}
                           {row?.allocation > 0 ? (
-                            <CustomTypography variant="tableCellSubData">
+                            <CustomTypography
+                              variant="tableCellSubData"
+                              sx={{
+                                fontSize: {
+                                  xs: '12px',
+                                  md: '16px'
+                                }
+                              }}
+                            >
                               {formatPercentage(row.allocation / 100)}
                             </CustomTypography>
                           ) : null}
                         </BoxWrapper>
                       </TableCellCustom>
                       {!isDDay ? (
-                        <TableCellCustom sx={{ width: '20%' }} align="left">
+                        <TableCellCustom
+                          sx={{
+                            width: '20%',
+                            fontSize: {
+                              xs: '12px',
+                              md: '16px'
+                            }
+                          }}
+                          align="left"
+                        >
                           {currency === 'USD'
                             ? formatCurrency(row.unclaimed || 0)
                             : formatNumber(row.unclaimed, 0)}
                         </TableCellCustom>
                       ) : null}
-                      <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                      <TableCellCustom
+                        sx={{
+                          width: isDDay ? '25%' : '20%',
+                          fontSize: {
+                            xs: '12px',
+                            md: '16px'
+                          }
+                        }}
+                        align="left"
+                      >
                         {currency === 'USD'
                           ? formatCurrency(row.results || 0)
                           : formatNumber(row.results, 1)}
@@ -140,11 +271,27 @@ const TableFunds = (props: TableFundsProps) => {
 
                 {funds.length > 5 ? (
                   <TableRow>
-                    <TableCellCustom colSpan={5} align="center">
+                    <TableCellCustom
+                      colSpan={5}
+                      align="center"
+                      sx={{
+                        fontSize: {
+                          xs: '12px',
+                          md: '16px'
+                        }
+                      }}
+                    >
                       <BoxWrapperRow gap={1}>
                         <CustomTypography
                           variant="tableCellSubData"
-                          sx={{ cursor: 'pointer', align: 'center' }}
+                          sx={{
+                            cursor: 'pointer',
+                            align: 'center',
+                            fontSize: {
+                              xs: '12px',
+                              md: '16px'
+                            }
+                          }}
                           onClick={() => setDisplayAll(!displayAll)}
                         >
                           {!displayAll
@@ -157,7 +304,11 @@ const TableFunds = (props: TableFundsProps) => {
                             cursor: 'pointer',
                             textDecoration: 'underline',
                             align: 'center',
-                            fontWeight: '700 !important'
+                            fontWeight: '700 !important',
+                            fontSize: {
+                              xs: '12px',
+                              md: '16px'
+                            }
                           }}
                           onClick={() => setDisplayAll(!displayAll)}
                         >
@@ -169,10 +320,28 @@ const TableFunds = (props: TableFundsProps) => {
                 ) : null}
 
                 <TableRow>
-                  <TableFooterCellCustom colSpan={2} align="left">
+                  <TableFooterCellCustom
+                    colSpan={2}
+                    align="left"
+                    sx={{
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
+                  >
                     Total
                   </TableFooterCellCustom>
-                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                  <TableFooterCellCustom
+                    sx={{
+                      width: isDDay ? '25%' : '20%',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
+                    align="left"
+                  >
                     <BoxWrapper>
                       {currency === 'USD'
                         ? formatCurrency(totals?.fundsTotal || 0)
@@ -180,13 +349,31 @@ const TableFunds = (props: TableFundsProps) => {
                     </BoxWrapper>
                   </TableFooterCellCustom>
                   {!isDDay ? (
-                    <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                    <TableFooterCellCustom
+                      sx={{
+                        width: isDDay ? '25%' : '20%',
+                        fontSize: {
+                          xs: '12px',
+                          md: '16px'
+                        }
+                      }}
+                      align="left"
+                    >
                       {currency === 'USD'
                         ? formatCurrency(totals?.unclaimedTotal || 0)
                         : formatNumber(totals?.unclaimedTotal || 0, 0)}
                     </TableFooterCellCustom>
                   ) : null}
-                  <TableFooterCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                  <TableFooterCellCustom
+                    sx={{
+                      width: isDDay ? '25%' : '20%',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
+                    align="left"
+                  >
                     {currency === 'USD'
                       ? formatCurrency(totals?.resultsTotal || 0)
                       : formatNumber(totals?.resultsTotal || 0, 1)}

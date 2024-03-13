@@ -25,6 +25,8 @@ export const PNG = () => {
         onClick={onClick}
         alignItems="center"
         sx={{
+          display: 'flex',
+          justifyContent: 'center',
           textDecoration: 'none',
           cursor: 'pointer',
           float: 'left',

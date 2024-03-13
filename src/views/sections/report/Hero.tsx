@@ -10,12 +10,15 @@ import { getDAO, getMonthName } from 'src/utils'
 import Image from 'next/image'
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
-import { Box } from '@mui/material'
+import { Box, Theme } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export const Hero = () => {
   const { state } = useApp()
 
   const { DAO: filterDAO, month } = state
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   const { dao, monthName } = React.useMemo(() => {
     const dao: FILTER_DAO | undefined = getDAO(filterDAO)
@@ -33,7 +36,7 @@ export const Hero = () => {
       <BoxWrapperColumn
         sx={{
           margin: {
-            xs: '10px 10px 10px 20px',
+            xs: '20px 20px 0 20px',
             md: '30px 30px 30px 30px'
           },
           alignItems: 'flex-start',
@@ -49,8 +52,7 @@ export const Hero = () => {
             sx={{
               alignItems: 'flex-start',
               alignSelf: 'stretch',
-              justifyContent: 'space-between',
-              gap: { xs: 0, md: 2 }
+              justifyContent: 'space-between'
             }}
           >
             <CustomTypography
@@ -76,7 +78,7 @@ export const Hero = () => {
                   md: '32px'
                 },
                 lineHeight: {
-                  xs: '44px',
+                  xs: '24px',
                   md: '64px'
                 }
               }}
@@ -86,7 +88,14 @@ export const Hero = () => {
           </BoxWrapperColumn>
         </BoxWrapperRow>
         <BoxWrapperRow
-          sx={{ flexWrap: 'wrap', justifyContent: 'flex-start', gap: { xs: 1, md: 2 } }}
+          sx={{
+            justifyContent: 'flex-start',
+            gap: 2,
+            paddingBottom: '20px',
+            ...(isMD
+              ? { flexWrap: 'wrap' }
+              : { width: 'fit-content', maxWidth: '100%', overflowX: 'auto' })
+          }}
         >
           {dao?.addresses
             // sort by item order

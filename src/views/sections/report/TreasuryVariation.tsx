@@ -8,16 +8,49 @@ import {
 import { FILTER_DAO, FILTER_DAOS } from 'src/config/constants'
 import { getDAO } from 'src/utils'
 import InfoIcon from '@mui/icons-material/Info'
-import { ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material'
+import { Theme, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material'
 import * as React from 'react'
 import { isYearAndMonthValid } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface TreasuryVariationProps {
   treasuryVariationData: any[]
   historicVariationData: any[]
   treasuryVariationForThePeriodDetailData: any[]
 }
+
+interface FilterProps {
+  toggleType: number
+  handleToggleOnChange: (event: React.MouseEvent<HTMLElement>, newToggleType: number) => void
+  helpText: string
+}
+const Filter = ({ toggleType, handleToggleOnChange, helpText }: FilterProps) => (
+  <ToggleButtonGroup
+    value={toggleType}
+    exclusive
+    onChange={handleToggleOnChange}
+    aria-label="Balance overview type"
+  >
+    <ToggleButton
+      disableRipple
+      value={0}
+      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+    >
+      Selected period
+    </ToggleButton>
+    <ToggleButton
+      disableRipple
+      value={1}
+      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+    >
+      Year to period
+      <Tooltip title={helpText} sx={{ ml: 1 }}>
+        <InfoIcon />
+      </Tooltip>
+    </ToggleButton>
+  </ToggleButtonGroup>
+)
 
 export const TreasuryVariation = (props: TreasuryVariationProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -46,24 +79,7 @@ export const TreasuryVariation = (props: TreasuryVariationProps) => {
 
   const helpText = DAO ? `Treasury variation since ${sinceText}` : ''
 
-  const filter = (
-    <ToggleButtonGroup
-      value={toggleType}
-      exclusive
-      onChange={handleToggleOnChange}
-      aria-label="Balance overview type"
-    >
-      <ToggleButton disableRipple value={0} sx={{ textTransform: 'none' }}>
-        Selected period
-      </ToggleButton>
-      <ToggleButton disableRipple value={1} sx={{ textTransform: 'none' }}>
-        Year to period
-        <Tooltip title={helpText} sx={{ ml: 1 }}>
-          <InfoIcon />
-        </Tooltip>
-      </ToggleButton>
-    </ToggleButtonGroup>
-  )
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
     <>
@@ -79,7 +95,13 @@ export const TreasuryVariation = (props: TreasuryVariationProps) => {
               ? 'Balance variation for the period (also year to period), results separated into Operations and DeFi results'
               : 'Balance variation for the period (also year to period), results separated into Non Farming and Farming Results.'
           }
-          filter={filter}
+          filter={
+            <Filter
+              toggleType={toggleType}
+              handleToggleOnChange={handleToggleOnChange}
+              helpText={helpText}
+            />
+          }
         >
           <TabPanel value={toggleType} index={0}>
             {treasuryVariationData?.length > 0 ? (
@@ -97,21 +119,23 @@ export const TreasuryVariation = (props: TreasuryVariationProps) => {
           </TabPanel>
         </PaperSection>
       </AnimatePresenceWrapper>
-      <AnimatePresenceWrapper>
-        <PaperSection
-          subTitle={
-            currency === 'USD'
-              ? 'Treasury variation for the period (detail)'
-              : 'Treasury variation for the period (detail) (ETH)'
-          }
-        >
-          {treasuryVariationForThePeriodDetailData?.length > 0 ? (
-            <Waterfall data={treasuryVariationForThePeriodDetailData} />
-          ) : (
-            <EmptyData />
-          )}
-        </PaperSection>
-      </AnimatePresenceWrapper>
+      {isMD ? (
+        <AnimatePresenceWrapper>
+          <PaperSection
+            subTitle={
+              currency === 'USD'
+                ? 'Treasury variation for the period (detail)'
+                : 'Treasury variation for the period (detail) (ETH)'
+            }
+          >
+            {treasuryVariationForThePeriodDetailData?.length > 0 ? (
+              <Waterfall data={treasuryVariationForThePeriodDetailData} />
+            ) : (
+              <EmptyData />
+            )}
+          </PaperSection>
+        </AnimatePresenceWrapper>
+      ) : null}
     </>
   )
 }

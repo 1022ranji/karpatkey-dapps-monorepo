@@ -19,22 +19,34 @@ export const PaperSection = (props: PaperSectionProps) => {
   return (
     <Paper className={'scrollable'} {...(id ? { id: slugify(id) } : {})}>
       <Divider />
-      <BoxWrapperColumn sx={{ marginX: '30px', marginY: '30px' }} gap={3}>
+      <BoxWrapperColumn sx={{ marginX: { xs: '20px', md: '30px' }, marginY: '30px' }} gap={3}>
         {title ? (
-          <BoxWrapperRow gap={2} sx={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>
-            <CustomTypography variant="paperSectionTitle" textAlign="left">
+          <BoxWrapperRow
+            gap={2}
+            sx={{ justifyContent: 'flex-start', alignItems: { xs: 'center', md: 'flex-end' } }}
+          >
+            <CustomTypography
+              variant="paperSectionTitle"
+              textAlign="left"
+              sx={{
+                fontSize: { xs: 24, md: 44 }
+              }}
+            >
               {title}
             </CustomTypography>
             {helpInfo ? (
               <Tooltip
                 title={
-                  <CustomTypography variant="body1" sx={{ color: 'common.white' }}>
+                  <CustomTypography
+                    variant="body1"
+                    sx={{ color: 'common.white', fontSize: { xs: 14, md: 18 } }}
+                  >
                     {helpInfo}
                   </CustomTypography>
                 }
                 sx={{ ml: 1, cursor: 'pointer' }}
               >
-                <InfoIcon sx={{ fontSize: 40, cursor: 'pointer' }} />
+                <InfoIcon sx={{ fontSize: { xs: 30, md: 40 }, cursor: 'pointer' }} />
               </Tooltip>
             ) : null}
           </BoxWrapperRow>
@@ -46,7 +58,12 @@ export const PaperSection = (props: PaperSectionProps) => {
             }}
           >
             {subTitle ? (
-              <CustomTypography variant="paperSectionSubtitle">{subTitle}</CustomTypography>
+              <CustomTypography
+                variant="paperSectionSubtitle"
+                sx={{ fontSize: { xs: 16, md: 22 } }}
+              >
+                {subTitle}
+              </CustomTypography>
             ) : null}
             {filter ? filter : null}
           </BoxWrapperRow>

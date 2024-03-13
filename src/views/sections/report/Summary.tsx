@@ -7,10 +7,11 @@ import {
   AnimatePresenceWrapper
 } from 'src/components'
 import * as React from 'react'
-import { Box } from '@mui/material'
+import { Box, Theme } from '@mui/material'
 import { getDAO } from 'src/utils'
 import { isYearAndMonthValid } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface SummaryProps {
   dao: Maybe<number>
@@ -57,16 +58,31 @@ export const Summary = (props: SummaryProps) => {
 
   const isDDay = isYearAndMonthValid()
 
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
   return (
     <AnimatePresenceWrapper>
-      <BoxWrapperColumn sx={{ margin: '30px 30px' }} gap={10}>
+      <BoxWrapperColumn
+        sx={{
+          margin: {
+            xs: '20px 20px 20px 20px',
+            md: '30px 30px 30px 30px'
+          }
+        }}
+        gap={10}
+      >
         <Box
           id="summary"
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            alignContent: 'center',
-            gap: { xs: 5, md: 10 }
+            alignContent: {
+              xs: 'flex-start',
+              md: 'center'
+            },
+            gap: { xs: 5, md: 10 },
+            flexDirection: { xs: 'column', md: 'row' }
           }}
         >
           <InfoCard
@@ -106,8 +122,8 @@ export const Summary = (props: SummaryProps) => {
         <Box
           sx={{
             display: 'flex',
-            flexWrap: 'wrap',
-            gap: 2
+            gap: isMD ? 2 : 10,
+            ...(isMD ? { flexWrap: 'wrap' } : { width: '100%', overflowX: 'auto' })
           }}
         >
           <PieChart
@@ -119,8 +135,8 @@ export const Summary = (props: SummaryProps) => {
                 color: item.color
               }
             })}
-            width={440}
-            height={400}
+            width={isMD ? 440 : 310}
+            height={isMD ? 400 : 300}
             {...(negativeTotalValue
               ? {
                   footerMessage: (
@@ -150,8 +166,8 @@ export const Summary = (props: SummaryProps) => {
                 color: item.color
               }
             })}
-            width={440}
-            height={400}
+            width={isMD ? 440 : 310}
+            height={isMD ? 400 : 300}
           />
           <PieChart
             titleMessage="Total funds by type"
@@ -162,8 +178,8 @@ export const Summary = (props: SummaryProps) => {
                 color: item.color
               }
             })}
-            width={440}
-            height={400}
+            width={isMD ? 440 : 310}
+            height={isMD ? 400 : 300}
           />
         </Box>
       </BoxWrapperColumn>

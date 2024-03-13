@@ -1,6 +1,8 @@
 import * as React from 'react'
-import { PieChart, BoxWrapperRow, EmptyData, PaperSection } from 'src/components'
+import { PieChart, EmptyData, PaperSection } from 'src/components'
 import { isYearAndMonthValid } from 'src/utils/params'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/material'
 
 interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
@@ -10,6 +12,9 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
   const { fundsByProtocol } = props
 
   const isDDay = isYearAndMonthValid()
+
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
     <PaperSection
@@ -25,21 +30,19 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
       {!fundsByProtocol || fundsByProtocol.length === 0 ? (
         <EmptyData />
       ) : (
-        <BoxWrapperRow sx={{ justifyContent: isDDay ? 'space-evenly' : 'center' }}>
-          <PieChart
-            data={fundsByProtocol.map((item) => {
-              return {
-                name: item.label,
-                y: item.allocation,
-                color: item.color
-              }
-            })}
-            innerSize="50%"
-            outerSize="70%"
-            height={560}
-            width={460}
-          />
-        </BoxWrapperRow>
+        <PieChart
+          data={fundsByProtocol.map((item) => {
+            return {
+              name: item.label,
+              y: item.allocation,
+              color: item.color
+            }
+          })}
+          innerSize={isMD ? '50%' : '45%'}
+          outerSize={isMD ? '70%' : '60%'}
+          height={isMD ? 560 : 310}
+          width={isMD ? 460 : 300}
+        />
       )}
     </PaperSection>
   )

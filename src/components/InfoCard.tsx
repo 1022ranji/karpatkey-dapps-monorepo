@@ -15,7 +15,10 @@ export const InfoCard = ({ title, value, helpInfo }: InfoCardProps) => {
       sx={{
         minWidth: 'max-content',
         width: 'max-content',
-        gap: 2
+        gap: {
+          xs: 1,
+          md: 2
+        }
       }}
     >
       <BoxWrapperRow gap={2} sx={{ justifyContent: 'flex-start', alignItems: 'flex-end' }}>

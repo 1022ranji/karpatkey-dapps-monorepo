@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material/styles'
-import { Menu, PNG as Logo, BoxWrapperColumn } from 'src/components'
+import { Menu, PNG as Logo, BoxWrapperColumn, MenuMobile } from 'src/components'
 import { Box, IconButton, ListItemButton, Slide } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Modal, StyledBackdrop, ModalContent, LinkStyled } from '../Common'
@@ -46,6 +46,46 @@ const NavbarWrapper = styled(Box)(() => ({
   width: '100%'
 }))
 
+interface WrapperProps {
+  children: React.ReactNode
+  sx?: any
+}
+
+const Wrapper = (props: WrapperProps) => {
+  return (
+    <NavbarLogoLeftContainer
+      sx={{
+        display: 'flex',
+        paddingRight: {
+          xs: '20px',
+          md: '26px'
+        },
+        paddingLeft: {
+          xs: '20px',
+          md: '26px'
+        },
+        height: {
+          xs: '80px',
+          md: HEADER_HEIGHT
+        },
+        flex: {
+          xs: `0 0 80px`,
+          md: `0 0 ${HEADER_HEIGHT}px` /* flex-grow, flex-shrink, flex-basis */
+        },
+        ...(props?.sx ?? {})
+      }}
+    >
+      <NavbarLeft className={`header`} sx={{ width: '100%' }}>
+        <Container>
+          <AnimatePresenceWrapper>
+            <NavbarWrapper>{props.children}</NavbarWrapper>
+          </AnimatePresenceWrapper>
+        </Container>
+      </NavbarLeft>
+    </NavbarLogoLeftContainer>
+  )
+}
+
 export const Header = () => {
   const router = useRouter()
 
@@ -67,53 +107,36 @@ export const Header = () => {
 
   return (
     <>
-      <NavbarLogoLeftContainer
+      <Wrapper>
+        <Logo />
+        <Menu />
+        <IconButton
+          edge="end"
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleOpen}
+          sx={{
+            justifyContent: 'center',
+            display: {
+              xs: 'flex',
+              md: 'none'
+            }
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Wrapper>
+      <Wrapper
         sx={{
-          display: 'flex',
-          paddingRight: {
-            xs: '20px',
-            md: '26px'
+          display: {
+            xs: 'flex',
+            md: 'none'
           },
-          paddingLeft: {
-            xs: '20px',
-            md: '26px'
-          },
-          height: {
-            xs: '80px',
-            md: HEADER_HEIGHT
-          },
-          flex: {
-            xs: `0 0 80px`,
-            md: `0 0 ${HEADER_HEIGHT}px` /* flex-grow, flex-shrink, flex-basis */
-          }
+          zIndex: 1
         }}
       >
-        <NavbarLeft className={`header`} sx={{ width: '100%' }}>
-          <Container>
-            <AnimatePresenceWrapper>
-              <NavbarWrapper>
-                <Logo />
-                <Menu />
-                <IconButton
-                  edge="end"
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={handleOpen}
-                  sx={{
-                    justifyContent: 'center',
-                    display: {
-                      xs: 'flex',
-                      md: 'none'
-                    }
-                  }}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </NavbarWrapper>
-            </AnimatePresenceWrapper>
-          </Container>
-        </NavbarLeft>
-      </NavbarLogoLeftContainer>
+        <MenuMobile />
+      </Wrapper>
       <Modal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"

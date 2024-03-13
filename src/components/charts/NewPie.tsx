@@ -2,6 +2,8 @@ import * as Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import React from 'react'
 import { CustomTypography, BoxWrapperColumn, EmptyData } from 'src/components/'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/material'
 
 interface PieChartTitleProps {
   title: string
@@ -41,6 +43,8 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
   } = props
   const chartComponentRef = React.useRef<HighchartsReact.RefObject>(null)
 
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
   const options = {
     title: {
       text: ''
@@ -76,9 +80,9 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         dataLabels: {
           enabled: true,
           crop: false,
-          distance: '25%',
+          distance: isMD ? '25%' : '15%',
           style: {
-            fontSize: '12px',
+            fontSize: isMD ? '12px' : '10px',
             fontFamily: 'IBM Plex Sans',
             color: '#222222',
             textOutline: '0px',
@@ -102,7 +106,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
           connectorColor: 'black',
           connectorWidth: 1,
           style: {
-            fontSize: '12px',
+            fontSize: isMD ? '12px' : '10px',
             fontFamily: 'IBM Plex Sans',
             color: '#222222',
             textOutline: '0px',
@@ -140,7 +144,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
 
   const containerProps = {
     style: {
-      marginTop: '40px',
+      ...(isMD ? { marginTop: '20px' } : { marginTop: '0px' }),
       height: `${height}px`,
       width: `${+width + 40}px`
     }

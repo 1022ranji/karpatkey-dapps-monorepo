@@ -36,31 +36,68 @@ export const TableTypeDDay = (props: TableTypeProps) => {
   return (
     <BoxWrapperColumn gap={4}>
       <TableContainer component={Box}>
-        <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
+        <Table
+          sx={{
+            width: '100%',
+            minWidth: {
+              xs: '600px',
+              md: '1200px'
+            },
+            overflow: 'scroll'
+          }}
+        >
           <TableHead>
             <TableRow>
               <TableHeadCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 Token category
               </TableHeadCellCustom>
               <TableHeadCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
                   DeFi funds
                   <Tooltip
                     title={'Positions aimed at yield generation'}
-                    sx={{ ml: 1, cursor: 'pointer' }}
+                    sx={{
+                      ml: 1,
+                      cursor: 'pointer',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
                   >
                     <InfoIcon />
                   </Tooltip>
                 </BoxWrapperRow>
               </TableHeadCellCustom>
               {haveOperationsFundsField ? (
-                <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+                <TableHeadCellCustom
+                  sx={{
+                    width: '20%',
+                    fontSize: {
+                      xs: '12px',
+                      md: '16px'
+                    }
+                  }}
+                  align="left"
+                >
                   <BoxWrapperRow sx={{ justifyContent: 'flex-start' }} gap={1}>
                     Operations
                     <br /> funds
@@ -68,7 +105,14 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                       title={
                         'Positions tailored to meet specific requirements like market making, not focused on yield generation'
                       }
-                      sx={{ ml: 1, cursor: 'pointer' }}
+                      sx={{
+                        ml: 1,
+                        cursor: 'pointer',
+                        fontSize: {
+                          xs: '12px',
+                          md: '16px'
+                        }
+                      }}
                     >
                       <InfoIcon />
                     </Tooltip>
@@ -76,13 +120,25 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                 </TableHeadCellCustom>
               ) : null}
               <TableHeadCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 Wallet
               </TableHeadCellCustom>
               <TableHeadCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 Total
@@ -99,13 +155,25 @@ export const TableTypeDDay = (props: TableTypeProps) => {
               return (
                 <TableRow key={index}>
                   <TableCellCustom
-                    sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                    sx={{
+                      width: haveOperationsFundsField ? '20%' : '25%',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
                     align="left"
                   >
                     {row['Token Category']}
                   </TableCellCustom>
                   <TableCellCustom
-                    sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                    sx={{
+                      width: haveOperationsFundsField ? '20%' : '25%',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
                     align="left"
                   >
                     {currency === 'USD'
@@ -113,14 +181,29 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                       : formatNumber(row['DeFi funds'] || 0, 0)}
                   </TableCellCustom>
                   {haveOperationsFundsField ? (
-                    <TableCellCustom sx={{ width: '20%' }} align="left">
+                    <TableCellCustom
+                      sx={{
+                        width: '20%',
+                        fontSize: {
+                          xs: '12px',
+                          md: '16px'
+                        }
+                      }}
+                      align="left"
+                    >
                       {currency === 'USD'
                         ? formatCurrency(row['Operations funds'] || 0)
                         : formatNumber(row['Operations funds'] || 0, 0)}
                     </TableCellCustom>
                   ) : null}
                   <TableCellCustom
-                    sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                    sx={{
+                      width: haveOperationsFundsField ? '20%' : '25%',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
                     align="left"
                   >
                     {currency === 'USD'
@@ -128,7 +211,13 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                       : formatNumber(row['Wallet'] || 0, 0)}
                   </TableCellCustom>
                   <TableCellCustom
-                    sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                    sx={{
+                      width: haveOperationsFundsField ? '20%' : '25%',
+                      fontSize: {
+                        xs: '12px',
+                        md: '16px'
+                      }
+                    }}
                     align="left"
                   >
                     {currency === 'USD'
@@ -140,13 +229,25 @@ export const TableTypeDDay = (props: TableTypeProps) => {
             })}
             <TableRow>
               <TableFooterCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 Total
               </TableFooterCellCustom>
               <TableFooterCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 {currency === 'USD'
@@ -154,14 +255,29 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                   : formatNumber(dataFooterType['DeFi funds'] || 0, 0)}
               </TableFooterCellCustom>
               {haveOperationsFundsField ? (
-                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                <TableFooterCellCustom
+                  sx={{
+                    width: '20%',
+                    fontSize: {
+                      xs: '12px',
+                      md: '16px'
+                    }
+                  }}
+                  align="left"
+                >
                   {currency === 'USD'
                     ? formatCurrency(dataFooterType['Operations funds'] || 0)
                     : formatNumber(dataFooterType['Operations funds'] || 0, 0)}
                 </TableFooterCellCustom>
               ) : null}
               <TableFooterCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 {currency === 'USD'
@@ -169,7 +285,13 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                   : formatNumber(dataFooterType['Wallet'] || 0, 0)}
               </TableFooterCellCustom>
               <TableFooterCellCustom
-                sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                sx={{
+                  width: haveOperationsFundsField ? '20%' : '25%',
+                  fontSize: {
+                    xs: '12px',
+                    md: '16px'
+                  }
+                }}
                 align="left"
               >
                 {currency === 'USD'
