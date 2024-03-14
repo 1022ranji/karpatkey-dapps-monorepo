@@ -255,6 +255,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -327,6 +333,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -398,6 +410,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -469,6 +487,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -546,6 +570,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -623,6 +653,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -695,6 +731,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -742,6 +784,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   },
@@ -837,6 +885,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 1,
         year: 2024,
         id: 1_2024
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: 2_2024
       }
     ]
   }
