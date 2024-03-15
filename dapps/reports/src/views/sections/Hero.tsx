@@ -8,11 +8,12 @@ import { getDAO, getMonthName } from '@karpatkey-monorepo/shared/utils'
 import Image from 'next/image'
 import * as React from 'react'
 import { useApp } from '@karpatkey-monorepo/reports/src/contexts/app.context'
+import moment from 'moment'
 
 const Hero = () => {
   const { state } = useApp()
 
-  const { DAO: filterDAO, month } = state
+  const { DAO: filterDAO, month, year } = state
 
   const { dao, monthName } = React.useMemo(() => {
     const dao: FILTER_DAO | undefined = getDAO(filterDAO)
@@ -42,7 +43,16 @@ const Hero = () => {
         </BoxWrapperRow>
         <BoxWrapperRow gap={1} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
           {dao?.addresses
-            // sort by item order
+            .filter((address) => {
+              const [ monthSince, yearSince] = address.since.split('_')
+              //check if the monthSince and yearSince is less than or equal to the current month and year
+              const d1 = moment(`${monthSince}/${yearSince}`, "MM/YYYY")
+              const d2 = moment(`${month}/${year}`, "MM/YYYY")
+
+              console.log(d1, d2, d1.isBefore(d2))
+
+              return d1.isSameOrBefore(d2)
+            })
             .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
             .map((daoAddress: DAO_ADDRESS, index: number) => (
               <ButtonAddress key={index} daoAddress={daoAddress} />
