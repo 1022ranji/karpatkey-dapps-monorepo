@@ -34,6 +34,8 @@ import RocketPool from '@karpatkey-monorepo/shared/components/Icons/Protocols/Ro
 import KarpatkeyIcon from '@karpatkey-monorepo/shared/components/Icons/Protocols/Karpatkey'
 import Stader from '@karpatkey-monorepo/shared/components/Icons/Protocols/Stader'
 import StakeDAO from '@karpatkey-monorepo/shared/components/Icons/Protocols/StakeDAO'
+import MU from '@karpatkey-monorepo/shared/components/Icons/Protocols/MU'
+
 import * as React from 'react'
 
 interface ProtocolIconProps {
@@ -112,6 +114,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
     case 'CoW':
       icon = <CoW width={24} height={24} />
       break
+    case 'CoW AMM':
+      icon = <CoW width={24} height={24} />
+      break
     case 'Notional':
       icon = <Notional width={24} height={24} />
       break
@@ -156,6 +161,9 @@ const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'StakeDAO':
       icon = <StakeDAO width={24} height={24} />
+      break
+    case 'Mu Exchange':
+      icon = <MU width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />
