@@ -49,8 +49,6 @@ const Hero = () => {
               const d1 = moment(`${monthSince}/${yearSince}`, "MM/YYYY")
               const d2 = moment(`${month}/${year}`, "MM/YYYY")
 
-              console.log(d1, d2, d1.isBefore(d2))
-
               return d1.isSameOrBefore(d2)
             })
             .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
