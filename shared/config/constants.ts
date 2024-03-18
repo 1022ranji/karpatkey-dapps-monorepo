@@ -56,6 +56,7 @@ export type DAO_ADDRESS = {
   chainId: number
   isSafe: boolean
   order: number
+  since: string
 }
 
 export interface FILTER_DAO {
@@ -80,7 +81,7 @@ export interface FILTER_DAO {
     label: string
     month: number
     year: number
-    id: number
+    id: string
   }[]
 }
 
@@ -97,49 +98,56 @@ export const CHAINS: CHAIN[] = [
     name: 'Gnosis Chain',
     short: 'gno',
     explorer: 'https://gnosisscan.io/address',
-    logo: '/images/chains/gnosis.svg'
+    logo: '/images/protocols/gnosis.svg'
   },
   {
     id: 42161,
     name: 'Arbitrum',
-    short: '',
+    short: 'arb',
     explorer: 'https://arbiscan.io/address',
-    logo: '/images/chains/arbitrum.svg'
+    logo: '/images/protocols/arbitrum.svg'
   },
   {
     id: 43114,
     name: 'Avalanche',
-    short: '',
+    short: 'ava',
     explorer: 'https://subnets.avax.network/c-chain/address',
-    logo: '/images/chains/avalanche.svg'
+    logo: '/images/protocols/avalanche.svg'
   },
   {
     id: 10,
     name: 'Optimism',
-    short: '',
+    short: 'opt',
     explorer: 'https://optimistic.etherscan.io/address',
-    logo: '/images/chains/optimism.svg'
+    logo: '/images/protocols/optimism.svg'
   },
   {
     id: 137,
     name: 'Polygon',
-    short: '',
+    short: 'pol',
     explorer: 'https://polygonscan.com/address',
-    logo: '/images/chains/polygon.svg'
+    logo: '/images/protocols/polygon.svg'
   },
   {
     id: 8453,
     name: 'Base',
-    short: '',
+    short: 'bas',
     explorer: 'https://basescan.org/address',
-    logo: '/images/chains/base.svg'
+    logo: '/images/protocols/base.svg'
   },
   {
     id: 1088,
     name: 'Metis',
-    short: '',
+    short: 'met',
     explorer: 'https://explorer.metis.io/address',
-    logo: '/images/chains/metis.svg'
+    logo: '/images/protocols/metis.svg'
+  },
+  {
+    id: 56,
+    name: 'Binance',
+    short: 'bnb',
+    explorer: 'https://bscscan.com/address',
+    logo: '/images/protocols/binance.svg'
   }
 ]
 
@@ -202,13 +210,50 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x849d52316331967b6ff1198e5e32a0eb168d039d',
         chainId: 1,
         isSafe: true,
-        order: 1
+        order: 1,
+        since: '1_2023'
       },
       {
         address: '0x458cd345b4c05e8df39d0a07220feb4ec19f5e6f',
         chainId: 100,
         isSafe: true,
-        order: 2
+        order: 2,
+        since: '1_2023'
+      },
+      {
+        address: '0x5B6e1AcD8494092C166b390C17f09694B9dDb42C',
+        chainId: 42161,
+        isSafe: true,
+        order: 3,
+        since: '2_2024'
+      },
+      {
+        address: '0x210Ff2E26599D7146753bCBbC93afEdf82d2802F',
+        chainId: 10,
+        isSafe: true,
+        order: 4,
+        since: '2_2024'
+      },
+      {
+        address: '0x7CE63a765341bc274fD5C5c4d80B17AC26f2062f',
+        chainId: 56,
+        isSafe: true,
+        order: 5,
+        since: '2_2024'
+      },
+      {
+        address: '0x3115F77805FE59Ef9a31d5b38C68C171665CBB53',
+        chainId: 137,
+        isSafe: true,
+        order: 6,
+        since: '2_2024'
+      },
+      {
+        address: '0x6bbe78ee9e474842dbd4ab4987b3cefe88426a92',
+        chainId: 100,
+        isSafe: true,
+        order: 7,
+        since: '2_2024'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -218,43 +263,49 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'July',
         month: 7,
         year: 2023,
-        id: 7_2023
+        id: '7_2023'
       },
       {
         label: 'August',
         month: 8,
         year: 2023,
-        id: 8_2023
+        id: '8_2023'
       },
       {
         label: 'September',
         month: 9,
         year: 2023,
-        id: 9_2023
+        id: '9_2023'
       },
       {
         label: 'October',
         month: 10,
         year: 2023,
-        id: 10_2023
+        id: '10_2023'
       },
       {
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -280,7 +331,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
         isSafe: false,
-        order: 1
+        order: 1,
+        since: '1_2023'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -290,43 +342,49 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'July',
         month: 7,
         year: 2023,
-        id: 7_2023
+        id: '7_2023'
       },
       {
         label: 'August',
         month: 8,
         year: 2023,
-        id: 8_2023
+        id: '8_2023'
       },
       {
         label: 'September',
         month: 9,
         year: 2023,
-        id: 9_2023
+        id: '9_2023'
       },
       {
         label: 'October',
         month: 10,
         year: 2023,
-        id: 10_2023
+        id: '10_2023'
       },
       {
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -351,7 +409,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x0efccbb9e2c09ea29551879bd9da32362b32fc89',
         chainId: 1,
         isSafe: true,
-        order: 1
+        order: 1,
+        since: '2_2023'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -361,43 +420,49 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'July',
         month: 7,
         year: 2023,
-        id: 7_2023
+        id: '7_2023'
       },
       {
         label: 'August',
         month: 8,
         year: 2023,
-        id: 8_2023
+        id: '8_2023'
       },
       {
         label: 'September',
         month: 9,
         year: 2023,
-        id: 9_2023
+        id: '9_2023'
       },
       {
         label: 'October',
         month: 10,
         year: 2023,
-        id: 10_2023
+        id: '10_2023'
       },
       {
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -422,7 +487,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x4f2083f5fbede34c2714affb3105539775f7fe64',
         chainId: 1,
         isSafe: true,
-        order: 1
+        order: 1,
+        since: '3_2023'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -432,43 +498,49 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'July',
         month: 7,
         year: 2023,
-        id: 7_2023
+        id: '7_2023'
       },
       {
         label: 'August',
         month: 8,
         year: 2023,
-        id: 8_2023
+        id: '8_2023'
       },
       {
         label: 'September',
         month: 9,
         year: 2023,
-        id: 9_2023
+        id: '9_2023'
       },
       {
         label: 'October',
         month: 10,
         year: 2023,
-        id: 10_2023
+        id: '10_2023'
       },
       {
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -493,13 +565,22 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
         chainId: 1,
         isSafe: true,
-        order: 1
+        order: 1,
+        since: '2_2023'
       },
       {
         address: '0x616de58c011f8736fa20c7ae5352f7f6fb9f0669',
         chainId: 100,
         isSafe: true,
-        order: 2
+        order: 2,
+        since: '2_2023'
+      },
+      {
+        address: '0xbeef5afe88ef73337e5070ab2855d37dbf5493a4',
+        chainId: 1,
+        isSafe: true,
+        order: 3,
+        since: '2_2024'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -509,43 +590,49 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'July',
         month: 7,
         year: 2023,
-        id: 7_2023
+        id: '7_2023'
       },
       {
         label: 'August',
         month: 8,
         year: 2023,
-        id: 8_2023
+        id: '8_2023'
       },
       {
         label: 'September',
         month: 9,
         year: 2023,
-        id: 9_2023
+        id: '9_2023'
       },
       {
         label: 'October',
         month: 10,
         year: 2023,
-        id: 10_2023
+        id: '10_2023'
       },
       {
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -570,14 +657,37 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x58e6c7ab55aa9012eacca16d1ed4c15795669e1c',
         chainId: 1,
         isSafe: true,
-        order: 1
+        order: 1,
+        since: '1_2023'
       },
       {
         address: '0x54e191B01aA9C1F61AA5C3BCe8d00956F32D3E71',
         chainId: 100,
         isSafe: true,
-        order: 2
-      }
+        order: 2,
+        since: '1_2023'
+      },
+      {
+        address: '0xFD322Dd727419D1e437686Ba11ED562F8A8Ad573',
+        chainId: 42161,
+        isSafe: true,
+        order: 3,
+        since: '1_2024'
+      },
+      {
+        address: '0x568240DefD76d42fcf6a3347ba4f5B0ABDC4a11A',
+        chainId: 1,
+        isSafe: true,
+        order: 4,
+        since: '1_2024'
+      },
+      {
+        address: '0x6CF63938f2CD5DFEBbDE0010bb640ed7Fa679693',
+        chainId: 1,
+        isSafe: true,
+        order: 5,
+        since: '1_2024'
+      },
     ],
     defaultCurrency: 'USD' as Currency,
     currenciesAllowed: ['USD', 'ETH'] as Currency[],
@@ -586,43 +696,49 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'July',
         month: 7,
         year: 2023,
-        id: 7_2023
+        id: '7_2023'
       },
       {
         label: 'August',
         month: 8,
         year: 2023,
-        id: 8_2023
+        id: '8_2023'
       },
       {
         label: 'September',
         month: 9,
         year: 2023,
-        id: 9_2023
+        id: '9_2023'
       },
       {
         label: 'October',
         month: 10,
         year: 2023,
-        id: 10_2023
+        id: '10_2023'
       },
       {
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -648,7 +764,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
         isSafe: false,
-        order: 1
+        order: 1,
+        since: '1_2023'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -658,43 +775,49 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'July',
         month: 7,
         year: 2023,
-        id: 7_2023
+        id: '7_2023'
       },
       {
         label: 'August',
         month: 8,
         year: 2023,
-        id: 8_2023
+        id: '8_2023'
       },
       {
         label: 'September',
         month: 9,
         year: 2023,
-        id: 9_2023
+        id: '9_2023'
       },
       {
         label: 'October',
         month: 10,
         year: 2023,
-        id: 10_2023
+        id: '10_2023'
       },
       {
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -719,7 +842,8 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x3e40d73eb977dc6a537af587d48316fee66e9c8c',
         chainId: 1,
         isSafe: false,
-        order: 1
+        order: 1,
+        since: '7_2023'
       }
     ],
     defaultCurrency: 'ETH' as Currency,
@@ -729,19 +853,25 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'November',
         month: 11,
         year: 2023,
-        id: 11_2023
+        id: '11_2023'
       },
       {
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   },
@@ -766,61 +896,71 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         address: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
         chainId: 1,
         isSafe: false,
-        order: 2
+        order: 2,
+        since: '12_2023'
       },
       {
         address: '0x25f2226b597e8f9514b3f68f00f494cf4f286491',
         chainId: 1,
         isSafe: false,
-        order: 1
+        order: 1,
+        since: '12_2023'
       },
       {
         address: '0x205e795336610f5131be52f09218af19f0f3ec60',
         chainId: 1,
         isSafe: true,
-        order: 3
+        order: 3,
+        since: '12_2023'
       },
       {
         address: '0x3e652e97ff339b73421f824f5b03d75b62f1fb51',
         chainId: 100,
         isSafe: false,
-        order: 10
+        order: 10,
+        since: '12_2023'
       },
       {
         address: '0x053d55f9b5af8694c503eb288a1b7e552f590710',
         chainId: 42161,
         isSafe: false,
-        order: 6
+        order: 6,
+        since: '12_2023'
       },
       {
         address: '0xb2289e329d2f85f1ed31adbb30ea345278f21bcf',
         chainId: 10,
         isSafe: false,
-        order: 7
+        order: 7,
+        since: '12_2023'
       },
       {
         address: '0xe8599f3cc5d38a9ad6f3684cd5cea72f10dbc383',
         chainId: 137,
         isSafe: false,
-        order: 5
+        order: 5,
+        since: '12_2023'
       },
       {
         address: '0x5ba7fd868c40c16f7adfae6cf87121e13fc2f7a0',
         chainId: 43114,
         isSafe: false,
-        order: 4
+        order: 4,
+        since: '12_2023'
       },
       {
         address: '0xba9424d650a4f5c80a0da641254d1acce2a37057',
         chainId: 8453,
         isSafe: false,
-        order: 9
+        order: 9,
+        since: '12_2023'
       },
       {
         address: '0xb5b64c7e00374e766272f8b442cd261412d4b118',
         chainId: 1088,
         isSafe: false,
-        order: 8
+        order: 8,
+        since: '12_2023'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -830,13 +970,19 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         label: 'December',
         month: 12,
         year: 2023,
-        id: 12_2023
+        id: '12_2023'
       },
       {
         label: 'January',
         month: 1,
         year: 2024,
-        id: 1_2024
+        id: '1_2024'
+      },
+      {
+        label: 'February',
+        month: 2,
+        year: 2024,
+        id: '2_2024'
       }
     ]
   }
