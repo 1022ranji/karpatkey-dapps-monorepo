@@ -1,90 +1,16 @@
 import React from 'react'
-import { styled } from '@mui/material/styles'
-import { Menu, PNG as Logo, BoxWrapperColumn, MenuMobile } from 'src/components'
+import { PNG as Logo, BoxWrapperColumn } from 'components/index'
 import { Box, IconButton, ListItemButton, Slide } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Modal, StyledBackdrop, ModalContent, LinkStyled } from '../Common'
-import { isYearAndMonthValid } from 'src/utils/params'
-import { Section } from 'components/layout/report/Sidebar'
-import { slugify } from 'src/utils'
+import { isYearAndMonthValid } from '../../../../utils/params'
+import { Section } from 'components/layout/report/desktop/Sidebar'
+import { slugify } from '../../../../utils'
 import { useRouter } from 'next/router'
-import { AnimatePresenceWrapper } from 'src/components'
+import { AnimatePresenceWrapper } from 'components/index'
+import { Modal, StyledBackdrop, ModalContent, LinkStyled, Wrapper } from '../../Common'
+import { Menu } from 'components/filters/Menu'
 
-export const HEADER_HEIGHT = 100
-
-const NavbarLogoLeftContainer = styled(Box)(() => ({
-  justifyContent: 'space-between',
-  width: '100%',
-  zIndex: 1302,
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: '#eeeded',
-  borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
-}))
-
-const NavbarLeft = styled(Box)(() => ({
-  zIndex: 1301,
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  backgroundColor: '#eeeded',
-  display: 'flex',
-  alignItems: 'center',
-  height: '100%'
-}))
-
-const Container = styled(Box)(() => ({
-  backgroundColor: 'transparent',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  width: '100%'
-}))
-
-const NavbarWrapper = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%'
-}))
-
-interface WrapperProps {
-  children: React.ReactNode
-  sx?: any
-}
-
-const Wrapper = (props: WrapperProps) => {
-  return (
-    <NavbarLogoLeftContainer
-      sx={{
-        display: 'flex',
-        paddingRight: {
-          xs: '20px',
-          md: '26px'
-        },
-        paddingLeft: {
-          xs: '20px',
-          md: '26px'
-        },
-        height: {
-          xs: '80px',
-          md: HEADER_HEIGHT
-        },
-        flex: {
-          xs: `0 0 80px`,
-          md: `0 0 ${HEADER_HEIGHT}px` /* flex-grow, flex-shrink, flex-basis */
-        },
-        ...(props?.sx ?? {})
-      }}
-    >
-      <NavbarLeft className={`header`} sx={{ width: '100%' }}>
-        <Container>
-          <AnimatePresenceWrapper>
-            <NavbarWrapper>{props.children}</NavbarWrapper>
-          </AnimatePresenceWrapper>
-        </Container>
-      </NavbarLeft>
-    </NavbarLogoLeftContainer>
-  )
-}
+export const HEADER_HEIGHT = 88
 
 export const Header = () => {
   const router = useRouter()
@@ -106,7 +32,7 @@ export const Header = () => {
   }
 
   return (
-    <>
+    <AnimatePresenceWrapper>
       <Wrapper>
         <Logo />
         <Menu />
@@ -125,17 +51,6 @@ export const Header = () => {
         >
           <MenuIcon />
         </IconButton>
-      </Wrapper>
-      <Wrapper
-        sx={{
-          display: {
-            xs: 'flex',
-            md: 'none'
-          },
-          zIndex: 1
-        }}
-      >
-        <MenuMobile />
       </Wrapper>
       <Modal
         aria-labelledby="unstyled-modal-title"
@@ -174,6 +89,6 @@ export const Header = () => {
           </ModalContent>
         </Slide>
       </Modal>
-    </>
+    </AnimatePresenceWrapper>
   )
 }

@@ -37,3 +37,11 @@ path:focus {
   width: fit-content;
   height: fit-content;
 }
+
+.custom-slider-address {
+  height: 48px;
+}
+
+.custom-slider-charts {
+  height: 280px;
+}

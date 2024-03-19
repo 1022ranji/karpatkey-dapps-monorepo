@@ -1,13 +1,13 @@
 import React from 'react'
-import { BoxWrapperRow, CustomTypography } from 'src/components'
+import { BoxWrapperRow, CustomTypography } from 'components/index'
 import { Box } from '@mui/material'
-import { FilterIcon, ShareIcon } from 'src/components/icons'
+import { FilterIcon, ShareIcon } from 'components/icons'
 import Image from 'next/image'
 import { useApp } from 'src/contexts/app.context'
 import { FILTER_DAO } from 'src/config/constants'
 import { getDAO, getMonthName } from 'src/utils'
 
-export const MenuMobile = () => {
+export const Menu = () => {
   const { state } = useApp()
 
   const { DAO: filterDAO, month } = state
@@ -27,18 +27,22 @@ export const MenuMobile = () => {
     <BoxWrapperRow
       sx={{
         justifyContent: 'space-between',
-        height: '66px',
         width: '100%',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        height: '80px',
+        borderBottom: '2px solid #E0E0E0',
+        borderTop: '2px solid #E0E0E0',
+        marginTop: '20px'
       }}
     >
       <Box
         gap={1}
         sx={{
-          width: '30%',
+          width: '25%',
           paddingRight: '10px',
           paddingLeft: '10px',
-          borderLeft: '1px solid #E0E0E0',
+          paddingTop: '10px',
+          paddingBottom: '10px',
           height: '100%',
           display: 'flex',
           justifyContent: 'center',
@@ -63,7 +67,9 @@ export const MenuMobile = () => {
           width: '25%',
           paddingRight: '10px',
           paddingLeft: '10px',
-          borderLeft: '1px solid #E0E0E0',
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          borderLeft: '2px solid #E0E0E0',
           height: '100%',
           display: 'flex',
           justifyContent: 'center',
@@ -75,10 +81,12 @@ export const MenuMobile = () => {
       </Box>
       <Box
         sx={{
-          width: '15%',
+          width: '25%',
           paddingRight: '10px',
           paddingLeft: '10px',
-          borderLeft: '1px solid #E0E0E0',
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          borderLeft: '2px solid #E0E0E0',
           height: '100%',
           display: 'flex',
           justifyContent: 'center',
@@ -100,8 +108,12 @@ export const MenuMobile = () => {
       </Box>
       <Box
         sx={{
-          width: '15%',
-          borderLeft: '1px solid #E0E0E0',
+          width: '25%',
+          paddingRight: '10px',
+          paddingLeft: '10px',
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          borderLeft: '2px solid #E0E0E0',
           height: '100%',
           display: 'flex',
           justifyContent: 'center',
@@ -112,8 +124,12 @@ export const MenuMobile = () => {
       </Box>
       <Box
         sx={{
-          width: '15%',
-          borderLeft: '1px solid #E0E0E0',
+          width: '25%',
+          paddingRight: '10px',
+          paddingLeft: '10px',
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          borderLeft: '2px solid #E0E0E0',
           height: '100%',
           display: 'flex',
           justifyContent: 'center',

@@ -156,7 +156,8 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         display: 'flex',
         justifyContent: 'center',
         height: `${height}px`,
-        width: `${width}px`
+        width: `${width}px`,
+        alignItems: { xs: 'center', sm: 'center', md: 'flex-start' }
       }}
     >
       {titleMessage ? <PieChartTitle title={titleMessage} /> : null}

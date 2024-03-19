@@ -1,17 +1,12 @@
 import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format'
-import {
-  CustomTypography,
-  PieChart,
-  InfoCard,
-  BoxWrapperColumn,
-  AnimatePresenceWrapper
-} from 'src/components'
+import { CustomTypography, PieChart, InfoCard, BoxWrapperColumn } from 'src/components'
 import * as React from 'react'
 import { Box, Theme } from '@mui/material'
 import { getDAO } from 'src/utils'
 import { isYearAndMonthValid } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { Carousel } from 'components/Carousel'
 
 interface SummaryProps {
   dao: Maybe<number>
@@ -62,11 +57,11 @@ export const Summary = (props: SummaryProps) => {
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
-    <AnimatePresenceWrapper>
+    <>
       <BoxWrapperColumn
         sx={{
           margin: {
-            xs: '20px 20px 20px 20px',
+            xs: '20px 10px 20px 10px',
             md: '30px 30px 30px 30px'
           }
         }}
@@ -82,7 +77,9 @@ export const Summary = (props: SummaryProps) => {
               md: 'center'
             },
             gap: { xs: 5, md: 10 },
-            flexDirection: { xs: 'column', md: 'row' }
+            flexDirection: 'row',
+            borderBottom: { xs: '2px solid #E0E0E0', md: 'none' },
+            paddingBottom: { xs: 3, md: 0 }
           }}
         >
           <InfoCard
@@ -119,70 +116,127 @@ export const Summary = (props: SummaryProps) => {
             }
           />
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            gap: isMD ? 2 : 10,
-            ...(isMD ? { flexWrap: 'wrap' } : { width: '100%', overflowX: 'auto' })
-          }}
-        >
-          <PieChart
-            titleMessage="Total funds by token category"
-            data={fundsByTokenCategory.map((item) => {
-              return {
-                name: item.label,
-                y: item.allocation,
-                color: item.color
-              }
-            })}
-            width={isMD ? 440 : 310}
-            height={isMD ? 400 : 300}
-            {...(negativeTotalValue
-              ? {
-                  footerMessage: (
-                    <CustomTypography
-                      variant={'body2'}
-                      color="textSecondary"
-                      sx={{
-                        fontFamily: 'IBM Plex Sans',
-                        fontSize: 12,
-                        fontStyle: 'italic',
-                        textAlign: 'center'
-                      }}
-                    >
-                      Negative balance due to loan debt ={' '}
-                      {formatCurrency(negativeTotalValue?.Total)}
-                    </CustomTypography>
-                  )
+        {isMD ? (
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            <PieChart
+              titleMessage="Total funds by token category"
+              data={fundsByTokenCategory.map((item) => {
+                return {
+                  name: item.label,
+                  y: item.allocation,
+                  color: item.color
                 }
-              : {})}
-          />
-          <PieChart
-            titleMessage="Total funds by blockchain"
-            data={fundsByBlockchain.map((item) => {
-              return {
-                name: item.label,
-                y: item.allocation,
-                color: item.color
-              }
-            })}
-            width={isMD ? 440 : 310}
-            height={isMD ? 400 : 300}
-          />
-          <PieChart
-            titleMessage="Total funds by type"
-            data={fundsByType.map((item) => {
-              return {
-                name: item.label,
-                y: item.allocation,
-                color: item.color
-              }
-            })}
-            width={isMD ? 440 : 310}
-            height={isMD ? 400 : 300}
-          />
-        </Box>
+              })}
+              width={isMD ? 440 : 310}
+              height={isMD ? 400 : 300}
+              {...(negativeTotalValue
+                ? {
+                    footerMessage: (
+                      <CustomTypography
+                        variant={'body2'}
+                        color="textSecondary"
+                        sx={{
+                          fontFamily: 'IBM Plex Sans',
+                          fontSize: 12,
+                          fontStyle: 'italic',
+                          textAlign: 'center'
+                        }}
+                      >
+                        Negative balance due to loan debt ={' '}
+                        {formatCurrency(negativeTotalValue?.Total)}
+                      </CustomTypography>
+                    )
+                  }
+                : {})}
+            />
+            <PieChart
+              titleMessage="Total funds by blockchain"
+              data={fundsByBlockchain.map((item) => {
+                return {
+                  name: item.label,
+                  y: item.allocation,
+                  color: item.color
+                }
+              })}
+              width={isMD ? 440 : 310}
+              height={isMD ? 400 : 300}
+            />
+            <PieChart
+              titleMessage="Total funds by type"
+              data={fundsByType.map((item) => {
+                return {
+                  name: item.label,
+                  y: item.allocation,
+                  color: item.color
+                }
+              })}
+              width={isMD ? 440 : 310}
+              height={isMD ? 400 : 300}
+            />
+          </Box>
+        ) : null}
       </BoxWrapperColumn>
-    </AnimatePresenceWrapper>
+      {!isMD ? (
+        <Box sx={{ paddingRight: '20px', paddingLeft: '20px' }}>
+          <Carousel className="custom-slider-charts">
+            <PieChart
+              titleMessage="Total funds by token category"
+              data={fundsByTokenCategory.map((item) => {
+                return {
+                  name: item.label,
+                  y: item.allocation,
+                  color: item.color
+                }
+              })}
+              width={isMD ? 440 : 310}
+              height={isMD ? 400 : 300}
+              {...(negativeTotalValue
+                ? {
+                    footerMessage: (
+                      <CustomTypography
+                        variant={'body2'}
+                        color="textSecondary"
+                        sx={{
+                          fontFamily: 'IBM Plex Sans',
+                          fontSize: 12,
+                          fontStyle: 'italic',
+                          textAlign: 'center'
+                        }}
+                      >
+                        Negative balance due to loan debt ={' '}
+                        {formatCurrency(negativeTotalValue?.Total)}
+                      </CustomTypography>
+                    )
+                  }
+                : {})}
+            />
+            <PieChart
+              titleMessage="Total funds by blockchain"
+              data={fundsByBlockchain.map((item) => {
+                return {
+                  name: item.label,
+                  y: item.allocation,
+                  color: item.color
+                }
+              })}
+              width={isMD ? 440 : 310}
+              height={isMD ? 400 : 300}
+            />
+            <PieChart
+              titleMessage="Total funds by type"
+              data={fundsByType.map((item) => {
+                return {
+                  name: item.label,
+                  y: item.allocation,
+                  color: item.color
+                }
+              })}
+              width={isMD ? 440 : 310}
+              height={isMD ? 400 : 300}
+            />
+          </Carousel>
+        </Box>
+      ) : null}
+    </>
   )
 }

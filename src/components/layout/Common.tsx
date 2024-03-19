@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import { css, Link, styled } from '@mui/material'
+import { Box, css, Link, styled } from '@mui/material'
 import { Modal as BaseModal } from '@mui/base/Modal'
 
 const Backdrop = React.forwardRef<HTMLDivElement, { open?: boolean; className: string }>(
@@ -56,3 +56,104 @@ export const LinkStyled = styled(Link)(() => ({
     color: 'rgba(26, 27, 31, 0.6)'
   }
 }))
+
+export const NavbarContainer = styled(Box)(() => ({
+  justifyContent: 'center',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  display: 'flex',
+  zIndex: 1302
+}))
+
+interface NavbarProps {
+  height?: number // Making height optional
+}
+export const Navbar = styled(Box)<NavbarProps>`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1301;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 20px;
+  height: ${(props) =>
+    props.height
+      ? `${props.height}px`
+      : '60px'}; /* Using a default value of 60px if height is not provided */
+  background-color: #eeeded;
+  '&.hide': {
+    position: fixed;
+    top: ${(props) =>
+      props.height
+        ? `-${props.height}px`
+        : '-60px'}; /* Using a default value of -60px if height is not provided */
+    transition: 0.3s linear;
+    z-index: 1301;
+  }
+  '&.show , &.down': {
+    position: fixed;
+    top: 0;
+    transition: 0.3s linear;
+    z-index: 1301;
+  }
+`
+
+export const NavbarWrapper = styled(Box)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between'
+}))
+
+interface WrapperProps {
+  children: React.ReactNode
+  sx?: any
+  sxNavBar?: any
+  height?: number
+}
+
+export const Wrapper = (props: WrapperProps) => {
+  const [show, setShow] = React.useState(true)
+  const [lastScrollY, setLastScrollY] = React.useState(0)
+
+  const controlNavbar = () => {
+    if (window.scrollY > lastScrollY) {
+      // if scroll down hide the navbar
+      setShow(false)
+    } else {
+      // if scroll up show the navbar
+      setShow(true)
+    }
+
+    // remember current page location to use in the next move
+    setLastScrollY(window.scrollY)
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', controlNavbar)
+
+    // cleanup function
+    return () => {
+      window.removeEventListener('scroll', controlNavbar)
+    }
+  }, [lastScrollY])
+
+  return (
+    <NavbarContainer sx={{ ...props.sx }}>
+      <Navbar
+        className={`header ${show ? 'show' : 'hide'}`}
+        height={props?.height}
+        sx={{
+          display: 'block',
+          width: '100%',
+          colorBackground: 'background.default',
+          ...(props?.sxNavBar ?? {})
+        }}
+      >
+        <NavbarWrapper>{props.children}</NavbarWrapper>
+      </Navbar>
+    </NavbarContainer>
+  )
+}

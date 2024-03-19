@@ -12,6 +12,7 @@ import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
 import { Box, Theme } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { Carousel } from 'components/Carousel'
 
 export const Hero = () => {
   const { state } = useApp()
@@ -36,7 +37,7 @@ export const Hero = () => {
       <BoxWrapperColumn
         sx={{
           margin: {
-            xs: '20px 20px 0 20px',
+            xs: '20px 10px 0 10px',
             md: '30px 30px 30px 30px'
           },
           alignItems: 'flex-start',
@@ -87,24 +88,44 @@ export const Hero = () => {
             </CustomTypography>
           </BoxWrapperColumn>
         </BoxWrapperRow>
-        <BoxWrapperRow
+        {isMD ? (
+          <BoxWrapperRow
+            sx={{
+              justifyContent: 'flex-start',
+              gap: 2,
+              paddingBottom: '20px',
+              flexWrap: 'wrap'
+            }}
+          >
+            {dao?.addresses
+              // sort by item order
+              .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
+              .map((daoAddress: DAO_ADDRESS, index: number) => (
+                <ButtonAddress key={index} daoAddress={daoAddress} />
+              ))}
+          </BoxWrapperRow>
+        ) : null}
+      </BoxWrapperColumn>
+      {!isMD ? (
+        <Box
           sx={{
-            justifyContent: 'flex-start',
-            gap: 2,
-            paddingBottom: '20px',
-            ...(isMD
-              ? { flexWrap: 'wrap' }
-              : { width: 'fit-content', maxWidth: '100%', overflowX: 'auto' })
+            paddingRight: '20px',
+            paddingLeft: '20px',
+            borderBottom: { xs: '2px solid #E0E0E0', md: 'none' }
           }}
         >
-          {dao?.addresses
-            // sort by item order
-            .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
-            .map((daoAddress: DAO_ADDRESS, index: number) => (
-              <ButtonAddress key={index} daoAddress={daoAddress} />
-            ))}
-        </BoxWrapperRow>
-      </BoxWrapperColumn>
+          <Carousel className="custom-slider-address">
+            {dao?.addresses
+              // sort by item order
+              .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
+              .map((daoAddress: DAO_ADDRESS, index: number) => (
+                <Box sx={{ paddingX: '10px' }} key={index}>
+                  <ButtonAddress daoAddress={daoAddress} />
+                </Box>
+              ))}
+          </Carousel>
+        </Box>
+      ) : null}
     </AnimatePresenceWrapper>
   )
 }

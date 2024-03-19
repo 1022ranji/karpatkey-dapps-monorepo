@@ -1,37 +1,26 @@
-import { Header as DashboardHeader } from './dashboard/Header'
+import { Wrapper as DashboardWrapper } from './dashboard/Wrapper'
 import { Body as DashboardBody } from './dashboard/Body'
+import { Header as DashboardHeader } from './dashboard/Header'
 
-import { Header as ReportHeader, HEADER_HEIGHT } from './report/Header'
-import { Body as ReportBody } from './report/Body'
-import { Sidebar as ReportSidebar } from './report/Sidebar'
+import { Wrapper as ReportMobileWrapper } from './report/mobile/Wrapper'
+import { Body as ReportMobileBody } from './report/mobile/Body'
+import { Header as ReportMobileHeader } from './report/mobile/Header'
+
+import { Wrapper as ReportDesktopWrapper } from './report/desktop/Wrapper'
+import { Body as ReportDesktopBody } from './report/desktop/Body'
+import { Header as ReportDesktopHeader } from './report/desktop/Header'
+import { Sidebar as ReportDesktopSidebar } from './report/desktop/Sidebar'
 
 import { Footer as CommonFooter } from './Footer'
 
-import { Box } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { Theme } from '@mui/material'
 import React, { ReactElement } from 'react'
-import { BoxWrapperColumn } from 'src/components'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { ReportDesktopBodyWrapper } from 'components/layout/report/desktop/BodyWrapper'
 
 interface LayoutProps {
   children: React.ReactElement
 }
-
-const DashboardWrapper = styled(BoxWrapperColumn)(() => ({
-  height: '100vh',
-  width: '100vw'
-}))
-
-const ReportWrapper = styled(BoxWrapperColumn)(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100vh',
-  margin: '0'
-}))
-
-const ReportBodyWrapper = styled(Box)(() => ({
-  display: `flex`,
-  height: `calc(100vh - ${HEADER_HEIGHT}px)`
-}))
 
 export const Layout = ({ children }: LayoutProps): ReactElement => {
   const queryParams = new URLSearchParams(window.location.search)
@@ -40,15 +29,23 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
   const monthParam = queryParams.get('month')
 
   const isSidebarVisible = !!(daoParam && yearParam && monthParam)
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return isSidebarVisible ? (
-    <ReportWrapper>
-      <ReportHeader />
-      <ReportBodyWrapper>
-        <ReportSidebar />
-        <ReportBody component="main">{children}</ReportBody>
-      </ReportBodyWrapper>
-    </ReportWrapper>
+    isMD ? (
+      <ReportDesktopWrapper>
+        <ReportDesktopHeader />
+        <ReportDesktopBodyWrapper>
+          <ReportDesktopSidebar />
+          <ReportDesktopBody component="main">{children}</ReportDesktopBody>
+        </ReportDesktopBodyWrapper>
+      </ReportDesktopWrapper>
+    ) : (
+      <ReportMobileWrapper>
+        <ReportMobileHeader />
+        <ReportMobileBody component="main">{children}</ReportMobileBody>
+      </ReportMobileWrapper>
+    )
   ) : (
     <DashboardWrapper>
       <DashboardHeader />

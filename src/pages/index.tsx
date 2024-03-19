@@ -111,7 +111,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       ...dashboard,
       report,
       currency: currenciesAllowed?.[0] ?? Currency.USD,
-      ...params
+      month: month ? +month : null,
+      year: year ? +year : null,
+      dao: dao ? +dao : null
     }
 
     return { props }

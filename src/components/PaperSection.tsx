@@ -1,7 +1,7 @@
 import InfoIcon from '@mui/icons-material/Info'
 import { Divider, Tooltip } from '@mui/material'
 import * as React from 'react'
-import { Section } from './layout/report/Sidebar'
+import { Section } from './layout/report/desktop/Sidebar'
 import { CustomTypography, Paper, BoxWrapperRow, BoxWrapperColumn } from 'src/components'
 import { slugify } from 'src/utils'
 
@@ -19,7 +19,13 @@ export const PaperSection = (props: PaperSectionProps) => {
   return (
     <Paper className={'scrollable'} {...(id ? { id: slugify(id) } : {})}>
       <Divider />
-      <BoxWrapperColumn sx={{ marginX: { xs: '20px', md: '30px' }, marginY: '30px' }} gap={3}>
+      <BoxWrapperColumn
+        sx={{
+          marginX: { xs: '10px', md: '30px' },
+          marginY: { xs: '20px', md: '30px' },
+          gap: { xs: 1, md: 3 }
+        }}
+      >
         {title ? (
           <BoxWrapperRow
             gap={2}
