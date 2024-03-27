@@ -25,7 +25,8 @@ const getDAOResume = async ({
   financialMetrics,
   DAO_ID,
   month,
-  year
+  year,
+  currency
 }: any) => {
   const totalFunds = getTotalFunds(variationMetricsDetail)
   const allocatedFunds = getCapitalUtilization(financialMetrics)
@@ -36,7 +37,7 @@ const getDAOResume = async ({
 
   const APY = getGlobalROI(financialMetricAndVarDetail)
 
-  const urlToReport = `?dao=${DAO_ID}&month=${month}&year=${year}`
+  const urlToReport = `?dao=${DAO_ID}&month=${month}&year=${year}&currency=${currency}`
 
   const shouldBeETH = FILTER_DAOS.find(
     (DAO: FILTER_DAO) => DAO.id === DAO_ID
@@ -61,6 +62,7 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
     shouldBeIncludedDashboardTwo,
     shouldBeIncludedNCAum,
     shouldBeIncludedLastMonthDeFiResults,
+    currenciesAllowed,
     isEnabled
   }: FILTER_DAO) => {
     const variationMetricsDetail = await dataWarehouse.getTreasuryVariationMetricsDetail(
@@ -89,7 +91,8 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
       financialMetrics,
       DAO_ID,
       month,
-      year
+      year,
+      currency: currenciesAllowed?.[0] ?? 'USD'
     })
     return {
       name,
