@@ -110,7 +110,8 @@ const TableOperations = (props: TableResultsProps) => {
                               xs: '11px',
                               md: '16px'
                             },
-                            fontWeight: '400 !important'
+                            fontWeight: '400 !important',
+                            fontStyle: 'italic'
                           }}
                         >
                           {row?.blockchain}

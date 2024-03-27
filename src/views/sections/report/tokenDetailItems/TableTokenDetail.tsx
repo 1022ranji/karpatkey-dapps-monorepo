@@ -115,6 +115,21 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                   }
                 }
 
+                const blockchains = row.blockchain.split('|')
+
+                let blockchainFilter = blockchains.reduce(
+                  (acc: string, item: string, index: number) => {
+                    if (index % 2 === 0) {
+                      acc += `${item} | `
+                    } else {
+                      acc += `${item} | \n`
+                    }
+                    return acc
+                  },
+                  ''
+                )
+                blockchainFilter = blockchainFilter.slice(0, -3)
+
                 return (
                   <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
                     <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="left">
@@ -139,25 +154,12 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                               xs: '11px',
                               md: '16px'
                             },
-                            fontWeight: '400 !important'
+                            fontWeight: '400 !important',
+                            fontStyle: 'italic'
                           }}
                         >
-                          {row.blockchain.split('|').slice(0, 5).join('|')}
+                          {blockchainFilter}
                         </CustomTypography>
-                        {row.blockchain.split('|').length > 5 ? (
-                          <CustomTypography
-                            variant="tableCellSubData"
-                            sx={{
-                              fontSize: {
-                                xs: '11px',
-                                md: '16px'
-                              },
-                              fontWeight: '400 !important'
-                            }}
-                          >
-                            {row.blockchain.split('|').slice(5).join('|')}
-                          </CustomTypography>
-                        ) : null}
                       </BoxWrapperColumn>
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
