@@ -105,7 +105,12 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const params = { dao, month, year, currency } as Filter
 
   // should come all parameters
-  if (Object.values(params).some((value) => value === null) && Object.values(params).length > 0) {
+  console.log(
+    Object.values(params).some((value) => value === null),
+    Object.values(params).filter((value) => value !== null).length > 0
+  )
+  const paramsNotNull = Object.values(params).filter((value) => value !== null).length
+  if (paramsNotNull !== 4 && paramsNotNull !== 0) {
     return {
       redirect: {
         permanent: false,
