@@ -22,11 +22,13 @@
 # debug
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+yarn-error.log
 .pnpm-debug.log*
 
 # local env files
 .env*.local
+.env
+.env.local
 
 # vercel
 .vercel
@@ -40,7 +42,6 @@ yarn-error.log*
 tsconfig.tsbuildinfo
 google-credentials.json
 
-.env.local
 
 github
 github.pub

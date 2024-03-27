@@ -1,0 +1,59 @@
+html {
+  scroll-behavior: smooth !important;
+}
+
+.scrollable {
+  scroll-margin-top: 100px;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -250px;
+  visibility: hidden;
+}
+
+g:focus,
+g:active {
+  outline: none !important;
+}
+
+path:focus {
+  outline: none !important;
+}
+
+.highcharts-data-label {
+  word-wrap: break-word;
+  white-space: pre-wrap !important;
+}
+
+.highcharts-tooltip > span {
+  background-color: #eeeded;
+  border: 1px solid silver;
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px #888;
+  padding: 8px;
+  z-index: 9999 !important;
+  width: fit-content;
+  height: fit-content;
+}
+
+.custom-slider-address {
+  height: 48px;
+}
+
+.custom-slider-charts {
+  height: 280px;
+}
+
+.custom-slider-cards > .slick-slide {
+  padding: 0 10px;
+}
+
+.slick-list {
+  mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -moz-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -ms-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -o-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+}
