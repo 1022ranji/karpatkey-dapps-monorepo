@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import './loadEnv'
-import { DataWarehouse } from 'src/services/classes/dataWarehouse.class'
-import Cache from 'src/services/classes/cache.class'
-import { getLatestMonthAndYearInCommonForEveryDAO } from 'src/utils'
-import { FILTER_DAO, FILTER_DAOS } from 'src/config/constants'
+import { DataWarehouse } from '../services/classes/dataWarehouse.class'
+import Cache from '../services/classes/cache.class'
+import { getLatestMonthAndYearInCommonForEveryDAO } from '../utils'
+import { FILTER_DAO, FILTER_DAOS } from '../config/constants'
 import {
   getCapitalUtilization,
   getFarmingResults,
   getGlobalROI,
   getTotalFunds
-} from 'src/utils/mappers/summary'
+} from '../utils/mappers/summary'
 
 const dataWarehouse = DataWarehouse.getInstance()
 

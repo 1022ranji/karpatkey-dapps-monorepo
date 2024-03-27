@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import './loadEnv'
-import { DataWarehouse } from 'src/services/classes/dataWarehouse.class'
-import Cache from 'src/services/classes/cache.class'
-import { FILTER_DAO, FILTER_DAOS } from 'src/config/constants'
-import { summaryData } from 'src/utils/mappers/summary'
-import { balanceOverviewData } from 'src/utils/mappers/balanceOverview'
-import { treasuryVariationData } from 'src/utils/mappers/treasuryVariation'
-import { farmingFundsData } from 'src/utils/mappers/farmingFunds'
-import { tokenDetailsData } from 'src/utils/mappers/tokenDetails'
+import { DataWarehouse } from '../services/classes/dataWarehouse.class'
+import Cache from '../services/classes/cache.class'
+import { FILTER_DAO, FILTER_DAOS } from '../config/constants'
+import { summaryData } from '../utils/mappers/summary'
+import { balanceOverviewData } from '../utils/mappers/balanceOverview'
+import { treasuryVariationData } from '../utils/mappers/treasuryVariation'
+import { farmingFundsData } from '../utils/mappers/farmingFunds'
+import { tokenDetailsData } from '../utils/mappers/tokenDetails'
 
 const dataWarehouse = DataWarehouse.getInstance()
 const metricPeriodType = 'month'
