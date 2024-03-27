@@ -76,10 +76,9 @@ export const Menu = () => {
   const onSubmitClose = (data: SubmitValues) => {
     const dao = data?.DAO
     const yearMonth = (data?.yearMonth ?? '') + ''
-    const currency = data?.currency
     const [year, month] = yearMonth.split('-')
 
-    if (month === undefined || dao === undefined || year === undefined || currency === undefined) {
+    if (month === undefined || dao === undefined || year === undefined) {
       return
     }
     const query = new URLSearchParams()
