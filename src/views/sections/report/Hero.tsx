@@ -33,6 +33,18 @@ export const Hero = () => {
     return null
   }
 
+  const daoAddresses =
+    dao?.addresses
+      // sort by item order
+      .filter((address) => {
+        const [monthSince, yearSince] = address.since.split('_')
+        //check if the monthSince and yearSince is less than or equal to the current month and year
+        const d1 = moment(`${monthSince}/${yearSince}`, 'MM/YYYY')
+        const d2 = moment(`${month}/${year}`, 'MM/YYYY')
+
+        return d1.isSameOrBefore(d2)
+      }) ?? []
+
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn
@@ -90,7 +102,7 @@ export const Hero = () => {
             </CustomTypography>
           </BoxWrapperColumn>
         </BoxWrapperRow>
-        {isMD || dao?.addresses.length <= 2 ? (
+        {isMD || daoAddresses.length <= 2 ? (
           <BoxWrapperRow
             sx={{
               justifyContent: 'flex-start',
@@ -99,16 +111,7 @@ export const Hero = () => {
               flexWrap: 'wrap'
             }}
           >
-            {dao?.addresses
-              // sort by item order
-              .filter((address) => {
-                const [monthSince, yearSince] = address.since.split('_')
-                //check if the monthSince and yearSince is less than or equal to the current month and year
-                const d1 = moment(`${monthSince}/${yearSince}`, 'MM/YYYY')
-                const d2 = moment(`${month}/${year}`, 'MM/YYYY')
-
-                return d1.isSameOrBefore(d2)
-              })
+            {daoAddresses
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
                 <ButtonAddress key={index} daoAddress={daoAddress} />
@@ -116,7 +119,7 @@ export const Hero = () => {
           </BoxWrapperRow>
         ) : null}
       </BoxWrapperColumn>
-      {!isMD && dao?.addresses.length > 2 ? (
+      {!isMD && daoAddresses.length > 2 ? (
         <Box
           sx={{
             padding: '0 20px 20px 20px',
@@ -124,8 +127,7 @@ export const Hero = () => {
           }}
         >
           <Carousel className="custom-slider-address">
-            {dao?.addresses
-              // sort by item order
+            {daoAddresses
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
                 <Box sx={{ paddingX: '10px' }} key={index}>
