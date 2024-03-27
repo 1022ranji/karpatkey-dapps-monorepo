@@ -18,6 +18,7 @@ import {
   Idle,
   Lido,
   Maker,
+  MU,
   Notional,
   Pods,
   Spark,
@@ -112,6 +113,9 @@ export const ProtocolIcon = (props: ProtocolIconProps) => {
     case 'CoW':
       icon = <CoW width={24} height={24} />
       break
+    case 'CoW AMM':
+      icon = <CoW width={24} height={24} />
+      break
     case 'Notional':
       icon = <Notional width={24} height={24} />
       break
@@ -126,6 +130,9 @@ export const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Spark':
       icon = <Spark width={24} height={24} />
+      break
+    case 'Mu Exchange':
+      icon = <MU width={24} height={24} />
       break
     case 'SushiSwap':
       icon = <SushiSwap width={24} height={24} />

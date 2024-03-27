@@ -13,11 +13,12 @@ import { useApp } from 'src/contexts/app.context'
 import { Box, Theme } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Carousel } from 'components/Carousel'
+import moment from 'moment'
 
 export const Hero = () => {
   const { state } = useApp()
 
-  const { DAO: filterDAO, month } = state
+  const { DAO: filterDAO, month, year } = state
   // check if the screen size is md
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
@@ -100,6 +101,14 @@ export const Hero = () => {
           >
             {dao?.addresses
               // sort by item order
+              .filter((address) => {
+                const [monthSince, yearSince] = address.since.split('_')
+                //check if the monthSince and yearSince is less than or equal to the current month and year
+                const d1 = moment(`${monthSince}/${yearSince}`, 'MM/YYYY')
+                const d2 = moment(`${month}/${year}`, 'MM/YYYY')
+
+                return d1.isSameOrBefore(d2)
+              })
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
                 <ButtonAddress key={index} daoAddress={daoAddress} />
