@@ -4,6 +4,7 @@ export type Filter = {
   dao: Maybe<number>
   month: Maybe<number>
   year: Maybe<number>
+  currency: Maybe<Currency>
 }
 
 export type ReportData = {

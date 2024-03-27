@@ -29,6 +29,7 @@ interface PieChartProps {
   height?: string | number
   innerSize?: string
   outerSize?: string
+  centered?: boolean
 }
 
 export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
@@ -39,7 +40,8 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
     width = 440,
     height = 400,
     innerSize = '40%',
-    outerSize = '65%'
+    outerSize = '65%',
+    centered = false
   } = props
   const chartComponentRef = React.useRef<HighchartsReact.RefObject>(null)
 
@@ -157,7 +159,8 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         justifyContent: 'center',
         height: `${height}px`,
         width: `${width}px`,
-        alignItems: { xs: 'center', sm: 'center', md: 'flex-start' }
+        alignItems: centered ? 'center' : 'flex-start',
+        ...(!isMD && { width: '100%' })
       }}
     >
       {titleMessage ? <PieChartTitle title={titleMessage} /> : null}

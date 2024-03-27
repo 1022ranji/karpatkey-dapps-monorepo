@@ -2,8 +2,32 @@ import { BoxProps, Table, TableBody, TableContainer, TableHead, TableRow } from 
 import Box from '@mui/material/Box'
 import * as React from 'react'
 import { formatCurrency, formatNumber } from 'src/utils/format'
-import { TableCellCustom, TableFooterCellCustom, TableHeadCellCustom } from 'src/components'
+import {
+  CustomTypography,
+  TableCellCustom,
+  TableFooterCellCustom,
+  TableHeadCellCustom
+} from 'src/components'
 import { useApp } from 'src/contexts/app.context'
+import { styled } from '@mui/material/styles'
+
+export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
+  fontFamily: 'IBM Plex Mono',
+  fontStyle: 'normal',
+  fontWeight: '700 !important',
+  color: `custom.black.primary`,
+  textOverflow: 'ellipsis',
+  whiteSpace: 'wrap',
+  overflow: 'hidden',
+  [theme.breakpoints.down('md')]: {
+    fontSize: '11px',
+    lineHeight: '14px'
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '16px',
+    lineHeight: '16px'
+  }
+}))
 
 type TableBlockchainProps = {
   balanceOverviewBlockchain: { funds: number; row: string; column: string }[]
@@ -58,50 +82,20 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
   const columnWidthPercentage = 100 / ((columns?.length ?? 0) + 2) + '%'
 
   return (
-    <TableContainer component={Box}>
-      <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
+    <TableContainer component={Box} sx={{ width: '100%', overflowX: 'auto' }}>
+      <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom
-              sx={{
-                width: columnWidthPercentage,
-                fontSize: {
-                  xs: '12px',
-                  md: '16px'
-                }
-              }}
-              align="left"
-            >
-              Token category
+            <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
+              <CustomTypo>Token category</CustomTypo>
             </TableHeadCellCustom>
             {columns.map((blockchainName: any, index: number) => (
-              <TableHeadCellCustom
-                key={index}
-                sx={{
-                  width: columnWidthPercentage,
-                  paddingLeft: '20px',
-                  paddingRight: '20px',
-                  fontSize: {
-                    xs: '12px',
-                    md: '16px'
-                  }
-                }}
-                align="left"
-              >
-                {blockchainName}
+              <TableHeadCellCustom key={index} sx={{ width: columnWidthPercentage }} align="right">
+                <CustomTypo>{blockchainName}</CustomTypo>
               </TableHeadCellCustom>
             ))}
-            <TableHeadCellCustom
-              sx={{
-                width: columnWidthPercentage,
-                fontSize: {
-                  xs: '12px',
-                  md: '16px'
-                }
-              }}
-              align="left"
-            >
-              Total
+            <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="right">
+              <CustomTypo>Total</CustomTypo>
             </TableHeadCellCustom>
           </TableRow>
         </TableHead>
@@ -110,99 +104,55 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
             const { category, total = 0 } = item
             return (
               <TableRow key={index}>
-                <TableCellCustom
-                  sx={{
-                    width: columnWidthPercentage,
-                    fontSize: {
-                      xs: '12px',
-                      md: '16px'
-                    }
-                  }}
-                  align="left"
-                >
-                  {category}
+                <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
+                  <CustomTypo>{category}</CustomTypo>
                 </TableCellCustom>
                 {columns.map((blockchainName: any, index: number) => {
                   const value = item[blockchainName] ?? 0
                   return (
                     <TableCellCustom
                       key={index}
-                      sx={{
-                        width: columnWidthPercentage,
-                        paddingLeft: '20px',
-                        paddingRight: '20px',
-                        fontSize: {
-                          xs: '12px',
-                          md: '16px'
-                        }
-                      }}
-                      align="left"
+                      sx={{ width: columnWidthPercentage }}
+                      align="right"
                     >
-                      {currency === 'USD' ? formatCurrency(value) : formatNumber(value, 0)}
+                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                        {currency === 'USD' ? formatCurrency(value) : formatNumber(value, 0)}
+                      </CustomTypo>
                     </TableCellCustom>
                   )
                 })}
-                <TableCellCustom
-                  sx={{
-                    width: columnWidthPercentage,
-                    fontSize: {
-                      xs: '12px',
-                      md: '16px'
-                    }
-                  }}
-                  align="left"
-                >
-                  {currency === 'USD' ? formatCurrency(total || 0) : formatNumber(total || 0, 0)}
+                <TableCellCustom sx={{ width: columnWidthPercentage }} align="right">
+                  <CustomTypo>
+                    {currency === 'USD' ? formatCurrency(total || 0) : formatNumber(total || 0, 0)}
+                  </CustomTypo>
                 </TableCellCustom>
               </TableRow>
             )
           })}
           <TableRow>
-            <TableFooterCellCustom
-              sx={{
-                width: columnWidthPercentage,
-                fontSize: {
-                  xs: '12px',
-                  md: '16px'
-                }
-              }}
-              align="left"
-            >
-              Total
+            <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
+              <CustomTypo>Total</CustomTypo>
             </TableFooterCellCustom>
             {columns.map((blockchainName: any, index: number) => {
               const total = totals[blockchainName] ?? 0
               return (
                 <TableFooterCellCustom
                   key={index}
-                  sx={{
-                    width: columnWidthPercentage,
-                    paddingLeft: '20px',
-                    paddingRight: '20px',
-                    fontSize: {
-                      xs: '12px',
-                      md: '16px'
-                    }
-                  }}
-                  align="left"
+                  sx={{ width: columnWidthPercentage }}
+                  align="right"
                 >
-                  {currency === 'USD' ? formatCurrency(total) : formatNumber(total, 0)}
+                  <CustomTypo>
+                    {currency === 'USD' ? formatCurrency(total) : formatNumber(total, 0)}
+                  </CustomTypo>
                 </TableFooterCellCustom>
               )
             })}
-            <TableFooterCellCustom
-              sx={{
-                width: columnWidthPercentage,
-                fontSize: {
-                  xs: '12px',
-                  md: '16px'
-                }
-              }}
-              align="left"
-            >
-              {currency === 'USD'
-                ? formatCurrency(totals['total'] || 0)
-                : formatNumber(totals['total'] || 0, 0)}
+            <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="right">
+              <CustomTypo>
+                {currency === 'USD'
+                  ? formatCurrency(totals['total'] || 0)
+                  : formatNumber(totals['total'] || 0, 0)}
+              </CustomTypo>
             </TableFooterCellCustom>
           </TableRow>
         </TableBody>

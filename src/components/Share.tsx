@@ -10,19 +10,20 @@ interface State extends SnackbarOrigin {
 }
 
 export const Share = (props: Filter) => {
-  const { month, dao, year } = props
+  const { month, dao, year, currency } = props
   const value = React.useMemo(() => {
     const query = new URLSearchParams()
     const url = window.location.href.split('?')[0]
     if (dao) query.append('dao', dao + '')
     if (month) query.append('month', month + '')
     if (year) query.append('year', year + '')
+    if (currency) query.append('currency', currency + '')
     return `${url}?${query.toString()}`
   }, [month, dao, year])
 
   const isShareButtonEnable = React.useMemo(() => {
-    return !!month || !!dao || !!year
-  }, [month, dao, year])
+    return !!month || !!dao || !!year || !!currency
+  }, [month, dao, year, currency])
 
   // Snackbar state and handlers
   const [snackbarState, setSnackbarState] = React.useState<State>({

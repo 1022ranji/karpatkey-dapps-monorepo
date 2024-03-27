@@ -19,14 +19,43 @@ import { TOKEN_COINGECKO_PRICE_URL } from 'src/config/constants'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { Box, Table, TableBody, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
+import {
+  Box,
+  styled,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Theme,
+  Tooltip
+} from '@mui/material'
 import * as React from 'react'
 import { isYearAndMonthValid } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface TableTokenDetailProps {
   filteredTokenDetails: any[]
 }
+
+export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
+  fontFamily: 'IBM Plex Mono',
+  fontStyle: 'normal',
+  fontWeight: '700 !important',
+  color: `custom.black.primary`,
+  textOverflow: 'ellipsis',
+  whiteSpace: 'wrap',
+  overflow: 'hidden',
+  [theme.breakpoints.down('md')]: {
+    fontSize: '11px',
+    lineHeight: '14px'
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '16px',
+    lineHeight: '16px'
+  }
+}))
 
 export const TableTokenDetail = (props: TableTokenDetailProps) => {
   const { filteredTokenDetails } = props
@@ -37,76 +66,103 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
   const { state } = useApp()
   const { currency } = state
 
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
   return (
-    <BoxWrapperColumn gap={4}>
-      <TableContainer component={Box}>
-        <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
-          <TableHead>
+    <TableContainer component={Box} sx={{ width: '100%', overflowX: 'auto' }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="left">
+              <CustomTypo>Token symbol</CustomTypo>
+            </TableHeadCellCustom>
+            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+              <CustomTypo>{currency === 'USD' ? 'Price' : 'ETH Price'}</CustomTypo>
+            </TableHeadCellCustom>
+            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+              <CustomTypo>Token balance</CustomTypo>
+            </TableHeadCellCustom>
+
+            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+              <CustomTypo>{isDDay ? 'Share' : 'Allocation'}</CustomTypo>
+            </TableHeadCellCustom>
+
+            {isMD ? (
+              <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+                <CustomTypo>Price variation</CustomTypo>
+              </TableHeadCellCustom>
+            ) : null}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredTokenDetails.length === 0 ? (
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '30%' }} align="left">
-                Token symbol
-              </TableHeadCellCustom>
-              <TableHeadCellCustom
-                sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
-                align="left"
-              >
-                {currency === 'USD' ? 'Price' : 'ETH Price'}
-              </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
-                Token balance
-              </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
-                {isDDay ? 'Share' : 'Allocation'}
-              </TableHeadCellCustom>
-              <TableHeadCellCustom sx={{ width: '15%' }} align="left">
-                Price variation
-              </TableHeadCellCustom>
+              <TableEmptyCellCustom colSpan={isMD ? 5 : 4}>
+                <EmptyData />
+              </TableEmptyCellCustom>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredTokenDetails.length === 0 ? (
-              <TableRow>
-                <TableEmptyCellCustom colSpan={5}>
-                  <EmptyData />
-                </TableEmptyCellCustom>
-              </TableRow>
-            ) : (
-              <>
-                {filteredTokenDetails.map((row: any, index: number) => {
-                  if (!displayAll && index > 4) return null
+          ) : (
+            <>
+              {filteredTokenDetails.map((row: any, index: number) => {
+                if (!displayAll && index > 4) return null
 
-                  const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
-                    (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
-                  )
-                  const onClick = () => {
-                    if (TOKEN) {
-                      window.open(TOKEN.url, '_blank')
-                    }
+                const TOKEN = TOKEN_COINGECKO_PRICE_URL.find(
+                  (item) => item.tokenName.toLowerCase() === row.tokenSymbol.toLowerCase()
+                )
+                const onClick = () => {
+                  if (TOKEN) {
+                    window.open(TOKEN.url, '_blank')
                   }
+                }
 
-                  return (
-                    <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                      <TableCellCustom sx={{ width: '30%' }} align="left">
-                        <BoxWrapperColumn>
-                          {row.tokenSymbol}
-                          <CustomTypography variant="tableCellSubData">
-                            {row.tokenCategory}
+                return (
+                  <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
+                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="left">
+                      <BoxWrapperColumn>
+                        <CustomTypo>{row.tokenSymbol}</CustomTypo>
+                        <CustomTypography
+                          variant="tableCellSubData"
+                          sx={{
+                            fontSize: {
+                              xs: '11px',
+                              md: '16px'
+                            },
+                            fontWeight: '400 !important'
+                          }}
+                        >
+                          {row.tokenCategory}
+                        </CustomTypography>
+                        <CustomTypography
+                          variant="tableCellSubData"
+                          sx={{
+                            fontSize: {
+                              xs: '11px',
+                              md: '16px'
+                            },
+                            fontWeight: '400 !important'
+                          }}
+                        >
+                          {row.blockchain.split('|').slice(0, 5).join('|')}
+                        </CustomTypography>
+                        {row.blockchain.split('|').length > 5 ? (
+                          <CustomTypography
+                            variant="tableCellSubData"
+                            sx={{
+                              fontSize: {
+                                xs: '11px',
+                                md: '16px'
+                              },
+                              fontWeight: '400 !important'
+                            }}
+                          >
+                            {row.blockchain.split('|').slice(5).join('|')}
                           </CustomTypography>
-                          <CustomTypography variant="tableCellSubData">
-                            {row.blockchain.split('|').slice(0, 5).join('|')}
-                          </CustomTypography>
-                          {row.blockchain.split('|').length > 5 ? (
-                            <CustomTypography variant="tableCellSubData">
-                              {row.blockchain.split('|').slice(5).join('|')}
-                            </CustomTypography>
-                          ) : null}
-                        </BoxWrapperColumn>
-                      </TableCellCustom>
-                      <TableCellCustom
-                        sx={{ width: '20%', paddingLeft: '20px', paddingRight: '20px' }}
-                        align="left"
-                      >
-                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                        ) : null}
+                      </BoxWrapperColumn>
+                    </TableCellCustom>
+                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+                      <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
+                        <BoxWrapperColumn gap={'2px'} sx={{ alignItems: 'flex-end' }}>
                           <Tooltip
                             title={
                               currency === 'USD'
@@ -115,51 +171,85 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                             }
                             sx={{ ml: 1 }}
                           >
-                            <span>
+                            <CustomTypo sx={{ fontWeight: '400 !important' }}>
                               {currency === 'USD'
                                 ? formatCurrencyWithPrecision(row.price)
                                 : formatNumberWithPrecision(+row.price?.toFixed(6))}
-                            </span>
+                            </CustomTypo>
                           </Tooltip>
-                          {TOKEN && (
-                            <OpenInNewIcon
-                              onClick={onClick}
-                              sx={{ cursor: 'pointer', fontSize: '1rem !important' }}
-                            />
-                          )}
-                        </BoxWrapperRow>
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '20%' }} align="left">
-                        <BoxWrapperColumn
+
+                          {!isMD ? (
+                            <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
+                              {formatPercentage(row.priceVariation) === '0.00%' ? (
+                                <Tooltip
+                                  title={formatPercentage(row.priceVariation, 10)}
+                                  sx={{ ml: 1 }}
+                                >
+                                  <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                                    {formatPercentage(row.priceVariation)}
+                                  </CustomTypo>
+                                </Tooltip>
+                              ) : (
+                                <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                                  {formatPercentage(row.priceVariation)}
+                                </CustomTypo>
+                              )}
+
+                              {row.priceVariation > 0 ? (
+                                <ArrowUpwardIcon sx={{ fontSize: '1rem !important' }} />
+                              ) : !row.priceVariation ? null : (
+                                <ArrowDownwardIcon sx={{ fontSize: '1rem !important' }} />
+                              )}
+                            </BoxWrapperRow>
+                          ) : null}
+                        </BoxWrapperColumn>
+
+                        {TOKEN && (
+                          <OpenInNewIcon
+                            onClick={onClick}
+                            sx={{ cursor: 'pointer', fontSize: '1rem !important' }}
+                          />
+                        )}
+                      </BoxWrapperRow>
+                    </TableCellCustom>
+                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="left">
+                      <BoxWrapperColumn sx={{ alignItems: 'flex-end' }}>
+                        <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                          {formatNumber(row.balance)}
+                        </CustomTypo>
+                        <CustomTypography
+                          variant="tableCellSubData"
                           sx={{
-                            minWidth: 'max-content',
-                            width: '125px',
-                            maxWidth: '100%',
-                            alignItems: 'flex-end'
+                            fontSize: {
+                              xs: '11px',
+                              md: '16px'
+                            },
+                            fontWeight: '400 !important'
                           }}
                         >
-                          {formatNumber(row.balance)}
-                          <CustomTypography variant="tableCellSubData">
-                            {currency === 'USD'
-                              ? formatCurrency(row.usdValue, 2)
-                              : `${formatNumber(row.usdValue, 2)} ETH`}
-                          </CustomTypography>
-                        </BoxWrapperColumn>
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
+                          {currency === 'USD'
+                            ? formatCurrency(row.usdValue, 2)
+                            : `${formatNumber(row.usdValue, 2)} ETH`}
+                        </CustomTypography>
+                      </BoxWrapperColumn>
+                    </TableCellCustom>
+                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
                         {formatPercentage(row.allocation)}
-                      </TableCellCustom>
-                      <TableCellCustom sx={{ width: '15%' }} align="left">
-                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-start' }}>
+                      </CustomTypo>
+                    </TableCellCustom>
+                    {isMD ? (
+                      <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+                        <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
                           {formatPercentage(row.priceVariation) === '0.00%' ? (
                             <Tooltip
                               title={formatPercentage(row.priceVariation, 10)}
                               sx={{ ml: 1 }}
                             >
-                              <span>{formatPercentage(row.priceVariation)}</span>
+                              <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
                             </Tooltip>
                           ) : (
-                            formatPercentage(row.priceVariation)
+                            <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
                           )}
 
                           {row.priceVariation > 0 ? (
@@ -169,46 +259,57 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                           )}
                         </BoxWrapperRow>
                       </TableCellCustom>
-                    </TableRow>
-                  )
-                })}
-
-                {filteredTokenDetails.length > 5 ? (
-                  <TableRow>
-                    <TableCellCustom colSpan={5} align="center">
-                      <BoxWrapperRow gap={1}>
-                        <CustomTypography
-                          variant="tableCellSubData"
-                          sx={{ cursor: 'pointer', align: 'center' }}
-                          onClick={() => setDisplayAll(!displayAll)}
-                        >
-                          {!displayAll
-                            ? `${
-                                filteredTokenDetails.length > 4 ? 5 : filteredTokenDetails.length
-                              } of ${filteredTokenDetails.length}`
-                            : `${filteredTokenDetails.length} of ${filteredTokenDetails.length}`}
-                        </CustomTypography>
-                        <CustomTypography
-                          variant="tableCellSubData"
-                          sx={{
-                            cursor: 'pointer',
-                            textDecoration: 'underline',
-                            align: 'center',
-                            fontWeight: '700 !important'
-                          }}
-                          onClick={() => setDisplayAll(!displayAll)}
-                        >
-                          {displayAll ? 'View less' : 'View all'}
-                        </CustomTypography>
-                      </BoxWrapperRow>
-                    </TableCellCustom>
+                    ) : null}
                   </TableRow>
-                ) : null}
-              </>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </BoxWrapperColumn>
+                )
+              })}
+
+              {filteredTokenDetails.length > 5 ? (
+                <TableRow>
+                  <TableCellCustom colSpan={isMD ? 5 : 4} align="center">
+                    <BoxWrapperRow gap={1}>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{
+                          cursor: 'pointer',
+                          align: 'center',
+                          fontSize: {
+                            xs: '12px',
+                            md: '16px'
+                          }
+                        }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {!displayAll
+                          ? `${
+                              filteredTokenDetails.length > 4 ? 5 : filteredTokenDetails.length
+                            } of ${filteredTokenDetails.length}`
+                          : `${filteredTokenDetails.length} of ${filteredTokenDetails.length}`}
+                      </CustomTypography>
+                      <CustomTypography
+                        variant="tableCellSubData"
+                        sx={{
+                          cursor: 'pointer',
+                          textDecoration: 'underline',
+                          align: 'center',
+                          fontWeight: '700 !important',
+                          fontSize: {
+                            xs: '12px',
+                            md: '16px'
+                          }
+                        }}
+                        onClick={() => setDisplayAll(!displayAll)}
+                      >
+                        {displayAll ? 'View less' : 'View all'}
+                      </CustomTypography>
+                    </BoxWrapperRow>
+                  </TableCellCustom>
+                </TableRow>
+              ) : null}
+            </>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }

@@ -139,6 +139,7 @@ export type SubmitValues = {
   deFiType?: string | number
   DAO?: string | number
   yearMonth?: string | number
+  currency?: string | number
 }
 
 interface FormProps {

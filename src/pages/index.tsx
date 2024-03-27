@@ -66,7 +66,7 @@ export default Homepage
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx
-  const { month = null, year = null, dao = null } = query
+  const { month = null, year = null, dao = null, currency = null } = query
 
   if (month && year && dao) {
     const allowedMonthAndYear = FILTER_DAOS.find((option) => {
@@ -85,10 +85,64 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
   }
 
-  const params = { dao, month, year } as Filter
+  if (currency && dao) {
+    const allowedCurrency = FILTER_DAOS.find((option) => {
+      return +option.id === +dao
+    })?.currenciesAllowed?.find((option) => {
+      return option === currency
+    })
 
-  // We validate the params here to avoid any errors in the page
-  await filterSchemaValidation.validate(params)
+    if (!allowedCurrency) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/500'
+        }
+      }
+    }
+  }
+
+  const params = { dao, month, year, currency } as Filter
+
+  // should come all parameters
+  if (Object.values(params).some((value) => value === null) && Object.values(params).length > 0) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/422'
+      }
+    }
+  }
+
+  // check if DAO parameters is correct
+  if (dao && !FILTER_DAOS.some((option) => +option.id === +dao)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404'
+      }
+    }
+  }
+
+  // check if month and year parameters is correct
+  if (month && year && !filterSchemaValidation.isValidSync({ month, year })) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404'
+      }
+    }
+  }
+
+  // check if currency parameters is correct
+  if (currency && !filterSchemaValidation.isValidSync({ currency })) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404'
+      }
+    }
+  }
 
   try {
     const pathFile = path.resolve(process.cwd(), './cache/dashboard.json')
@@ -102,15 +156,10 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       report = reports[+year][+month]
     }
 
-    // Get allowed currencies from FILTER_DAOS
-    const currenciesAllowed = FILTER_DAOS.find(
-      (daoItem) => dao && +daoItem.id === +dao
-    )?.currenciesAllowed
-
     const props = {
       ...dashboard,
       report,
-      currency: currenciesAllowed?.[0] ?? Currency.USD,
+      currency: currency ? (currency as Currency) : null,
       month: month ? +month : null,
       year: year ? +year : null,
       dao: dao ? +dao : null

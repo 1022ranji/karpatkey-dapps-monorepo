@@ -3,6 +3,9 @@ import { getOperationsDetailTotals } from 'src/utils/mappers/farmingFunds'
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
 import TableOperations from './TableOperations'
+import { FilterContent } from 'components/filters/mobile/FilterContent'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/material'
 
 interface ResultsContainerProps {
   operationDetails: any[]
@@ -98,7 +101,7 @@ export const OperationsContainer = (props: ResultsContainerProps) => {
       }
     : null
 
-  const filter = (
+  const CommonFilter = (
     <Filter
       id={id}
       handleClick={handleClick}
@@ -126,10 +129,24 @@ export const OperationsContainer = (props: ResultsContainerProps) => {
     </Filter>
   )
 
+  const MobileFilter = (
+    <FilterContent
+      enableBlockchain={true}
+      enableProtocol={true}
+      blockchainOptions={blockchainOptions}
+      protocolOptions={protocolOptions}
+      handleClear={handleClear}
+      handleClick={onSubmitClose}
+    />
+  )
+
   const isFilterActive = blockchainFilter || protocolFilter
 
   const { state } = useApp()
   const { currency } = state
+
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
     <PaperSection
@@ -138,7 +155,7 @@ export const OperationsContainer = (props: ResultsContainerProps) => {
           ? 'Operations funds/results by position'
           : 'Operations funds/results by position (ETH)'
       }
-      filter={filter}
+      filter={isMD ? CommonFilter : MobileFilter}
     >
       {filteredOperationDetails.length === 0 && !isFilterActive ? (
         <EmptyData />

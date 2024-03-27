@@ -22,15 +22,32 @@ export const SafeButton = (props: SafeButtonProps) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        gap: '16px',
-        height: '48px',
-        padding: '6px 14px',
+        gap: { xs: '8px', md: '16px' },
+        height: {
+          xs: '40px',
+          md: '48px'
+        },
+        padding: {
+          xs: '4px 7px',
+          md: '6px 14px'
+        },
         color: '#EEEDED',
         background: '#1A1A1A',
         borderRadius: '40px',
-        minWidth: '260px',
+        minWidth: {
+          xs: '120px',
+          md: '200px'
+        },
         '&:hover': {
           background: '#222222'
+        },
+        fontSize: {
+          xs: '12px',
+          md: '16px'
+        },
+        lineHeight: {
+          xs: '16px',
+          md: '24px'
         }
       }}
     >
@@ -54,16 +71,33 @@ const CommonButton = (props: CommonButtonProps) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        gap: '16px',
-        height: '48px',
-        padding: '6px 14px',
+        gap: { xs: '8px', md: '16px' },
+        height: {
+          xs: '40px',
+          md: '48px'
+        },
+        padding: {
+          xs: '4px 7px',
+          md: '6px 14px'
+        },
         color: '#1A1A1A',
         background: '#EEEDED',
         borderRadius: '40px',
         border: '1px solid #222222',
-        minWidth: '200px',
+        minWidth: {
+          xs: '120px',
+          md: '200px'
+        },
         '&:hover': {
           background: '#FFFFFF'
+        },
+        fontSize: {
+          xs: '12px',
+          md: '16px'
+        },
+        lineHeight: {
+          xs: '16px',
+          md: '24px'
         }
       }}
     >

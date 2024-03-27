@@ -17,7 +17,7 @@ export const Menu = () => {
   const { state } = useApp()
   const router = useRouter()
 
-  const { year, month, DAO: filterDAO } = state
+  const { year, month, DAO: filterDAO, currency } = state
 
   const param = year && month ? { yearArg: year + '', monthArg: month + '' } : undefined
 
@@ -76,14 +76,18 @@ export const Menu = () => {
   const onSubmitClose = (data: SubmitValues) => {
     const dao = data?.DAO
     const yearMonth = (data?.yearMonth ?? '') + ''
+    const currency = data?.currency
     const [year, month] = yearMonth.split('-')
 
-    if (month === undefined || dao === undefined || year === undefined) return
+    if (month === undefined || dao === undefined || year === undefined || currency === undefined) {
+      return
+    }
     const query = new URLSearchParams()
 
     if (dao !== null && dao !== undefined) query.append('dao', dao + '')
     if (month !== null && month !== undefined) query.append('month', month + '')
     if (year !== null && year !== undefined) query.append('year', year + '')
+    if (currency !== null && currency !== undefined) query.append('currency', currency + '')
 
     const href = `/?${query.toString()}`
     router.push(href)
@@ -126,7 +130,7 @@ export const Menu = () => {
         />
       </Filter>
       {isDDay && <FilterByCurrency />}
-      <Share dao={filterDAO} year={year} month={month} />
+      <Share dao={filterDAO} year={year} month={month} currency={currency} />
     </BoxWrapperRow>
   )
 }

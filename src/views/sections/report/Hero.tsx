@@ -22,8 +22,8 @@ export const Hero = () => {
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   const { dao, monthName } = React.useMemo(() => {
-    const dao: FILTER_DAO | undefined = getDAO(filterDAO)
-    const monthName = month ? getMonthName(+month) : null
+    const dao: Maybe<FILTER_DAO> = getDAO(filterDAO) ?? null
+    const monthName: Maybe<string> = month ? getMonthName(+month)?.label ?? null : null
 
     return { dao, monthName }
   }, [filterDAO, month])
@@ -37,7 +37,7 @@ export const Hero = () => {
       <BoxWrapperColumn
         sx={{
           margin: {
-            xs: '20px 10px 0 10px',
+            xs: '20px 20px 20px 20px',
             md: '30px 30px 30px 30px'
           },
           alignItems: 'flex-start',
@@ -53,7 +53,8 @@ export const Hero = () => {
             sx={{
               alignItems: 'flex-start',
               alignSelf: 'stretch',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              gap: { xs: 1, md: 0 }
             }}
           >
             <CustomTypography
@@ -88,7 +89,7 @@ export const Hero = () => {
             </CustomTypography>
           </BoxWrapperColumn>
         </BoxWrapperRow>
-        {isMD ? (
+        {isMD || dao?.addresses.length <= 2 ? (
           <BoxWrapperRow
             sx={{
               justifyContent: 'flex-start',
@@ -106,12 +107,11 @@ export const Hero = () => {
           </BoxWrapperRow>
         ) : null}
       </BoxWrapperColumn>
-      {!isMD ? (
+      {!isMD && dao?.addresses.length > 2 ? (
         <Box
           sx={{
-            paddingRight: '20px',
-            paddingLeft: '20px',
-            borderBottom: { xs: '2px solid #E0E0E0', md: 'none' }
+            padding: '0 20px 20px 20px',
+            borderBottom: '2px solid #E0E0E0'
           }}
         >
           <Carousel className="custom-slider-address">

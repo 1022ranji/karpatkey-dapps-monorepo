@@ -33,7 +33,7 @@ export const Header = () => {
 
   return (
     <AnimatePresenceWrapper>
-      <Wrapper>
+      <Wrapper height={HEADER_HEIGHT}>
         <Logo />
         <Menu />
         <IconButton

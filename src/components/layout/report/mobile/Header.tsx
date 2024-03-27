@@ -36,7 +36,7 @@ export const Header = () => {
       <Wrapper
         sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
         height={HEADER_HEIGHT}
-        sxNavBar={{ padding: '20px 0 0 0' }}
+        sxNavBar={{ padding: '20px 0 0 0', maxWidth: '940px', width: '100%' }}
       >
         <BoxWrapperColumn sx={{ height: '100%', width: '100%' }}>
           <BoxWrapperRow
@@ -65,7 +65,7 @@ export const Header = () => {
               <MenuIcon />
             </IconButton>
           </BoxWrapperRow>
-          <Menu />
+          {!open && <Menu />}
         </BoxWrapperColumn>
       </Wrapper>
       <Modal
@@ -76,7 +76,7 @@ export const Header = () => {
         slots={{ backdrop: StyledBackdrop }}
       >
         <Slide direction="down" in={open} mountOnEnter unmountOnExit>
-          <ModalContent sx={{ width: '100%', height: '100%', top: '88px' }}>
+          <ModalContent sx={{ width: '100%', height: '100%', top: '120px' }}>
             <Box sx={{ p: 2 }}>
               <BoxWrapperColumn sx={{ mb: 2 }} gap={4}>
                 {SECTIONS.map((text: Section, index: number) => {
@@ -100,6 +100,23 @@ export const Header = () => {
                     </Box>
                   )
                 })}
+                <Box
+                  onClick={() => {
+                    router.push('/').catch((e) => {
+                      // workaround for https://github.com/vercel/next.js/issues/37362
+                      if (!e.cancelled) {
+                        throw e
+                      }
+                    })
+                    setOpen(false)
+                  }}
+                  key={'Reports home'}
+                  style={{ textDecoration: 'none', color: 'black' }}
+                >
+                  <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>
+                    <LinkStyled>Reports home</LinkStyled>
+                  </ListItemButton>
+                </Box>
               </BoxWrapperColumn>
             </Box>
           </ModalContent>

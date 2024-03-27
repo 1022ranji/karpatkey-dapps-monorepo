@@ -1,7 +1,8 @@
 import React from 'react'
 import clsx from 'clsx'
-import { Box, css, Link, styled } from '@mui/material'
+import { Box, css, Link, styled, Theme } from '@mui/material'
 import { Modal as BaseModal } from '@mui/base/Modal'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const Backdrop = React.forwardRef<HTMLDivElement, { open?: boolean; className: string }>(
   (props, ref) => {
@@ -14,7 +15,7 @@ Backdrop.displayName = 'Backdrop'
 
 export const Modal = styled(BaseModal)`
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   inset: 0;
   display: flex;
   align-items: center;
@@ -62,44 +63,39 @@ export const NavbarContainer = styled(Box)(() => ({
   marginLeft: 'auto',
   marginRight: 'auto',
   display: 'flex',
-  zIndex: 1302
+  zIndex: 2
 }))
 
 interface NavbarProps {
   height?: number // Making height optional
 }
-export const Navbar = styled(Box)<NavbarProps>`
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  position: sticky;
-  top: 0;
-  z-index: 1301;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px 20px;
-  height: ${(props) =>
-    props.height
-      ? `${props.height}px`
-      : '60px'}; /* Using a default value of 60px if height is not provided */
-  background-color: #eeeded;
+
+export const Navbar = styled(Box)(({ height }: NavbarProps) => ({
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  display: 'flex',
+  position: 'sticky',
+  top: '0',
+  zIndex: 15,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  padding: '20px 20px',
+  height: height || 60,
+  backgroundColor: '#eeeded',
   '&.hide': {
-    position: fixed;
-    top: ${(props) =>
-      props.height
-        ? `-${props.height}px`
-        : '-60px'}; /* Using a default value of -60px if height is not provided */
-    transition: 0.3s linear;
-    z-index: 1301;
-  }
+    position: 'fixed',
+    top: height ? `-${height}px` : '-60px',
+    transition: '0.3s linear',
+    zIndex: 2
+  },
   '&.show , &.down': {
-    position: fixed;
-    top: 0;
-    transition: 0.3s linear;
-    z-index: 1301;
+    position: 'fixed',
+    top: '0px',
+    transition: '0.3s linear',
+    zIndex: 15
   }
-`
+}))
 
 export const NavbarWrapper = styled(Box)(() => ({
   display: 'flex',
@@ -118,6 +114,8 @@ export const Wrapper = (props: WrapperProps) => {
   const [show, setShow] = React.useState(true)
   const [lastScrollY, setLastScrollY] = React.useState(0)
 
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+
   const controlNavbar = () => {
     if (window.scrollY > lastScrollY) {
       // if scroll down hide the navbar
@@ -132,11 +130,11 @@ export const Wrapper = (props: WrapperProps) => {
   }
 
   React.useEffect(() => {
-    window.addEventListener('scroll', controlNavbar)
+    if (isMD) window.addEventListener('scroll', controlNavbar)
 
     // cleanup function
     return () => {
-      window.removeEventListener('scroll', controlNavbar)
+      if (isMD) window.removeEventListener('scroll', controlNavbar)
     }
   }, [lastScrollY])
 

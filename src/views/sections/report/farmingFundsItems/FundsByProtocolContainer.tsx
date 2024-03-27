@@ -41,7 +41,8 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
           innerSize={isMD ? '50%' : '45%'}
           outerSize={isMD ? '70%' : '60%'}
           height={isMD ? 560 : 310}
-          width={isMD ? 460 : 300}
+          width={isMD ? '100%' : 300}
+          centered={true}
         />
       )}
     </PaperSection>

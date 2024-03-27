@@ -45,3 +45,15 @@ path:focus {
 .custom-slider-charts {
   height: 280px;
 }
+
+.custom-slider-cards > .slick-slide {
+  padding: 0 10px;
+}
+
+.slick-list {
+  mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -moz-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -ms-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+  -o-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
+}

@@ -60,10 +60,7 @@ export const Summary = (props: SummaryProps) => {
     <>
       <BoxWrapperColumn
         sx={{
-          margin: {
-            xs: '20px 10px 20px 10px',
-            md: '30px 30px 30px 30px'
-          }
+          borderBottom: { xs: '2px solid #E0E0E0', md: 'none' }
         }}
         gap={10}
       >
@@ -78,8 +75,11 @@ export const Summary = (props: SummaryProps) => {
             },
             gap: { xs: 5, md: 10 },
             flexDirection: 'row',
-            borderBottom: { xs: '2px solid #E0E0E0', md: 'none' },
-            paddingBottom: { xs: 3, md: 0 }
+            paddingBottom: { xs: 2, md: 0 },
+            margin: {
+              xs: '20px 20px 20px 20px',
+              md: '30px 30px 30px 30px'
+            }
           }}
         >
           <InfoCard
@@ -117,7 +117,17 @@ export const Summary = (props: SummaryProps) => {
           />
         </Box>
         {isMD ? (
-          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 2,
+              flexWrap: 'wrap',
+              margin: {
+                xs: '20px 20px 20px 20px',
+                md: '30px 30px 30px 30px'
+              }
+            }}
+          >
             <PieChart
               titleMessage="Total funds by token category"
               data={fundsByTokenCategory.map((item) => {
@@ -177,7 +187,14 @@ export const Summary = (props: SummaryProps) => {
         ) : null}
       </BoxWrapperColumn>
       {!isMD ? (
-        <Box sx={{ paddingRight: '20px', paddingLeft: '20px' }}>
+        <Box
+          sx={{
+            margin: {
+              xs: '20px 20px 20px 20px',
+              md: '30px 30px 30px 30px'
+            }
+          }}
+        >
           <Carousel className="custom-slider-charts">
             <PieChart
               titleMessage="Total funds by token category"
@@ -190,6 +207,7 @@ export const Summary = (props: SummaryProps) => {
               })}
               width={isMD ? 440 : 310}
               height={isMD ? 400 : 300}
+              {...(!isMD ? { centered: true } : {})}
               {...(negativeTotalValue
                 ? {
                     footerMessage: (
@@ -221,6 +239,7 @@ export const Summary = (props: SummaryProps) => {
               })}
               width={isMD ? 440 : 310}
               height={isMD ? 400 : 300}
+              {...(!isMD ? { centered: true } : {})}
             />
             <PieChart
               titleMessage="Total funds by type"
@@ -233,6 +252,7 @@ export const Summary = (props: SummaryProps) => {
               })}
               width={isMD ? 440 : 310}
               height={isMD ? 400 : 300}
+              {...(!isMD ? { centered: true } : {})}
             />
           </Carousel>
         </Box>

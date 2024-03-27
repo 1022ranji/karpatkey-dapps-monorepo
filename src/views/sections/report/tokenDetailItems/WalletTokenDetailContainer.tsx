@@ -9,10 +9,12 @@ import {
 } from 'src/components'
 import { OTHERS_WALLET_LIMIT } from 'src/config/constants'
 import { SUMMARY_COLORS } from 'src/config/theme'
-import { PaperProps } from '@mui/material'
+import { PaperProps, Theme } from '@mui/material'
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
 import { TableWalletTokenDetail } from './TableWalletTokenDetail'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { FilterContent } from 'src/components/filters/mobile/FilterContent'
 
 interface WalletTokenDetailContainerProps {
   walletTokenDetail: any[]
@@ -96,7 +98,7 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
       }
     : null
 
-  const filter = (
+  const CommonFilter = (
     <Filter
       id={id}
       handleClick={handleClick}
@@ -119,6 +121,15 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
     </Filter>
   )
 
+  const MobileFilter = (
+    <FilterContent
+      enableBlockchain={true}
+      blockchainOptions={blockchainOptions}
+      handleClear={handleClear}
+      handleClick={onSubmitClose}
+    />
+  )
+
   const isFilterApplied = blockchainFilter !== null
 
   const filteredWalletTokenDetailForPieChartWithColors = filteredWalletTokenDetail.map(
@@ -128,7 +139,7 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
         color: SUMMARY_COLORS[index]
           ? SUMMARY_COLORS[index]
           : SUMMARY_COLORS[Math.floor(Math.random() * 9) + 0],
-        label: item.tokenSymbol,
+        label: item.tokenSymbol + ' ' + item.blockchain,
         value: item.usdValue
       }
     }
@@ -158,10 +169,13 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
   const { state } = useApp()
   const { currency } = state
 
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
   return (
     <PaperSection
       subTitle={currency === 'USD' ? 'Wallet token detail' : 'Wallet token detail (ETH)'}
-      filter={filter}
+      filter={isMD ? CommonFilter : MobileFilter}
     >
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
         <EmptyData />
@@ -182,10 +196,11 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
                 color: item.color
               }
             })}
-            innerSize="60%"
-            outerSize="80%"
-            width={'fit-content'}
-            height={440}
+            innerSize={isMD ? '60%' : '45%'}
+            outerSize={isMD ? '80%' : '60%'}
+            height={isMD ? 440 : 310}
+            width={isMD ? 'fit-content' : 350}
+            centered={true}
           />
           <TableWalletTokenDetail filteredWalletTokenDetail={filteredWalletTokenDetail} />
         </BoxWrapperRow>

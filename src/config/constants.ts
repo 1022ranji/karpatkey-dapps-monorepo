@@ -1248,18 +1248,18 @@ export const OTHERS_SUMMARY_LIMIT = 2
 export const OTHERS_WALLET_LIMIT = 3
 
 export const MONTHS = [
-  { label: 'January', id: 1 },
-  { label: 'February', id: 2 },
-  { label: 'March', id: 3 },
-  { label: 'April', id: 4 },
-  { label: 'May', id: 5 },
-  { label: 'June', id: 6 },
-  { label: 'July', id: 7 },
-  { label: 'August', id: 8 },
-  { label: 'September', id: 9 },
-  { label: 'October', id: 10 },
-  { label: 'November', id: 11 },
-  { label: 'December', id: 12 }
+  { label: 'January', short: 'Jan', id: 1 },
+  { label: 'February', short: 'Feb', id: 2 },
+  { label: 'March', short: 'Mar', id: 3 },
+  { label: 'April', short: 'Apr', id: 4 },
+  { label: 'May', short: 'May', id: 5 },
+  { label: 'June', short: 'Jun', id: 6 },
+  { label: 'July', short: 'Jul', id: 7 },
+  { label: 'August', short: 'Aug', id: 8 },
+  { label: 'September', short: 'Sep', id: 9 },
+  { label: 'October', short: 'Oct', id: 10 },
+  { label: 'November', short: 'Nov', id: 11 },
+  { label: 'December', short: 'Dec', id: 12 }
 ]
 
 export const MIN_ALLOWED_ALLOCATION = 0.00009

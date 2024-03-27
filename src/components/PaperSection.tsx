@@ -21,9 +21,11 @@ export const PaperSection = (props: PaperSectionProps) => {
       <Divider />
       <BoxWrapperColumn
         sx={{
-          marginX: { xs: '10px', md: '30px' },
-          marginY: { xs: '20px', md: '30px' },
-          gap: { xs: 1, md: 3 }
+          margin: {
+            xs: '40px 20px 40px 20px',
+            md: '30px 30px 30px 30px'
+          },
+          gap: { xs: 3, md: 3 }
         }}
       >
         {title ? (
@@ -35,7 +37,8 @@ export const PaperSection = (props: PaperSectionProps) => {
               variant="paperSectionTitle"
               textAlign="left"
               sx={{
-                fontSize: { xs: 24, md: 44 }
+                fontSize: { xs: 22, md: 44 },
+                lineHeight: { xs: '22px', md: '44px' }
               }}
             >
               {title}
@@ -60,13 +63,17 @@ export const PaperSection = (props: PaperSectionProps) => {
         {subTitle || filter ? (
           <BoxWrapperRow
             sx={{
-              ...(subTitle ? { justifyContent: 'space-between' } : { justifyContent: 'flex-end' })
+              ...(subTitle ? { justifyContent: 'space-between' } : { justifyContent: 'flex-end' }),
+              gap: '0.75em'
             }}
           >
             {subTitle ? (
               <CustomTypography
                 variant="paperSectionSubtitle"
-                sx={{ fontSize: { xs: 16, md: 22 } }}
+                sx={{
+                  fontSize: { xs: 16, md: 22 },
+                  lineHeight: { xs: '20px', md: '22px' }
+                }}
               >
                 {subTitle}
               </CustomTypography>

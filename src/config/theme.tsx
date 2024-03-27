@@ -3,7 +3,8 @@ import { ThemeOptions, createTheme } from '@mui/material/styles'
 // Create a theme instance.
 const theme = createTheme({
   zIndex: {
-    drawer: 1200
+    drawer: 1200,
+    modal: 1300
   },
   breakpoints: {
     values: {
@@ -118,7 +119,7 @@ const theme = createTheme({
     paperSectionTitle: {
       fontFamily: 'IBM Plex Mono',
       fontStyle: 'normal',
-      fontWeight: '500 !important',
+      fontWeight: '700 !important',
       fontSize: '44px',
       lineHeight: '44px',
       color: '#1A1A1A'
@@ -238,6 +239,8 @@ const theme = createTheme({
       grey: {
         primary: '#808080',
         secondary: '#7A7A7A',
+        ternary: '#535353',
+        quaternary: '#DEDEDE',
         dark: '#222222',
         light: '#F5F5F5'
       },

@@ -120,13 +120,7 @@ const CustomizedAxisTick = (props: any) => {
   )
 }
 
-export const Waterfall = ({
-  title,
-  data,
-  bottom = 50,
-  barSize = 60,
-  ...props
-}: BoxProps & WaterfallProps) => {
+export const Waterfall = ({ title, data, barSize = 60, ...props }: BoxProps & WaterfallProps) => {
   const initialBalanceFunds = data.find((item) => item.value === 'Initial Balance')?.uv
 
   const { minValue } = data.reduce(
@@ -180,13 +174,13 @@ export const Waterfall = ({
   )
   if (isMoreThanMDAndLessThanLG) {
     charactersLength = 8
-    fontSize = 10
+    fontSize = 12
   }
 
   const isLessThanMD = useMediaQuery((theme: any) => theme.breakpoints.down('md'))
   if (isLessThanMD) {
     charactersLength = 8
-    fontSize = 7
+    fontSize = 12
   }
 
   return (
@@ -207,9 +201,7 @@ export const Waterfall = ({
           data={data}
           margin={{
             top: 20,
-            right: 30,
-            left: 20,
-            bottom: bottom
+            left: 10
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />

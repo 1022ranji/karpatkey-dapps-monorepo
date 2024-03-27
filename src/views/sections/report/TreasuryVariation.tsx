@@ -31,18 +31,27 @@ const Filter = ({ toggleType, handleToggleOnChange, helpText }: FilterProps) => 
     exclusive
     onChange={handleToggleOnChange}
     aria-label="Balance overview type"
+    sx={{ height: 'fit-content' }}
   >
     <ToggleButton
       disableRipple
       value={0}
-      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+      sx={{
+        textTransform: 'none',
+        fontSize: { xs: '14px !important', md: '18px !important' },
+        lineHeight: '1.2rem'
+      }}
     >
       Selected period
     </ToggleButton>
     <ToggleButton
       disableRipple
       value={1}
-      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+      sx={{
+        textTransform: 'none',
+        fontSize: { xs: '14px !important', md: '18px !important' },
+        lineHeight: '1.2rem'
+      }}
     >
       Year to period
       <Tooltip title={helpText} sx={{ ml: 1 }}>
@@ -105,14 +114,14 @@ export const TreasuryVariation = (props: TreasuryVariationProps) => {
         >
           <TabPanel value={toggleType} index={0}>
             {treasuryVariationData?.length > 0 ? (
-              <Waterfall data={treasuryVariationData} barSize={150} />
+              <Waterfall data={treasuryVariationData} barSize={isMD ? 150 : 40} />
             ) : (
               <EmptyData />
             )}
           </TabPanel>
           <TabPanel value={toggleType} index={1}>
             {historicVariationData?.length > 0 ? (
-              <Waterfall data={historicVariationData} barSize={150} />
+              <Waterfall data={historicVariationData} barSize={isMD ? 150 : 40} />
             ) : (
               <EmptyData />
             )}

@@ -2,6 +2,9 @@ import { AutocompleteOption, Filter, Form, EmptyData, PaperSection } from 'src/c
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
 import { TableTokenDetail } from './TableTokenDetail'
+import { FilterContent } from 'components/filters/mobile/FilterContent'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/material'
 
 interface TokenDetailContainerProps {
   tokenDetails: any[]
@@ -86,7 +89,7 @@ export const TokenDetailContainer = (props: TokenDetailContainerProps) => {
       }
     : null
 
-  const filter = (
+  const CommonFilter = (
     <Filter
       id={id}
       handleClick={handleClick}
@@ -109,10 +112,22 @@ export const TokenDetailContainer = (props: TokenDetailContainerProps) => {
     </Filter>
   )
 
+  const MobileFilter = (
+    <FilterContent
+      enableBlockchain={true}
+      blockchainOptions={blockchainOptions}
+      handleClear={handleClear}
+      handleClick={onSubmitClose}
+    />
+  )
+
   const isFilterApplied = blockchainFilter !== null
 
   const { state } = useApp()
   const { currency } = state
+
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
     <PaperSection
@@ -124,7 +139,7 @@ export const TokenDetailContainer = (props: TokenDetailContainerProps) => {
           : 'Token detail with price variation (ETH)'
       }
       helpInfo="Token balances, price variations, detail by position and wallet"
-      filter={filter}
+      filter={isMD ? CommonFilter : MobileFilter}
     >
       {filteredTokenDetails.length === 0 && !isFilterApplied ? (
         <EmptyData />

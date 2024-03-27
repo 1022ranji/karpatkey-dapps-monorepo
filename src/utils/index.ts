@@ -1,8 +1,6 @@
 import { getAddress } from '@ethersproject/address'
 import { FILTER_DAO, FILTER_DAOS, MONTHS, NONE } from '../config/constants'
 
-import { AutocompleteOption } from '../components/CustomAutocomplete'
-
 export function isAddress(value: any): string | false {
   try {
     return getAddress(value)
@@ -28,11 +26,11 @@ export const slugify = (str: string) =>
     .replace(/^-+|-+$/g, '')
 
 export const getMonthName = (monthNumber: number) => {
-  const month = MONTHS.find((option: AutocompleteOption) => {
+  const month = MONTHS.find((option: { label: string; short: string; id: number }) => {
     return +option.id === +monthNumber
   })
 
-  return month?.label
+  return month
 }
 
 export const getDAOName = (daoKey: number) => {

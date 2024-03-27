@@ -5,19 +5,21 @@ import { Header as DashboardHeader } from './dashboard/Header'
 import { Wrapper as ReportMobileWrapper } from './report/mobile/Wrapper'
 import { Body as ReportMobileBody } from './report/mobile/Body'
 import { Header as ReportMobileHeader } from './report/mobile/Header'
+import { Footer as ReportMobileFooter } from './report/mobile/Footer'
 
 import { Wrapper as ReportDesktopWrapper } from './report/desktop/Wrapper'
 import { Body as ReportDesktopBody } from './report/desktop/Body'
 import { Header as ReportDesktopHeader } from './report/desktop/Header'
 import { Sidebar as ReportDesktopSidebar } from './report/desktop/Sidebar'
+import { Footer as ReportDesktopFooter } from './report/desktop/Footer'
 
-import { Footer as CommonFooter } from './Footer'
+import { Footer as DashboardFooter } from './dashboard/Footer'
 
 import { Theme } from '@mui/material'
 import React, { ReactElement } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { ReportDesktopBodyWrapper } from 'components/layout/report/desktop/BodyWrapper'
-
+import { Disclaimer } from 'components/layout/report/Disclaimer'
 interface LayoutProps {
   children: React.ReactElement
 }
@@ -37,20 +39,26 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
         <ReportDesktopHeader />
         <ReportDesktopBodyWrapper>
           <ReportDesktopSidebar />
-          <ReportDesktopBody component="main">{children}</ReportDesktopBody>
+          <ReportDesktopBody component="main">
+            {children}
+            <Disclaimer />
+            <ReportDesktopFooter />
+          </ReportDesktopBody>
         </ReportDesktopBodyWrapper>
       </ReportDesktopWrapper>
     ) : (
       <ReportMobileWrapper>
         <ReportMobileHeader />
         <ReportMobileBody component="main">{children}</ReportMobileBody>
+        <Disclaimer />
+        <ReportMobileFooter />
       </ReportMobileWrapper>
     )
   ) : (
     <DashboardWrapper>
       <DashboardHeader />
       <DashboardBody component="main">{children}</DashboardBody>
-      <CommonFooter />
+      <DashboardFooter />
     </DashboardWrapper>
   )
 }

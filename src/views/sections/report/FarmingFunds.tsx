@@ -47,24 +47,26 @@ export const FarmingFunds = (props: FarmingFundsProps) => {
                 : 'Farming results from Farm-Swaps (ETH)'
           }
         >
-          <CustomTypography variant="farmSwapsValue">
-            {totalFarmSwaps === 0 ? (
-              <CustomTypography
-                variant="body2"
-                color="textSecondary"
-                align="left"
-                sx={{ fontStyle: 'italic' }}
-              >
-                {isDDay
-                  ? 'No DeFi results from DeFi-Swaps within the selected period'
-                  : 'No farming results from Farm-Swaps within the selected period'}
-              </CustomTypography>
-            ) : currency === 'USD' ? (
-              formatCurrency(totalFarmSwaps)
-            ) : (
-              formatNumber(totalFarmSwaps, 0)
-            )}
-          </CustomTypography>
+          {totalFarmSwaps === 0 && (
+            <CustomTypography
+              variant="body2"
+              color="textSecondary"
+              align="left"
+              sx={{ fontStyle: 'italic' }}
+            >
+              {isDDay
+                ? 'No DeFi results from DeFi-Swaps within the selected period'
+                : 'No farming results from Farm-Swaps within the selected period'}
+            </CustomTypography>
+          )}
+
+          {totalFarmSwaps !== 0 && currency === 'USD' && (
+            <CustomTypography>{formatCurrency(totalFarmSwaps)}</CustomTypography>
+          )}
+
+          {totalFarmSwaps !== 0 && currency === 'ETH' && (
+            <CustomTypography>{formatNumber(totalFarmSwaps, 0)}</CustomTypography>
+          )}
         </PaperSection>
       </AnimatePresenceWrapper>
       {operationDetails.length > 0 && isDDay && (

@@ -25,6 +25,7 @@ const Filter = ({ toggleType, handleToggleOnChange }: FilterProps) => (
     exclusive
     onChange={handleToggleOnChange}
     aria-label="Balance overview type"
+    sx={{ height: 'fit-content' }}
   >
     <ToggleButton
       disableRipple

@@ -2,6 +2,9 @@ import { PaperSection, Form, Filter, EmptyData, AutocompleteOption } from 'src/c
 import { getFarmingResultsDetailsByProtocolTotals } from 'src/utils/mappers/farmingFunds'
 import * as React from 'react'
 import TableResults from './TableResults'
+import { FilterContent } from 'components/filters/mobile/FilterContent'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/material'
 
 interface ResultsContainerProps {
   fundsDetails: any[]
@@ -96,7 +99,7 @@ const ResultsContainer = (props: ResultsContainerProps) => {
       }
     : null
 
-  const filter = (
+  const CommonFilter = (
     <Filter
       id={id}
       handleClick={handleClick}
@@ -124,10 +127,25 @@ const ResultsContainer = (props: ResultsContainerProps) => {
     </Filter>
   )
 
+  const MobileFilter = (
+    <FilterContent
+      enableBlockchain={true}
+      blockchainOptions={blockchainOptions}
+      handleClear={handleClear}
+      handleClick={onSubmitClose}
+    />
+  )
+
   const isFilterActive = blockchainFilter || protocolFilter
 
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
   return (
-    <PaperSection subTitle="Farming results detail by position" filter={filter}>
+    <PaperSection
+      subTitle="Farming results detail by position"
+      filter={isMD ? CommonFilter : MobileFilter}
+    >
       {fundsDetails.length === 0 && !isFilterActive ? (
         <EmptyData />
       ) : (

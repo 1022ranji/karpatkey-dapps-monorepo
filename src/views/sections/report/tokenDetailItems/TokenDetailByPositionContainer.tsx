@@ -3,6 +3,9 @@ import { PaperSection, Form, Filter, EmptyData } from 'src/components'
 import * as React from 'react'
 import { isYearAndMonthValid } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
+import { FilterContent } from 'components/filters/mobile/FilterContent'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/material'
 
 interface TokenDetailByPositionContainerProps {
   tokenDetailByPosition: any[]
@@ -177,7 +180,7 @@ export const TokenDetailByPositionContainer = (props: TokenDetailByPositionConta
     })
     .sort((a: any, b: any) => a.label.localeCompare(b.label))
 
-  const filter = (
+  const CommonFilter = (
     <Filter
       id={id}
       handleClick={handleClick}
@@ -211,13 +214,31 @@ export const TokenDetailByPositionContainer = (props: TokenDetailByPositionConta
       />
     </Filter>
   )
+
+  const MobileFilter = (
+    <FilterContent
+      enableBlockchain={true}
+      enableProtocol={true}
+      enableToken={true}
+      {...(isDDay ? { enableDeFiType: true, deFiTypeOptions } : {})}
+      blockchainOptions={blockchainOptions}
+      protocolOptions={protocolOptions}
+      tokenOptions={tokenOptions}
+      handleClear={handleClear}
+      handleClick={onSubmitClose}
+    />
+  )
+
   const { state } = useApp()
   const { currency } = state
+
+  // check if the screen size is md
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
     <PaperSection
       subTitle={currency === 'USD' ? 'Token detail by position' : 'Token detail by position (ETH)'}
-      filter={filter}
+      filter={isMD ? CommonFilter : MobileFilter}
     >
       {filteredDataByBlockchainAndProtocolAndToken &&
       filteredDataByBlockchainAndProtocolAndToken.length > 0 ? (

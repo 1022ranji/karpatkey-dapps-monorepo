@@ -1,4 +1,4 @@
-import { number, object } from 'yup'
+import { number, object, string } from 'yup'
 
 export const filterSchemaValidation = object({
   dao: number().notRequired().min(0, 'Minimum at least 0').max(9, 'Allowed maximum is 9'),
@@ -6,5 +6,8 @@ export const filterSchemaValidation = object({
   year: number()
     .notRequired()
     .min(2020, 'Minimum at least 2020')
-    .max(2050, 'Allowed maximum is 2050')
+    .max(2050, 'Allowed maximum is 2050'),
+  currency: string()
+    .notRequired()
+    .matches(/^(USD|ETH)$/, 'Invalid currency')
 })
