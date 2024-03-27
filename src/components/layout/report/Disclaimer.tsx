@@ -11,8 +11,8 @@ export const Disclaimer = () => {
       <BoxWrapperColumn
         sx={{
           margin: {
-            xs: '20px 20px 20px 20px',
-            md: '30px 30px 30px 30px'
+            xs: '40px 20px 20px 20px',
+            md: '60px 30px 30px 30px'
           },
           alignItems: 'flex-start',
           gap: { xs: 2, md: 4 }
@@ -40,7 +40,7 @@ export const Disclaimer = () => {
           Token Balances and Prices are considered at end of month 0 UTC.
         </CustomTypography>
         {isDDay && (
-          <BoxWrapperColumn gap={'10px'} sx={{ marginBottom: '40px', marginTop: '40px' }}>
+          <BoxWrapperColumn gap={'10px'} sx={{ marginBottom: '20px', marginTop: '20px' }}>
             <CustomTypography
               variant="body2"
               color="textSecondary"
