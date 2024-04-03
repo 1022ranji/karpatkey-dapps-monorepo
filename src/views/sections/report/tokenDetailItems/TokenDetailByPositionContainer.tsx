@@ -220,10 +220,15 @@ export const TokenDetailByPositionContainer = (props: TokenDetailByPositionConta
       enableBlockchain={true}
       enableProtocol={true}
       enableToken={true}
-      {...(isDDay ? { enableDeFiType: true, deFiTypeOptions } : {})}
+      {...(isDDay
+        ? { enableDeFiType: true, defaultDeFiTypeValue: defaultDeFiTypeValue?.id, deFiTypeOptions }
+        : {})}
       blockchainOptions={blockchainOptions}
       protocolOptions={protocolOptions}
       tokenOptions={tokenOptions}
+      defaultBlockchainValue={defaultBlockchainValue?.id}
+      defaultProtocolValue={defaultProtocolValue?.id}
+      defaultTokenValue={defaultTokenValue?.id}
       handleClear={handleClear}
       handleClick={onSubmitClose}
     />

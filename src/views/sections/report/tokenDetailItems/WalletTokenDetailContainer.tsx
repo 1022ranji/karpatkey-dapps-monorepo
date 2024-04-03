@@ -125,6 +125,7 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
     <FilterContent
       enableBlockchain={true}
       blockchainOptions={blockchainOptions}
+      defaultBlockchainValue={defaultBlockchainValue?.id}
       handleClear={handleClear}
       handleClick={onSubmitClose}
     />

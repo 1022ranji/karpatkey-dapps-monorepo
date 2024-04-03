@@ -135,6 +135,8 @@ export const OperationsContainer = (props: ResultsContainerProps) => {
       enableProtocol={true}
       blockchainOptions={blockchainOptions}
       protocolOptions={protocolOptions}
+      defaultBlockchainValue={defaultBlockchainValue?.id}
+      defaultProtocolValue={defaultProtocolValue?.id}
       handleClear={handleClear}
       handleClick={onSubmitClose}
     />

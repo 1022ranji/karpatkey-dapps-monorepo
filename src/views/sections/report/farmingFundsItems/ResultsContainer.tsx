@@ -130,7 +130,11 @@ const ResultsContainer = (props: ResultsContainerProps) => {
   const MobileFilter = (
     <FilterContent
       enableBlockchain={true}
+      enableProtocol={true}
       blockchainOptions={blockchainOptions}
+      protocolOptions={protocolOptions}
+      defaultBlockchainValue={defaultBlockchainValue?.id}
+      defaultProtocolValue={defaultProtocolValue?.id}
       handleClear={handleClear}
       handleClick={onSubmitClose}
     />

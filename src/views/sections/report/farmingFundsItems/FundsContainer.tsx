@@ -138,6 +138,8 @@ export const FundsContainer = (props: FundsContainerProps) => {
       enableProtocol={true}
       blockchainOptions={blockchainOptions}
       protocolOptions={protocolOptions}
+      defaultBlockchainValue={defaultBlockchainValue?.id}
+      defaultProtocolValue={defaultProtocolValue?.id}
       handleClear={handleClear}
       handleClick={onSubmitClose}
     />
