@@ -1,5 +1,11 @@
 import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format'
-import { CustomTypography, PieChart, InfoCard, BoxWrapperColumn } from 'src/components'
+import {
+  CustomTypography,
+  PieChart,
+  InfoCard,
+  BoxWrapperColumn,
+  AnimatePresenceWrapper
+} from 'src/components'
 import * as React from 'react'
 import { Box, Theme } from '@mui/material'
 import { getDAO } from 'src/utils'
@@ -57,7 +63,7 @@ export const Summary = (props: SummaryProps) => {
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return (
-    <>
+    <AnimatePresenceWrapper>
       <BoxWrapperColumn
         sx={{
           borderBottom: { xs: '2px solid #E0E0E0', md: 'none' }
@@ -257,6 +263,6 @@ export const Summary = (props: SummaryProps) => {
           </Carousel>
         </Box>
       ) : null}
-    </>
+    </AnimatePresenceWrapper>
   )
 }
