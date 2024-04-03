@@ -36,7 +36,7 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
   const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
 
   return (
-    <TableContainer component={Box}>
+    <TableContainer component={Box} sx={{ overflow: 'hidden' /* Hide scrollbars */ }}>
       <MaterialTable>
         <TableHead>
           <TableRow sx={{ '& th': { borderBottom: 'none !important' } }}>

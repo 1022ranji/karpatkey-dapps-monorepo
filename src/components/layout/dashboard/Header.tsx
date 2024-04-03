@@ -29,7 +29,8 @@ export const Header = () => {
               md: 'flex'
             },
             position: 'relative',
-            float: 'right'
+            float: 'right',
+            height: '40px'
           }}
         >
           <LinkStyled href="https://www.karpatkey.com/contributions">Contributions</LinkStyled>

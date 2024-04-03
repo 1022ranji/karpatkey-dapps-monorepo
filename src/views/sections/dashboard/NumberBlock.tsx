@@ -15,8 +15,8 @@ export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
           variant="h2"
           sx={{
             fontFamily: 'IBM Plex Mono',
-            fontSize: '36px',
-            lineHeight: '24px',
+            fontSize: '32px',
+            lineHeight: '20px',
             fontStyle: 'normal',
             fontWeight: 600
           }}
@@ -27,8 +27,8 @@ export const NumberBlock = ({ amount, title }: NumberBlockProps) => {
           textAlign="center"
           sx={{
             fontFamily: 'IBM Plex Mono',
-            fontSize: '22px',
-            lineHeight: '24px',
+            fontSize: '20px',
+            lineHeight: '22px',
             fontWeight: '400',
             fontStyle: 'normal'
           }}
