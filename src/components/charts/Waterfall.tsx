@@ -201,6 +201,7 @@ export const Waterfall = ({ title, data, barSize = 60, ...props }: BoxProps & Wa
           data={data}
           margin={{
             top: 20,
+            bottom: 20,
             left: 10
           }}
         >

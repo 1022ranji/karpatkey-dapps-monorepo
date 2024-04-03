@@ -195,10 +195,7 @@ export const Summary = (props: SummaryProps) => {
       {!isMD ? (
         <Box
           sx={{
-            margin: {
-              xs: '20px 20px 20px 20px',
-              md: '30px 30px 30px 30px'
-            }
+            margin: '40px 20px 40px 20px'
           }}
         >
           <Carousel className="custom-slider-charts">
