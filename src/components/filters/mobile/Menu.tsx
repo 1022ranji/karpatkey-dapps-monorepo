@@ -68,12 +68,13 @@ export const Menu = () => {
     if (filterDAO) query.append('dao', filterDAO + '')
     if (month) query.append('month', month + '')
     if (year) query.append('year', year + '')
+    if (currency) query.append('currency', currency)
     return `${url}?${query.toString()}`
-  }, [month, filterDAO, year])
+  }, [month, filterDAO, year, currency])
 
   const { dao, monthName } = React.useMemo(() => {
     const dao: FILTER_DAO | undefined = getDAO(filterDAO)
-    const monthName = month ? getMonthName(+month)?.label : null
+    const monthName = month ? getMonthName(+month)?.short : null
 
     return { dao, monthName }
   }, [filterDAO, month])
