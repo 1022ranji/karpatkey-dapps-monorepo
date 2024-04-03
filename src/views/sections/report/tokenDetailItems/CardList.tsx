@@ -3,7 +3,8 @@ import { Variants, motion, useAnimation } from 'framer-motion'
 import * as React from 'react'
 import { useInView } from 'react-intersection-observer'
 
-import { Card } from './card/Card'
+import { Card as CardDesktop } from './card/desktop/Card'
+import { Card as CardMobile } from './card/mobile/Card'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Carousel } from 'components/Carousel'
 
@@ -85,7 +86,7 @@ export const CardList = (props: CardListProps) => {
                   background: 'background.paper'
                 }}
               >
-                <Card id={index} key={index} card={card} />
+                <CardDesktop id={index} key={index} card={card} />
               </Box>
             )
           })}
@@ -100,7 +101,7 @@ export const CardList = (props: CardListProps) => {
             }
           }}
         >
-          <Carousel className="custom-slider-cards">
+          <Carousel className="custom-slider-cards" dots={false}>
             {tokenDetailByPosition.map((card: any, index: number) => {
               return (
                 <Box
@@ -108,15 +109,15 @@ export const CardList = (props: CardListProps) => {
                   sx={{
                     maxWidth: '320px',
                     minWidth: '320px',
-                    minHeight: '180px',
-                    height: '180px',
+                    minHeight: '200px',
+                    height: 'fit-content',
                     padding: '8px 8px',
                     margin: '0 10px',
                     border: '1px solid #B6B6B6',
                     background: 'background.paper'
                   }}
                 >
-                  <Card id={index} key={index} card={card} />
+                  <CardMobile id={index} key={index} card={card} />
                 </Box>
               )
             })}

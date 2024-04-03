@@ -1,15 +1,16 @@
-import { formatCurrency, formatNumber } from 'src/utils/format'
+import { formatCurrency, formatNumber } from '../../../../../../utils/format'
 import { ItemText } from './ItemText'
 import { Position } from './Position'
 import { ProtocolIcon } from './ProtocolIcon'
 import { Title } from './Title'
-import { BoxWrapperColumn, BoxWrapperRow, UniswapHelpText } from 'src/components'
+import { BoxWrapperColumn, BoxWrapperRow, UniswapHelpText } from 'components/index'
 import * as React from 'react'
 import { Common } from './Common'
 import { Ratios } from './Ratios'
-import { UNISWAP_PROTOCOL } from 'src/config/constants'
-import { isYearAndMonthValid } from 'src/utils/params'
-import { useApp } from 'src/contexts/app.context'
+import { UNISWAP_PROTOCOL } from '../../../../../../config/constants'
+import { isYearAndMonthValid } from '../../../../../../utils/params'
+import { useApp } from '../../../../../../contexts/app.context'
+import Box from '@mui/material/Box'
 
 interface CardItemProps {
   id: number
@@ -49,6 +50,7 @@ export const Card = (props: CardItemProps) => {
           <Title title={deFiType} />
         </BoxWrapperRow>
       )}
+
       <BoxWrapperColumn gap={1}>
         <Position position={position} {...(protocol === UNISWAP_PROTOCOL ? { helpText } : {})} />
         <ItemText
@@ -60,36 +62,38 @@ export const Card = (props: CardItemProps) => {
           }
         />
       </BoxWrapperColumn>
-      {cardType === 'common' &&
-        categories
-          .sort((a: any, b: any) => a.name.localeCompare(b.name))
-          .map((category: any, index: number) => {
-            const { name, tokens } = category
-            if (tokens && tokens.length > 0) {
-              return <Common key={index} title={name} tokens={tokens} />
-            } else {
-              return null
-            }
-          })}
-      {cardType === 'metrics' &&
-        categories
-          .sort((a: any, b: any) => a.name.localeCompare(b.name))
-          .map((category: any, index: number) => {
-            const { name, tokens, ratios } = category
-            if (name === 'Ratios') {
-              if (ratios && ratios.length > 0) {
-                return <Ratios key={index} title={name} ratios={ratios} />
-              } else {
-                return null
-              }
-            } else {
+      <Box sx={{ display: 'none' }}>
+        {cardType === 'common' &&
+          categories
+            .sort((a: any, b: any) => a.name.localeCompare(b.name))
+            .map((category: any, index: number) => {
+              const { name, tokens } = category
               if (tokens && tokens.length > 0) {
                 return <Common key={index} title={name} tokens={tokens} />
               } else {
                 return null
               }
-            }
-          })}
+            })}
+        {cardType === 'metrics' &&
+          categories
+            .sort((a: any, b: any) => a.name.localeCompare(b.name))
+            .map((category: any, index: number) => {
+              const { name, tokens, ratios } = category
+              if (name === 'Ratios') {
+                if (ratios && ratios.length > 0) {
+                  return <Ratios key={index} title={name} ratios={ratios} />
+                } else {
+                  return null
+                }
+              } else {
+                if (tokens && tokens.length > 0) {
+                  return <Common key={index} title={name} tokens={tokens} />
+                } else {
+                  return null
+                }
+              }
+            })}
+      </Box>
     </BoxWrapperColumn>
   )
 }
