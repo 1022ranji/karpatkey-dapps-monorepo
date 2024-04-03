@@ -86,7 +86,18 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: columnWidthPercentage,
+                ...(columns.length > 2 && {
+                  position: 'sticky',
+                  left: 0,
+                  zIndex: 1,
+                  backgroundColor: '#eeeded'
+                })
+              }}
+              align="left"
+            >
               <CustomTypo>Token category</CustomTypo>
             </TableHeadCellCustom>
             {columns.map((blockchainName: any, index: number) => (
@@ -104,7 +115,18 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
             const { category, total = 0 } = item
             return (
               <TableRow key={index}>
-                <TableCellCustom sx={{ width: columnWidthPercentage }} align="left">
+                <TableCellCustom
+                  sx={{
+                    width: columnWidthPercentage,
+                    ...(columns.length > 2 && {
+                      position: 'sticky',
+                      left: 0,
+                      zIndex: 1,
+                      backgroundColor: '#eeeded'
+                    })
+                  }}
+                  align="left"
+                >
                   <CustomTypo>{category}</CustomTypo>
                 </TableCellCustom>
                 {columns.map((blockchainName: any, index: number) => {
@@ -130,7 +152,18 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
             )
           })}
           <TableRow>
-            <TableFooterCellCustom sx={{ width: columnWidthPercentage }} align="left">
+            <TableFooterCellCustom
+              sx={{
+                width: columnWidthPercentage,
+                ...(columns.length > 2 && {
+                  position: 'sticky',
+                  left: 0,
+                  zIndex: 1,
+                  backgroundColor: '#eeeded'
+                })
+              }}
+              align="left"
+            >
               <CustomTypo>Total</CustomTypo>
             </TableFooterCellCustom>
             {columns.map((blockchainName: any, index: number) => {

@@ -47,67 +47,73 @@ export const Hero = () => {
 
   return (
     <AnimatePresenceWrapper>
-      <BoxWrapperColumn
-        sx={{
-          margin: {
-            xs: '20px 20px 20px 20px',
-            md: '30px 30px 30px 30px'
-          },
-          alignItems: 'flex-start',
-          gap: { xs: 2, md: 4 }
-        }}
-      >
-        <BoxWrapperRow sx={{ gap: { xs: 0, md: 2 } }}>
-          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-            <Image src={dao?.icon ?? ''} alt={dao?.name} width={116} height={116} key={dao?.icon} />
-          </Box>
-          <a className="anchor" id="summary" />
-          <BoxWrapperColumn
-            sx={{
-              alignItems: 'flex-start',
-              alignSelf: 'stretch',
-              justifyContent: 'space-between',
-              gap: { xs: 1, md: 0 }
-            }}
-          >
-            <CustomTypography
-              variant="heroSectionTitle"
+      {isMD ? (
+        <BoxWrapperColumn
+          sx={{
+            margin: {
+              xs: '20px 20px 20px 20px',
+              md: '30px 30px 30px 30px'
+            },
+            alignItems: 'flex-start',
+            gap: { xs: 2, md: 4 }
+          }}
+        >
+          <BoxWrapperRow sx={{ gap: { xs: 0, md: 2 } }}>
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <Image
+                src={dao?.icon ?? ''}
+                alt={dao?.name}
+                width={116}
+                height={116}
+                key={dao?.icon}
+              />
+            </Box>
+            <a className="anchor" id="summary" />
+            <BoxWrapperColumn
               sx={{
-                fontSize: {
-                  xs: '44px',
-                  md: '64px'
-                },
-                lineHeight: {
-                  xs: '44px',
-                  md: '64px'
-                }
+                alignItems: 'flex-start',
+                alignSelf: 'stretch',
+                justifyContent: 'space-between',
+                gap: { xs: 1, md: 0 }
               }}
             >
-              {dao?.name?.trim()}
-            </CustomTypography>
-            <CustomTypography
-              variant="heroSectionSubtitle"
-              sx={{
-                fontSize: {
-                  xs: '24px',
-                  md: '32px'
-                },
-                lineHeight: {
-                  xs: '24px',
-                  md: '64px'
-                }
-              }}
-            >
-              {monthName.trim()} Treasury Report
-            </CustomTypography>
-          </BoxWrapperColumn>
-        </BoxWrapperRow>
-        {isMD || daoAddresses.length <= 2 ? (
+              <CustomTypography
+                variant="heroSectionTitle"
+                sx={{
+                  fontSize: {
+                    xs: '44px',
+                    md: '64px'
+                  },
+                  lineHeight: {
+                    xs: '44px',
+                    md: '64px'
+                  }
+                }}
+              >
+                {dao?.name?.trim()}
+              </CustomTypography>
+              <CustomTypography
+                variant="heroSectionSubtitle"
+                sx={{
+                  fontSize: {
+                    xs: '24px',
+                    md: '32px'
+                  },
+                  lineHeight: {
+                    xs: '24px',
+                    md: '64px'
+                  }
+                }}
+              >
+                {monthName.trim()} Treasury Report
+              </CustomTypography>
+            </BoxWrapperColumn>
+          </BoxWrapperRow>
           <BoxWrapperRow
             sx={{
               justifyContent: 'flex-start',
               gap: 2,
-              paddingBottom: '20px',
+              padding: '20px 20px 20px 20px',
               flexWrap: 'wrap'
             }}
           >
@@ -117,8 +123,25 @@ export const Hero = () => {
                 <ButtonAddress key={index} daoAddress={daoAddress} />
               ))}
           </BoxWrapperRow>
-        ) : null}
-      </BoxWrapperColumn>
+        </BoxWrapperColumn>
+      ) : null}
+      {!isMD && daoAddresses.length <= 2 ? (
+        <BoxWrapperRow
+          sx={{
+            justifyContent: 'flex-start',
+            gap: 2,
+            padding: '20px 20px 20px 20px',
+            borderBottom: '2px solid #E0E0E0',
+            flexWrap: 'wrap'
+          }}
+        >
+          {daoAddresses
+            .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
+            .map((daoAddress: DAO_ADDRESS, index: number) => (
+              <ButtonAddress key={index} daoAddress={daoAddress} />
+            ))}
+        </BoxWrapperRow>
+      ) : null}
       {!isMD && daoAddresses.length > 2 ? (
         <Box
           sx={{

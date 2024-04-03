@@ -73,7 +73,16 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: isMD ? '20%' : '25%',
+                position: 'sticky',
+                left: 0,
+                zIndex: 1,
+                backgroundColor: '#eeeded'
+              }}
+              align="left"
+            >
               <CustomTypo>Token symbol</CustomTypo>
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
@@ -132,7 +141,16 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
 
                 return (
                   <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="left">
+                    <TableCellCustom
+                      sx={{
+                        width: isMD ? '20%' : '25%',
+                        position: 'sticky',
+                        left: 0,
+                        zIndex: 1,
+                        backgroundColor: '#eeeded'
+                      }}
+                      align="left"
+                    >
                       <BoxWrapperColumn>
                         <CustomTypo>{row.tokenSymbol}</CustomTypo>
                         <CustomTypography
