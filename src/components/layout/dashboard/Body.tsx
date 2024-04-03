@@ -5,5 +5,8 @@ export const Body = styled(BoxWrapperColumn)(() => ({
   alignItems: 'center',
   flexGrow: 1,
   zIndex: 1,
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  maxWidth: '940px',
+  marginLeft: 'auto',
+  marginRight: 'auto'
 }))
