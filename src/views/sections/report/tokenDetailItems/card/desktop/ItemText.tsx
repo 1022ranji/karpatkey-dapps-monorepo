@@ -1,4 +1,4 @@
-import { CustomTypography } from 'src/components'
+import { CustomTypography } from 'components/index'
 import * as React from 'react'
 
 interface ItemTextProps {

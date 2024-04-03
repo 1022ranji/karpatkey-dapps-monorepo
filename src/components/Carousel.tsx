@@ -7,6 +7,7 @@ import PrevArrow from '@mui/icons-material/ArrowBackIos'
 interface CarouselProps {
   children: React.ReactNode
   className?: string
+  dots?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,9 +20,9 @@ export const NextArrowCustom = ({ currentSlide, slideCount, ...arrowProps }: any
   <NextArrow sx={{ fill: 'black', fontSize: '14px' }} {...arrowProps} />
 )
 
-export const Carousel = ({ children, className }: CarouselProps) => {
+export const Carousel = ({ children, className, dots = true }: CarouselProps) => {
   const settings = {
-    dots: true,
+    dots,
     speed: 500,
     initialSlide: 0,
     slidesToShow: 1,

@@ -1,10 +1,10 @@
-import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format'
-import { BoxWrapperColumn, BoxWrapperRow } from 'src/components'
+import { formatCurrency, formatNumber, formatPercentage } from '../../../../../../utils/format'
+import { BoxWrapperColumn, BoxWrapperRow } from 'components/index'
 import { Divider } from '@mui/material'
 import * as React from 'react'
 
 import { ItemText } from './ItemText'
-import { useApp } from 'src/contexts/app.context'
+import { useApp } from '../../../../../../contexts/app.context'
 
 interface RatiosProps {
   title: string

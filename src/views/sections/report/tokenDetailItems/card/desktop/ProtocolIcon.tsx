@@ -34,7 +34,7 @@ import {
   Karpatkey,
   Stader,
   StakeDAO
-} from 'src/components/icons/protocols'
+} from 'components/icons/protocols'
 import * as React from 'react'
 
 interface ProtocolIconProps {

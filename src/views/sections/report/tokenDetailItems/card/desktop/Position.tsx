@@ -1,4 +1,4 @@
-import { CustomTypography } from 'src/components'
+import { CustomTypography } from 'components/index'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import * as React from 'react'
 import { ReactElement } from 'react'

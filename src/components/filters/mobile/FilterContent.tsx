@@ -43,6 +43,10 @@ interface FilterContentProps {
   tokenOptions?: any[]
   handleClear: () => void
   handleClick: (params: any) => void
+  defaultBlockchainValue?: Maybe<string>
+  defaultProtocolValue?: Maybe<string>
+  defaultDeFiTypeValue?: Maybe<string>
+  defaultTokenValue?: Maybe<string>
 }
 
 export const FilterContent = ({
@@ -55,7 +59,11 @@ export const FilterContent = ({
   deFiTypeOptions = [],
   tokenOptions = [],
   handleClear,
-  handleClick
+  handleClick,
+  defaultBlockchainValue = null,
+  defaultProtocolValue = null,
+  defaultDeFiTypeValue = null,
+  defaultTokenValue = null
 }: FilterContentProps) => {
   const [openModal, setOpenModal] = React.useState(false)
 
@@ -76,10 +84,25 @@ export const FilterContent = ({
     setIsTokenSelectionBeenDisplayed(false)
   }
 
-  const [selectedBlockchain, setSelectedBlockchain] = React.useState<Maybe<string>>(null)
-  const [selectedProtocol, setSelectedProtocol] = React.useState<Maybe<string>>(null)
-  const [selectedDeFiType, setSelectedDeFiType] = React.useState<Maybe<string>>(null)
-  const [selectedToken, setSelectedToken] = React.useState<Maybe<string>>(null)
+  const [selectedBlockchain, setSelectedBlockchain] = React.useState<Maybe<string>>(
+    defaultBlockchainValue ? defaultBlockchainValue : null
+  )
+  const [selectedProtocol, setSelectedProtocol] = React.useState<Maybe<string>>(
+    defaultProtocolValue ? defaultProtocolValue : null
+  )
+  const [selectedDeFiType, setSelectedDeFiType] = React.useState<Maybe<string>>(
+    defaultDeFiTypeValue ? defaultDeFiTypeValue : null
+  )
+  const [selectedToken, setSelectedToken] = React.useState<Maybe<string>>(
+    defaultTokenValue ? defaultTokenValue : null
+  )
+
+  React.useEffect(() => {
+    if (defaultBlockchainValue) setSelectedBlockchain(defaultBlockchainValue)
+    if (defaultProtocolValue) setSelectedProtocol(defaultProtocolValue)
+    if (defaultDeFiTypeValue) setSelectedDeFiType(defaultDeFiTypeValue)
+    if (defaultTokenValue) setSelectedToken(defaultTokenValue)
+  }, [defaultBlockchainValue, defaultProtocolValue, defaultDeFiTypeValue, defaultTokenValue])
 
   const [isMenuBeenDisplayed, setIsMenuBeenDisplayed] = React.useState(true)
   const [isBlockchainSelectionBeenDisplayed, setIsBlockchainSelectionBeenDisplayed] =
