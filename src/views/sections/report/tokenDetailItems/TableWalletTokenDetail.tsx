@@ -55,7 +55,16 @@ export const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxP
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+              <TableHeadCellCustom
+                sx={{
+                  width: '20%',
+                  position: 'sticky',
+                  left: 0,
+                  zIndex: 1,
+                  backgroundColor: '#eeeded'
+                }}
+                align="left"
+              >
                 <CustomTypo>Token symbol</CustomTypo>
               </TableHeadCellCustom>
               <TableHeadCellCustom sx={{ width: '20%' }} align="right">
@@ -80,7 +89,16 @@ export const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxP
 
                   return (
                     <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
-                      <TableCellCustom sx={{ width: '33%' }} align="left">
+                      <TableCellCustom
+                        sx={{
+                          width: '33%',
+                          position: 'sticky',
+                          left: 0,
+                          zIndex: 1,
+                          backgroundColor: '#eeeded'
+                        }}
+                        align="left"
+                      >
                         <BoxWrapperColumn>
                           <CustomTypo>{row.tokenSymbol}</CustomTypo>
                           <CustomTypography

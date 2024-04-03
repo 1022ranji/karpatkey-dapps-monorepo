@@ -26,7 +26,16 @@ const TableResults = (props: TableResultsProps) => {
       <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: '20%',
+                position: 'sticky',
+                left: 0,
+                zIndex: 1,
+                backgroundColor: '#eeeded'
+              }}
+              align="left"
+            >
               Blockchain
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '20%' }} align="left">
@@ -57,7 +66,16 @@ const TableResults = (props: TableResultsProps) => {
 
                 return (
                   <TableRow key={index}>
-                    <TableCellCustom sx={{ width: '20%' }} align="left">
+                    <TableCellCustom
+                      sx={{
+                        width: '20%',
+                        position: 'sticky',
+                        left: 0,
+                        zIndex: 1,
+                        backgroundColor: '#eeeded'
+                      }}
+                      align="left"
+                    >
                       {row?.blockchain}
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '20%' }} align="left">
@@ -113,7 +131,16 @@ const TableResults = (props: TableResultsProps) => {
                 </TableRow>
               ) : null}
               <TableRow>
-                <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+                <TableFooterCellCustom
+                  sx={{
+                    width: '20%',
+                    position: 'sticky',
+                    left: 0,
+                    zIndex: 1,
+                    backgroundColor: '#eeeded'
+                  }}
+                  align="left"
+                >
                   Total
                 </TableFooterCellCustom>
                 <TableFooterCellCustom sx={{ width: '20%' }} align="left">

@@ -50,7 +50,16 @@ const TableOperations = (props: TableResultsProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: '25%' }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: '25%',
+                position: 'sticky',
+                left: 0,
+                zIndex: 1,
+                backgroundColor: '#eeeded'
+              }}
+              align="left"
+            >
               <CustomTypo>Position</CustomTypo>
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '25%' }} align="right">
@@ -88,7 +97,16 @@ const TableOperations = (props: TableResultsProps) => {
 
                 return (
                   <TableRow key={index}>
-                    <TableCellCustom sx={{ width: '25%' }} align="left">
+                    <TableCellCustom
+                      sx={{
+                        width: '25%',
+                        position: 'sticky',
+                        left: 0,
+                        zIndex: 1,
+                        backgroundColor: '#eeeded'
+                      }}
+                      align="left"
+                    >
                       <BoxWrapperColumn>
                         <CustomTypo>{row?.position}</CustomTypo>
                         <CustomTypography
@@ -200,7 +218,16 @@ const TableOperations = (props: TableResultsProps) => {
                 </TableRow>
               ) : null}
               <TableRow>
-                <TableFooterCellCustom sx={{ width: '25%' }} align="left">
+                <TableFooterCellCustom
+                  sx={{
+                    width: '25%',
+                    position: 'sticky',
+                    left: 0,
+                    zIndex: 1,
+                    backgroundColor: '#eeeded'
+                  }}
+                  align="left"
+                >
                   <CustomTypo>Total</CustomTypo>
                 </TableFooterCellCustom>
                 <TableFooterCellCustom sx={{ width: '25%' }} align="right">

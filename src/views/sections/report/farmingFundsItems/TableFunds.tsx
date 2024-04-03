@@ -55,7 +55,16 @@ const TableFunds = (props: TableFundsProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: isDDay ? '33%' : '25%',
+                position: 'sticky',
+                left: 0,
+                zIndex: 1,
+                backgroundColor: '#eeeded'
+              }}
+              align="left"
+            >
               <CustomTypo>Position</CustomTypo>
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="right">
@@ -104,7 +113,16 @@ const TableFunds = (props: TableFundsProps) => {
 
                 return (
                   <TableRow key={index}>
-                    <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
+                    <TableCellCustom
+                      sx={{
+                        width: isDDay ? '25%' : '20%',
+                        position: 'sticky',
+                        left: 0,
+                        zIndex: 1,
+                        backgroundColor: '#eeeded'
+                      }}
+                      align="left"
+                    >
                       <BoxWrapperRow
                         sx={{ overflowWrap: 'anywhere', justifyContent: 'flex-start' }}
                       >
@@ -224,7 +242,16 @@ const TableFunds = (props: TableFundsProps) => {
               ) : null}
 
               <TableRow>
-                <TableFooterCellCustom colSpan={1} align="left">
+                <TableFooterCellCustom
+                  colSpan={1}
+                  align="left"
+                  sx={{
+                    position: 'sticky',
+                    left: 0,
+                    zIndex: 1,
+                    backgroundColor: '#eeeded'
+                  }}
+                >
                   <CustomTypo>Total</CustomTypo>
                 </TableFooterCellCustom>
                 <TableFooterCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="right">

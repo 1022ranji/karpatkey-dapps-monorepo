@@ -42,7 +42,16 @@ export const TableType = (props: TableTypeProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCellCustom sx={{ width: '20%' }} align="left">
+            <TableHeadCellCustom
+              sx={{
+                width: '20%',
+                position: 'sticky',
+                left: 0,
+                zIndex: 1,
+                backgroundColor: '#eeeded'
+              }}
+              align="left"
+            >
               <CustomTypo>Token category</CustomTypo>
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '20%' }} align="right">
@@ -69,7 +78,16 @@ export const TableType = (props: TableTypeProps) => {
             dataFooterType['Total'] = (dataFooterType['Total'] || 0) + row['Total']
             return (
               <TableRow key={index}>
-                <TableCellCustom sx={{ width: '20%' }} align="left">
+                <TableCellCustom
+                  sx={{
+                    width: '20%',
+                    position: 'sticky',
+                    left: 0,
+                    zIndex: 1,
+                    backgroundColor: '#eeeded'
+                  }}
+                  align="left"
+                >
                   <CustomTypo>{row['Token Category']}</CustomTypo>
                 </TableCellCustom>
                 <TableCellCustom sx={{ width: '20%' }} align="right">
@@ -104,7 +122,16 @@ export const TableType = (props: TableTypeProps) => {
             )
           })}
           <TableRow>
-            <TableFooterCellCustom sx={{ width: '20%' }} align="left">
+            <TableFooterCellCustom
+              sx={{
+                width: '20%',
+                position: 'sticky',
+                left: 0,
+                zIndex: 1,
+                backgroundColor: '#eeeded'
+              }}
+              align="left"
+            >
               <CustomTypo>Total</CustomTypo>
             </TableFooterCellCustom>
             <TableFooterCellCustom sx={{ width: '20%' }} align="right">
