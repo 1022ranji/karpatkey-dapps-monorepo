@@ -66,4 +66,4 @@ path:focus {
   -o-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
 }
 
-body, html { overflow-x:hidden; }
+body { overflow-x:hidden; }
