@@ -76,7 +76,7 @@ const TableFunds = (props: TableFundsProps) => {
               </TableHeadCellCustom>
             ) : null}
             <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="right">
-              <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={1}>
+              <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
                 <CustomTypo>{isDDay ? 'DeFi results' : 'Farming results'}</CustomTypo>
                 <Tooltip
                   title={

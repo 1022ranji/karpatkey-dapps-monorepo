@@ -66,7 +66,7 @@ const TableOperations = (props: TableResultsProps) => {
               <CustomTypo>Operations funds</CustomTypo>
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '25%' }} align="right">
-              <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={1}>
+              <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
                 <CustomTypo>Operations results</CustomTypo>
                 <Tooltip
                   title={
