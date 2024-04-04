@@ -75,7 +75,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
           <TableRow>
             <TableHeadCellCustom
               sx={{
-                width: isMD ? '20%' : '25%',
+                width: isMD ? '20%' : '33%',
                 position: 'sticky',
                 left: 0,
                 zIndex: 1,
@@ -85,19 +85,20 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
             >
               <CustomTypo>Token symbol</CustomTypo>
             </TableHeadCellCustom>
-            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
               <CustomTypo>{currency === 'USD' ? 'Price' : 'ETH Price'}</CustomTypo>
             </TableHeadCellCustom>
-            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
               <CustomTypo>Token balance</CustomTypo>
             </TableHeadCellCustom>
 
-            <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
-              <CustomTypo>{isDDay ? 'Share' : 'Allocation'}</CustomTypo>
-            </TableHeadCellCustom>
-
             {isMD ? (
-              <TableHeadCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+              <TableHeadCellCustom sx={{ width: '20%' }} align="right">
+                <CustomTypo>{isDDay ? 'Share' : 'Allocation'}</CustomTypo>
+              </TableHeadCellCustom>
+            ) : null}
+            {isMD ? (
+              <TableHeadCellCustom sx={{ width: '20%' }} align="right">
                 <CustomTypo>Price variation</CustomTypo>
               </TableHeadCellCustom>
             ) : null}
@@ -143,7 +144,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                   <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
                     <TableCellCustom
                       sx={{
-                        width: isMD ? '20%' : '25%',
+                        width: isMD ? '20%' : '33%',
                         position: 'sticky',
                         left: 0,
                         zIndex: 1,
@@ -180,7 +181,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                         </CustomTypography>
                       </BoxWrapperColumn>
                     </TableCellCustom>
-                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+                    <TableCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
                       <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
                         <BoxWrapperColumn gap={'2px'} sx={{ alignItems: 'flex-end' }}>
                           <Tooltip
@@ -234,7 +235,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                         )}
                       </BoxWrapperRow>
                     </TableCellCustom>
-                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="left">
+                    <TableCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="left">
                       <BoxWrapperColumn sx={{ alignItems: 'flex-end' }}>
                         <CustomTypo sx={{ fontWeight: '400 !important' }}>
                           {formatNumber(row.balance)}
@@ -253,15 +254,31 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                             ? formatCurrency(row.usdValue, 2)
                             : `${formatNumber(row.usdValue, 2)} ETH`}
                         </CustomTypography>
+                        {!isMD ? (
+                          <CustomTypography
+                            variant="tableCellSubData"
+                            sx={{
+                              fontSize: {
+                                xs: '11px',
+                                md: '16px'
+                              },
+                              fontWeight: '400 !important'
+                            }}
+                          >
+                            {formatPercentage(row.allocation)}
+                          </CustomTypography>
+                        ) : null}
                       </BoxWrapperColumn>
                     </TableCellCustom>
-                    <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
-                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                        {formatPercentage(row.allocation)}
-                      </CustomTypo>
-                    </TableCellCustom>
                     {isMD ? (
-                      <TableCellCustom sx={{ width: isMD ? '20%' : '25%' }} align="right">
+                      <TableCellCustom sx={{ width: '20%' }} align="right">
+                        <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                          {formatPercentage(row.allocation)}
+                        </CustomTypo>
+                      </TableCellCustom>
+                    ) : null}
+                    {isMD ? (
+                      <TableCellCustom sx={{ width: '20%' }} align="right">
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
                           {formatPercentage(row.priceVariation) === '0.00%' ? (
                             <Tooltip
@@ -288,7 +305,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
 
               {filteredTokenDetails.length > 5 ? (
                 <TableRow>
-                  <TableCellCustom colSpan={isMD ? 5 : 4} align="center">
+                  <TableCellCustom colSpan={isMD ? 5 : 3} align="center">
                     <BoxWrapperRow gap={1}>
                       <CustomTypography
                         variant="tableCellSubData"
