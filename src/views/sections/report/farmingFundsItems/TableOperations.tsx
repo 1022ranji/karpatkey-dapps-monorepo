@@ -67,7 +67,7 @@ const TableOperations = (props: TableResultsProps) => {
             </TableHeadCellCustom>
             <TableHeadCellCustom sx={{ width: '25%' }} align="right">
               <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={1}>
-                <CustomTypo>Operation results</CustomTypo>
+                <CustomTypo>Operations results</CustomTypo>
                 <Tooltip
                   title={
                     'Operations results include fees, rebasing, pool token variation and rewards from Operations positions'
