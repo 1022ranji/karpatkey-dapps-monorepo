@@ -61,7 +61,20 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
     },
     series: [
       {
+        allowPointSelect: false,
+        states: {
+          hover: {
+            enabled: false
+          },
+          select: {
+            enabled: false
+          },
+          inactive: {
+            enabled: false
+          }
+        },
         name: 'Data',
+        slicedOffset: 0,
         data: data
       }
     ],
@@ -97,7 +110,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         }
       },
       pie: {
-        allowPointSelect: true,
+        allowPointSelect: false,
         cursor: 'pointer',
         borderRadius: 0,
         borderWidth: 0,
@@ -119,23 +132,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
     },
 
     tooltip: {
-      useHTML: true,
-      borderWidth: 0,
-      borderRadius: 0,
-      shadow: false,
-      backgroundColor: 'rgba(255, 255, 255, 0)',
-      formatter: function (this: Highcharts.TooltipFormatterContextObject): any {
-        return `<span class="highcharts-data-label">${
-          this.point.name
-        }</span><br>${this.point.percentage?.toFixed(2)} %`
-      },
-      style: {
-        fontSize: '12px',
-        fontFamily: 'IBM Plex Sans',
-        color: '#222222',
-        textOutline: '0px',
-        fontWeight: 'normal'
-      }
+      enabled: false
     },
     accessibility: {
       point: {

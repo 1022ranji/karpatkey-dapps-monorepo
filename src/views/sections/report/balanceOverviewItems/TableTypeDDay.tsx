@@ -79,8 +79,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                   title={'Positions aimed at yield generation'}
                   sx={{
                     ml: '5px',
-                    cursor: 'pointer',
-                    fontSize: '16px'
+                    cursor: 'pointer'
                   }}
                 >
                   <InfoIcon />
@@ -97,8 +96,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                     }
                     sx={{
                       ml: '5px',
-                      cursor: 'pointer',
-                      fontSize: '16px'
+                      cursor: 'pointer'
                     }}
                   >
                     <InfoIcon />

@@ -165,7 +165,7 @@ const TableOperations = (props: TableResultsProps) => {
                       </CustomTypo>
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '25%' }} align="right">
-                      <CustomTypo>
+                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
                         {currency === 'USD'
                           ? formatCurrency(row?.priceVariation?.toFixed(2) || 0)
                           : formatNumber(row?.priceVariation?.toFixed(2) || 0, 0)}

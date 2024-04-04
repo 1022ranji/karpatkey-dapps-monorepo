@@ -189,13 +189,15 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                                 ? formatCurrency(row?.price, 4)
                                 : formatNumber(row?.price, 10)
                             }
-                            sx={{ ml: 1 }}
+                            sx={{ ml: 1, cursor: 'pointer' }}
                           >
-                            <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                              {currency === 'USD'
-                                ? formatCurrencyWithPrecision(row.price)
-                                : formatNumberWithPrecision(+row.price?.toFixed(6))}
-                            </CustomTypo>
+                            <div>
+                              <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                                {currency === 'USD'
+                                  ? formatCurrencyWithPrecision(row.price)
+                                  : formatNumberWithPrecision(+row.price?.toFixed(6))}
+                              </CustomTypo>
+                            </div>
                           </Tooltip>
 
                           {!isMD ? (
@@ -203,7 +205,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                               {formatPercentage(row.priceVariation) === '0.00%' ? (
                                 <Tooltip
                                   title={formatPercentage(row.priceVariation, 10)}
-                                  sx={{ ml: 1 }}
+                                  sx={{ ml: 1, cursor: 'pointer' }}
                                 >
                                   <CustomTypo sx={{ fontWeight: '400 !important' }}>
                                     {formatPercentage(row.priceVariation)}
@@ -264,7 +266,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                           {formatPercentage(row.priceVariation) === '0.00%' ? (
                             <Tooltip
                               title={formatPercentage(row.priceVariation, 10)}
-                              sx={{ ml: 1 }}
+                              sx={{ ml: 1, cursor: 'pointer' }}
                             >
                               <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
                             </Tooltip>

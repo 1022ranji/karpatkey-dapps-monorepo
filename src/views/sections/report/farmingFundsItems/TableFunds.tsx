@@ -86,11 +86,7 @@ const TableFunds = (props: TableFundsProps) => {
                   }
                   sx={{
                     ml: 1,
-                    cursor: 'pointer',
-                    fontSize: {
-                      xs: '12px',
-                      md: '16px'
-                    }
+                    cursor: 'pointer'
                   }}
                 >
                   <InfoIcon />
@@ -190,7 +186,7 @@ const TableFunds = (props: TableFundsProps) => {
                       </TableCellCustom>
                     ) : null}
                     <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
-                      <CustomTypo>
+                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
                         {currency === 'USD'
                           ? formatCurrency(row.results || 0)
                           : formatNumber(row.results, 1)}
