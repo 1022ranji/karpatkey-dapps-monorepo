@@ -5,7 +5,7 @@ import { HEADER_HEIGHT } from 'components/layout/report/desktop/Header'
 export const Wrapper = styled(BoxWrapperColumn)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  height: '100vh',
+  height: `calc(100vh - ${HEADER_HEIGHT}px)`,
   margin: '0',
   top: `${HEADER_HEIGHT}px`,
   position: 'relative'
