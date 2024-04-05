@@ -19,7 +19,7 @@ import { Theme } from '@mui/material'
 import React, { ReactElement } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { ReportDesktopBodyWrapper } from 'components/layout/report/desktop/BodyWrapper'
-import { Disclaimer } from 'components/layout/report/Disclaimer'
+
 interface LayoutProps {
   children: React.ReactElement
 }
@@ -41,7 +41,6 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
           <ReportDesktopSidebar />
           <ReportDesktopBody component="main">
             {children}
-            <Disclaimer />
             <ReportDesktopFooter />
           </ReportDesktopBody>
         </ReportDesktopBodyWrapper>
@@ -50,7 +49,6 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
       <ReportMobileWrapper>
         <ReportMobileHeader />
         <ReportMobileBody component="main">{children}</ReportMobileBody>
-        <Disclaimer />
         <ReportMobileFooter />
       </ReportMobileWrapper>
     )

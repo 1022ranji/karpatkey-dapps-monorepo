@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 
 export const ReportDesktopBodyWrapper = styled(Box)(() => ({
   display: `flex`,
-  height: `calc(100vh)`,
+  height: `100%`,
   borderTop: '1px solid rgba(0, 0, 0, 0.12)',
   overflowY: 'hidden'
 }))

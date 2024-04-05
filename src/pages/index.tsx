@@ -19,12 +19,16 @@ import {
   updateYear
 } from 'src/contexts/reducers'
 import { Currency, Dashboard, Report } from 'src/contexts/state'
+import { useRouter } from 'next/router'
 
 const Homepage = (props: ReportProps) => {
   const { month, dao, year, metrics, daoResume, report, currency } = props
   const isFilterEmpty = !month && !dao && !year
 
   const { dispatch } = useApp()
+
+  const router = useRouter()
+  const [, hash] = router.asPath.split('#')
 
   React.useEffect(() => {
     const start = () => {
@@ -50,6 +54,10 @@ const Homepage = (props: ReportProps) => {
 
     start()
   }, [dispatch, dao, year, month, metrics, daoResume, report, currency])
+
+  if (!hash) {
+    window.scrollTo(0, 0)
+  }
 
   if (isFilterEmpty) {
     return <DashboardContent />

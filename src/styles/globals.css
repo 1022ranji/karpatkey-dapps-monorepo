@@ -68,11 +68,13 @@ path:focus {
 
 body {
   overflow-x: hidden;
+  height: 100%;
 }
 
 
 @media (min-width: 1000px) {
   body {
     overflow-y: hidden;
+    height: 100%;
   }
 }
