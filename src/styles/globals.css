@@ -67,5 +67,12 @@ path:focus {
 }
 
 body {
-  overflow-x:hidden;
+  overflow-x: hidden;
+}
+
+
+@media (min-width: 1000px) {
+  body {
+    overflow-y: hidden;
+  }
 }
