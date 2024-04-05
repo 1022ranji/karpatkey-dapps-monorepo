@@ -7,6 +7,7 @@ import { TreasuryVariation } from 'src/views/sections/report/TreasuryVariation'
 import { BoxContainerWrapper } from 'src/components/wrappers'
 import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
+import { Disclaimer } from 'components/layout/report/Disclaimer'
 
 export const Report = () => {
   const { state } = useApp()
@@ -58,6 +59,7 @@ export const Report = () => {
         tokenDetailByPosition={tokenDetails?.tokenDetailByPosition}
         walletTokenDetail={tokenDetails?.walletTokenDetail}
       />
+      <Disclaimer />
     </BoxContainerWrapper>
   )
 }
