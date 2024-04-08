@@ -198,10 +198,11 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
               }
             })}
             innerSize={isMD ? '60%' : '45%'}
-            outerSize={isMD ? '80%' : '60%'}
+            outerSize={isMD ? '70%' : '60%'}
             height={isMD ? 440 : 310}
             width={isMD ? 'fit-content' : 350}
             centered={true}
+            bottom={120}
           />
           <TableWalletTokenDetail filteredWalletTokenDetail={filteredWalletTokenDetail} />
         </BoxWrapperRow>
