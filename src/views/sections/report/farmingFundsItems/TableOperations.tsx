@@ -137,7 +137,7 @@ const TableOperations = (props: TableResultsProps) => {
                       </BoxWrapperColumn>
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '25%' }} align="right">
-                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                      <CustomTypo>
                         {currency === 'USD'
                           ? formatCurrency(row?.operationsFunds || 0)
                           : formatNumber(row?.operationsFunds || 0, 0)}
@@ -158,7 +158,7 @@ const TableOperations = (props: TableResultsProps) => {
                       )}
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: '25%' }} align="right">
-                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                      <CustomTypo>
                         {currency === 'USD'
                           ? formatCurrency(row?.operationResults?.toFixed(2) || 0)
                           : formatNumber(row?.operationResults?.toFixed(2) || 0, 1)}
