@@ -235,7 +235,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                         )}
                       </BoxWrapperRow>
                     </TableCellCustom>
-                    <TableCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="left">
+                    <TableCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
                       <BoxWrapperColumn sx={{ alignItems: 'flex-end' }}>
                         <CustomTypo>{formatNumber(row.balance)}</CustomTypo>
                         <CustomTypography
@@ -259,8 +259,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                               fontSize: {
                                 xs: '11px',
                                 md: '16px'
-                              },
-                              fontWeight: '400 !important'
+                              }
                             }}
                           >
                             {formatPercentage(row.allocation)}
@@ -270,9 +269,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                     </TableCellCustom>
                     {isMD ? (
                       <TableCellCustom sx={{ width: '20%' }} align="right">
-                        <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                          {formatPercentage(row.allocation)}
-                        </CustomTypo>
+                        <CustomTypo>{formatPercentage(row.allocation)}</CustomTypo>
                       </TableCellCustom>
                     ) : null}
                     {isMD ? (

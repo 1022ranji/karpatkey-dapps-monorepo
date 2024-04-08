@@ -202,7 +202,6 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
             height={isMD ? 440 : 310}
             width={isMD ? 'fit-content' : 350}
             centered={true}
-            bottom={120}
           />
           <TableWalletTokenDetail filteredWalletTokenDetail={filteredWalletTokenDetail} />
         </BoxWrapperRow>

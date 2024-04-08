@@ -116,9 +116,7 @@ export const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxP
                         </BoxWrapperColumn>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '33%' }} align="right">
-                        <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                          {formatPercentage(row.allocation)}
-                        </CustomTypo>
+                        <CustomTypo>{formatPercentage(row.allocation)}</CustomTypo>
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '33%' }} align="right">
                         <BoxWrapperColumn>

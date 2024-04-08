@@ -3,5 +3,6 @@ import { BoxWrapperColumn } from 'components/wrappers'
 
 export const Wrapper = styled(BoxWrapperColumn)(() => ({
   height: '100vh',
-  width: '100vw'
+  width: '100vw',
+  overflowY: 'auto'
 }))
