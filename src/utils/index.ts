@@ -73,19 +73,35 @@ export const getLatestMonthAndYear = (DAO_PARAM: Maybe<FILTER_DAO>) => {
 }
 
 export const getLatestMonthAndYearInCommonForEveryDAO = () => {
-  const DATES_ALLOWED = FILTER_DAOS.map((DAO) => DAO.datesAllowed).flat()
+  // Filter out only the enabled DAOs
+  const enabledDAOs = FILTER_DAOS.filter((dao: FILTER_DAO) => dao.isEnabled)
 
-  const DATES_ALLOWED_SORTED = DATES_ALLOWED.sort((a: any, b: any) => {
-    if (a.year === b.year) {
-      return a.month - b.month
-    }
-    return a.year - b.year
-  })
+  // Get the dates allowed for each enabled DAO
+  const datesAllowedArrays = enabledDAOs.map((dao: FILTER_DAO) => dao.datesAllowed) as {
+    month: number
+    year: number
+  }[][]
 
-  return {
-    month: DATES_ALLOWED_SORTED[DATES_ALLOWED_SORTED.length - 1]?.month || null,
-    year: DATES_ALLOWED_SORTED[DATES_ALLOWED_SORTED.length - 1]?.year || null
-  }
+  // Find the intersection of months and years
+  const commonMonths =
+    datesAllowedArrays.reduce((acc, curr) => {
+      return acc?.filter(({ month, year }) =>
+        curr?.some(({ month: m, year: y }) => m === month && y === year)
+      )
+    }, datesAllowedArrays[0]) ?? []
+
+  // Get the last month and year in common
+  const lastMonthAndYearInCommon = commonMonths?.reduce(
+    (latest, { month, year }) => {
+      if (year > latest.year || (year === latest.year && month > latest.month)) {
+        return { month, year }
+      }
+      return latest
+    },
+    { month: 0, year: 0 }
+  )
+
+  return lastMonthAndYearInCommon
 }
 
 export const isProductionCheckingDomainName = () => {

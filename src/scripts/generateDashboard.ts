@@ -17,6 +17,9 @@ const metricPeriodType = 'month'
 const { month, year } = getLatestMonthAndYearInCommonForEveryDAO()
 const metricPeriod = `${year}_${month}`
 
+console.log(`Generating cache for ${month}/${year}`)
+console.log(`Metric period: ${metricPeriod}`)
+
 const getDAOResume = async ({
   variationMetricsDetail,
   financialMetricAndVarDetail,
