@@ -138,7 +138,7 @@ export const TreasuryVariation = (props: TreasuryVariationProps) => {
             }
           >
             {treasuryVariationForThePeriodDetailData?.length > 0 ? (
-              <Waterfall data={treasuryVariationForThePeriodDetailData} />
+              <Waterfall data={treasuryVariationForThePeriodDetailData} bottom={100} />
             ) : (
               <EmptyData />
             )}

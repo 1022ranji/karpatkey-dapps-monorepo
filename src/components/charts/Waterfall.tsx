@@ -120,7 +120,13 @@ const CustomizedAxisTick = (props: any) => {
   )
 }
 
-export const Waterfall = ({ title, data, barSize = 60, ...props }: BoxProps & WaterfallProps) => {
+export const Waterfall = ({
+  title,
+  data,
+  barSize = 60,
+  bottom = 20,
+  ...props
+}: BoxProps & WaterfallProps) => {
   const initialBalanceFunds = data.find((item) => item.value === 'Initial Balance')?.uv
 
   const { minValue } = data.reduce(
@@ -201,7 +207,7 @@ export const Waterfall = ({ title, data, barSize = 60, ...props }: BoxProps & Wa
           data={data}
           margin={{
             top: 20,
-            bottom: 20,
+            bottom,
             left: 10
           }}
         >

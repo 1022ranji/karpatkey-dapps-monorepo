@@ -80,7 +80,7 @@ export const CardList = (props: CardListProps) => {
                   maxWidth: '320px',
                   minWidth: '320px',
                   minHeight: '440px',
-                  height: 'fit-content',
+                  height: 'content-fit',
                   padding: '8px 8px',
                   border: '1px solid #B6B6B6',
                   background: 'background.paper'
