@@ -155,7 +155,7 @@ const TableFunds = (props: TableFundsProps) => {
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
                       <BoxWrapperColumn>
-                        <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                        <CustomTypo>
                           {currency === 'USD'
                             ? formatCurrency(row.funds || 0)
                             : formatNumber(row.funds, 0)}
@@ -186,7 +186,7 @@ const TableFunds = (props: TableFundsProps) => {
                       </TableCellCustom>
                     ) : null}
                     <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
-                      <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                      <CustomTypo>
                         {currency === 'USD'
                           ? formatCurrency(row.results || 0)
                           : formatNumber(row.results, 1)}

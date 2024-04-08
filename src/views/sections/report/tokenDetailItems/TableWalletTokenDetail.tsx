@@ -122,9 +122,7 @@ export const TableWalletTokenDetail = (props: TableWalletTokenDetailProps & BoxP
                       </TableCellCustom>
                       <TableCellCustom sx={{ width: '33%' }} align="right">
                         <BoxWrapperColumn>
-                          <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                            {formatNumber(row.tokenBalance)}
-                          </CustomTypo>
+                          <CustomTypo>{formatNumber(row.tokenBalance)}</CustomTypo>
                           <CustomTypography
                             variant="tableCellSubData"
                             sx={{

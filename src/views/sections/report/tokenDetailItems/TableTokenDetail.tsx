@@ -193,7 +193,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                             sx={{ ml: 1, cursor: 'pointer' }}
                           >
                             <div>
-                              <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                              <CustomTypo>
                                 {currency === 'USD'
                                   ? formatCurrencyWithPrecision(row.price)
                                   : formatNumberWithPrecision(+row.price?.toFixed(6))}
@@ -237,9 +237,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                     </TableCellCustom>
                     <TableCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="left">
                       <BoxWrapperColumn sx={{ alignItems: 'flex-end' }}>
-                        <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                          {formatNumber(row.balance)}
-                        </CustomTypo>
+                        <CustomTypo>{formatNumber(row.balance)}</CustomTypo>
                         <CustomTypography
                           variant="tableCellSubData"
                           sx={{
