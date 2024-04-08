@@ -94,7 +94,6 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         innerSize,
         dataLabels: {
           enabled: true,
-          crop: false,
           distance: isMD ? '25%' : '15%',
           style: {
             fontSize: isMD ? '12px' : '10px',
@@ -105,6 +104,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
             width: '100px'
           },
           connectorWidth: 2,
+          softConnector: true,
           connectorShape: 'fixedOffset',
           shadow: false
         }
@@ -119,7 +119,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
             '<span class="highcharts-data-label">{point.name}</span><br>{point.percentage:.2f} %',
           useHTML: true,
           connectorColor: 'black',
-          connectorWidth: 1,
+          connectorWidth: 2,
           style: {
             fontSize: isMD ? '12px' : '10px',
             fontFamily: 'IBM Plex Sans',

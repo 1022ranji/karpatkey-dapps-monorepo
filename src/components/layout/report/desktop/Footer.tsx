@@ -12,6 +12,7 @@ import {
   BoxWrapperColumn
 } from 'src/components'
 import { useScreenSize } from 'src/hooks/useScreenSize'
+import { useApp } from 'src/contexts/app.context'
 
 const Wrapper = styled(BoxWrapperColumn)(({ theme }: any) => ({
   backgroundColor: theme.palette.background.default,
@@ -44,11 +45,16 @@ const Title = styled(CustomTypography)({
 })
 
 export const Footer = () => {
+  const { state } = useApp()
+  const { DAO } = state
+
   const screenSize = useScreenSize()
   const isMobile = screenSize.width < 767
 
   const year = new Date()
   const fullYear = year.getFullYear()
+
+  if (!DAO) return null
 
   return (
     <AnimatePresenceWrapper>
