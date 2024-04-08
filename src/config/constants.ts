@@ -272,6 +272,13 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         isSafe: true,
         order: 7,
         since: '2_2024'
+      },
+      {
+        address: '0x1c7828DAdAdE12a848f36BE8E2d3146462ABfF68',
+        chainId: 100,
+        isSafe: true,
+        order: 8,
+        since: '3_2024'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -623,6 +630,13 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         isSafe: true,
         order: 3,
         since: '2_2024'
+      },
+      {
+        address: '0x324e12107ec7a89e94dd1c07b7d8781406db3e1d',
+        chainId: 1,
+        isSafe: true,
+        order: 4,
+        since: '3_2024'
       }
     ],
     defaultCurrency: 'USD' as Currency,
