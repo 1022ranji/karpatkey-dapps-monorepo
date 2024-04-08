@@ -33,6 +33,8 @@ import {
   RocketPool,
   Karpatkey,
   Stader,
+  Autonolas,
+  Sommelier,
   StakeDAO
 } from 'components/icons/protocols'
 import * as React from 'react'
@@ -163,6 +165,12 @@ export const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'StakeDAO':
       icon = <StakeDAO width={24} height={24} />
+      break
+    case 'Autonolas':
+      icon = <Autonolas width={24} height={24} />
+      break
+    case 'Sommelier':
+      icon = <Sommelier width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />

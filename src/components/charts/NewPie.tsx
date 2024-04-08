@@ -111,7 +111,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
       },
       pie: {
         allowPointSelect: false,
-        cursor: 'pointer',
+        cursor: 'default',
         borderRadius: 0,
         borderWidth: 0,
         dataLabels: {
