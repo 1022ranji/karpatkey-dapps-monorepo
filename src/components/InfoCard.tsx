@@ -32,6 +32,7 @@ export const InfoCard = ({ title, value, helpInfo }: InfoCardProps) => {
                 {helpInfo}
               </CustomTypography>
             }
+            enterTouchDelay={0}
             sx={{ ml: 1, cursor: 'pointer' }}
           >
             <InfoIcon sx={{ fontSize: 24, cursor: 'pointer' }} />

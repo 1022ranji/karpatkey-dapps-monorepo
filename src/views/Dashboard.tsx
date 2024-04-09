@@ -159,7 +159,9 @@ export const Dashboard = () => {
                 allocatedFunds,
                 deFiResults,
                 APY: CUSTOM_APY,
-                currency: 'USD' as Currency
+                currency: 'USD' as Currency,
+                latestMonth: month,
+                latestYear: year
               }
               return <Card {...params} key={index} />
             })}
@@ -198,7 +200,9 @@ export const Dashboard = () => {
                 allocatedFunds,
                 deFiResults,
                 APY: CUSTOM_APY,
-                currency: 'ETH' as Currency
+                currency: 'ETH' as Currency,
+                latestMonth: month,
+                latestYear: year
               }
               return <Card {...params} key={index} />
             })}

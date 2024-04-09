@@ -199,7 +199,7 @@ export const FilterContent = ({
             {enableDeFiType && (
               <BoxWrapperColumn sx={{ alignItems: 'center' }}>
                 <CustomTypo sx={{ color: 'primary.main', marginTop: '20px', marginBottom: '10px' }}>
-                  DeFi Type
+                  DeFi type
                 </CustomTypo>
                 <CustomButton
                   sx={{ width: '314px' }}
@@ -209,7 +209,7 @@ export const FilterContent = ({
                   }}
                 >
                   <CustomTypo sx={{ color: 'custom.grey.ternary' }}>
-                    {selectedDeFiType || 'Select DeFi type'}
+                    {selectedDeFiType || 'Select type'}
                   </CustomTypo>
                 </CustomButton>
               </BoxWrapperColumn>
@@ -408,9 +408,7 @@ export const FilterContent = ({
             }}
           >
             <BoxWrapperColumn gap={2} sx={{ alignItems: 'center', marginTop: '20px' }}>
-              <CustomTypo sx={{ color: 'primary.main', marginY: '20px' }}>
-                Select DeFi Type
-              </CustomTypo>
+              <CustomTypo sx={{ color: 'primary.main', marginY: '20px' }}>Select type</CustomTypo>
               {deFiTypeOptions?.map((option) => (
                 <CustomButton
                   key={option.id}

@@ -185,6 +185,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                       <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
                         <BoxWrapperColumn gap={'2px'} sx={{ alignItems: 'flex-end' }}>
                           <Tooltip
+                            enterTouchDelay={0}
                             title={
                               currency === 'USD'
                                 ? formatCurrency(row?.price, 4)
@@ -205,6 +206,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                             <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
                               {formatPercentage(row.priceVariation) === '0.00%' ? (
                                 <Tooltip
+                                  enterTouchDelay={0}
                                   title={formatPercentage(row.priceVariation, 10)}
                                   sx={{ ml: 1, cursor: 'pointer' }}
                                 >
@@ -279,6 +281,7 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                         <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
                           {formatPercentage(row.priceVariation) === '0.00%' ? (
                             <Tooltip
+                              enterTouchDelay={0}
                               title={formatPercentage(row.priceVariation, 10)}
                               sx={{ ml: 1, cursor: 'pointer' }}
                             >
