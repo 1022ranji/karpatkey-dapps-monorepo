@@ -115,18 +115,25 @@ export const FilterContent = ({
 
   const isDisabled = !selectedBlockchain && !selectedProtocol && !selectedDeFiType && !selectedToken
 
+  const amountOfSelectedFilters = React.useMemo(() => {
+    // return the amount of selected filters
+    return [selectedBlockchain, selectedProtocol, selectedDeFiType, selectedToken].filter(
+      (filter) => filter !== null
+    ).length
+  }, [selectedBlockchain, selectedProtocol, selectedDeFiType, selectedToken])
+
   return (
     <>
       <BoxWrapperRow sx={{ width: '100%', justifyContent: 'flex-end' }}>
         <CustomButton
           sx={{
-            width: '100px'
+            minWidth: amountOfSelectedFilters ? '120px' : '100px'
           }}
           onClick={() => {
             handleClickOpenModal()
           }}
         >
-          Filters
+          Filters {amountOfSelectedFilters > 0 ? `(${amountOfSelectedFilters})` : ''}
         </CustomButton>
       </BoxWrapperRow>
       <Dialog
