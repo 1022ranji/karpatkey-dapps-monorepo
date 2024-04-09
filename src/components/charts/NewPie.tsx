@@ -104,7 +104,6 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
             width: '100px'
           },
           connectorWidth: 2,
-          softConnector: true,
           connectorShape: 'fixedOffset',
           shadow: false
         }
