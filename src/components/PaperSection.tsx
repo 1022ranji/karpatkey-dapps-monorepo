@@ -53,6 +53,7 @@ export const PaperSection = (props: PaperSectionProps) => {
                     {helpInfo}
                   </CustomTypography>
                 }
+                enterTouchDelay={0}
                 sx={{ ml: 1, cursor: 'pointer' }}
               >
                 <InfoIcon sx={{ fontSize: { xs: 30, md: 40 }, cursor: 'pointer' }} />

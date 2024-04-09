@@ -54,7 +54,7 @@ const Filter = ({ toggleType, handleToggleOnChange, helpText }: FilterProps) => 
       }}
     >
       Year to period
-      <Tooltip title={helpText} sx={{ ml: 1 }}>
+      <Tooltip title={helpText} enterTouchDelay={0} sx={{ ml: 1 }}>
         <InfoIcon />
       </Tooltip>
     </ToggleButton>

@@ -6,12 +6,14 @@ import {
   BoxWrapperColumn,
   BoxWrapperRow,
   LinkWrapper,
-  AnimatePresenceWrapper
+  AnimatePresenceWrapper,
+  CustomTypography
 } from 'src/components'
 import { NumberBlockCard } from './NumberBlockCard'
 import { Currency } from 'src/contexts/state'
 import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format'
 import { Value } from './Value'
+import moment from 'moment'
 
 interface CardProps {
   name: string
@@ -22,10 +24,40 @@ interface CardProps {
   deFiResults: number
   APY: string
   currency: Currency
+  latestMonth: number
+  latestYear: number
+}
+
+const Title = ({ title }: { title: string }) => {
+  return (
+    <CustomTypography
+      sx={{
+        textAlign: 'flex-start',
+        fontFamily: 'IBM Plex Mono',
+        fontSize: '16px',
+        lineHeight: '24px',
+        fontWeight: '600',
+        fontStyle: 'normal'
+      }}
+    >
+      {title}
+    </CustomTypography>
+  )
 }
 
 export const Card = (props: CardProps) => {
-  const { name, urlToReport, currency, icon, totalFunds, allocatedFunds, deFiResults, APY } = props
+  const {
+    name,
+    urlToReport,
+    currency,
+    icon,
+    totalFunds,
+    allocatedFunds,
+    deFiResults,
+    APY,
+    latestMonth,
+    latestYear
+  } = props
   const router = useRouter()
 
   const onClick = (e: any) => {
@@ -36,6 +68,9 @@ export const Card = (props: CardProps) => {
       router.push(urlToReport)
     }
   }
+
+  const formattedDate = moment(`${latestYear}-${latestMonth}`, 'YYYY-MM').format('MMM YY')
+
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn
@@ -54,9 +89,12 @@ export const Card = (props: CardProps) => {
             <Image src={icon} alt={name} width={48} height={48} />
             <Value value={name} fontWeight={600} />
           </BoxWrapperRow>
-          <LinkWrapper url={urlToReport} isCentered>
-            <OpenInNewIcon onClick={onClick} sx={{ cursor: 'pointer', fontSize: '1.4rem' }} />
-          </LinkWrapper>
+          <BoxWrapperRow gap={1}>
+            <Title title={formattedDate} />
+            <LinkWrapper url={urlToReport} isCentered>
+              <OpenInNewIcon onClick={onClick} sx={{ cursor: 'pointer', fontSize: '1.4rem' }} />
+            </LinkWrapper>
+          </BoxWrapperRow>
         </BoxWrapperRow>
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }} gap={4}>
           <BoxWrapperColumn gap={4}>

@@ -79,6 +79,7 @@ const TableFunds = (props: TableFundsProps) => {
               <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
                 <CustomTypo>{isDDay ? 'DeFi results' : 'Farming results'}</CustomTypo>
                 <Tooltip
+                  enterTouchDelay={0}
                   title={
                     isDDay
                       ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'

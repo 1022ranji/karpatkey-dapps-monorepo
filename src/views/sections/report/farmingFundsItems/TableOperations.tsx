@@ -69,6 +69,7 @@ const TableOperations = (props: TableResultsProps) => {
               <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
                 <CustomTypo>Operations results</CustomTypo>
                 <Tooltip
+                  enterTouchDelay={0}
                   title={
                     'Operations results include fees, rebasing, pool token variation and rewards from Operations positions'
                   }

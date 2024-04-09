@@ -149,6 +149,7 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                 return (
                   <Tooltip
                     key={index}
+                    enterTouchDelay={0}
                     title={
                       <CustomTypography variant="body2" sx={{ color: 'common.white' }}>
                         {`Click to see the ${latestMonthLabel} treasury report`}
