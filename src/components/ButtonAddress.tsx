@@ -6,18 +6,23 @@ import { shortenAddress } from 'src/utils'
 
 interface ButtonAddressProp {
   daoAddress: DAO_ADDRESS
+  key: number
+  sx?: any
 }
 
 interface SafeButtonProps {
   address: string
   chain: CHAIN
   onClick: () => void
+  key: number
+  sx?: any
 }
 
 export const SafeButton = (props: SafeButtonProps) => {
-  const { address, chain, onClick } = props
+  const { address, chain, onClick, key, sx = {} } = props
   return (
     <Button
+      key={key}
       onClick={onClick}
       sx={{
         display: 'flex',
@@ -48,7 +53,8 @@ export const SafeButton = (props: SafeButtonProps) => {
         lineHeight: {
           xs: '16px',
           md: '24px'
-        }
+        },
+        ...sx
       }}
     >
       <Safe />
@@ -61,13 +67,16 @@ export const SafeButton = (props: SafeButtonProps) => {
 interface CommonButtonProps {
   address: string
   onClick: () => void
+  sx?: any
+  key: number
 }
 
 const CommonButton = (props: CommonButtonProps) => {
-  const { address, onClick } = props
+  const { address, key, onClick, sx = {} } = props
   return (
     <Button
       onClick={onClick}
+      key={key}
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -98,7 +107,8 @@ const CommonButton = (props: CommonButtonProps) => {
         lineHeight: {
           xs: '16px',
           md: '24px'
-        }
+        },
+        ...sx
       }}
     >
       {shortenAddress(address)}
@@ -108,7 +118,7 @@ const CommonButton = (props: CommonButtonProps) => {
 }
 
 export const ButtonAddress = (props: ButtonAddressProp) => {
-  const { daoAddress } = props
+  const { daoAddress, key, sx } = props
   const { address, chainId, isSafe } = daoAddress
 
   const chain: CHAIN | undefined = CHAINS.find((chain) => chain.id === chainId)
@@ -123,9 +133,9 @@ export const ButtonAddress = (props: ButtonAddressProp) => {
   return (
     <>
       {isSafe ? (
-        <SafeButton address={address} chain={chain} onClick={onClick} />
+        <SafeButton address={address} chain={chain} onClick={onClick} key={key} {...sx} />
       ) : (
-        <CommonButton address={address} onClick={onClick} />
+        <CommonButton address={address} onClick={onClick} key={key} {...sx} />
       )}
     </>
   )

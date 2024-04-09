@@ -13,8 +13,25 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
 
   const isDDay = isYearAndMonthValid()
 
-  // check if the screen size is md
-  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+  const isBreakpointOne = useMediaQuery((theme: Theme) => theme.breakpoints.up(1000))
+  const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))
+  const isBreakpointThree = useMediaQuery((theme: Theme) => theme.breakpoints.up(480))
+
+  const settingsSize = {
+    innerSize: isBreakpointOne
+      ? '50%'
+      : isBreakpointTwo
+        ? '45%'
+        : isBreakpointThree
+          ? '40%'
+          : '35%',
+    outerSize: isBreakpointOne ? '75%' : isBreakpointTwo ? '70%' : isBreakpointThree ? '65%' : '60%'
+  }
+
+  const settingsHeightWidth = {
+    width: isBreakpointOne ? 560 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360,
+    height: isBreakpointOne ? 560 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360
+  }
 
   return (
     <PaperSection
@@ -38,10 +55,10 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
               color: item.color
             }
           })}
-          innerSize={isMD ? '50%' : '45%'}
-          outerSize={isMD ? '70%' : '60%'}
-          height={isMD ? 560 : 310}
-          width={isMD ? '100%' : 300}
+          innerSize={settingsSize.innerSize}
+          outerSize={settingsSize.outerSize}
+          width={settingsHeightWidth.width}
+          height={settingsHeightWidth.height}
           centered={true}
         />
       )}
