@@ -68,7 +68,7 @@ export const Summary = (props: SummaryProps) => {
         sx={{
           borderBottom: { xs: '2px solid #E0E0E0', md: 'none' }
         }}
-        gap={10}
+        gap={5}
       >
         <Box
           id="summary"

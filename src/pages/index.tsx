@@ -20,6 +20,7 @@ import {
 } from 'src/contexts/reducers'
 import { Currency, Dashboard, Report } from 'src/contexts/state'
 import { useRouter } from 'next/router'
+import { getDAO } from '../utils'
 
 const Homepage = (props: ReportProps) => {
   const { month, dao, year, metrics, daoResume, report, currency } = props
@@ -74,13 +75,14 @@ export default Homepage
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx
-  const { month = null, year = null, dao = null, currency = null } = query
+  const { month = null, year = null, dao = null } = query
+  let { currency = null } = query
 
   if (month && year && dao) {
     const allowedMonthAndYear = FILTER_DAOS.find((option) => {
-      return +option.id === +dao
+      return dao && +option.id === +dao
     })?.datesAllowed?.find((option) => {
-      return +option.year === +year && +option.month === +month
+      return year && month && +option.year === +year && +option.month === +month
     })
 
     if (!allowedMonthAndYear) {
@@ -93,9 +95,13 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
   }
 
+  // Check if is Lido DAO and currency is not USD
+  const daoName = dao ? getDAO(+dao)?.keyName || '' : ''
+  if (daoName === 'Lido' && currency === 'USD') currency = Currency.ETH
+
   if (currency && dao) {
     const allowedCurrency = FILTER_DAOS.find((option) => {
-      return +option.id === +dao
+      return dao && +option.id === +dao
     })?.currenciesAllowed?.find((option) => {
       return option === currency
     })
@@ -124,7 +130,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   }
 
   // check if DAO parameters is correct
-  if (dao && !FILTER_DAOS.some((option) => +option.id === +dao)) {
+  if (dao && !FILTER_DAOS.some((option) => dao && +option.id === +dao)) {
     return {
       redirect: {
         permanent: false,

@@ -208,9 +208,11 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                                   title={formatPercentage(row.priceVariation, 10)}
                                   sx={{ ml: 1, cursor: 'pointer' }}
                                 >
-                                  <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                                    {formatPercentage(row.priceVariation)}
-                                  </CustomTypo>
+                                  <div>
+                                    <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                                      {formatPercentage(row.priceVariation)}
+                                    </CustomTypo>
+                                  </div>
                                 </Tooltip>
                               ) : (
                                 <CustomTypo sx={{ fontWeight: '400 !important' }}>
@@ -280,7 +282,9 @@ export const TableTokenDetail = (props: TableTokenDetailProps) => {
                               title={formatPercentage(row.priceVariation, 10)}
                               sx={{ ml: 1, cursor: 'pointer' }}
                             >
-                              <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
+                              <div>
+                                <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
+                              </div>
                             </Tooltip>
                           ) : (
                             <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
