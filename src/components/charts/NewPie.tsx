@@ -118,7 +118,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
             '<span class="highcharts-data-label">{point.name}</span><br>{point.percentage:.2f} %',
           useHTML: true,
           connectorColor: 'black',
-          connectorWidth: 2,
+          connectorWidth: 1,
           style: {
             fontSize: isMD ? '12px' : '10px',
             fontFamily: 'IBM Plex Sans',
