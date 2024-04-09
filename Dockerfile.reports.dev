@@ -24,7 +24,7 @@ COPY . .
 # Install dependencies
 RUN yarn install --frozen-lockfile
 
-WORKDIR /app/dapps/reports
+WORKDIR /app
 
 # Build app
 RUN --mount=type=secret,id=env,dst=/.env yarn run build

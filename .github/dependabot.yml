@@ -14,7 +14,7 @@ updates:
       - "mariano-aguero"
   # Configuration for npm, reports
   - package-ecosystem: "npm"
-    directory: '/dapps/reports'
+    directory: '/'
     schedule:
       interval: 'daily'
     assignees:

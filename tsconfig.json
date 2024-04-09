@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,18 +15,11 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
+    "types": ["react", "node", "./types.d.ts"],
     "paths": {
-      "react": [ "./node_modules/@types/react" ],
-      "@karpatkey-monorepo/reports": [
-        "./dapps/reports/*",
-        "./dapps/reports/src/"
-      ],
-      "@karpatkey-monorepo/shared": [
-        "./shared/*"
-      ],
-      "@karpatkey-monorepo/tools": [
-        "./tools/*"
-      ]
+      "react": ["./node_modules/@types/react"],
+      "components/*": ["./src/components/*"],
+      "src": ["./src", "./src/*"]
     }
   },
   "ts-node": {
@@ -40,10 +29,6 @@
       "module": "commonjs"
     }
   },
-  "include": [
-    "./**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./**/*"],
+  "exclude": ["node_modules"]
 }
