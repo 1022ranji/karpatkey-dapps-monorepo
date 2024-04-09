@@ -39,7 +39,10 @@ path:focus {
 }
 
 .custom-slider-address {
-  height: 48px;
+  .slick-slide.slick-active {
+    justify-content: center;
+    display: flex;
+  }
 }
 
 .custom-slider-charts {
@@ -56,14 +59,6 @@ path:focus {
 
 .custom-slider-cards > .slick-dots {
   display: contents;
-}
-
-.slick-list {
-  mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
-  -moz-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
-  -ms-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
-  -o-mask-image: linear-gradient(to right, transparent 2%, black 20%, black 80%, transparent);
 }
 
 body {
