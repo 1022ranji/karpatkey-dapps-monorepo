@@ -145,7 +145,7 @@ export const Hero = () => {
       {!isMD && daoAddresses.length > 2 ? (
         <Box
           sx={{
-            padding: '0 20px 20px 20px',
+            padding: `10px 20px 10px 20px`,
             borderBottom: '2px solid #E0E0E0'
           }}
         >
