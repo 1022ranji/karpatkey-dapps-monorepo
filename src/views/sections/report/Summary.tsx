@@ -74,7 +74,7 @@ export const Summary = (props: SummaryProps) => {
         : isBreakpointThree
           ? '40%'
           : '35%',
-    outerSize: isBreakpointOne ? '75%' : isBreakpointTwo ? '70%' : isBreakpointThree ? '65%' : '60%'
+    outerSize: isBreakpointOne ? '75%' : isBreakpointTwo ? '60%' : isBreakpointThree ? '60%' : '60%'
   }
 
   const settingsHeightWidth = {

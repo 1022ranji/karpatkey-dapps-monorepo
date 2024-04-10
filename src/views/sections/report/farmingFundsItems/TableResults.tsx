@@ -22,8 +22,8 @@ const TableResults = (props: TableResultsProps) => {
   const [displayAll, setDisplayAll] = React.useState(false)
 
   return (
-    <TableContainer component={Box}>
-      <Table sx={{ width: '100%', minWidth: '1200px', overflow: 'scroll' }}>
+    <TableContainer component={Box} sx={{ width: '100%', overflowX: 'auto' }}>
+      <Table sx={{ borderCollapse: 'separate', borderSpacing: 0 }}>
         <TableHead>
           <TableRow>
             <TableHeadCellCustom

@@ -83,7 +83,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
 
   return (
     <TableContainer component={Box} sx={{ width: '100%', overflowX: 'auto' }}>
-      <Table>
+      <Table sx={{ borderCollapse: 'separate', borderSpacing: 0 }}>
         <TableHead>
           <TableRow>
             <TableHeadCellCustom
