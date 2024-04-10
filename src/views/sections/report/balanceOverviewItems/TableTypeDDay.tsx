@@ -54,7 +54,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
 
   return (
     <TableContainer component={Box} sx={{ width: '100%', overflowX: 'auto' }}>
-      <Table>
+      <Table sx={{ borderCollapse: 'separate', borderSpacing: 0 }}>
         <TableHead>
           <TableRow>
             <TableHeadCellCustom
@@ -77,6 +77,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                 <CustomTypo>DeFi funds</CustomTypo>
                 <Tooltip
                   title={'Positions aimed at yield generation'}
+                  enterTouchDelay={0}
                   sx={{
                     ml: '5px',
                     cursor: 'pointer'
@@ -94,6 +95,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                     title={
                       'Positions tailored to meet specific requirements like market making, not focused on yield generation'
                     }
+                    enterTouchDelay={0}
                     sx={{
                       ml: '5px',
                       cursor: 'pointer'

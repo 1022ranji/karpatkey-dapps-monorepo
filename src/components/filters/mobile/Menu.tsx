@@ -1,7 +1,7 @@
 import React from 'react'
 import { BoxWrapperColumn, BoxWrapperRow, CustomTypography } from 'src/components'
 import { Box, Snackbar } from '@mui/material'
-import { FilterIcon, ShareIcon } from 'components/icons'
+import { ShareIcon } from 'components/icons'
 import Image from 'next/image'
 import { useApp } from 'src/contexts/app.context'
 import { FILTER_DAO, FILTER_DAOS, MONTHS } from 'src/config/constants'
@@ -175,7 +175,7 @@ export const Menu = () => {
           marginTop: '20px'
         }}
       >
-        <BlockMenu gap={1}>
+        <BlockMenu onClick={handleClickOpenModal} gap={1}>
           <Image
             src={dao?.icon ?? ''}
             alt={dao?.name || ''}
@@ -192,10 +192,13 @@ export const Menu = () => {
             {dao?.name}
           </CustomTypo>
         </BlockMenu>
-        <BlockMenu sx={{ borderLeft: '2px solid #E0E0E0', textAlign: 'center' }}>
+        <BlockMenu
+          onClick={handleClickOpenModal}
+          sx={{ borderLeft: '2px solid #E0E0E0', textAlign: 'center' }}
+        >
           <CustomTypo
             sx={{
-              textAlign: 'left',
+              textAlign: 'center',
               margin: '5px',
               textOverflow: 'ellipsis',
               whiteSpace: 'pre-wrap',
@@ -205,11 +208,11 @@ export const Menu = () => {
             {year} {monthName}
           </CustomTypo>
         </BlockMenu>
-        <BlockMenu sx={{ borderLeft: '2px solid #E0E0E0', textAlign: 'center' }}>
+        <BlockMenu
+          onClick={handleClickOpenModal}
+          sx={{ borderLeft: '2px solid #E0E0E0', textAlign: 'center' }}
+        >
           <CustomTypo>{currency}</CustomTypo>
-        </BlockMenu>
-        <BlockMenu sx={{ borderLeft: '2px solid #E0E0E0', cursor: 'pointer' }}>
-          <FilterIcon onClick={handleClickOpenModal} width={38} height={38} />
         </BlockMenu>
         <BlockMenu sx={{ borderLeft: '2px solid #E0E0E0', cursor: 'pointer' }}>
           <CopyToClipboard text={valueToCopy}>

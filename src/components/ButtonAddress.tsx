@@ -6,16 +6,18 @@ import { shortenAddress } from 'src/utils'
 
 interface ButtonAddressProp {
   daoAddress: DAO_ADDRESS
+  sx?: any
 }
 
 interface SafeButtonProps {
   address: string
   chain: CHAIN
   onClick: () => void
+  sx?: any
 }
 
 export const SafeButton = (props: SafeButtonProps) => {
-  const { address, chain, onClick } = props
+  const { address, chain, onClick, sx = {} } = props
   return (
     <Button
       onClick={onClick}
@@ -48,7 +50,8 @@ export const SafeButton = (props: SafeButtonProps) => {
         lineHeight: {
           xs: '16px',
           md: '24px'
-        }
+        },
+        ...sx
       }}
     >
       <Safe />
@@ -61,10 +64,11 @@ export const SafeButton = (props: SafeButtonProps) => {
 interface CommonButtonProps {
   address: string
   onClick: () => void
+  sx?: any
 }
 
 const CommonButton = (props: CommonButtonProps) => {
-  const { address, onClick } = props
+  const { address, onClick, sx = {} } = props
   return (
     <Button
       onClick={onClick}
@@ -98,7 +102,8 @@ const CommonButton = (props: CommonButtonProps) => {
         lineHeight: {
           xs: '16px',
           md: '24px'
-        }
+        },
+        ...sx
       }}
     >
       {shortenAddress(address)}
@@ -108,7 +113,7 @@ const CommonButton = (props: CommonButtonProps) => {
 }
 
 export const ButtonAddress = (props: ButtonAddressProp) => {
-  const { daoAddress } = props
+  const { daoAddress, sx } = props
   const { address, chainId, isSafe } = daoAddress
 
   const chain: CHAIN | undefined = CHAINS.find((chain) => chain.id === chainId)
@@ -123,9 +128,9 @@ export const ButtonAddress = (props: ButtonAddressProp) => {
   return (
     <>
       {isSafe ? (
-        <SafeButton address={address} chain={chain} onClick={onClick} />
+        <SafeButton address={address} chain={chain} onClick={onClick} {...sx} />
       ) : (
-        <CommonButton address={address} onClick={onClick} />
+        <CommonButton address={address} onClick={onClick} {...sx} />
       )}
     </>
   )

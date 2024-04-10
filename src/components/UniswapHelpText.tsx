@@ -7,6 +7,7 @@ export const UniswapHelpText = () => {
     <Tooltip
       title="For UniswapV3, unclaimed fees are shown as unclaimed rewards"
       sx={{ ml: 1, cursor: 'pointer' }}
+      enterTouchDelay={0}
     >
       <InfoIcon />
     </Tooltip>

@@ -12,7 +12,7 @@ import { getDAO } from 'src/utils'
 import { isYearAndMonthValid } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { Carousel } from 'components/Carousel'
+import { CarouselPieChart } from 'components/carousels/pieCharts'
 
 interface SummaryProps {
   dao: Maybe<number>
@@ -61,6 +61,26 @@ export const Summary = (props: SummaryProps) => {
 
   // check if the screen size is md
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
+  const isBreakpointOne = useMediaQuery((theme: Theme) => theme.breakpoints.up(1000))
+  const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))
+  const isBreakpointThree = useMediaQuery((theme: Theme) => theme.breakpoints.up(480))
+
+  const settingsSize = {
+    innerSize: isBreakpointOne
+      ? '50%'
+      : isBreakpointTwo
+        ? '45%'
+        : isBreakpointThree
+          ? '40%'
+          : '35%',
+    outerSize: isBreakpointOne ? '75%' : isBreakpointTwo ? '60%' : isBreakpointThree ? '60%' : '60%'
+  }
+
+  const settingsHeightWidth = {
+    width: isBreakpointOne ? 440 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
+    height: isBreakpointOne ? 400 : isBreakpointTwo ? 320 : isBreakpointThree ? 300 : 280
+  }
 
   return (
     <AnimatePresenceWrapper>
@@ -126,7 +146,7 @@ export const Summary = (props: SummaryProps) => {
           <Box
             sx={{
               display: 'flex',
-              gap: 2,
+              gap: 10,
               flexWrap: 'wrap',
               margin: {
                 xs: '20px 20px 20px 20px',
@@ -143,8 +163,10 @@ export const Summary = (props: SummaryProps) => {
                   color: item.color
                 }
               })}
-              width={isMD ? 440 : 310}
-              height={isMD ? 400 : 300}
+              innerSize={settingsSize.innerSize}
+              outerSize={settingsSize.outerSize}
+              width={settingsHeightWidth.width}
+              height={settingsHeightWidth.height}
               {...(negativeTotalValue
                 ? {
                     footerMessage: (
@@ -174,8 +196,10 @@ export const Summary = (props: SummaryProps) => {
                   color: item.color
                 }
               })}
-              width={isMD ? 440 : 310}
-              height={isMD ? 400 : 300}
+              innerSize={settingsSize.innerSize}
+              outerSize={settingsSize.outerSize}
+              width={settingsHeightWidth.width}
+              height={settingsHeightWidth.height}
             />
             <PieChart
               titleMessage="Total funds by type"
@@ -186,8 +210,10 @@ export const Summary = (props: SummaryProps) => {
                   color: item.color
                 }
               })}
-              width={isMD ? 440 : 310}
-              height={isMD ? 400 : 300}
+              innerSize={settingsSize.innerSize}
+              outerSize={settingsSize.outerSize}
+              width={settingsHeightWidth.width}
+              height={settingsHeightWidth.height}
             />
           </Box>
         ) : null}
@@ -198,7 +224,7 @@ export const Summary = (props: SummaryProps) => {
             margin: '40px 20px 40px 20px'
           }}
         >
-          <Carousel className="custom-slider-charts">
+          <CarouselPieChart className="custom-slider-charts">
             <PieChart
               titleMessage="Total funds by token category"
               data={fundsByTokenCategory.map((item) => {
@@ -208,8 +234,10 @@ export const Summary = (props: SummaryProps) => {
                   color: item.color
                 }
               })}
-              width={isMD ? 440 : 310}
-              height={isMD ? 400 : 300}
+              innerSize={settingsSize.innerSize}
+              outerSize={settingsSize.outerSize}
+              width={settingsHeightWidth.width}
+              height={settingsHeightWidth.height}
               {...(!isMD ? { centered: true } : {})}
               {...(negativeTotalValue
                 ? {
@@ -240,8 +268,10 @@ export const Summary = (props: SummaryProps) => {
                   color: item.color
                 }
               })}
-              width={isMD ? 440 : 310}
-              height={isMD ? 400 : 300}
+              innerSize={settingsSize.innerSize}
+              outerSize={settingsSize.outerSize}
+              width={settingsHeightWidth.width}
+              height={settingsHeightWidth.height}
               {...(!isMD ? { centered: true } : {})}
             />
             <PieChart
@@ -253,11 +283,13 @@ export const Summary = (props: SummaryProps) => {
                   color: item.color
                 }
               })}
-              width={isMD ? 440 : 310}
-              height={isMD ? 400 : 300}
+              innerSize={settingsSize.innerSize}
+              outerSize={settingsSize.outerSize}
+              width={settingsHeightWidth.width}
+              height={settingsHeightWidth.height}
               {...(!isMD ? { centered: true } : {})}
             />
-          </Carousel>
+          </CarouselPieChart>
         </Box>
       ) : null}
     </AnimatePresenceWrapper>

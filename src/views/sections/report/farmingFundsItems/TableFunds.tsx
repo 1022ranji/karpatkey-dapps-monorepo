@@ -52,7 +52,7 @@ const TableFunds = (props: TableFundsProps) => {
 
   return (
     <TableContainer component={Box} sx={{ width: '100%', overflowX: 'auto' }}>
-      <Table>
+      <Table sx={{ borderCollapse: 'separate', borderSpacing: 0 }}>
         <TableHead>
           <TableRow>
             <TableHeadCellCustom
@@ -79,6 +79,7 @@ const TableFunds = (props: TableFundsProps) => {
               <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
                 <CustomTypo>{isDDay ? 'DeFi results' : 'Farming results'}</CustomTypo>
                 <Tooltip
+                  enterTouchDelay={0}
                   title={
                     isDDay
                       ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'

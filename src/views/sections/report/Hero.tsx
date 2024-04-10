@@ -12,8 +12,8 @@ import * as React from 'react'
 import { useApp } from 'src/contexts/app.context'
 import { Box, Theme } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { Carousel } from 'components/Carousel'
 import moment from 'moment'
+import { CarouselAddresses } from 'components/carousels/addresses'
 
 export const Hero = () => {
   const { state } = useApp()
@@ -120,7 +120,9 @@ export const Hero = () => {
             {daoAddresses
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
-                <ButtonAddress key={index} daoAddress={daoAddress} />
+                <Box key={index}>
+                  <ButtonAddress daoAddress={daoAddress} />
+                </Box>
               ))}
           </BoxWrapperRow>
         </BoxWrapperColumn>
@@ -138,26 +140,28 @@ export const Hero = () => {
           {daoAddresses
             .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
             .map((daoAddress: DAO_ADDRESS, index: number) => (
-              <ButtonAddress key={index} daoAddress={daoAddress} />
+              <Box key={index}>
+                <ButtonAddress daoAddress={daoAddress} />
+              </Box>
             ))}
         </BoxWrapperRow>
       ) : null}
       {!isMD && daoAddresses.length > 2 ? (
         <Box
           sx={{
-            padding: '0 20px 20px 20px',
+            padding: `10px 20px 10px 20px`,
             borderBottom: '2px solid #E0E0E0'
           }}
         >
-          <Carousel className="custom-slider-address">
+          <CarouselAddresses className="custom-slider-address" quantity={daoAddresses.length || 0}>
             {daoAddresses
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
-                <Box sx={{ paddingX: '10px' }} key={index}>
-                  <ButtonAddress daoAddress={daoAddress} />
+                <Box key={index}>
+                  <ButtonAddress daoAddress={daoAddress} sx={{ paddingX: '10px' }} />
                 </Box>
               ))}
-          </Carousel>
+          </CarouselAddresses>
         </Box>
       ) : null}
     </AnimatePresenceWrapper>

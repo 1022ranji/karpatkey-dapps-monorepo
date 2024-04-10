@@ -47,6 +47,25 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
 
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
+  const isBreakpointOne = useMediaQuery((theme: Theme) => theme.breakpoints.up(1000))
+  const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))
+  const isBreakpointThree = useMediaQuery((theme: Theme) => theme.breakpoints.up(480))
+
+  const fontSize = isBreakpointOne
+    ? '12px'
+    : isBreakpointTwo
+      ? '10px'
+      : isBreakpointThree
+        ? '8px'
+        : '8px'
+  const distance = isBreakpointOne
+    ? '25%'
+    : isBreakpointTwo
+      ? '20%'
+      : isBreakpointThree
+        ? '15%'
+        : '12%'
+
   const options = {
     title: {
       text: ''
@@ -94,9 +113,9 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         innerSize,
         dataLabels: {
           enabled: true,
-          distance: isMD ? '25%' : '15%',
+          distance,
           style: {
-            fontSize: isMD ? '12px' : '10px',
+            fontSize,
             fontFamily: 'IBM Plex Sans',
             color: '#222222',
             textOutline: '0px',
@@ -115,12 +134,12 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         borderWidth: 0,
         dataLabels: {
           format:
-            '<span class="highcharts-data-label">{point.name}</span><br>{point.percentage:.2f} %',
+            '<span class="highcharts-data-label">{point.name}</span><br><span class="highcharts-data-label-percentage">{point.percentage:.2f}%</span>',
           useHTML: true,
           connectorColor: 'black',
-          connectorWidth: 2,
+          connectorWidth: 1,
           style: {
-            fontSize: isMD ? '12px' : '10px',
+            fontSize,
             fontFamily: 'IBM Plex Sans',
             color: '#222222',
             textOutline: '0px',

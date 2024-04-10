@@ -128,7 +128,7 @@ export const Filter = (props: FilterProps) => {
             />
           ) : null}
         </BoxWrapperRow>
-        <Tooltip title={tooltipText} sx={{ ml: 1 }}>
+        <Tooltip title={tooltipText} sx={{ ml: 1 }} enterTouchDelay={0}>
           <HighlightOffIcon
             sx={{
               ...(isClearButtonEnabled
