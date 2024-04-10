@@ -27,6 +27,10 @@ path:focus {
   white-space: pre-wrap !important;
 }
 
+.highcharts-data-label-percentage {
+  width: 100%;
+}
+
 .highcharts-tooltip > span {
   background-color: #eeeded;
   border: 1px solid silver;
