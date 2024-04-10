@@ -206,7 +206,7 @@ export const FilterContent = ({
             {enableDeFiType && (
               <BoxWrapperColumn sx={{ alignItems: 'center' }}>
                 <CustomTypo sx={{ color: 'primary.main', marginTop: '20px', marginBottom: '10px' }}>
-                  DeFi type
+                  Type
                 </CustomTypo>
                 <CustomButton
                   sx={{ width: '314px' }}

@@ -29,7 +29,7 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
   }
 
   const settingsHeightWidth = {
-    width: isBreakpointOne ? 560 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360,
+    width: isBreakpointOne ? '100%' : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360,
     height: isBreakpointOne ? 560 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360
   }
 
