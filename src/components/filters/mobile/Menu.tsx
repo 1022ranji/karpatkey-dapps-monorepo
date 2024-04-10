@@ -198,7 +198,7 @@ export const Menu = () => {
         >
           <CustomTypo
             sx={{
-              textAlign: 'left',
+              textAlign: 'center',
               margin: '5px',
               textOverflow: 'ellipsis',
               whiteSpace: 'pre-wrap',
