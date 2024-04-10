@@ -3,6 +3,7 @@ import { PieChart, EmptyData, PaperSection } from 'src/components'
 import { isYearAndMonthValid } from 'src/utils/params'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Theme } from '@mui/material'
+import Box from '@mui/material/Box'
 
 interface FundsByProtocolContainerProps {
   fundsByProtocol: any[]
@@ -29,7 +30,7 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
   }
 
   const settingsHeightWidth = {
-    width: isBreakpointOne ? '100%' : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360,
+    width: isBreakpointOne ? 700 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360,
     height: isBreakpointOne ? 560 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360
   }
 
@@ -47,20 +48,22 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
       {!fundsByProtocol || fundsByProtocol.length === 0 ? (
         <EmptyData />
       ) : (
-        <PieChart
-          data={fundsByProtocol.map((item) => {
-            return {
-              name: item.label,
-              y: item.allocation,
-              color: item.color
-            }
-          })}
-          innerSize={settingsSize.innerSize}
-          outerSize={settingsSize.outerSize}
-          width={settingsHeightWidth.width}
-          height={settingsHeightWidth.height}
-          centered={true}
-        />
+        <Box sx={{ width: '100%', justifyContent: 'center', display: 'flex' }}>
+          <PieChart
+            data={fundsByProtocol.map((item) => {
+              return {
+                name: item.label,
+                y: item.allocation,
+                color: item.color
+              }
+            })}
+            innerSize={settingsSize.innerSize}
+            outerSize={settingsSize.outerSize}
+            width={settingsHeightWidth.width}
+            height={settingsHeightWidth.height}
+            centered={true}
+          />
+        </Box>
       )}
     </PaperSection>
   )

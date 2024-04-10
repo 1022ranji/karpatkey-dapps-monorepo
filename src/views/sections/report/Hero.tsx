@@ -120,7 +120,9 @@ export const Hero = () => {
             {daoAddresses
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
-                <ButtonAddress key={index} daoAddress={daoAddress} />
+                <Box key={index}>
+                  <ButtonAddress daoAddress={daoAddress} />
+                </Box>
               ))}
           </BoxWrapperRow>
         </BoxWrapperColumn>
@@ -138,7 +140,9 @@ export const Hero = () => {
           {daoAddresses
             .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
             .map((daoAddress: DAO_ADDRESS, index: number) => (
-              <ButtonAddress key={index} daoAddress={daoAddress} />
+              <Box key={index}>
+                <ButtonAddress daoAddress={daoAddress} />
+              </Box>
             ))}
         </BoxWrapperRow>
       ) : null}
@@ -153,7 +157,9 @@ export const Hero = () => {
             {daoAddresses
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
-                <ButtonAddress key={index} daoAddress={daoAddress} sx={{ paddingX: '10px' }} />
+                <Box key={index}>
+                  <ButtonAddress daoAddress={daoAddress} sx={{ paddingX: '10px' }} />
+                </Box>
               ))}
           </CarouselAddresses>
         </Box>

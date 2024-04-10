@@ -146,7 +146,7 @@ export const Summary = (props: SummaryProps) => {
           <Box
             sx={{
               display: 'flex',
-              gap: 2,
+              gap: 10,
               flexWrap: 'wrap',
               margin: {
                 xs: '20px 20px 20px 20px',
