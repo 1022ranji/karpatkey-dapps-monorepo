@@ -1063,6 +1063,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 2,
         year: 2024,
         id: '2_2024'
+      },
+      {
+        label: 'March',
+        month: 3,
+        year: 2024,
+        id: '3_2024'
       }
     ]
   }
