@@ -29,9 +29,8 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
   const daoParam = queryParams.get('dao')
   const yearParam = queryParams.get('year')
   const monthParam = queryParams.get('month')
-  const currencyParam = queryParams.get('currency')
 
-  const isSidebarVisible = !!(daoParam && yearParam && monthParam && currencyParam)
+  const isSidebarVisible = !!(daoParam && yearParam && monthParam)
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
   return isSidebarVisible ? (
