@@ -129,7 +129,7 @@ export const Menu = () => {
         />
       </Filter>
       {isDDay && <FilterByCurrency />}
-      <Share dao={filterDAO} year={year} month={month} currency={currency} />
+      <Share />
     </BoxWrapperRow>
   )
 }
