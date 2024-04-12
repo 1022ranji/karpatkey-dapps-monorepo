@@ -1,29 +1,31 @@
-import { Filter } from 'src/types'
 import { Button, Snackbar } from '@mui/material'
 import * as React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { SnackbarOrigin } from '@mui/material/Snackbar'
 import { AnimatePresenceWrapper } from 'src/components'
+import { useApp } from '../contexts/app.context'
 
 interface State extends SnackbarOrigin {
   open: boolean
 }
 
-export const Share = (props: Filter) => {
-  const { month, dao, year, currency } = props
+export const Share = () => {
+  const { state } = useApp()
+  const { year, month, DAO: filterDAO, currency } = state
+
   const value = React.useMemo(() => {
     const query = new URLSearchParams()
     const url = window.location.href.split('?')[0]
-    if (dao) query.append('dao', dao + '')
+    if (filterDAO) query.append('dao', filterDAO + '')
     if (month) query.append('month', month + '')
     if (year) query.append('year', year + '')
     if (currency) query.append('currency', currency + '')
     return `${url}?${query.toString()}`
-  }, [month, dao, year])
+  }, [month, filterDAO, year, currency])
 
   const isShareButtonEnable = React.useMemo(() => {
-    return !!month || !!dao || !!year || !!currency
-  }, [month, dao, year, currency])
+    return !!month || !!filterDAO || !!year || !!currency
+  }, [month, filterDAO, year, currency])
 
   // Snackbar state and handlers
   const [snackbarState, setSnackbarState] = React.useState<State>({
