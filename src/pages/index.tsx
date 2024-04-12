@@ -116,6 +116,12 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
   }
 
+  if (!currency && dao) {
+    currency = FILTER_DAOS.find((option) => {
+      return dao && +option.id === +dao
+    })?.currenciesAllowed[0] as unknown as Currency
+  }
+
   const params = { dao, month, year, currency } as Filter
 
   // should come all parameters
