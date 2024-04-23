@@ -20,18 +20,16 @@ export const NextArrowCustom = ({ currentSlide, slideCount, ...arrowProps }: any
   <NextArrow sx={{ fill: 'black', fontSize: '14px' }} {...arrowProps} />
 )
 
-export const Carousel = ({ children, className, dots = true }: CarouselProps) => {
+export const CarouselCards = ({ children, className, dots = true }: CarouselProps) => {
   const settings = {
     dots,
     speed: 500,
     initialSlide: 0,
     slidesToShow: 1,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: '5px',
     className: className,
-    variableWidth: true,
     swipeToSlide: true,
+    infinite: true,
     nextArrow: <NextArrowCustom />,
     prevArrow: <PrevArrowCustom />,
     responsive: [
@@ -43,7 +41,7 @@ export const Carousel = ({ children, className, dots = true }: CarouselProps) =>
         }
       },
       {
-        breakpoint: 700,
+        breakpoint: 720,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1

@@ -53,23 +53,41 @@ path:focus {
   height: 280px;
 }
 
-.custom-slider-cards > .slick-slide {
-  padding: 0 10px;
-}
-
-.custom-slider-cards > .slick-list {
-  height: fit-content;
-}
-
-.custom-slider-cards > .slick-dots {
-  display: contents;
-}
-
 body {
   overflow-x: hidden;
   height: 100%;
 }
 
+.custom-slider-cards {
+  .slick-slide.slick-active {
+    justify-content: center;
+    display: flex;
+  }
+}
+
+@keyframes jumpInfiniteDown {
+  0% {
+    margin-bottom: 0;
+  }
+  50% {
+    margin-bottom: 20px;
+  }
+  100% {
+    margin-bottom: 0;
+  }
+}
+
+@keyframes jumpInfiniteUp {
+  0% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: 20px;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
 
 @media (min-width: 1000px) {
   body {
