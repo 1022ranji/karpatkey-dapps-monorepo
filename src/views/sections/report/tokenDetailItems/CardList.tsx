@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer'
 import { Card as CardDesktop } from './card/desktop/Card'
 import { Card as CardMobile } from './card/mobile/Card'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { Carousel } from 'components/Carousel'
+import { CarouselCards } from 'components/carousels/cards'
 
 interface CardListProps {
   tokenDetailByPosition: any[]
@@ -101,7 +101,7 @@ export const CardList = (props: CardListProps) => {
             }
           }}
         >
-          <Carousel className="custom-slider-cards" dots={false}>
+          <CarouselCards className="custom-slider-cards" dots={false}>
             {tokenDetailByPosition.map((card: any, index: number) => {
               return (
                 <Box
@@ -121,7 +121,7 @@ export const CardList = (props: CardListProps) => {
                 </Box>
               )
             })}
-          </Carousel>
+          </CarouselCards>
         </Box>
       )}
     </>
