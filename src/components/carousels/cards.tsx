@@ -20,7 +20,7 @@ export const NextArrowCustom = ({ currentSlide, slideCount, ...arrowProps }: any
   <NextArrow sx={{ fill: 'black', fontSize: '14px' }} {...arrowProps} />
 )
 
-export const CarouselCards = ({ children, className, dots = true }: CarouselProps) => {
+export const CarouselCards = ({ children, className, dots = false }: CarouselProps) => {
   const settings = {
     dots,
     speed: 500,
