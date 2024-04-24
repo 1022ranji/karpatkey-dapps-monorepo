@@ -52,6 +52,10 @@ export const CardList = (props: CardListProps) => {
   }
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
+  const isBreakpointOne = useMediaQuery((theme: Theme) => theme.breakpoints.up(1000))
+  const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))
+  const isBreakpointThree = useMediaQuery((theme: Theme) => theme.breakpoints.up(480))
+
   return (
     <>
       {isMD && (
@@ -95,20 +99,25 @@ export const CardList = (props: CardListProps) => {
       {!isMD && (
         <Box
           sx={{
-            margin: {
-              xs: '20px 20px 20px 20px',
-              md: '30px 30px 30px 30px'
-            }
+            margin: '20px 20px 20px 20px'
           }}
         >
-          <CarouselCards className="custom-slider-cards" dots={false}>
+          <CarouselCards className="custom-slider-cards">
             {tokenDetailByPosition.map((card: any, index: number) => {
               return (
                 <Box
                   key={index}
                   sx={{
                     maxWidth: '320px',
-                    minWidth: '320px',
+                    minWidth: '220px',
+                    width: isBreakpointOne
+                      ? '320px !important'
+                      : isBreakpointTwo
+                        ? '280px !important'
+                        : isBreakpointThree
+                          ? '260px !important'
+                          : '200px !important',
+
                     minHeight: '200px',
                     height: 'fit-content',
                     padding: '8px 8px',

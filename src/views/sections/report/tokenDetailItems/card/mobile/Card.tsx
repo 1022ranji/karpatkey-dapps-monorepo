@@ -30,7 +30,7 @@ export const Card = (props: CardItemProps) => {
 
   const helpText = <UniswapHelpText />
 
-  const [isOnTop, setOnTop] = React.useState(false)
+  const [isOnTop, setOnTop] = React.useState(true)
   const [isAtBottom, setAtBottom] = React.useState(false)
 
   const scrollDown = React.useCallback((e: any) => {
@@ -59,8 +59,8 @@ export const Card = (props: CardItemProps) => {
   }, [categories])
 
   return (
-    <BoxWrapperColumn gap={4}>
-      <BoxWrapperColumn gap={4} sx={{ minHeight: '150px', height: '150px', maxHeight: '200px' }}>
+    <BoxWrapperColumn gap={5}>
+      <BoxWrapperColumn gap={4} sx={{ minHeight: '150px', height: '150px', maxHeight: '240px' }}>
         {!isDDay ? (
           <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
             <Title title={blockchain} />
@@ -134,10 +134,11 @@ export const Card = (props: CardItemProps) => {
           <ArrowDownwardIcon sx={{ fontSize: '30px', color: '#232323' }} />
         </Box>
 
-        <Box
+        <BoxWrapperColumn
+          gap={2}
           onScroll={scrollDown}
           sx={{
-            padding: '0 10px',
+            paddingRight: '10px',
             overflowY: 'auto',
             '&::-webkit-scrollbar': {
               width: '15px',
@@ -180,7 +181,7 @@ export const Card = (props: CardItemProps) => {
                   }
                 }
               })}
-        </Box>
+        </BoxWrapperColumn>
       </BoxWrapperColumn>
     </BoxWrapperColumn>
   )
