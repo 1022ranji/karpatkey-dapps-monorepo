@@ -65,6 +65,22 @@ body {
   }
 }
 
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.dot.active {
+  width: 20px;
+  height: 20px;
+}
+
+
 @keyframes jumpInfiniteDown {
   0% {
     margin-bottom: 0;

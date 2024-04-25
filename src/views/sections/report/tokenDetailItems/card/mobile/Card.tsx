@@ -116,7 +116,7 @@ export const Card = (props: CardItemProps) => {
             display: hideScrollButton || isOnTop ? 'none' : 'block'
           }}
         >
-          <ArrowUpwardIcon sx={{ fontSize: '30px', color: '#232323' }} />
+          <ArrowUpwardIcon sx={{ fontSize: '20px', color: '#232323' }} />
         </Box>
 
         <Box
@@ -131,7 +131,7 @@ export const Card = (props: CardItemProps) => {
             display: hideScrollButton || isAtBottom ? 'none' : 'block'
           }}
         >
-          <ArrowDownwardIcon sx={{ fontSize: '30px', color: '#232323' }} />
+          <ArrowDownwardIcon sx={{ fontSize: '20px', color: '#232323' }} />
         </Box>
 
         <BoxWrapperColumn
