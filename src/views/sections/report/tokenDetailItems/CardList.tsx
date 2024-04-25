@@ -7,7 +7,6 @@ import { Card as CardDesktop } from './card/desktop/Card'
 import { Card as CardMobile } from './card/mobile/Card'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { CarouselCards } from 'components/carousels/cards'
-import { CustomTypography } from 'components/CustomTypography'
 import { BoxWrapperColumn } from 'components/wrappers'
 
 interface CardListProps {
@@ -58,8 +57,6 @@ export const CardList = (props: CardListProps) => {
   const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))
   const isBreakpointThree = useMediaQuery((theme: Theme) => theme.breakpoints.up(480))
 
-  const [position, setPosition] = React.useState(1)
-
   return (
     <>
       {isMD && (
@@ -102,9 +99,6 @@ export const CardList = (props: CardListProps) => {
       )}
       {!isMD && (
         <BoxWrapperColumn gap={0}>
-          <CustomTypography variant={'body2'}>
-            {`${position}/${tokenDetailByPosition.length}`}
-          </CustomTypography>
           <Box
             sx={{
               margin: '0 20px 20px 20px'
@@ -112,10 +106,7 @@ export const CardList = (props: CardListProps) => {
           >
             <CarouselCards
               className="custom-slider-cards"
-              beforeChange={(oldIndex: number, newIndex: number) => {
-                console.log('beforeChange', oldIndex, newIndex)
-                setPosition(newIndex + 1)
-              }}
+              totalSlides={tokenDetailByPosition.length}
             >
               {tokenDetailByPosition.map((card: any, index: number) => {
                 return (

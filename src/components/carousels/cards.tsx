@@ -1,15 +1,14 @@
 import React from 'react'
 import Slider from 'react-slick'
-import { Box } from '@mui/material'
+import { Box, Chip } from '@mui/material'
 import NextArrow from '@mui/icons-material/ArrowForwardIos'
 import PrevArrow from '@mui/icons-material/ArrowBackIos'
+import { BoxWrapperRow } from 'components/wrappers'
 
 interface CarouselProps {
   children: React.ReactNode
   className?: string
-  dots?: boolean
-  beforeChange?: (oldIndex: number, newIndex: number) => void
-  afterChange?: (index: number) => void
+  totalSlides: number
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -22,26 +21,30 @@ export const NextArrowCustom = ({ currentSlide, slideCount, ...arrowProps }: any
   <NextArrow sx={{ fill: 'black', fontSize: '14px' }} {...arrowProps} />
 )
 
-export const CarouselCards = ({
-  children,
-  className,
-  dots = false,
-  beforeChange,
-  afterChange
-}: CarouselProps) => {
+export const CarouselCards = ({ children, className, totalSlides }: CarouselProps) => {
+  const [activeIndex, setActiveIndex] = React.useState(0)
+
+  let firstDotIndex = Math.max(0, activeIndex - 2)
+  const lastDotIndex = Math.min(totalSlides - 1, firstDotIndex + 4)
+
+  if (lastDotIndex === totalSlides - 1) {
+    firstDotIndex = Math.max(0, totalSlides - 5)
+  }
+
   const settings = {
-    dots,
+    dots: false,
     speed: 500,
-    initialSlide: 0,
+    infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     className: className,
     swipeToSlide: true,
-    infinite: true,
     nextArrow: <NextArrowCustom />,
     prevArrow: <PrevArrowCustom />,
-    beforeChange,
-    afterChange,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    beforeChange: (_: number, next: number) => setActiveIndex(next),
+    customPaging: () => <div />,
+
     responsive: [
       {
         breakpoint: 1024,
@@ -67,8 +70,44 @@ export const CarouselCards = ({
     ]
   }
   return (
-    <Box className="slider-container" component={'div'} sx={{ marginY: '20px', marginX: '20px' }}>
-      <Slider {...settings}>{children}</Slider>
-    </Box>
+    <>
+      <Chip
+        label={`${activeIndex + 1}/${totalSlides}`}
+        sx={{
+          left: '20px',
+          display: 'flex',
+          position: 'absolute'
+        }}
+      />
+
+      <Box className="slider-container" component={'div'} sx={{ marginY: '50px', marginX: '20px' }}>
+        <Slider {...settings}>{children}</Slider>
+        <BoxWrapperRow className="pagination-dots" sx={{ marginTop: '40px' }}>
+          {Array.from({ length: totalSlides }, (_, i) => i)
+            .slice(firstDotIndex, lastDotIndex + 1)
+            .map((index) => {
+              const dotClass = index === activeIndex ? 'dot active' : 'dot'
+              const dotSize =
+                Math.abs(activeIndex - index) === 0
+                  ? '12px'
+                  : `${12 - Math.abs(activeIndex - index) * 2}px`
+              const dotStyle = {
+                width: dotSize,
+                height: dotSize,
+                backgroundColor: index === activeIndex ? 'black' : 'gray'
+              }
+
+              return (
+                <div
+                  key={index}
+                  className={dotClass}
+                  style={dotStyle}
+                  onClick={() => setActiveIndex(index)}
+                />
+              )
+            })}
+        </BoxWrapperRow>
+      </Box>
+    </>
   )
 }
