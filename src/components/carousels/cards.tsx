@@ -8,6 +8,8 @@ interface CarouselProps {
   children: React.ReactNode
   className?: string
   dots?: boolean
+  beforeChange?: (oldIndex: number, newIndex: number) => void
+  afterChange?: (index: number) => void
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,7 +22,13 @@ export const NextArrowCustom = ({ currentSlide, slideCount, ...arrowProps }: any
   <NextArrow sx={{ fill: 'black', fontSize: '14px' }} {...arrowProps} />
 )
 
-export const CarouselCards = ({ children, className, dots = false }: CarouselProps) => {
+export const CarouselCards = ({
+  children,
+  className,
+  dots = false,
+  beforeChange,
+  afterChange
+}: CarouselProps) => {
   const settings = {
     dots,
     speed: 500,
@@ -32,6 +40,8 @@ export const CarouselCards = ({ children, className, dots = false }: CarouselPro
     infinite: true,
     nextArrow: <NextArrowCustom />,
     prevArrow: <PrevArrowCustom />,
+    beforeChange,
+    afterChange,
     responsive: [
       {
         breakpoint: 1024,

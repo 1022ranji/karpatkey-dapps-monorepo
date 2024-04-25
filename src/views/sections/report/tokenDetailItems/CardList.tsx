@@ -7,6 +7,8 @@ import { Card as CardDesktop } from './card/desktop/Card'
 import { Card as CardMobile } from './card/mobile/Card'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { CarouselCards } from 'components/carousels/cards'
+import { CustomTypography } from 'components/CustomTypography'
+import { BoxWrapperColumn } from 'components/wrappers'
 
 interface CardListProps {
   tokenDetailByPosition: any[]
@@ -56,6 +58,8 @@ export const CardList = (props: CardListProps) => {
   const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))
   const isBreakpointThree = useMediaQuery((theme: Theme) => theme.breakpoints.up(480))
 
+  const [position, setPosition] = React.useState(1)
+
   return (
     <>
       {isMD && (
@@ -97,41 +101,52 @@ export const CardList = (props: CardListProps) => {
         </Box>
       )}
       {!isMD && (
-        <Box
-          sx={{
-            margin: '20px 20px 20px 20px'
-          }}
-        >
-          <CarouselCards className="custom-slider-cards">
-            {tokenDetailByPosition.map((card: any, index: number) => {
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    maxWidth: '320px',
-                    minWidth: '220px',
-                    width: isBreakpointOne
-                      ? '320px !important'
-                      : isBreakpointTwo
-                        ? '280px !important'
-                        : isBreakpointThree
-                          ? '260px !important'
-                          : '200px !important',
+        <BoxWrapperColumn gap={0}>
+          <CustomTypography variant={'body2'}>
+            {`${position}/${tokenDetailByPosition.length}`}
+          </CustomTypography>
+          <Box
+            sx={{
+              margin: '0 20px 20px 20px'
+            }}
+          >
+            <CarouselCards
+              className="custom-slider-cards"
+              beforeChange={(oldIndex: number, newIndex: number) => {
+                console.log('beforeChange', oldIndex, newIndex)
+                setPosition(newIndex + 1)
+              }}
+            >
+              {tokenDetailByPosition.map((card: any, index: number) => {
+                return (
+                  <Box
+                    key={index}
+                    sx={{
+                      maxWidth: '320px',
+                      minWidth: '220px',
+                      width: isBreakpointOne
+                        ? '320px !important'
+                        : isBreakpointTwo
+                          ? '280px !important'
+                          : isBreakpointThree
+                            ? '260px !important'
+                            : '200px !important',
 
-                    minHeight: '200px',
-                    height: 'fit-content',
-                    padding: '8px 8px',
-                    margin: '0 10px',
-                    border: '1px solid #B6B6B6',
-                    background: 'background.paper'
-                  }}
-                >
-                  <CardMobile id={index} key={index} card={card} />
-                </Box>
-              )
-            })}
-          </CarouselCards>
-        </Box>
+                      minHeight: '200px',
+                      height: 'fit-content',
+                      padding: '8px 8px',
+                      margin: '0 10px',
+                      border: '1px solid #B6B6B6',
+                      background: 'background.paper'
+                    }}
+                  >
+                    <CardMobile id={index} key={index} card={card} />
+                  </Box>
+                )
+              })}
+            </CarouselCards>
+          </Box>
+        </BoxWrapperColumn>
       )}
     </>
   )
