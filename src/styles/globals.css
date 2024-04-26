@@ -53,11 +53,6 @@ path:focus {
   height: 280px;
 }
 
-body {
-  overflow-x: hidden;
-  height: 100%;
-}
-
 .custom-slider-cards {
   .slick-slide.slick-active {
     justify-content: center;
@@ -105,6 +100,11 @@ body {
   }
 }
 
+.highcharts-data-labels {
+  visibility: visible;
+  opacity: 1 !important;
+}
+
 @media (min-width: 1000px) {
   body {
     overflow-y: hidden;
@@ -112,7 +112,7 @@ body {
   }
 }
 
-.highcharts-data-labels {
-  visibility: visible;
-  opacity: 1 !important;
+body {
+  overflow-x: hidden;
+  height: 100%;
 }
