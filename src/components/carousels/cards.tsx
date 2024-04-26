@@ -89,8 +89,8 @@ export const CarouselCards = ({ children, className, totalSlides }: CarouselProp
               const dotClass = index === activeIndex ? 'dot active' : 'dot'
               const dotSize =
                 Math.abs(activeIndex - index) === 0
-                  ? '12px'
-                  : `${12 - Math.abs(activeIndex - index) * 2}px`
+                  ? '10px'
+                  : `${10 - Math.abs(activeIndex - index) * 2}px`
               const dotStyle = {
                 width: dotSize,
                 height: dotSize,
