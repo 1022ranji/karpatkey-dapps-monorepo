@@ -16,7 +16,7 @@ export const Header = () => {
 
   return (
     <AnimatePresenceWrapper>
-      <Wrapper height={HEADER_HEIGHT} sxNavBar={{ maxWidth: '940px' }}>
+      <Wrapper height={HEADER_HEIGHT} sxNavBar={{ maxWidth: '940px', width: '100%' }}>
         <Logo />
         <Box
           sx={{
@@ -66,7 +66,7 @@ export const Header = () => {
         slots={{ backdrop: StyledBackdrop }}
       >
         <Slide direction="down" in={open} mountOnEnter unmountOnExit>
-          <ModalContent sx={{ width: '100%', height: '100%', top: '88px' }}>
+          <ModalContent sx={{ width: '100%', height: '100%', top: `${HEADER_HEIGHT}px` }}>
             <Box sx={{ p: 2 }}>
               <BoxWrapperColumn sx={{ mb: 2 }} gap={4}>
                 <ListItemButton sx={{ paddingLeft: '0px', justifyContent: 'center' }}>

@@ -1,8 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
-import { Box, css, Link, styled, Theme } from '@mui/material'
+import { Box, css, Link, styled } from '@mui/material'
 import { Modal as BaseModal } from '@mui/base/Modal'
-import useMediaQuery from '@mui/material/useMediaQuery'
 
 const Backdrop = React.forwardRef<HTMLDivElement, { open?: boolean; className: string }>(
   (props, ref) => {
@@ -114,8 +113,6 @@ export const Wrapper = (props: WrapperProps) => {
   const [show, setShow] = React.useState(true)
   const [lastScrollY, setLastScrollY] = React.useState(0)
 
-  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
-
   const controlNavbar = () => {
     if (window.scrollY > lastScrollY) {
       // if scroll down hide the navbar
@@ -130,13 +127,13 @@ export const Wrapper = (props: WrapperProps) => {
   }
 
   React.useEffect(() => {
-    if (isMD) window.addEventListener('scroll', controlNavbar)
+    window.addEventListener('scroll', controlNavbar)
 
     // cleanup function
     return () => {
-      if (isMD) window.removeEventListener('scroll', controlNavbar)
+      window.removeEventListener('scroll', controlNavbar)
     }
-  }, [lastScrollY])
+  }, [lastScrollY, controlNavbar])
 
   return (
     <NavbarContainer sx={{ ...props.sx }}>
