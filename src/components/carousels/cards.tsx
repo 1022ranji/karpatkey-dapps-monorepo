@@ -9,6 +9,7 @@ interface CarouselProps {
   children: React.ReactNode
   className?: string
   totalSlides: number
+  afterChangeCallback?: (index: number) => void
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -21,7 +22,12 @@ export const NextArrowCustom = ({ currentSlide, slideCount, ...arrowProps }: any
   <NextArrow sx={{ fill: 'black', fontSize: '14px' }} {...arrowProps} />
 )
 
-export const CarouselCards = ({ children, className, totalSlides }: CarouselProps) => {
+export const CarouselCards = ({
+  children,
+  className,
+  totalSlides,
+  afterChangeCallback
+}: CarouselProps) => {
   const [activeIndex, setActiveIndex] = React.useState(0)
 
   let firstDotIndex = Math.max(0, activeIndex - 2)
@@ -43,6 +49,11 @@ export const CarouselCards = ({ children, className, totalSlides }: CarouselProp
     prevArrow: <PrevArrowCustom />,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     beforeChange: (_: number, next: number) => setActiveIndex(next),
+    afterChange: (index: number) => {
+      if (afterChangeCallback) {
+        afterChangeCallback(index)
+      }
+    },
     customPaging: () => <div />,
 
     responsive: [
