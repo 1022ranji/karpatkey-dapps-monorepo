@@ -53,17 +53,12 @@ export const Card = (props: CardItemProps) => {
   }, [goToTop, props.id])
 
   const hideScrollButton = React.useMemo(() => {
-    // check amount of elements in categories
-    let amountOfElements = 0
-    categories.forEach((category: any) => {
-      if (category.tokens) {
-        amountOfElements += category.tokens.length
-      } else if (category.ratios) {
-        amountOfElements += category.ratios.length
-      }
-    })
-    // hide scroll down button if amount of elements is less than 4
-    return amountOfElements < 4
+    const element = document.getElementById(`scrollable_${props.id}`)
+    if (element) {
+      const scrollHeight = element.scrollHeight
+      const clientHeight = element.clientHeight
+      return scrollHeight <= clientHeight
+    }
   }, [categories])
 
   return (
