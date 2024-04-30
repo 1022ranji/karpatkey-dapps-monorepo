@@ -59,6 +59,7 @@ export const Card = (props: CardItemProps) => {
       const clientHeight = element.clientHeight
       return scrollHeight <= clientHeight
     }
+    return false
   }, [categories])
 
   return (
