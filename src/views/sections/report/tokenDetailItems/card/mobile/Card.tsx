@@ -17,10 +17,11 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 interface CardItemProps {
   id: number
   card: any
+  goToTop: boolean
 }
 
 export const Card = (props: CardItemProps) => {
-  const { card } = props
+  const { card, goToTop } = props
   const { blockchain, protocol, position, totalUsdValue, cardType, categories, deFiType } = card
 
   const isDDay = isYearAndMonthValid()
@@ -43,6 +44,13 @@ export const Card = (props: CardItemProps) => {
     setOnTop(top)
     setAtBottom(bottom)
   }, [])
+
+  React.useEffect(() => {
+    const scrollable = document.getElementById(`scrollable_${props.id}`)
+    if (scrollable) {
+      scrollable.scrollTop = 0
+    }
+  }, [goToTop, props.id])
 
   const hideScrollButton = React.useMemo(() => {
     // check amount of elements in categories
@@ -136,18 +144,19 @@ export const Card = (props: CardItemProps) => {
 
         <BoxWrapperColumn
           gap={2}
+          id={`scrollable_${props.id}`}
           onScroll={scrollDown}
           sx={{
             paddingRight: '10px',
             overflowY: 'auto',
             '&::-webkit-scrollbar': {
-              width: '15px',
+              width: '5px',
               padding: '10px',
               margin: '10px'
             },
             '::-webkit-scrollbar-thumb': {
-              backgroundColor: '#d3d3d3',
-              borderRadius: '10px'
+              backgroundColor: '#d3d3d3'
+              // borderRadius: '10px'
             }
           }}
         >
