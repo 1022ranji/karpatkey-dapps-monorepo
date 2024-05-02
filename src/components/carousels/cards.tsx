@@ -30,11 +30,12 @@ export const CarouselCards = ({
 }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = React.useState(0)
 
-  let firstDotIndex = Math.max(0, activeIndex - 2)
-  const lastDotIndex = Math.min(totalSlides - 1, firstDotIndex + 4)
+  let firstDotIndex = Math.max(0, activeIndex - 3)
+  const effectiveDots = totalSlides < 7 ? totalSlides : 7
+  const lastDotIndex = Math.min(totalSlides - 1, firstDotIndex + effectiveDots - 1)
 
   if (lastDotIndex === totalSlides - 1) {
-    firstDotIndex = Math.max(0, totalSlides - 5)
+    firstDotIndex = Math.max(0, totalSlides - effectiveDots)
   }
 
   const settings = {
@@ -101,7 +102,7 @@ export const CarouselCards = ({
               const dotSize =
                 Math.abs(activeIndex - index) === 0
                   ? '10px'
-                  : `${10 - Math.abs(activeIndex - index) * 2}px`
+                  : `${10 - Math.abs(activeIndex - index) * 1.1}px`
               const dotStyle = {
                 width: dotSize,
                 height: dotSize,
