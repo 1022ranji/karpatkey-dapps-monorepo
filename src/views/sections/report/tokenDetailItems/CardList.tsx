@@ -106,42 +106,68 @@ export const CardList = (props: CardListProps) => {
               margin: '0 20px 20px 20px'
             }}
           >
-            <CarouselCards
-              className="custom-slider-cards"
-              totalSlides={tokenDetailByPosition.length}
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              afterChangeCallback={(index: number) => {
-                setGoToTop(!goToTop)
-              }}
-            >
-              {tokenDetailByPosition.map((card: any, index: number) => {
-                return (
-                  <Box
-                    key={index}
-                    sx={{
-                      maxWidth: '320px',
-                      minWidth: '220px',
-                      width: isBreakpointOne
-                        ? '320px !important'
-                        : isBreakpointTwo
-                          ? '280px !important'
-                          : isBreakpointThree
-                            ? '260px !important'
-                            : '200px !important',
+            {tokenDetailByPosition.length > 1 && (
+              <CarouselCards
+                className="custom-slider-cards"
+                totalSlides={tokenDetailByPosition.length}
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                afterChangeCallback={(index: number) => {
+                  setGoToTop(!goToTop)
+                }}
+              >
+                {tokenDetailByPosition.map((card: any, index: number) => {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        maxWidth: '320px',
+                        minWidth: '220px',
+                        width: isBreakpointOne
+                          ? '320px !important'
+                          : isBreakpointTwo
+                            ? '280px !important'
+                            : isBreakpointThree
+                              ? '260px !important'
+                              : '200px !important',
 
-                      minHeight: '200px',
-                      height: 'fit-content',
-                      padding: '8px 8px',
-                      margin: '0 10px',
-                      border: '1px solid #B6B6B6',
-                      background: 'background.paper'
-                    }}
-                  >
-                    <CardMobile id={index} key={index} card={card} goToTop={goToTop} />
-                  </Box>
-                )
-              })}
-            </CarouselCards>
+                        minHeight: '200px',
+                        height: 'fit-content',
+                        padding: '8px 8px',
+                        margin: '0 10px',
+                        border: '1px solid #B6B6B6',
+                        background: 'background.paper'
+                      }}
+                    >
+                      <CardMobile id={index} key={index} card={card} goToTop={goToTop} />
+                    </Box>
+                  )
+                })}
+              </CarouselCards>
+            )}
+            {tokenDetailByPosition.length === 1 && (
+              <Box
+                sx={{
+                  maxWidth: '320px',
+                  minWidth: '220px',
+                  width: isBreakpointOne
+                    ? '320px !important'
+                    : isBreakpointTwo
+                      ? '280px !important'
+                      : isBreakpointThree
+                        ? '260px !important'
+                        : '200px !important',
+
+                  minHeight: '200px',
+                  height: 'fit-content',
+                  padding: '8px 8px',
+                  margin: 'auto auto',
+                  border: '1px solid #B6B6B6',
+                  background: 'background.paper'
+                }}
+              >
+                <CardMobile id={0} key={0} card={tokenDetailByPosition[0]} goToTop={goToTop} />
+              </Box>
+            )}
           </Box>
         </BoxWrapperColumn>
       )}
