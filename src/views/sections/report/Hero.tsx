@@ -153,7 +153,10 @@ export const Hero = () => {
             borderBottom: '2px solid #E0E0E0'
           }}
         >
-          <CarouselAddresses className="custom-slider-address" quantity={daoAddresses.length || 0}>
+          <CarouselAddresses
+            className="custom-slider-address"
+            totalSlides={daoAddresses.length || 0}
+          >
             {daoAddresses
               .sort((a: DAO_ADDRESS, b: DAO_ADDRESS) => a.order - b.order)
               .map((daoAddress: DAO_ADDRESS, index: number) => (
