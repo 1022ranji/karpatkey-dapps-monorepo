@@ -224,7 +224,7 @@ export const Summary = (props: SummaryProps) => {
             margin: '40px 20px 40px 20px'
           }}
         >
-          <CarouselPieChart className="custom-slider-charts">
+          <CarouselPieChart className="custom-slider-charts" totalSlides={3}>
             <PieChart
               titleMessage="Total funds by token category"
               data={fundsByTokenCategory.map((item) => {
