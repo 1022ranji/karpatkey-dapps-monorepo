@@ -33,6 +33,7 @@ export const Card = (props: CardItemProps) => {
 
   const [isOnTop, setOnTop] = React.useState(true)
   const [isAtBottom, setAtBottom] = React.useState(false)
+  const [hideScrollButton, setHideScrollButton] = React.useState(false)
 
   const scrollDown = React.useCallback((e: any) => {
     // check if scroll finish at bottom
@@ -52,15 +53,19 @@ export const Card = (props: CardItemProps) => {
     }
   }, [goToTop, props.id])
 
-  const hideScrollButton = React.useMemo(() => {
-    const element = document.getElementById(`scrollable_${props.id}`)
-    if (element) {
-      const scrollHeight = element.scrollHeight
-      const clientHeight = element.clientHeight
-      return scrollHeight <= clientHeight
+  React.useEffect(() => {
+    const checkHideScrollButton = () => {
+      const element = document.getElementById(`scrollable_${props.id}`)
+      if (element) {
+        const scrollHeight = element.scrollHeight
+        const clientHeight = element.clientHeight
+        setHideScrollButton(scrollHeight <= clientHeight)
+      } else {
+        setHideScrollButton(false)
+      }
     }
-    return false
-  }, [categories])
+    checkHideScrollButton()
+  }, [categories, props.id])
 
   return (
     <BoxWrapperColumn gap={5}>
