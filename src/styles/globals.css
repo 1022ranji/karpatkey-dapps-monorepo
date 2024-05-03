@@ -107,7 +107,6 @@ path:focus {
 
 @media (min-width: 1000px) {
   body {
-    overflow-y: hidden;
     height: 100%;
   }
 }
