@@ -3,7 +3,6 @@ import { Divider } from '@mui/material'
 import { BoxWrapperRow, BoxWrapperColumn, AnimatePresenceWrapper } from 'src/components'
 import { NumberBlock } from 'src/views/sections/dashboard/NumberBlock'
 import { formatCurrency, formatPercentage } from 'src/utils/format'
-import { Value } from 'src/views/sections/dashboard/Value'
 import { Title } from 'src/views/sections/dashboard/Title'
 import { useApp } from 'src/contexts/app.context'
 import { Currency, DAOResume } from 'src/contexts/state'
@@ -36,30 +35,9 @@ export const Dashboard = () => {
         justifyContent: 'center'
       }}
     >
-      <BoxWrapperColumn
-        sx={{
-          marginTop: '128px',
-          marginBottom: '40px',
-          display: {
-            xs: 'flex',
-            md: 'none'
-          },
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <AnimatePresenceWrapper>
-          <Value value={'Available in desktop view only.'} />
-          <Value value={'Responsive view is coming soon!'} />
-        </AnimatePresenceWrapper>
-      </BoxWrapperColumn>
-
       <BoxWrapperRow
         sx={{
-          marginTop: {
-            xs: '40px',
-            md: '128px'
-          },
+          marginTop: '128px',
           marginBottom: '40px',
           paddingRight: '20px',
           paddingLeft: '20px',

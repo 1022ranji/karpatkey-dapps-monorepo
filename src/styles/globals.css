@@ -53,23 +53,57 @@ path:focus {
   height: 280px;
 }
 
-.custom-slider-cards > .slick-slide {
-  padding: 0 10px;
+.custom-slider-cards {
+  .slick-slide.slick-active {
+    justify-content: center;
+    display: flex;
+  }
 }
 
-.custom-slider-cards > .slick-list {
-  height: fit-content;
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
-.custom-slider-cards > .slick-dots {
-  display: contents;
+.dot.active {
+  width: 20px;
+  height: 20px;
 }
 
-body {
-  overflow-x: hidden;
-  height: 100%;
+
+@keyframes jumpInfiniteDown {
+  0% {
+    margin-bottom: 0;
+  }
+  50% {
+    margin-bottom: 20px;
+  }
+  100% {
+    margin-bottom: 0;
+  }
 }
 
+@keyframes jumpInfiniteUp {
+  0% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: 20px;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+
+.highcharts-data-labels {
+  visibility: visible;
+  opacity: 1 !important;
+}
 
 @media (min-width: 1000px) {
   body {
@@ -78,7 +112,7 @@ body {
   }
 }
 
-.highcharts-data-labels {
-  visibility: visible;
-  opacity: 1 !important;
+body {
+  overflow-x: hidden;
+  height: 100%;
 }
