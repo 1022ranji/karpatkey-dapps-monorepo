@@ -35,9 +35,13 @@ import {
   Stader,
   Autonolas,
   Sommelier,
-  StakeDAO
+  StakeDAO,
+  Dolomite,
+  ChorusOne,
+  Bread
 } from 'components/icons/protocols'
 import * as React from 'react'
+import { Safe } from 'components/icons/protocols/Safe'
 
 interface ProtocolIconProps {
   protocol: string
@@ -171,6 +175,18 @@ export const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Sommelier':
       icon = <Sommelier width={24} height={24} />
+      break
+    case 'Safe':
+      icon = <Safe width={24} height={24} />
+      break
+    case 'Dolomite':
+      icon = <Dolomite width={24} height={24} />
+      break
+    case 'Opus Pool (Chorus One)':
+      icon = <ChorusOne width={24} height={24} />
+      break
+    case 'Bread':
+      icon = <Bread width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />
