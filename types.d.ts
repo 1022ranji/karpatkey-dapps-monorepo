@@ -32,3 +32,5 @@ declare type DAO_NAME =
   | 'Gnosis Guild'
   | 'Lido'
   | 'Aave DAO'
+  | 'Safe<>Gnosis'
+  | 'Safe'

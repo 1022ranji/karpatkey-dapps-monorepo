@@ -178,7 +178,9 @@ export const enum DAO_NAME_KEY {
   'karpatkey DAO' = 6,
   'Gnosis Guild' = 7,
   'Lido' = 8,
-  'Aave DAO' = 9
+  'Aave DAO' = 9,
+  'Safe<>Gnosis' = 10,
+  'Safe' = 11
 }
 
 export const getDAONumberByName = (daoName: string): number => {
@@ -201,6 +203,10 @@ export const getDAONumberByName = (daoName: string): number => {
       return DAO_NAME_KEY['Lido']
     case 'Aave':
       return DAO_NAME_KEY['Aave DAO']
+    case 'Safe<>Gnosis':
+      return DAO_NAME_KEY['Safe<>Gnosis']
+    case 'Safe':
+      return DAO_NAME_KEY['Safe']
     default:
       return -1
   }
@@ -1118,6 +1124,97 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         year: 2024,
         id: '3_2024'
       },
+      {
+        label: 'April',
+        month: 4,
+        year: 2024,
+        id: '4_2024'
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['Safe<>Gnosis'],
+    name: 'Safe<>Gnosis',
+    icon: '/images/protocols/safe-gnosis.svg',
+    keyName: 'Safe<>Gnosis',
+    sinceMonth: 4,
+    sinceYear: 2024,
+    sinceYearToPeriod: {
+      2024: 'April 2024'
+    },
+    shouldBeIncludedDashboardOne: true,
+    shouldBeIncludedDashboardTwo: false,
+    shouldBeIncludedNCAum: true,
+    shouldBeIncludedLastMonthDeFiResults: true,
+    isEnabled: true,
+    addresses: [
+      {
+        address: '0xd28b432f06cb64692379758b88b5fcdfc4f56922',
+        chainId: 1,
+        isSafe: true,
+        order: 1,
+        since: '4_2024'
+      },
+      {
+        address: '0x0c6eeb232800fb86215438c4f7ae032b5463586c',
+        chainId: 100,
+        isSafe: true,
+        order: 2,
+        since: '4_2024'
+      },
+      {
+        address: '0x027e1cbf2c299cba5eb8a2584910d04f1a8aa403',
+        chainId: 1,
+        isSafe: true,
+        order: 3,
+        since: '4_2024'
+      }
+    ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
+    datesAllowed: [
+      {
+        label: 'April',
+        month: 4,
+        year: 2024,
+        id: '4_2024'
+      }
+    ]
+  },
+  {
+    id: DAO_NAME_KEY['Safe'],
+    name: 'Safe',
+    icon: '/images/protocols/safe.svg',
+    keyName: 'Safe',
+    sinceMonth: 4,
+    sinceYear: 2024,
+    sinceYearToPeriod: {
+      2024: 'April 2024'
+    },
+    shouldBeIncludedDashboardOne: false,
+    shouldBeIncludedDashboardTwo: true,
+    shouldBeIncludedNCAum: false,
+    shouldBeIncludedLastMonthDeFiResults: false,
+    isEnabled: true,
+    addresses: [
+      {
+        address: '0x0b00b3227a5f3df3484f03990a87e02ebad2f888',
+        chainId: 1,
+        isSafe: true,
+        order: 1,
+        since: '4_2024'
+      },
+      {
+        address: '0x1d4f25bc16b68c50b78e1040bc430a8097fd6f45',
+        chainId: 1,
+        isSafe: true,
+        order: 2,
+        since: '4_2024'
+      }
+    ],
+    defaultCurrency: 'USD' as Currency,
+    currenciesAllowed: ['USD', 'ETH'] as Currency[],
+    datesAllowed: [
       {
         label: 'April',
         month: 4,

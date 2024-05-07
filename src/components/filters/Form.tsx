@@ -286,7 +286,7 @@ export const Form = (props: FormProps) => {
                 </Stack>
               ) : null}
               {enableDAO ? (
-                <Stack width={200}>
+                <Stack width={230}>
                   <DAOAutocomplete
                     control={control}
                     name={'DAO'}

@@ -11,7 +11,7 @@ import {
   TableRow,
   Tooltip
 } from '@mui/material'
-import { MONTHS } from 'src/config/constants'
+import { FILTER_DAOS, MONTHS } from 'src/config/constants'
 import { Value } from './Value'
 import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format'
 import {
@@ -27,10 +27,15 @@ interface TableProps {
   daoResume: any[]
   latestMonth: number
   latestYear: number
-  currency: Currency
+  currency?: Currency
 }
 
-export const Table = ({ daoResume, latestMonth, latestYear, currency }: TableProps) => {
+export const Table = ({
+  daoResume,
+  latestMonth,
+  latestYear,
+  currency = 'USD' as Currency
+}: TableProps) => {
   const router = useRouter()
 
   const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
@@ -146,6 +151,9 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                   }
                 }
 
+                const defaultCurrency =
+                  FILTER_DAOS.find((dao) => dao.keyName === keyName)?.defaultCurrency ?? currency
+
                 return (
                   <Tooltip
                     key={index}
@@ -192,8 +200,12 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                       >
                         <LinkWrapper url={urlToReport}>
                           <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
-                            <Image src={icon} alt={name} width={48} height={48} />
-                            <Value value={name} fontWeight={600} />
+                            <Box sx={{ justifyContent: 'center' }}>
+                              <Image src={icon} alt={name} width={96} height={48} />
+                            </Box>
+                            <Box sx={{ width: '100%' }}>
+                              <Value value={name} fontWeight={600} />
+                            </Box>
                           </BoxWrapperRow>
                         </LinkWrapper>
                       </TableCellCustom>
@@ -209,7 +221,7 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                         <LinkWrapper url={urlToReport}>
                           <Value
                             value={
-                              currency === 'USD'
+                              defaultCurrency === 'USD'
                                 ? formatCurrency(totalFunds || 0)
                                 : `${formatNumber(totalFunds || 0, 0)} ETH`
                             }
@@ -243,7 +255,7 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                         <LinkWrapper url={urlToReport}>
                           <Value
                             value={
-                              currency === 'USD'
+                              defaultCurrency === 'USD'
                                 ? formatCurrency(deFiResults || 0)
                                 : `${formatNumber(deFiResults || 0, 0)} ETH`
                             }
