@@ -63,7 +63,7 @@ export const Hero = () => {
               <Image
                 src={dao?.icon ?? ''}
                 alt={dao?.name}
-                width={116}
+                width={dao?.keyName === 'Safe<>Gnosis' ? 232 : 116}
                 height={116}
                 key={dao?.icon}
               />

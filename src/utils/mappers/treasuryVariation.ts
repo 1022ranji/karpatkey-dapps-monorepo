@@ -10,6 +10,7 @@ export const getTreasuryVariationForThePeriod = (
   const valuesForThePeriodETH: any[] = []
 
   const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+
   const rowsUSD = isDDay
     ? waterfall1ReportFiltered
         .map((row: any) => {
@@ -103,7 +104,19 @@ export const getTreasuryVariationForThePeriod = (
           }
         })
 
-  const haveValueFinalBalanceUSD = rowsUSD.find((row: any) => row.key === 4)
+  const haveValueInitialBalanceUSD = rowsUSD?.find((row: any) => row.key === 1)
+  if (!haveValueInitialBalanceUSD && rowsUSD.length > 0) {
+    // add the initial balance at the beginning
+    rowsUSD.unshift({
+      funds: 0,
+      value: 'Initial Balance',
+      key: 1,
+      uv: 0,
+      pv: 0
+    })
+  }
+
+  const haveValueFinalBalanceUSD = rowsUSD?.find((row: any) => row.key === 4)
   if (!haveValueFinalBalanceUSD && rowsUSD.length > 0) {
     const total = rowsUSD.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
@@ -212,7 +225,19 @@ export const getTreasuryVariationForThePeriod = (
           }
         })
 
-  const haveValueFinalBalanceETH = rowsETH.find((row: any) => row.key === 4)
+  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.key === 1)
+  if (!haveValueInitialBalanceETH && rowsETH.length > 0) {
+    // add the initial balance at the beginning
+    rowsETH.unshift({
+      funds: 0,
+      value: 'Initial Balance',
+      key: 1,
+      uv: 0,
+      pv: 0
+    })
+  }
+
+  const haveValueFinalBalanceETH = rowsETH?.find((row: any) => row.key === 4)
   if (!haveValueFinalBalanceETH && rowsETH.length > 0) {
     const total = rowsETH.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
@@ -297,6 +322,18 @@ export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any
       }
     })
 
+  const haveValueInitialBalanceUSD = rowsUSD?.find((row: any) => row.key === 1)
+  if (!haveValueInitialBalanceUSD && rowsUSD.length > 0) {
+    // add the initial balance at the beginning
+    rowsUSD.unshift({
+      funds: 0,
+      value: 'Initial Balance',
+      key: 1,
+      uv: 0,
+      pv: 0
+    })
+  }
+
   if (rowsUSD.length > 0) {
     const total = rowsUSD.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
@@ -371,6 +408,18 @@ export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any
             : valuesForThisYearETH[index - 1].pv + valuesForThisYearETH[index - 1].uv
       }
     })
+
+  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.key === 1)
+  if (!haveValueInitialBalanceETH && rowsETH.length > 0) {
+    // add the initial balance at the beginning
+    rowsETH.unshift({
+      funds: 0,
+      value: 'Initial Balance',
+      key: 1,
+      uv: 0,
+      pv: 0
+    })
+  }
 
   if (rowsETH.length > 0) {
     const total = rowsETH.reduce(
@@ -552,6 +601,20 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
       }
     })
 
+  // add initial balance in case doesn't exist
+  const haveValueInitialBalanceUSD = rowsUSD?.find((row: any) => row.key === 1)
+  if (!haveValueInitialBalanceUSD && rowsUSD.length > 0) {
+    // add the initial balance at the beginning
+    rowsUSD.unshift({
+      funds: 0,
+      value: 'Initial Balance',
+      shortedValue: 'IB',
+      key: 1,
+      uv: 0,
+      pv: 0
+    })
+  }
+
   if (rowsUSD.length > 0) {
     const total = rowsUSD.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
@@ -570,7 +633,7 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
 
   // Remove funds in the range of 0.5
   rowsUSD = rowsUSD.filter(
-    (row: any) => !(row.funds === 0 || (row.funds < 0.5 && row.funds > -0.5))
+    (row: any) => !((row.funds === 0 || (row.funds < 0.5 && row.funds > -0.5)) && row.key !== 1)
   )
 
   //////////////// ETH
@@ -731,6 +794,20 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
       }
     })
 
+  // add initial balance in case doesn't exist
+  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.key === 1)
+  if (!haveValueInitialBalanceETH && rowsETH.length > 0) {
+    // add the initial balance at the beginning
+    rowsETH.unshift({
+      funds: 0,
+      value: 'Initial Balance',
+      shortedValue: 'IB',
+      key: 1,
+      uv: 0,
+      pv: 0
+    })
+  }
+
   if (rowsETH.length > 0) {
     const total = rowsETH.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
@@ -749,7 +826,7 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
 
   // Remove funds in the range of 0.5
   rowsETH = rowsETH.filter(
-    (row: any) => !(row.funds === 0 || (row.funds < 0.5 && row.funds > -0.5))
+    (row: any) => !((row.funds === 0 || (row.funds < 0.5 && row.funds > -0.5)) && row.key !== 1)
   )
 
   return {

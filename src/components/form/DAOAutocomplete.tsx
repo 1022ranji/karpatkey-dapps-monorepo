@@ -29,7 +29,7 @@ const RenderInput = (params: AutocompleteRenderInputParams) => {
   if (option) {
     InputProps.startAdornment = (
       <>
-        <Image src={option.icon || ''} alt={option.name} width={20} height={20} />
+        <Image src={option.icon || ''} alt={option.name} width={40} height={20} />
         &nbsp;
       </>
     )
@@ -46,6 +46,7 @@ const RenderInput = (params: AutocompleteRenderInputParams) => {
         </BoxWrapperRow>
       }
       variant="standard"
+      sx={{ width: 230 }}
     />
   )
 }
@@ -54,10 +55,10 @@ const RenderOption = (props: any, option: any) => {
   return (
     <Box
       component="span"
-      sx={{ '& > img': { mr: 2, flexShrink: 0 }, backgroundColor: '#F5F5F5' }}
+      sx={{ '& > img': { mr: 2, flexShrink: 0 }, backgroundColor: '#F5F5F5', width: 230 }}
       {...props}
     >
-      <Image src={option.logo || ''} alt={option.label} width={20} height={20} />
+      <Image src={option.logo || ''} alt={option.label} width={40} height={20} />
       {option.label}
     </Box>
   )

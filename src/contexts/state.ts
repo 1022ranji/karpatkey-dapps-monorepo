@@ -25,9 +25,11 @@ export type DAOResume = {
   icon: string
   shouldBeDisplayedHomepage: boolean
   isEnabled: boolean
-  totalFunds: number
+  totalFundsUSD: number
+  totalFundsETH: number
   allocatedFunds: number
-  deFiResults: number
+  deFiResultsUSD: number
+  deFiResultsETH: number
   APY: number
   urlToReport: string
 }
