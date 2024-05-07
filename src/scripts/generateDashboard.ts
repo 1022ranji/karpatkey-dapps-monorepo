@@ -44,9 +44,11 @@ const getDAOResume = async ({
   )?.shouldBeIncludedDashboardTwo
 
   return {
-    totalFunds: shouldBeETH ? totalFunds.totalFundsETH : totalFunds.totalFundsUSD,
+    totalFundsUSD: totalFunds.totalFundsUSD,
+    totalFundsETH: totalFunds.totalFundsETH,
     allocatedFunds,
-    deFiResults: shouldBeETH ? deFiResults.deFiResultsETH : deFiResults.deFiResultsUSD,
+    deFiResultsETH: deFiResults.deFiResultsETH,
+    deFiResultsUSD: deFiResults.deFiResultsUSD,
     APY,
     urlToReport
   }
@@ -114,17 +116,17 @@ const daoResumePromises = FILTER_DAOS.filter((DAO: FILTER_DAO) => DAO.isEnabled)
 
     const nonCustodialAum = daoResume.reduce((acc, item) => {
       if (!item.shouldBeIncludedNCAum) return acc
-      return acc + item.totalFunds
+      return acc + item.totalFundsUSD
     }, 0)
 
     const lastMonthDeFiResults = daoResume.reduce((acc, dao) => {
       if (!dao.shouldBeIncludedLastMonthDeFiResults) return acc
-      return acc + dao.deFiResults
+      return acc + dao.deFiResultsUSD
     }, 0)
     const daoResumeSorted = daoResume.sort((a, b) => {
       if (a.keyName === 'karpatkey DAO') return 1
       if (b.keyName === 'karpatkey DAO') return -1
-      return b.totalFunds - a.totalFunds
+      return b.totalFundsUSD - a.totalFundsUSD
     })
 
     const dataWarehouse = DataWarehouse.getInstance()

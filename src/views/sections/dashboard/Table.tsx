@@ -21,10 +21,10 @@ import {
   LinkWrapper,
   BoxWrapperRow
 } from 'src/components'
-import { Currency } from 'src/contexts/state'
+import { Currency, DAOResume } from 'src/contexts/state'
 
 interface TableProps {
-  daoResume: any[]
+  daoResume: DAOResume[]
   latestMonth: number
   latestYear: number
   currency?: Currency
@@ -124,9 +124,11 @@ export const Table = ({
                   icon,
                   name,
                   keyName,
-                  totalFunds = 0,
+                  totalFundsUSD = 0,
+                  totalFundsETH = 0,
                   allocatedFunds = 0,
-                  deFiResults = 0,
+                  deFiResultsUSD = 0,
+                  deFiResultsETH = 0,
                   APY = 0,
                   urlToReport
                 } = dao
@@ -222,8 +224,8 @@ export const Table = ({
                           <Value
                             value={
                               defaultCurrency === 'USD'
-                                ? formatCurrency(totalFunds || 0)
-                                : `${formatNumber(totalFunds || 0, 0)} ETH`
+                                ? formatCurrency(totalFundsUSD || 0)
+                                : `${formatNumber(totalFundsETH || 0, 0)} ETH`
                             }
                           />
                         </LinkWrapper>
@@ -256,8 +258,8 @@ export const Table = ({
                           <Value
                             value={
                               defaultCurrency === 'USD'
-                                ? formatCurrency(deFiResults || 0)
-                                : `${formatNumber(deFiResults || 0, 0)} ETH`
+                                ? formatCurrency(deFiResultsUSD || 0)
+                                : `${formatNumber(deFiResultsETH || 0, 0)} ETH`
                             }
                           />
                         </LinkWrapper>
