@@ -30,7 +30,13 @@ export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) =
   }
 
   const settingsHeightWidth = {
-    width: isBreakpointOne ? 700 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360,
+    width: isBreakpointOne
+      ? 'inherit'
+      : isBreakpointTwo
+        ? 'inherit'
+        : isBreakpointThree
+          ? 'inherit'
+          : 'inherit',
     height: isBreakpointOne ? 560 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360
   }
 
