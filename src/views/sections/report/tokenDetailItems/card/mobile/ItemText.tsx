@@ -6,7 +6,7 @@ interface ItemTextProps {
   maxWidth?: string
 }
 
-export const ItemText = ({ itemText, maxWidth = '120px' }: ItemTextProps) => {
+export const ItemText = ({ itemText, maxWidth = 'fit-content' }: ItemTextProps) => {
   return (
     <CustomTypography
       sx={{
