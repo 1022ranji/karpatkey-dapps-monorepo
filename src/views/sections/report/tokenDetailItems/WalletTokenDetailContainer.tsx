@@ -1,12 +1,4 @@
-import {
-  PieChart,
-  BoxWrapperRow,
-  PaperSection,
-  Form,
-  Filter,
-  EmptyData,
-  AutocompleteOption
-} from 'src/components'
+import { PieChart, PaperSection, Form, Filter, EmptyData, AutocompleteOption } from 'src/components'
 import { OTHERS_WALLET_LIMIT } from 'src/config/constants'
 import { SUMMARY_COLORS } from 'src/config/theme'
 import { PaperProps, Theme } from '@mui/material'
@@ -15,6 +7,7 @@ import { useApp } from 'src/contexts/app.context'
 import { TableWalletTokenDetail } from './TableWalletTokenDetail'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { FilterContent } from 'src/components/filters/mobile/FilterContent'
+import Box from '@mui/material/Box'
 
 interface WalletTokenDetailContainerProps {
   walletTokenDetail: any[]
@@ -189,7 +182,13 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
   }
 
   const settingsHeightWidth = {
-    width: isBreakpointOne ? 560 : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360,
+    width: isBreakpointOne
+      ? 'inherit'
+      : isBreakpointTwo
+        ? 'inherit'
+        : isBreakpointThree
+          ? 'inherit'
+          : 'inherit',
     height: isBreakpointOne ? 'fit-content' : isBreakpointTwo ? 500 : isBreakpointThree ? 470 : 360
   }
 
@@ -201,30 +200,34 @@ export const WalletTokenDetailContainer = (props: WalletTokenDetailContainerProp
       {filteredWalletTokenDetail.length === 0 && !isFilterApplied ? (
         <EmptyData />
       ) : (
-        <BoxWrapperRow
+        <Box
           gap={4}
           sx={{
             display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly'
+            flexDirection: isMD ? 'row' : 'column',
+            alignItems: 'center',
+            justifyContent: isMD ? 'center' : 'flex-start',
+            flexWrap: 'wrap'
           }}
         >
-          <PieChart
-            data={filteredWalletTokenDetailForPieChartWithColorsAndOthers.map((item: any) => {
-              return {
-                name: item.label,
-                y: item.allocation,
-                color: item.color
-              }
-            })}
-            innerSize={settingsSize.innerSize}
-            outerSize={settingsSize.outerSize}
-            width={settingsHeightWidth.width}
-            height={settingsHeightWidth.height}
-            centered={true}
-          />
+          <Box sx={{ width: isMD ? 'inherit' : '100%', justifyContent: 'center', display: 'flex' }}>
+            <PieChart
+              data={filteredWalletTokenDetailForPieChartWithColorsAndOthers.map((item: any) => {
+                return {
+                  name: item.label,
+                  y: item.allocation,
+                  color: item.color
+                }
+              })}
+              innerSize={settingsSize.innerSize}
+              outerSize={settingsSize.outerSize}
+              width={settingsHeightWidth.width}
+              height={settingsHeightWidth.height}
+              centered={true}
+            />
+          </Box>
           <TableWalletTokenDetail filteredWalletTokenDetail={filteredWalletTokenDetail} />
-        </BoxWrapperRow>
+        </Box>
       )}
     </PaperSection>
   )

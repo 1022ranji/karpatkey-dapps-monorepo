@@ -11,7 +11,7 @@ import {
   TableRow,
   Tooltip
 } from '@mui/material'
-import { MONTHS } from 'src/config/constants'
+import { FILTER_DAOS, MONTHS } from 'src/config/constants'
 import { Value } from './Value'
 import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format'
 import {
@@ -21,16 +21,21 @@ import {
   LinkWrapper,
   BoxWrapperRow
 } from 'src/components'
-import { Currency } from 'src/contexts/state'
+import { Currency, DAOResume } from 'src/contexts/state'
 
 interface TableProps {
-  daoResume: any[]
+  daoResume: DAOResume[]
   latestMonth: number
   latestYear: number
-  currency: Currency
+  currency?: Currency
 }
 
-export const Table = ({ daoResume, latestMonth, latestYear, currency }: TableProps) => {
+export const Table = ({
+  daoResume,
+  latestMonth,
+  latestYear,
+  currency = 'USD' as Currency
+}: TableProps) => {
   const router = useRouter()
 
   const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
@@ -119,9 +124,11 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                   icon,
                   name,
                   keyName,
-                  totalFunds = 0,
+                  totalFundsUSD = 0,
+                  totalFundsETH = 0,
                   allocatedFunds = 0,
-                  deFiResults = 0,
+                  deFiResultsUSD = 0,
+                  deFiResultsETH = 0,
                   APY = 0,
                   urlToReport
                 } = dao
@@ -145,6 +152,9 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                     router.push(urlToReport)
                   }
                 }
+
+                const defaultCurrency =
+                  FILTER_DAOS.find((dao) => dao.keyName === keyName)?.defaultCurrency ?? currency
 
                 return (
                   <Tooltip
@@ -192,8 +202,12 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                       >
                         <LinkWrapper url={urlToReport}>
                           <BoxWrapperRow key={index} gap={4} sx={{ justifyContent: 'flex-start' }}>
-                            <Image src={icon} alt={name} width={48} height={48} />
-                            <Value value={name} fontWeight={600} />
+                            <Box sx={{ justifyContent: 'center' }}>
+                              <Image src={icon} alt={name} width={96} height={48} />
+                            </Box>
+                            <Box sx={{ width: '100%' }}>
+                              <Value value={name} fontWeight={600} />
+                            </Box>
                           </BoxWrapperRow>
                         </LinkWrapper>
                       </TableCellCustom>
@@ -209,9 +223,9 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                         <LinkWrapper url={urlToReport}>
                           <Value
                             value={
-                              currency === 'USD'
-                                ? formatCurrency(totalFunds || 0)
-                                : `${formatNumber(totalFunds || 0, 0)} ETH`
+                              defaultCurrency === 'USD'
+                                ? formatCurrency(totalFundsUSD || 0)
+                                : `${formatNumber(totalFundsETH || 0, 0)} ETH`
                             }
                           />
                         </LinkWrapper>
@@ -243,9 +257,9 @@ export const Table = ({ daoResume, latestMonth, latestYear, currency }: TablePro
                         <LinkWrapper url={urlToReport}>
                           <Value
                             value={
-                              currency === 'USD'
-                                ? formatCurrency(deFiResults || 0)
-                                : `${formatNumber(deFiResults || 0, 0)} ETH`
+                              defaultCurrency === 'USD'
+                                ? formatCurrency(deFiResultsUSD || 0)
+                                : `${formatNumber(deFiResultsETH || 0, 0)} ETH`
                             }
                           />
                         </LinkWrapper>

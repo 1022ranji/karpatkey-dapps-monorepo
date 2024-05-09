@@ -37,7 +37,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
     data,
     titleMessage,
     footerMessage,
-    width = 440,
+    width = 'inherit',
     height = 400,
     innerSize = '40%',
     outerSize = '65%',
@@ -163,7 +163,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
     style: {
       ...(isMD ? { marginTop: '20px' } : { marginTop: '0px' }),
       height: `${height}px`,
-      width: `${+width + 40}px`
+      width
     }
   }
 
@@ -173,9 +173,8 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         display: 'flex',
         justifyContent: 'center',
         height: `${height}px`,
-        width: `${width}px`,
         alignItems: centered ? 'center' : 'flex-start',
-        ...(!isMD && { width: '100%' })
+        width
       }}
     >
       {titleMessage ? <PieChartTitle title={titleMessage} /> : null}

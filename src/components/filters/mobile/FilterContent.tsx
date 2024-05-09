@@ -28,7 +28,8 @@ const CustomButton = styled(Button)(({ theme }) => ({
 }))
 
 const CustomTypo = styled(CustomTypography)(() => ({
-  fontSize: 18,
+  fontSize: '14px',
+  lineHeight: '14px',
   fontWeight: 600
 }))
 
@@ -317,7 +318,10 @@ export const FilterContent = ({
               display: isBlockchainSelectionBeenDisplayed ? 'flex' : 'none'
             }}
           >
-            <BoxWrapperColumn gap={2} sx={{ alignItems: 'center', marginTop: '20px' }}>
+            <BoxWrapperColumn
+              gap={1}
+              sx={{ alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}
+            >
               <CustomTypo sx={{ color: 'primary.main', marginY: '20px' }}>
                 Select Blockchain
               </CustomTypo>
@@ -329,11 +333,9 @@ export const FilterContent = ({
                     setIsBlockchainSelectionBeenDisplayed(false)
                     setSelectedBlockchain(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px', marginBottom: '10px' }}
                 >
-                  <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
-                    {option.label}
-                  </CustomTypo>
+                  <CustomTypo>{option.label}</CustomTypo>
                 </CustomButton>
               ))}
             </BoxWrapperColumn>
@@ -350,7 +352,10 @@ export const FilterContent = ({
               display: isProtocolSelectionBeenDisplayed ? 'flex' : 'none'
             }}
           >
-            <BoxWrapperColumn gap={2} sx={{ alignItems: 'center', marginTop: '20px' }}>
+            <BoxWrapperColumn
+              gap={1}
+              sx={{ alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}
+            >
               <CustomTypo sx={{ color: 'primary.main', marginY: '20px' }}>
                 Select Protocol
               </CustomTypo>
@@ -362,11 +367,9 @@ export const FilterContent = ({
                     setIsProtocolSelectionBeenDisplayed(false)
                     setSelectedProtocol(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px', marginBottom: '10px' }}
                 >
-                  <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
-                    {option.label}
-                  </CustomTypo>
+                  <CustomTypo>{option.label}</CustomTypo>
                 </CustomButton>
               ))}
             </BoxWrapperColumn>
@@ -383,7 +386,7 @@ export const FilterContent = ({
               display: isTokenSelectionBeenDisplayed ? 'flex' : 'none'
             }}
           >
-            <BoxWrapperColumn gap={2} sx={{ alignItems: 'center', marginTop: '20px' }}>
+            <BoxWrapperColumn gap={1} sx={{ alignItems: 'center', marginTop: '20px' }}>
               <CustomTypo sx={{ color: 'primary.main', marginY: '20px' }}>Select Token</CustomTypo>
               {tokenOptions?.map((option) => (
                 <CustomButton
@@ -393,11 +396,9 @@ export const FilterContent = ({
                     setIsTokenSelectionBeenDisplayed(false)
                     setSelectedToken(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px', marginBottom: '10px' }}
                 >
-                  <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
-                    {option.label}
-                  </CustomTypo>
+                  <CustomTypo>{option.label}</CustomTypo>
                 </CustomButton>
               ))}
             </BoxWrapperColumn>
@@ -414,7 +415,7 @@ export const FilterContent = ({
               display: isDeFiTypeSelectionBeenDisplayed ? 'flex' : 'none'
             }}
           >
-            <BoxWrapperColumn gap={2} sx={{ alignItems: 'center', marginTop: '20px' }}>
+            <BoxWrapperColumn gap={1} sx={{ alignItems: 'center', marginTop: '20px' }}>
               <CustomTypo sx={{ color: 'primary.main', marginY: '20px' }}>Select type</CustomTypo>
               {deFiTypeOptions?.map((option) => (
                 <CustomButton
@@ -424,11 +425,9 @@ export const FilterContent = ({
                     setIsDeFiTypeSelectionBeenDisplayed(false)
                     setSelectedDeFiType(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px', marginBottom: '10px' }}
                 >
-                  <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
-                    {option.label}
-                  </CustomTypo>
+                  <CustomTypo>{option.label}</CustomTypo>
                 </CustomButton>
               ))}
             </BoxWrapperColumn>

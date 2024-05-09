@@ -53,6 +53,13 @@ path:focus {
   height: 280px;
 }
 
+.custom-slider-charts {
+  .slick-slide.slick-active {
+    justify-content: center;
+    display: flex;
+  }
+}
+
 .custom-slider-cards {
   .slick-slide.slick-active {
     justify-content: center;

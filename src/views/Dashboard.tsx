@@ -86,7 +86,7 @@ export const Dashboard = () => {
             <BoxWrapperColumn gap={4}>
               <Title title="Other treasuries not considered in non-custodial AUM" />
               <DashboardTable
-                daoResume={daoResumeDashboardTwo}
+                daoResume={daoResumeDashboardTwo.sort((a, b) => b.totalFundsUSD - a.totalFundsUSD)}
                 latestMonth={month}
                 latestYear={year}
                 currency={'ETH' as Currency}
@@ -114,9 +114,11 @@ export const Dashboard = () => {
                 name,
                 keyName,
                 icon,
-                totalFunds,
+                totalFundsUSD,
+                totalFundsETH,
                 allocatedFunds,
-                deFiResults,
+                deFiResultsUSD,
+                deFiResultsETH,
                 APY,
                 urlToReport
               } = resume
@@ -133,13 +135,16 @@ export const Dashboard = () => {
                 name,
                 urlToReport,
                 icon,
-                totalFunds,
+                totalFundsUSD,
+                totalFundsETH,
                 allocatedFunds,
-                deFiResults,
+                deFiResultsUSD,
+                deFiResultsETH,
                 APY: CUSTOM_APY,
                 currency: 'USD' as Currency,
                 latestMonth: month,
-                latestYear: year
+                latestYear: year,
+                keyName
               }
               return <Card {...params} key={index} />
             })}
@@ -150,40 +155,47 @@ export const Dashboard = () => {
               <Divider sx={{ borderBottomWidth: 5, marginBottom: 5 }} />
               <Title title="Other treasuries not considered in non-custodial AUM" />
             </BoxWrapperColumn>
-            {daoResumeDashboardTwo.map((resume: DAOResume, index: number) => {
-              const {
-                name,
-                keyName,
-                icon,
-                totalFunds,
-                allocatedFunds,
-                deFiResults,
-                APY,
-                urlToReport
-              } = resume
+            {daoResumeDashboardTwo
+              .sort((a, b) => b.totalFundsUSD - a.totalFundsUSD)
+              .map((resume: DAOResume, index: number) => {
+                const {
+                  name,
+                  keyName,
+                  icon,
+                  totalFundsUSD,
+                  totalFundsETH,
+                  allocatedFunds,
+                  deFiResultsUSD,
+                  deFiResultsETH,
+                  APY,
+                  urlToReport
+                } = resume
 
-              const isDAOEnsOctober = keyName === 'ENS DAO' && +year === 2023 && +month === 10
-              const isDAOEnsNovember = keyName === 'ENS DAO' && +year === 2023 && +month === 11
-              const CUSTOM_APY = isDAOEnsOctober
-                ? '2.04%'
-                : isDAOEnsNovember
-                  ? '2.9%'
-                  : formatPercentage(APY)
+                const isDAOEnsOctober = keyName === 'ENS DAO' && +year === 2023 && +month === 10
+                const isDAOEnsNovember = keyName === 'ENS DAO' && +year === 2023 && +month === 11
+                const CUSTOM_APY = isDAOEnsOctober
+                  ? '2.04%'
+                  : isDAOEnsNovember
+                    ? '2.9%'
+                    : formatPercentage(APY)
 
-              const params = {
-                name,
-                urlToReport,
-                icon,
-                totalFunds,
-                allocatedFunds,
-                deFiResults,
-                APY: CUSTOM_APY,
-                currency: 'ETH' as Currency,
-                latestMonth: month,
-                latestYear: year
-              }
-              return <Card {...params} key={index} />
-            })}
+                const params = {
+                  name,
+                  urlToReport,
+                  icon,
+                  totalFundsUSD,
+                  totalFundsETH,
+                  allocatedFunds,
+                  deFiResultsUSD,
+                  deFiResultsETH,
+                  APY: CUSTOM_APY,
+                  currency: 'ETH' as Currency,
+                  latestMonth: month,
+                  latestYear: year,
+                  keyName
+                }
+                return <Card {...params} key={index} />
+              })}
           </>
         )}
       </BoxWrapperRow>

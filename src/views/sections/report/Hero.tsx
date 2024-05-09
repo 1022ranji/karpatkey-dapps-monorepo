@@ -63,7 +63,7 @@ export const Hero = () => {
               <Image
                 src={dao?.icon ?? ''}
                 alt={dao?.name}
-                width={116}
+                width={dao?.keyName === 'Safe<>Gnosis' ? 232 : 116}
                 height={116}
                 key={dao?.icon}
               />
@@ -127,7 +127,7 @@ export const Hero = () => {
           </BoxWrapperRow>
         </BoxWrapperColumn>
       ) : null}
-      {!isMD && daoAddresses.length <= 2 ? (
+      {!isMD && daoAddresses.length <= 1 ? (
         <BoxWrapperRow
           sx={{
             justifyContent: 'flex-start',
@@ -146,7 +146,7 @@ export const Hero = () => {
             ))}
         </BoxWrapperRow>
       ) : null}
-      {!isMD && daoAddresses.length > 2 ? (
+      {!isMD && daoAddresses.length > 1 ? (
         <Box
           sx={{
             padding: `10px 20px 10px 20px`,

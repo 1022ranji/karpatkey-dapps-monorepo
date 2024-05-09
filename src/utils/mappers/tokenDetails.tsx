@@ -568,6 +568,11 @@ export const getTokenDetailByPositionUSD = (data: any, params: any) => {
       if (obj?.farming_type?.includes('unclaim')) {
         categoryName = isDDay ? `DeFi unclaimed rewards` : `Unclaimed rewards`
       }
+      if (obj?.farming_type?.includes('Operations')) {
+        const positiveBalanceLabel = `Operations funds: collateral`
+        const negativeBalanceLabel = `Operations funds: debt`
+        categoryName = balance > 0 ? positiveBalanceLabel : negativeBalanceLabel
+      }
 
       const cardFound = acc.find((card: any) => {
         return (

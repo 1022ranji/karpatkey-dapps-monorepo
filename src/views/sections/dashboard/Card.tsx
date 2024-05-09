@@ -14,18 +14,22 @@ import { Currency } from 'src/contexts/state'
 import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format'
 import { Value } from './Value'
 import moment from 'moment'
+import { FILTER_DAOS } from '../../../config/constants'
 
 interface CardProps {
   name: string
   urlToReport: string
   icon: string
-  totalFunds: number
+  totalFundsUSD: number
+  totalFundsETH: number
   allocatedFunds: number
-  deFiResults: number
+  deFiResultsUSD: number
+  deFiResultsETH: number
   APY: string
   currency: Currency
   latestMonth: number
   latestYear: number
+  keyName: string
 }
 
 const Title = ({ title }: { title: string }) => {
@@ -49,14 +53,17 @@ export const Card = (props: CardProps) => {
   const {
     name,
     urlToReport,
-    currency,
     icon,
-    totalFunds,
+    totalFundsUSD,
+    totalFundsETH,
     allocatedFunds,
-    deFiResults,
+    deFiResultsUSD,
+    deFiResultsETH,
     APY,
     latestMonth,
-    latestYear
+    latestYear,
+    keyName,
+    currency
   } = props
   const router = useRouter()
 
@@ -70,6 +77,9 @@ export const Card = (props: CardProps) => {
   }
 
   const formattedDate = moment(`${latestYear}-${latestMonth}`, 'YYYY-MM').format('MMM YY')
+
+  const defaultCurrency =
+    FILTER_DAOS.find((dao) => dao.keyName === keyName)?.defaultCurrency ?? currency
 
   return (
     <AnimatePresenceWrapper>
@@ -86,7 +96,7 @@ export const Card = (props: CardProps) => {
       >
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <BoxWrapperRow gap={1}>
-            <Image src={icon} alt={name} width={48} height={48} />
+            <Image src={icon} alt={name} width={keyName === 'Safe<>Gnosis' ? 48 : 32} height={32} />
             <Value value={name} fontWeight={600} />
           </BoxWrapperRow>
           <BoxWrapperRow gap={1}>
@@ -100,17 +110,17 @@ export const Card = (props: CardProps) => {
           <BoxWrapperColumn gap={4}>
             <NumberBlockCard
               amount={
-                currency === 'USD'
-                  ? formatCurrency(totalFunds || 0)
-                  : `${formatNumber(totalFunds || 0, 0)} ETH`
+                defaultCurrency === 'USD'
+                  ? formatCurrency(totalFundsUSD || 0)
+                  : `${formatNumber(totalFundsETH || 0, 0)} ETH`
               }
-              title={`Total funds ${currency === 'USD' ? '(ncAUM)' : ''}`}
+              title={`Total funds ${defaultCurrency === 'USD' ? '(ncAUM)' : ''}`}
             />
             <NumberBlockCard
               amount={
-                currency === 'USD'
-                  ? formatCurrency(deFiResults || 0)
-                  : `${formatNumber(deFiResults || 0, 0)} ETH`
+                defaultCurrency === 'USD'
+                  ? formatCurrency(deFiResultsUSD || 0)
+                  : `${formatNumber(deFiResultsETH || 0, 0)} ETH`
               }
               title={'DeFi results'}
             />
