@@ -96,7 +96,7 @@ export const Card = (props: CardProps) => {
       >
         <BoxWrapperRow sx={{ justifyContent: 'space-between' }}>
           <BoxWrapperRow gap={1}>
-            <Image src={icon} alt={name} width={48} height={48} />
+            <Image src={icon} alt={name} width={keyName === 'Safe<>Gnosis' ? 48 : 32} height={32} />
             <Value value={name} fontWeight={600} />
           </BoxWrapperRow>
           <BoxWrapperRow gap={1}>

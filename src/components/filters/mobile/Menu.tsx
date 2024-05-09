@@ -179,14 +179,16 @@ export const Menu = () => {
           <Image
             src={dao?.icon ?? ''}
             alt={dao?.name || ''}
-            width={38}
+            width={76}
             height={38}
             key={dao?.icon}
           />
           <CustomTypo
             sx={{
               maxWidth: 'max(0px, calc((100% - 140px)*999))',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis'
             }}
           >
             {dao?.name}

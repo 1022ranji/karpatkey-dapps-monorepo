@@ -33,15 +33,15 @@ import {
   RocketPool,
   Karpatkey,
   Stader,
+  StakeDAO,
   Autonolas,
   Sommelier,
-  StakeDAO,
   Dolomite,
   ChorusOne,
   Bread
 } from 'components/icons/protocols'
-import * as React from 'react'
 import { Safe } from 'components/icons/protocols/Safe'
+import * as React from 'react'
 
 interface ProtocolIconProps {
   protocol: string
@@ -148,6 +148,9 @@ export const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Validators (GC)':
       icon = <Validators width={24} height={24} />
+      break
+    case 'UniswapV2':
+      icon = <UniswapV3 width={24} height={24} />
       break
     case 'UniswapV3':
       icon = <UniswapV3 width={24} height={24} />
