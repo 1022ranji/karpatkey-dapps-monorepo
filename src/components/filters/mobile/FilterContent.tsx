@@ -329,7 +329,7 @@ export const FilterContent = ({
                     setIsBlockchainSelectionBeenDisplayed(false)
                     setSelectedBlockchain(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px' }}
                 >
                   <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
                     {option.label}
@@ -362,7 +362,7 @@ export const FilterContent = ({
                     setIsProtocolSelectionBeenDisplayed(false)
                     setSelectedProtocol(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px' }}
                 >
                   <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
                     {option.label}
@@ -393,7 +393,7 @@ export const FilterContent = ({
                     setIsTokenSelectionBeenDisplayed(false)
                     setSelectedToken(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px' }}
                 >
                   <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
                     {option.label}
@@ -424,7 +424,7 @@ export const FilterContent = ({
                     setIsDeFiTypeSelectionBeenDisplayed(false)
                     setSelectedDeFiType(option.id)
                   }}
-                  sx={{ justifyContent: 'flex-start', width: '200px' }}
+                  sx={{ justifyContent: 'center', width: '200px' }}
                 >
                   <CustomTypo gap={2} sx={{ paddingLeft: '60px' }}>
                     {option.label}
