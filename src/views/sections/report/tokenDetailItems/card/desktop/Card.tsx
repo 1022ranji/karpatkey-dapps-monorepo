@@ -1,7 +1,7 @@
 import { formatCurrency, formatNumber } from '../../../../../../utils/format'
 import { ItemText } from './ItemText'
 import { Position } from './Position'
-import { ProtocolIcon } from './ProtocolIcon'
+import { ProtocolIcon } from '../ProtocolIcon'
 import { Title } from './Title'
 import { BoxWrapperColumn, BoxWrapperRow, UniswapHelpText } from 'components/index'
 import * as React from 'react'
