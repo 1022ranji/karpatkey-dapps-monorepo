@@ -74,12 +74,12 @@ export const Summary = (props: SummaryProps) => {
         : isBreakpointThree
           ? '40%'
           : '35%',
-    outerSize: isBreakpointOne ? '75%' : isBreakpointTwo ? '60%' : isBreakpointThree ? '60%' : '60%'
+    outerSize: isBreakpointOne ? '65%' : isBreakpointTwo ? '50%' : isBreakpointThree ? '50%' : '50%'
   }
 
   const settingsHeightWidth = {
-    width: isBreakpointOne ? 440 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
-    height: isBreakpointOne ? 400 : isBreakpointTwo ? 320 : isBreakpointThree ? 300 : 280
+    width: isBreakpointOne ? 540 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
+    height: isBreakpointOne ? 500 : isBreakpointTwo ? 320 : isBreakpointThree ? 300 : 280
   }
 
   return (
