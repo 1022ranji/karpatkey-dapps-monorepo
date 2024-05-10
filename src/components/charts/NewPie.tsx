@@ -59,9 +59,9 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         ? '8px'
         : '8px'
   const distance = isBreakpointOne
-    ? '25%'
+    ? '20%'
     : isBreakpointTwo
-      ? '20%'
+      ? '18%'
       : isBreakpointThree
         ? '15%'
         : '12%'
@@ -134,7 +134,7 @@ export const PieChart = (props: HighchartsReact.Props & PieChartProps) => {
         borderWidth: 0,
         dataLabels: {
           format:
-            '<span class="highcharts-data-label">{point.name}</span><br><span class="highcharts-data-label-percentage">{point.percentage:.2f}%</span>',
+            '<span class="highcharts-data-label">{point.name}</span><span class="highcharts-data-label-percentage">{point.percentage:.2f}%</span>',
           useHTML: true,
           connectorColor: 'black',
           connectorWidth: 1,
