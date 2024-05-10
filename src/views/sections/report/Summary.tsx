@@ -74,12 +74,12 @@ export const Summary = (props: SummaryProps) => {
         : isBreakpointThree
           ? '40%'
           : '35%',
-    outerSize: isBreakpointOne ? '75%' : isBreakpointTwo ? '60%' : isBreakpointThree ? '60%' : '60%'
+    outerSize: isBreakpointOne ? '65%' : isBreakpointTwo ? '50%' : isBreakpointThree ? '50%' : '50%'
   }
 
   const settingsHeightWidth = {
-    width: isBreakpointOne ? 440 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
-    height: isBreakpointOne ? 400 : isBreakpointTwo ? 320 : isBreakpointThree ? 300 : 280
+    width: isBreakpointOne ? 500 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
+    height: isBreakpointOne ? 500 : isBreakpointTwo ? 320 : isBreakpointThree ? 300 : 280
   }
 
   return (
@@ -146,7 +146,6 @@ export const Summary = (props: SummaryProps) => {
           <Box
             sx={{
               display: 'flex',
-              gap: 10,
               flexWrap: 'wrap',
               margin: {
                 xs: '20px 20px 20px 20px',
