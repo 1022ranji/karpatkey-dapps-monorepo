@@ -78,7 +78,7 @@ export const Summary = (props: SummaryProps) => {
   }
 
   const settingsHeightWidth = {
-    width: isBreakpointOne ? 540 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
+    width: isBreakpointOne ? 500 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
     height: isBreakpointOne ? 500 : isBreakpointTwo ? 320 : isBreakpointThree ? 300 : 280
   }
 
@@ -146,7 +146,6 @@ export const Summary = (props: SummaryProps) => {
           <Box
             sx={{
               display: 'flex',
-              gap: 10,
               flexWrap: 'wrap',
               margin: {
                 xs: '20px 20px 20px 20px',
