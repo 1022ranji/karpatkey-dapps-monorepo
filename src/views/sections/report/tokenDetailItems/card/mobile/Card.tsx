@@ -157,7 +157,6 @@ export const Card = (props: CardItemProps) => {
             },
             '::-webkit-scrollbar-thumb': {
               backgroundColor: '#d3d3d3'
-              // borderRadius: '10px'
             }
           }}
         >
