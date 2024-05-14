@@ -28,7 +28,7 @@ export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
   },
   [theme.breakpoints.up('md')]: {
     fontSize: '16px',
-    lineHeight: '16px'
+    lineHeight: '21px'
   }
 }))
 
@@ -116,6 +116,15 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
     }
   }, [])
 
+  // add
+  const firstColumnRef = React.useRef<HTMLElement>(null)
+  const [firstColumnWidth, setFirstColumnWidth] = React.useState(0)
+  React.useEffect(() => {
+    if (firstColumnRef.current) {
+      setFirstColumnWidth(firstColumnRef.current.offsetWidth)
+    }
+  }, [])
+
   return (
     <Box
       sx={{
@@ -132,7 +141,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
           top: '50%',
           margin: 0,
           padding: 0,
-          left: '110px',
+          left: `${firstColumnWidth}px`,
           animation: 'jumpInfiniteHorizontalLeft 1.5s infinite',
           display: isScrollable.left ? 'block' : 'none'
         }}
@@ -144,6 +153,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
           <TableHead>
             <TableRow>
               <TableHeadCellCustom
+                ref={firstColumnRef}
                 sx={{
                   width: columnWidthPercentage,
                   ...(columns.length > 2 && {
