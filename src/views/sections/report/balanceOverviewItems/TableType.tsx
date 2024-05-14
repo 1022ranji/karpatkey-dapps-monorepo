@@ -26,7 +26,7 @@ export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
   },
   [theme.breakpoints.up('md')]: {
     fontSize: '16px',
-    lineHeight: '16px'
+    lineHeight: '21px'
   }
 }))
 

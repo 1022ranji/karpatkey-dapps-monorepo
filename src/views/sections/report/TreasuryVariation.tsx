@@ -39,7 +39,8 @@ const Filter = ({ toggleType, handleToggleOnChange, helpText }: FilterProps) => 
       sx={{
         textTransform: 'none',
         fontSize: { xs: '14px !important', md: '18px !important' },
-        lineHeight: '1.2rem'
+        lineHeight: { xs: '16px !important', md: '20px !important' },
+        padding: { xs: '8px !important', md: '12px !important' }
       }}
     >
       Selected period
@@ -50,7 +51,8 @@ const Filter = ({ toggleType, handleToggleOnChange, helpText }: FilterProps) => 
       sx={{
         textTransform: 'none',
         fontSize: { xs: '14px !important', md: '18px !important' },
-        lineHeight: '1.2rem'
+        lineHeight: { xs: '16px !important', md: '20px !important' },
+        padding: { xs: '8px !important', md: '12px !important' }
       }}
     >
       Year to period
