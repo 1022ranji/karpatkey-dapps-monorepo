@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/config-conventional": "^19.2.2",
     "@types/cookie": "^0.6.0",
     "@types/lodash": "^4.17.1",
     "@types/luxon": "^3.4.2",
