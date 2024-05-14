@@ -91,7 +91,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
   const [firstColumnWidth, setFirstColumnWidth] = React.useState(0)
   React.useEffect(() => {
     if (firstColumnRef.current) {
-      setFirstColumnWidth(firstColumnRef.current.offsetWidth)
+      setFirstColumnWidth(firstColumnRef.current.offsetWidth + 20)
     }
   }, [])
 
