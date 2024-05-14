@@ -3,7 +3,7 @@ name: Update Dependencies
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 5" # every friday at midnight
+    - cron: "0 2 * * *"
 
 jobs:
   update-dep:
@@ -13,7 +13,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: dependencies
+          branch: develop
           title: 'Update dependencies'
           commit-message: 'Update dependencies'
           body: |
