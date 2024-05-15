@@ -17,11 +17,10 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 interface CardItemProps {
   id: number
   card: any
-  goToTop: boolean
 }
 
 export const Card = (props: CardItemProps) => {
-  const { card, goToTop } = props
+  const { card } = props
   const { blockchain, protocol, position, totalUsdValue, cardType, categories, deFiType } = card
 
   const isDDay = isYearAndMonthValid()
@@ -45,13 +44,6 @@ export const Card = (props: CardItemProps) => {
     setOnTop(top)
     setAtBottom(bottom)
   }, [])
-
-  React.useEffect(() => {
-    const scrollable = document.getElementById(`scrollable_${props.id}`)
-    if (scrollable) {
-      scrollable.scrollTop = 0
-    }
-  }, [goToTop, props.id])
 
   React.useEffect(() => {
     const checkHideScrollButton = () => {
