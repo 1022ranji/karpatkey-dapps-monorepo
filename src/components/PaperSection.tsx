@@ -1,9 +1,11 @@
 import InfoIcon from '@mui/icons-material/Info'
-import { Divider, Tooltip } from '@mui/material'
+import { Divider, Theme, Tooltip } from '@mui/material'
 import * as React from 'react'
 import { Section } from './layout/report/desktop/Sidebar'
 import { CustomTypography, Paper, BoxWrapperRow, BoxWrapperColumn } from 'src/components'
 import { slugify } from 'src/utils'
+import Box from '@mui/material/Box'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface PaperSectionProps {
   id?: Section
@@ -16,8 +18,21 @@ interface PaperSectionProps {
 
 export const PaperSection = (props: PaperSectionProps) => {
   const { id, title, subTitle, helpInfo, filter, children } = props
+
+  const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
   return (
-    <Paper className={'scrollable'} {...(id ? { id: slugify(id) } : {})}>
+    <Paper className={'scrollable'} {...(id && isMD ? { id: slugify(id) } : {})}>
+      {!isMD && (
+        <Box
+          {...(id && !isMD ? { id: slugify(id) } : {})}
+          sx={{
+            visibility: 'hidden',
+            marginTop: '-140px',
+            position: 'absolute'
+          }}
+        />
+      )}
       <Divider />
       <BoxWrapperColumn
         sx={{
