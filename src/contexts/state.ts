@@ -32,6 +32,7 @@ export type DAOResume = {
   deFiResultsETH: number
   APY: number
   urlToReport: string
+  shouldBeIncludedNCAum: boolean
 }
 
 export type SummaryType = {

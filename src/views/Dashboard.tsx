@@ -120,7 +120,8 @@ export const Dashboard = () => {
                 deFiResultsUSD,
                 deFiResultsETH,
                 APY,
-                urlToReport
+                urlToReport,
+                shouldBeIncludedNCAum
               } = resume
 
               const isDAOEnsOctober = keyName === 'ENS DAO' && +year === 2023 && +month === 10
@@ -144,7 +145,8 @@ export const Dashboard = () => {
                 currency: 'USD' as Currency,
                 latestMonth: month,
                 latestYear: year,
-                keyName
+                keyName,
+                shouldBeIncludedNCAum
               }
               return <Card {...params} key={index} />
             })}
@@ -168,7 +170,8 @@ export const Dashboard = () => {
                   deFiResultsUSD,
                   deFiResultsETH,
                   APY,
-                  urlToReport
+                  urlToReport,
+                  shouldBeIncludedNCAum
                 } = resume
 
                 const isDAOEnsOctober = keyName === 'ENS DAO' && +year === 2023 && +month === 10
@@ -192,7 +195,8 @@ export const Dashboard = () => {
                   currency: 'ETH' as Currency,
                   latestMonth: month,
                   latestYear: year,
-                  keyName
+                  keyName,
+                  shouldBeIncludedNCAum
                 }
                 return <Card {...params} key={index} />
               })}

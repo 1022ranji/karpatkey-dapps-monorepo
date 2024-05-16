@@ -46,7 +46,7 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
         </ReportDesktopBodyWrapper>
       </ReportDesktopWrapper>
     ) : (
-      <ReportMobileWrapper>
+      <ReportMobileWrapper id="summary">
         <ReportMobileHeader />
         <ReportMobileBody component="main">{children}</ReportMobileBody>
         <ReportMobileFooter />
