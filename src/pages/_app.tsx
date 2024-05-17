@@ -14,6 +14,7 @@ import { AppProvider } from 'src/contexts/app.context'
 import * as React from 'react'
 
 import '../styles/globals.css'
+import GoogleAnalytics from 'components/GoogleAnalytics'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -60,6 +61,7 @@ export default function MyApp(props: MyAppProps) {
           <AppProvider>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
+            <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || ''} />
             <NoSsr>
               {isPasswordProtected ? <Component {...pageProps} /> : null}
               {!isPasswordProtected ? (
