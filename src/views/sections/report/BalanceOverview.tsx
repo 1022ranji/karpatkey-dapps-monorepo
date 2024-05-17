@@ -30,14 +30,24 @@ const Filter = ({ toggleType, handleToggleOnChange }: FilterProps) => (
     <ToggleButton
       disableRipple
       value={1}
-      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+      sx={{
+        textTransform: 'none',
+        fontSize: { xs: '14px !important', md: '18px !important' },
+        lineHeight: { xs: '16px !important', md: '20px !important' },
+        padding: { xs: '8px !important', md: '12px !important' }
+      }}
     >
       Type
     </ToggleButton>
     <ToggleButton
       disableRipple
       value={0}
-      sx={{ textTransform: 'none', fontSize: { xs: '14px !important', md: '18px !important' } }}
+      sx={{
+        textTransform: 'none',
+        fontSize: { xs: '14px !important', md: '18px !important' },
+        lineHeight: { xs: '16px !important', md: '20px !important' },
+        padding: { xs: '8px !important', md: '12px !important' }
+      }}
     >
       Blockchain
     </ToggleButton>

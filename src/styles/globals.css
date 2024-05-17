@@ -2,9 +2,9 @@ html {
   scroll-behavior: smooth !important;
 }
 
-.scrollable {
-  scroll-margin-top: 100px;
-}
+/*.scrollable {*/
+/*  scroll-margin-top: 100px;*/
+/*}*/
 
 a.anchor {
   display: block;
@@ -123,4 +123,28 @@ path:focus {
 body {
   overflow-x: hidden;
   height: 100%;
+}
+
+@keyframes jumpInfiniteHorizontalLeft {
+  0% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 10px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+
+@keyframes jumpInfiniteHorizontalRight {
+  0% {
+    margin-right: 0;
+  }
+  50% {
+    margin-right: 10px;
+  }
+  100% {
+    margin-right: 0;
+  }
 }

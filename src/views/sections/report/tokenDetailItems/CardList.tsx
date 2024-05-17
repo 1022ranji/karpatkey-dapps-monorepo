@@ -57,8 +57,6 @@ export const CardList = (props: CardListProps) => {
   const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))
   const isBreakpointThree = useMediaQuery((theme: Theme) => theme.breakpoints.up(480))
 
-  const [goToTop, setGoToTop] = React.useState(false)
-
   return (
     <>
       {isMD && (
@@ -110,10 +108,6 @@ export const CardList = (props: CardListProps) => {
               <CarouselCards
                 className="custom-slider-cards"
                 totalSlides={tokenDetailByPosition.length}
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                afterChangeCallback={(index: number) => {
-                  setGoToTop(!goToTop)
-                }}
               >
                 {tokenDetailByPosition.map((card: any, index: number) => {
                   return (
@@ -138,7 +132,7 @@ export const CardList = (props: CardListProps) => {
                         background: 'background.paper'
                       }}
                     >
-                      <CardMobile id={index} key={index} card={card} goToTop={goToTop} />
+                      <CardMobile id={index} key={index} card={card} />
                     </Box>
                   )
                 })}
@@ -165,7 +159,7 @@ export const CardList = (props: CardListProps) => {
                   background: 'background.paper'
                 }}
               >
-                <CardMobile id={0} key={0} card={tokenDetailByPosition[0]} goToTop={goToTop} />
+                <CardMobile id={0} key={0} card={tokenDetailByPosition[0]} />
               </Box>
             )}
           </Box>

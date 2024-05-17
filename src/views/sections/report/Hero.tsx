@@ -129,6 +129,7 @@ export const Hero = () => {
       ) : null}
       {!isMD && daoAddresses.length <= 1 ? (
         <BoxWrapperRow
+          id="summary"
           sx={{
             justifyContent: 'flex-start',
             gap: 2,
@@ -148,6 +149,7 @@ export const Hero = () => {
       ) : null}
       {!isMD && daoAddresses.length > 1 ? (
         <Box
+          id="summary"
           sx={{
             padding: `10px 20px 10px 20px`,
             borderBottom: '2px solid #E0E0E0'

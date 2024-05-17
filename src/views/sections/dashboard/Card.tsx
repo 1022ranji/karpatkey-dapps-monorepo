@@ -30,6 +30,7 @@ interface CardProps {
   latestMonth: number
   latestYear: number
   keyName: string
+  shouldBeIncludedNCAum: boolean
 }
 
 const Title = ({ title }: { title: string }) => {
@@ -63,7 +64,8 @@ export const Card = (props: CardProps) => {
     latestMonth,
     latestYear,
     keyName,
-    currency
+    currency,
+    shouldBeIncludedNCAum
   } = props
   const router = useRouter()
 
@@ -88,6 +90,7 @@ export const Card = (props: CardProps) => {
         sx={{
           maxWidth: '320px',
           minWidth: '320px',
+          minHeight: '260px',
           height: 'fit-content',
           padding: '8px 8px',
           border: '1px solid #B6B6B6',
@@ -114,7 +117,7 @@ export const Card = (props: CardProps) => {
                   ? formatCurrency(totalFundsUSD || 0)
                   : `${formatNumber(totalFundsETH || 0, 0)} ETH`
               }
-              title={`Total funds ${defaultCurrency === 'USD' ? '(ncAUM)' : ''}`}
+              title={`Total funds ${shouldBeIncludedNCAum ? '(ncAUM)' : ''}`}
             />
             <NumberBlockCard
               amount={

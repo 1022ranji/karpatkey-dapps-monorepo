@@ -22,12 +22,7 @@ export const NextArrowCustom = ({ currentSlide, slideCount, ...arrowProps }: any
   <NextArrow sx={{ fill: 'black', fontSize: '14px' }} {...arrowProps} />
 )
 
-export const CarouselCards = ({
-  children,
-  className,
-  totalSlides,
-  afterChangeCallback
-}: CarouselProps) => {
+export const CarouselCards = ({ children, className, totalSlides }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = React.useState(0)
 
   let firstDotIndex = Math.max(0, activeIndex - 3)
@@ -49,11 +44,8 @@ export const CarouselCards = ({
     nextArrow: <NextArrowCustom />,
     prevArrow: <PrevArrowCustom />,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    beforeChange: (_: number, next: number) => setActiveIndex(next),
-    afterChange: (index: number) => {
-      if (afterChangeCallback) {
-        afterChangeCallback(index)
-      }
+    beforeChange: (_: number, next: number) => {
+      setActiveIndex(next)
     },
     customPaging: () => <div />,
 
@@ -81,6 +73,14 @@ export const CarouselCards = ({
       }
     ]
   }
+
+  React.useEffect(() => {
+    const slideElement = document.querySelector(`#scrollable_${activeIndex}`)
+    if (slideElement) {
+      slideElement.scrollTop = 0
+    }
+  }, [activeIndex])
+
   return (
     <>
       <Chip
@@ -93,7 +93,23 @@ export const CarouselCards = ({
       />
 
       <Box className="slider-container" component={'div'} sx={{ marginY: '50px', marginX: '20px' }}>
-        <Slider {...settings}>{children}</Slider>
+        <Slider {...settings}>
+          {React.Children.map(children, (child, index) => {
+            return (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                {child}
+              </Box>
+            )
+          })}
+        </Slider>
         <BoxWrapperRow className="pagination-dots" sx={{ marginTop: '40px' }}>
           {Array.from({ length: totalSlides }, (_, i) => i)
             .slice(firstDotIndex, lastDotIndex + 1)

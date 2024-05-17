@@ -91,7 +91,7 @@ export const Summary = (props: SummaryProps) => {
         gap={5}
       >
         <Box
-          id="summary"
+          id={isMD ? 'summary' : ''}
           sx={{
             display: 'flex',
             flexWrap: 'wrap',

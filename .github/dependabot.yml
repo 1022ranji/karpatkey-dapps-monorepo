@@ -24,7 +24,7 @@ updates:
     versioning-strategy: 'increase'
     labels:
       - 'dependencies'
-    target-branch: 'dependencies'
+    target-branch: 'develop'
     ignore:
       - dependency-name: "@mui/material"
       - dependency-name: "@mui/icons-material"
