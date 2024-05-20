@@ -107,10 +107,15 @@ const TableFunds = (props: TableFundsProps) => {
   }, [checkScrollable])
 
   const firstRowRef = React.useRef<HTMLElement>(null)
+  const lastRowRef = React.useRef<HTMLElement>(null)
   const [firstRowHeight, setFirstRowHeight] = React.useState(0)
+  const [lastRowHeight, setLastRowHeight] = React.useState(0)
   React.useEffect(() => {
     if (firstRowRef.current) {
       setFirstRowHeight(firstRowRef.current.clientHeight + 20)
+    }
+    if (lastRowRef.current) {
+      setLastRowHeight(lastRowRef.current.clientHeight + 20)
     }
   }, [])
 
@@ -418,11 +423,14 @@ const TableFunds = (props: TableFundsProps) => {
                       <CustomTypo>{isDDay ? 'DeFi funds' : 'Farming funds'}</CustomTypo>
                     </TableHeadCellCustom>
                     {!isDDay ? (
-                      <TableHeadCellCustom sx={{ width: '25%' }} align="right">
+                      <TableHeadCellCustom sx={{ width: '25%', zIndex: 1 }} align="right">
                         <CustomTypo>Unclaimed rewards</CustomTypo>
                       </TableHeadCellCustom>
                     ) : null}
-                    <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="right">
+                    <TableHeadCellCustom
+                      sx={{ width: isDDay ? '33%' : '25%', zIndex: 1 }}
+                      align="right"
+                    >
                       <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
                         <CustomTypo>{isDDay ? 'DeFi results' : 'Farming results'}</CustomTypo>
                         <Tooltip
@@ -546,6 +554,7 @@ const TableFunds = (props: TableFundsProps) => {
                   {Object.values(totals).length === 0 ? null : (
                     <TableRow>
                       <TableFooterCellCustom
+                        ref={lastRowRef}
                         sx={{
                           position: 'sticky',
                           zIndex: 1,
@@ -632,7 +641,7 @@ const TableFunds = (props: TableFundsProps) => {
           <Box
             sx={{
               position: 'absolute',
-              bottom: `${firstRowHeight}px`,
+              bottom: `${lastRowHeight}px`,
               margin: 0,
               padding: 0,
               left: '50%',
