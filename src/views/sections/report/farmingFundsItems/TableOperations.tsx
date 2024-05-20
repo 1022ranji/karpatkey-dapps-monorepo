@@ -77,7 +77,7 @@ const TableOperations = (props: TableResultsProps) => {
 
     setIsScrollable({
       top: element.scrollTop > 0,
-      bottom: !(element.scrollHeight - element.scrollTop === element.clientHeight),
+      bottom: !(element.scrollHeight - element.scrollTop - 1 < element.clientHeight),
       left: element.scrollLeft > 0,
       right: element.scrollLeft < element.scrollWidth - element.clientWidth - 1
     })
