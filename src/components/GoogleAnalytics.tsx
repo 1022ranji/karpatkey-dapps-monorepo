@@ -1,7 +1,8 @@
 import Script from 'next/script'
+import { DATA_WAREHOUSE_ENV } from '../config/constants'
 
 const GoogleAnalytics = ({ ga_id }: { ga_id: string }) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (DATA_WAREHOUSE_ENV !== 'production') {
     console.log('No google analytic tracking, development environment')
     return null
   }
