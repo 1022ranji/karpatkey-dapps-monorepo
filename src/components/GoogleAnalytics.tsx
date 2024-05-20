@@ -1,8 +1,8 @@
 import Script from 'next/script'
-import { DATA_WAREHOUSE_ENV } from '../config/constants'
+import { isProductionSite } from '../utils'
 
 const GoogleAnalytics = ({ ga_id }: { ga_id: string }) => {
-  if (DATA_WAREHOUSE_ENV !== 'production') {
+  if (!isProductionSite()) {
     console.log('No google analytic tracking, development environment')
     return null
   }
@@ -10,6 +10,7 @@ const GoogleAnalytics = ({ ga_id }: { ga_id: string }) => {
     console.error('Google Analytics ID is missing')
     return null
   }
+
   return (
     <>
       <Script
