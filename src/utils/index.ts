@@ -103,3 +103,11 @@ export const getLatestMonthAndYearInCommonForEveryDAO = () => {
 
   return lastMonthAndYearInCommon
 }
+
+export const isProductionSite = () => {
+  // check domain name for this
+  if (typeof window !== 'undefined') {
+    return window.location.hostname === 'reports.karpatkey.com'
+  }
+  return false
+}
