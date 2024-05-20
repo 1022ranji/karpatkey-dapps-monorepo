@@ -127,3 +127,11 @@ export const isStagingSite = () => {
   }
   return false
 }
+
+export const isLocalSite = () => {
+  // check domain name for this
+  if (typeof window !== 'undefined') {
+    return window.location.hostname === 'localhost'
+  }
+  return false
+}
