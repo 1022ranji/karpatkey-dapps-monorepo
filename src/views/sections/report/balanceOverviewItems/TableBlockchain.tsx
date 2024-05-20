@@ -116,7 +116,6 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
     }
   }, [])
 
-  // add
   const firstColumnRef = React.useRef<HTMLElement>(null)
   const [firstColumnWidth, setFirstColumnWidth] = React.useState(0)
   React.useEffect(() => {

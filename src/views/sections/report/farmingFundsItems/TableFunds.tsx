@@ -27,6 +27,9 @@ import { UNISWAP_PROTOCOL } from 'src/config/constants'
 import { isYearAndMonthValid } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import { debounce } from 'lodash'
 
 interface TableFundsProps {
   funds: any
@@ -61,6 +64,46 @@ const TableFunds = (props: TableFundsProps) => {
   const { currency } = state
 
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+
+  const tableContainerRef = React.useRef<HTMLDivElement>(null)
+
+  const [isScrollable, setIsScrollable] = React.useState({ top: false, bottom: false })
+
+  const checkScrollable = debounce(() => {
+    const element = tableContainerRef.current
+    if (!element) return
+
+    setIsScrollable({
+      top: element.scrollTop > 0,
+      bottom: !(element.scrollHeight - element.scrollTop === element.clientHeight)
+    })
+  }, 100)
+
+  React.useEffect(() => {
+    checkScrollable()
+    window.addEventListener('resize', checkScrollable)
+    return () => {
+      window.removeEventListener('resize', checkScrollable)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const element = tableContainerRef.current
+    if (!element) return
+
+    element.addEventListener('scroll', checkScrollable)
+    return () => {
+      element.removeEventListener('scroll', checkScrollable)
+    }
+  }, [])
+
+  const firstRowRef = React.useRef<HTMLElement>(null)
+  const [firstRowHeight, setFirstRowHeight] = React.useState(0)
+  React.useEffect(() => {
+    if (firstRowRef.current) {
+      setFirstRowHeight(firstRowRef.current.clientHeight + 20)
+    }
+  }, [])
 
   return (
     <>
@@ -296,212 +339,272 @@ const TableFunds = (props: TableFundsProps) => {
         </TableContainer>
       )}
       {!isMD && (
-        <TableContainer
-          component={Box}
-          sx={{ width: '100%', height: '600px', overflow: 'auto', bgcolor: 'background.paper' }}
+        <Box
+          sx={{
+            width: '100%',
+            overflowX: 'auto',
+            position: 'relative',
+            display: 'block',
+            whiteSpace: 'nowrap'
+          }}
         >
-          <Box sx={{ maxHeight: '600px', overflow: 'auto' }}>
-            {' '}
-            {/* Capa de contenedor adicional */}
-            <Table
-              stickyHeader
-              sx={{ borderCollapse: 'separate', borderSpacing: 0, transform: 'translateZ(0)' }}
-            >
-              <TableHead sx={{ bgcolor: 'background.paper' }}>
-                <TableRow>
-                  <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="left">
-                    <CustomTypo>Position</CustomTypo>
-                  </TableHeadCellCustom>
-                  <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="right">
-                    <CustomTypo>{isDDay ? 'DeFi funds' : 'Farming funds'}</CustomTypo>
-                  </TableHeadCellCustom>
-                  {!isDDay ? (
-                    <TableHeadCellCustom sx={{ width: '25%' }} align="right">
-                      <CustomTypo>Unclaimed rewards</CustomTypo>
-                    </TableHeadCellCustom>
-                  ) : null}
-                  <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="right">
-                    <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
-                      <CustomTypo>{isDDay ? 'DeFi results' : 'Farming results'}</CustomTypo>
-                      <Tooltip
-                        enterTouchDelay={0}
-                        title={
-                          isDDay
-                            ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'
-                            : 'Farming results include results from fees, rebasing, pool token variation and rewards'
-                        }
-                        sx={{
-                          ml: 1,
-                          cursor: 'pointer'
-                        }}
-                      >
-                        <InfoIcon />
-                      </Tooltip>
-                    </BoxWrapperRow>
-                  </TableHeadCellCustom>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {funds.length === 0 ? (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: `${firstRowHeight}px`,
+              margin: 0,
+              padding: 0,
+              left: '45%',
+              animation: 'jumpInfiniteUp 1.5s infinite',
+              display: isScrollable.top ? 'block' : 'none'
+            }}
+          >
+            <ArrowUpwardIcon style={{ fontSize: '20px', color: '#232323' }} />
+          </Box>
+          <TableContainer
+            component={Box}
+            ref={tableContainerRef}
+            sx={{ width: '100%', height: '600px', overflow: 'auto', bgcolor: 'background.paper' }}
+          >
+            <Box sx={{ maxHeight: '600px' }}>
+              <Table
+                stickyHeader
+                sx={{ borderCollapse: 'separate', borderSpacing: 0, transform: 'translateZ(0)' }}
+              >
+                <TableHead sx={{ bgcolor: 'background.paper' }}>
                   <TableRow>
-                    <TableEmptyCellCustom colSpan={5}>
-                      <EmptyData />
-                    </TableEmptyCellCustom>
-                  </TableRow>
-                ) : (
-                  <>
-                    {funds.map((row: any, index: number) => {
-                      return (
-                        <TableRow key={index} sx={{ zIndex: -20 }}>
-                          <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="left">
-                            <BoxWrapperRow
-                              sx={{ overflowWrap: 'anywhere', justifyContent: 'flex-start' }}
-                            >
-                              <BoxWrapperColumn>
-                                <CustomTypo>{row.position}</CustomTypo>
-                                <CustomTypography
-                                  variant="tableCellSubData"
-                                  sx={{
-                                    fontSize: {
-                                      xs: '11px',
-                                      md: '16px'
-                                    },
-                                    fontWeight: '400 !important'
-                                  }}
-                                >
-                                  {row.protocol}
-                                </CustomTypography>
-                                <CustomTypography
-                                  variant="tableCellSubData"
-                                  sx={{
-                                    fontSize: {
-                                      xs: '11px',
-                                      md: '16px'
-                                    },
-                                    fontWeight: '400 !important',
-                                    fontStyle: 'italic'
-                                  }}
-                                >
-                                  {row.blockchain}
-                                </CustomTypography>
-                              </BoxWrapperColumn>
-                              {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
-                            </BoxWrapperRow>
-                          </TableCellCustom>
-                          <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
-                            <BoxWrapperColumn>
-                              <CustomTypo>
-                                {currency === 'USD'
-                                  ? formatCurrency(row.funds || 0)
-                                  : formatNumber(row.funds, 0)}
-                              </CustomTypo>
-                              {row?.allocation > 0 ? (
-                                <CustomTypography
-                                  variant="tableCellSubData"
-                                  sx={{
-                                    fontSize: {
-                                      xs: '11px',
-                                      md: '16px'
-                                    },
-                                    fontWeight: '400 !important'
-                                  }}
-                                >
-                                  {formatPercentage(row.allocation / 100)}
-                                </CustomTypography>
-                              ) : null}
-                            </BoxWrapperColumn>
-                          </TableCellCustom>
-                          {!isDDay ? (
-                            <TableCellCustom sx={{ width: '20%' }} align="right">
-                              <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                                {currency === 'USD'
-                                  ? formatCurrency(row.unclaimed || 0)
-                                  : formatNumber(row.unclaimed, 0)}
-                              </CustomTypo>
-                            </TableCellCustom>
-                          ) : null}
-                          <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
-                            <CustomTypo>
-                              {currency === 'USD'
-                                ? formatCurrency(row.results || 0)
-                                : formatNumber(row.results, 1)}
-                            </CustomTypo>
-                          </TableCellCustom>
-                        </TableRow>
-                      )
-                    })}
-                  </>
-                )}
-                {Object.values(totals).length === 0 ? null : (
-                  <TableRow>
-                    <TableFooterCellCustom
-                      colSpan={1}
-                      align="left"
-                      sx={{
-                        position: 'sticky',
-                        bottom: 0,
-                        zIndex: 1,
-                        backgroundColor: '#eeeded'
-                      }}
-                    >
-                      <CustomTypo>Total</CustomTypo>
-                    </TableFooterCellCustom>
-                    <TableFooterCellCustom
+                    <TableHeadCellCustom
+                      ref={firstRowRef}
                       sx={{
                         width: isDDay ? '33%' : '25%',
+                        align: 'left',
                         position: 'sticky',
-                        bottom: 0,
-                        zIndex: 1,
-                        backgroundColor: '#eeeded'
+                        left: 0,
+                        backgroundColor: 'background.paper',
+                        zIndex: 2
                       }}
+                      align="left"
+                    >
+                      <CustomTypo>Position</CustomTypo>
+                    </TableHeadCellCustom>
+                    <TableHeadCellCustom
+                      sx={{ width: isDDay ? '33%' : '25%', zIndex: 1 }}
                       align="right"
                     >
-                      <CustomTypo>
-                        {currency === 'USD'
-                          ? formatCurrency(totals?.fundsTotal || 0)
-                          : formatNumber(totals?.fundsTotal || 0, 0)}
-                      </CustomTypo>
-                    </TableFooterCellCustom>
+                      <CustomTypo>{isDDay ? 'DeFi funds' : 'Farming funds'}</CustomTypo>
+                    </TableHeadCellCustom>
                     {!isDDay ? (
+                      <TableHeadCellCustom sx={{ width: '25%' }} align="right">
+                        <CustomTypo>Unclaimed rewards</CustomTypo>
+                      </TableHeadCellCustom>
+                    ) : null}
+                    <TableHeadCellCustom sx={{ width: isDDay ? '33%' : '25%' }} align="right">
+                      <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
+                        <CustomTypo>{isDDay ? 'DeFi results' : 'Farming results'}</CustomTypo>
+                        <Tooltip
+                          enterTouchDelay={0}
+                          title={
+                            isDDay
+                              ? 'DeFi results include fees, rebasing, pool token variation and rewards from DeFi positions'
+                              : 'Farming results include results from fees, rebasing, pool token variation and rewards'
+                          }
+                          sx={{
+                            ml: 1,
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <InfoIcon />
+                        </Tooltip>
+                      </BoxWrapperRow>
+                    </TableHeadCellCustom>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {funds.length === 0 ? (
+                    <TableRow>
+                      <TableEmptyCellCustom colSpan={5}>
+                        <EmptyData />
+                      </TableEmptyCellCustom>
+                    </TableRow>
+                  ) : (
+                    <>
+                      {funds.map((row: any, index: number) => {
+                        return (
+                          <TableRow key={index} sx={{ zIndex: -20 }}>
+                            <TableCellCustom
+                              sx={{
+                                width: isDDay ? '25%' : '20%',
+                                align: 'left',
+                                position: 'sticky',
+                                left: 0,
+                                zIndex: 1,
+                                backgroundColor: 'background.paper'
+                              }}
+                            >
+                              <BoxWrapperRow
+                                sx={{ overflowWrap: 'anywhere', justifyContent: 'flex-start' }}
+                              >
+                                <BoxWrapperColumn>
+                                  <CustomTypo>{row.position}</CustomTypo>
+                                  <CustomTypography
+                                    variant="tableCellSubData"
+                                    sx={{
+                                      fontSize: {
+                                        xs: '11px',
+                                        md: '16px'
+                                      },
+                                      fontWeight: '400 !important'
+                                    }}
+                                  >
+                                    {row.protocol}
+                                  </CustomTypography>
+                                  <CustomTypography
+                                    variant="tableCellSubData"
+                                    sx={{
+                                      fontSize: {
+                                        xs: '11px',
+                                        md: '16px'
+                                      },
+                                      fontWeight: '400 !important',
+                                      fontStyle: 'italic'
+                                    }}
+                                  >
+                                    {row.blockchain}
+                                  </CustomTypography>
+                                </BoxWrapperColumn>
+                                {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
+                              </BoxWrapperRow>
+                            </TableCellCustom>
+                            <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
+                              <BoxWrapperColumn>
+                                <CustomTypo>
+                                  {currency === 'USD'
+                                    ? formatCurrency(row.funds || 0)
+                                    : formatNumber(row.funds, 0)}
+                                </CustomTypo>
+                                {row?.allocation > 0 ? (
+                                  <CustomTypography
+                                    variant="tableCellSubData"
+                                    sx={{
+                                      fontSize: {
+                                        xs: '11px',
+                                        md: '16px'
+                                      },
+                                      fontWeight: '400 !important'
+                                    }}
+                                  >
+                                    {formatPercentage(row.allocation / 100)}
+                                  </CustomTypography>
+                                ) : null}
+                              </BoxWrapperColumn>
+                            </TableCellCustom>
+                            {!isDDay ? (
+                              <TableCellCustom sx={{ width: '20%' }} align="right">
+                                <CustomTypo sx={{ fontWeight: '400 !important' }}>
+                                  {currency === 'USD'
+                                    ? formatCurrency(row.unclaimed || 0)
+                                    : formatNumber(row.unclaimed, 0)}
+                                </CustomTypo>
+                              </TableCellCustom>
+                            ) : null}
+                            <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
+                              <CustomTypo>
+                                {currency === 'USD'
+                                  ? formatCurrency(row.results || 0)
+                                  : formatNumber(row.results, 1)}
+                              </CustomTypo>
+                            </TableCellCustom>
+                          </TableRow>
+                        )
+                      })}
+                    </>
+                  )}
+                  {Object.values(totals).length === 0 ? null : (
+                    <TableRow>
+                      <TableFooterCellCustom
+                        sx={{
+                          position: 'sticky',
+                          zIndex: 1,
+                          backgroundColor: 'background.paper',
+                          align: 'left',
+                          left: 0,
+                          bottom: 0
+                        }}
+                        colSpan={1}
+                        align="left"
+                      >
+                        <CustomTypo>Total</CustomTypo>
+                      </TableFooterCellCustom>
                       <TableFooterCellCustom
                         sx={{
                           width: isDDay ? '33%' : '25%',
                           position: 'sticky',
                           bottom: 0,
                           zIndex: 1,
-                          backgroundColor: '#eeeded'
+                          backgroundColor: 'background.paper'
                         }}
                         align="right"
                       >
                         <CustomTypo>
                           {currency === 'USD'
-                            ? formatCurrency(totals?.unclaimedTotal || 0)
-                            : formatNumber(totals?.unclaimedTotal || 0, 0)}
+                            ? formatCurrency(totals?.fundsTotal || 0)
+                            : formatNumber(totals?.fundsTotal || 0, 0)}
                         </CustomTypo>
                       </TableFooterCellCustom>
-                    ) : null}
-                    <TableFooterCellCustom
-                      sx={{
-                        width: isDDay ? '33%' : '25%',
-                        position: 'sticky',
-                        bottom: 0,
-                        zIndex: 1,
-                        backgroundColor: '#eeeded'
-                      }}
-                      align="right"
-                    >
-                      <CustomTypo>
-                        {currency === 'USD'
-                          ? formatCurrency(totals?.resultsTotal || 0)
-                          : formatNumber(totals?.resultsTotal || 0, 1)}
-                      </CustomTypo>
-                    </TableFooterCellCustom>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                      {!isDDay ? (
+                        <TableFooterCellCustom
+                          sx={{
+                            width: isDDay ? '33%' : '25%',
+                            position: 'sticky',
+                            bottom: 0,
+                            zIndex: 1,
+                            backgroundColor: 'background.paper'
+                          }}
+                          align="right"
+                        >
+                          <CustomTypo>
+                            {currency === 'USD'
+                              ? formatCurrency(totals?.unclaimedTotal || 0)
+                              : formatNumber(totals?.unclaimedTotal || 0, 0)}
+                          </CustomTypo>
+                        </TableFooterCellCustom>
+                      ) : null}
+                      <TableFooterCellCustom
+                        sx={{
+                          width: isDDay ? '33%' : '25%',
+                          position: 'sticky',
+                          bottom: 0,
+                          zIndex: 1,
+                          backgroundColor: 'background.paper'
+                        }}
+                        align="right"
+                      >
+                        <CustomTypo>
+                          {currency === 'USD'
+                            ? formatCurrency(totals?.resultsTotal || 0)
+                            : formatNumber(totals?.resultsTotal || 0, 1)}
+                        </CustomTypo>
+                      </TableFooterCellCustom>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </Box>
+          </TableContainer>
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: `${firstRowHeight}px`,
+              margin: 0,
+              padding: 0,
+              left: '45%',
+              animation: 'jumpInfiniteDown 1.5s infinite',
+              display: isScrollable.bottom ? 'block' : 'none'
+            }}
+          >
+            <ArrowDownwardIcon style={{ fontSize: '20px', color: '#232323' }} />
           </Box>
-        </TableContainer>
+        </Box>
       )}
     </>
   )
