@@ -29,6 +29,8 @@ import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { debounce } from 'lodash'
 
 interface TableFundsProps {
@@ -67,7 +69,12 @@ const TableFunds = (props: TableFundsProps) => {
 
   const tableContainerRef = React.useRef<HTMLDivElement>(null)
 
-  const [isScrollable, setIsScrollable] = React.useState({ top: false, bottom: false })
+  const [isScrollable, setIsScrollable] = React.useState({
+    top: false,
+    bottom: false,
+    left: false,
+    right: false
+  })
 
   const checkScrollable = debounce(() => {
     const element = tableContainerRef.current
@@ -75,7 +82,9 @@ const TableFunds = (props: TableFundsProps) => {
 
     setIsScrollable({
       top: element.scrollTop > 0,
-      bottom: !(element.scrollHeight - element.scrollTop === element.clientHeight)
+      bottom: !(element.scrollHeight - element.scrollTop === element.clientHeight),
+      left: element.scrollLeft > 0,
+      right: element.scrollLeft < element.scrollWidth - element.clientWidth - 1
     })
   }, 100)
 
@@ -85,7 +94,7 @@ const TableFunds = (props: TableFundsProps) => {
     return () => {
       window.removeEventListener('resize', checkScrollable)
     }
-  }, [])
+  }, [checkScrollable])
 
   React.useEffect(() => {
     const element = tableContainerRef.current
@@ -95,7 +104,7 @@ const TableFunds = (props: TableFundsProps) => {
     return () => {
       element.removeEventListener('scroll', checkScrollable)
     }
-  }, [])
+  }, [checkScrollable])
 
   const firstRowRef = React.useRef<HTMLElement>(null)
   const [firstRowHeight, setFirstRowHeight] = React.useState(0)
@@ -354,12 +363,27 @@ const TableFunds = (props: TableFundsProps) => {
               top: `${firstRowHeight}px`,
               margin: 0,
               padding: 0,
-              left: '45%',
+              left: '50%',
               animation: 'jumpInfiniteUp 1.5s infinite',
-              display: isScrollable.top ? 'block' : 'none'
+              display: isScrollable.top ? 'block' : 'none',
+              zIndex: 2
             }}
           >
             <ArrowUpwardIcon style={{ fontSize: '20px', color: '#232323' }} />
+          </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              margin: 0,
+              padding: 0,
+              left: `10px`,
+              animation: 'jumpInfiniteHorizontalLeft 1.5s infinite',
+              display: isScrollable.left ? 'block' : 'none',
+              zIndex: 2
+            }}
+          >
+            <ArrowBackIcon style={{ fontSize: '20px', color: '#232323' }} />
           </Box>
           <TableContainer
             component={Box}
@@ -594,12 +618,27 @@ const TableFunds = (props: TableFundsProps) => {
           <Box
             sx={{
               position: 'absolute',
+              top: '50%',
+              margin: 0,
+              padding: 0,
+              right: '10px',
+              animation: 'jumpInfiniteHorizontalRight 1.5s infinite',
+              display: isScrollable.right ? 'block' : 'none',
+              zIndex: 2
+            }}
+          >
+            <ArrowForwardIcon style={{ fontSize: '20px', color: '#232323' }} />
+          </Box>
+          <Box
+            sx={{
+              position: 'absolute',
               bottom: `${firstRowHeight}px`,
               margin: 0,
               padding: 0,
-              left: '45%',
+              left: '50%',
               animation: 'jumpInfiniteDown 1.5s infinite',
-              display: isScrollable.bottom ? 'block' : 'none'
+              display: isScrollable.bottom ? 'block' : 'none',
+              zIndex: 2
             }}
           >
             <ArrowDownwardIcon style={{ fontSize: '20px', color: '#232323' }} />
