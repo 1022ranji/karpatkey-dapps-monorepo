@@ -114,7 +114,7 @@ export const TableType = (props: TableTypeProps) => {
                   position: 'sticky',
                   left: 0,
                   zIndex: 1,
-                  backgroundColor: '#eeeded'
+                  backgroundColor: 'background.paper'
                 }}
                 align="left"
               >
@@ -142,42 +142,58 @@ export const TableType = (props: TableTypeProps) => {
                 (dataFooterType['Unclaimed rewards'] || 0) + row['Unclaimed rewards']
               dataFooterType['Wallet'] = (dataFooterType['Wallet'] || 0) + row['Wallet']
               dataFooterType['Total'] = (dataFooterType['Total'] || 0) + row['Total']
+
+              const lastOne = balanceOverviewType.length - 1 === index
+
               return (
                 <TableRow key={index}>
                   <TableCellCustom
                     sx={{
+                      ...(lastOne ? { borderBottom: 'none' } : {}),
                       width: '20%',
                       position: 'sticky',
                       left: 0,
                       zIndex: 1,
-                      backgroundColor: '#eeeded'
+                      backgroundColor: 'background.paper'
                     }}
                     align="left"
                   >
                     <CustomTypo>{row['Token Category']}</CustomTypo>
                   </TableCellCustom>
-                  <TableCellCustom sx={{ width: '20%' }} align="right">
+                  <TableCellCustom
+                    sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                    align="right"
+                  >
                     <CustomTypo sx={{ fontWeight: '400 !important' }}>
                       {currency === 'USD'
                         ? formatCurrency(row['Farming funds'] || 0)
                         : formatNumber(row['Farming funds'] || 0, 0)}
                     </CustomTypo>
                   </TableCellCustom>
-                  <TableCellCustom sx={{ width: '20%' }} align="right">
+                  <TableCellCustom
+                    sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                    align="right"
+                  >
                     <CustomTypo sx={{ fontWeight: '400 !important' }}>
                       {currency === 'USD'
                         ? formatCurrency(row['Unclaimed rewards'] || 0)
                         : formatNumber(row['Unclaimed rewards'] || 0, 0)}
                     </CustomTypo>
                   </TableCellCustom>
-                  <TableCellCustom sx={{ width: '20%' }} align="right">
+                  <TableCellCustom
+                    sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                    align="right"
+                  >
                     <CustomTypo sx={{ fontWeight: '400 !important' }}>
                       {currency === 'USD'
                         ? formatCurrency(row['Wallet'] || 0)
                         : formatNumber(row['Wallet'] || 0, 0)}
                     </CustomTypo>
                   </TableCellCustom>
-                  <TableCellCustom sx={{ width: '20%' }} align="right">
+                  <TableCellCustom
+                    sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                    align="right"
+                  >
                     <CustomTypo>
                       {currency === 'USD'
                         ? formatCurrency(row['Total'] || 0)
@@ -194,7 +210,7 @@ export const TableType = (props: TableTypeProps) => {
                   position: 'sticky',
                   left: 0,
                   zIndex: 1,
-                  backgroundColor: '#eeeded'
+                  backgroundColor: 'background.paper'
                 }}
                 align="left"
               >

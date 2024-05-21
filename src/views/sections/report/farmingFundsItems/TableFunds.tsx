@@ -132,7 +132,7 @@ const TableFunds = (props: TableFundsProps) => {
                     position: 'sticky',
                     left: 0,
                     zIndex: 1,
-                    backgroundColor: '#eeeded'
+                    backgroundColor: 'background.paper'
                   }}
                   align="left"
                 >
@@ -179,15 +179,18 @@ const TableFunds = (props: TableFundsProps) => {
                   {funds.map((row: any, index: number) => {
                     if (!displayAll && index > 4) return null
 
+                    const lastOne = funds.length - 1 === index
+
                     return (
                       <TableRow key={index}>
                         <TableCellCustom
                           sx={{
+                            ...(lastOne ? { borderBottom: 'none' } : {}),
                             width: isDDay ? '25%' : '20%',
                             position: 'sticky',
                             left: 0,
                             zIndex: 1,
-                            backgroundColor: '#eeeded'
+                            backgroundColor: 'background.paper'
                           }}
                           align="left"
                         >
@@ -225,7 +228,13 @@ const TableFunds = (props: TableFundsProps) => {
                             {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
                           </BoxWrapperRow>
                         </TableCellCustom>
-                        <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
+                        <TableCellCustom
+                          sx={{
+                            width: isDDay ? '25%' : '20%',
+                            ...(lastOne ? { borderBottom: 'none' } : {})
+                          }}
+                          align="right"
+                        >
                           <BoxWrapperColumn>
                             <CustomTypo>
                               {currency === 'USD'
@@ -249,7 +258,10 @@ const TableFunds = (props: TableFundsProps) => {
                           </BoxWrapperColumn>
                         </TableCellCustom>
                         {!isDDay ? (
-                          <TableCellCustom sx={{ width: '20%' }} align="right">
+                          <TableCellCustom
+                            sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                            align="right"
+                          >
                             <CustomTypo sx={{ fontWeight: '400 !important' }}>
                               {currency === 'USD'
                                 ? formatCurrency(row.unclaimed || 0)
@@ -257,7 +269,13 @@ const TableFunds = (props: TableFundsProps) => {
                             </CustomTypo>
                           </TableCellCustom>
                         ) : null}
-                        <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
+                        <TableCellCustom
+                          sx={{
+                            width: isDDay ? '25%' : '20%',
+                            ...(lastOne ? { borderBottom: 'none' } : {})
+                          }}
+                          align="right"
+                        >
                           <CustomTypo>
                             {currency === 'USD'
                               ? formatCurrency(row.results || 0)
@@ -270,7 +288,7 @@ const TableFunds = (props: TableFundsProps) => {
 
                   {funds.length > 5 ? (
                     <TableRow>
-                      <TableCellCustom colSpan={4} align="center">
+                      <TableCellCustom colSpan={4} align="center" sx={{ borderBottom: 'none' }}>
                         <BoxWrapperRow gap={1}>
                           <CustomTypography
                             variant="tableCellSubData"
@@ -317,7 +335,7 @@ const TableFunds = (props: TableFundsProps) => {
                         position: 'sticky',
                         left: 0,
                         zIndex: 1,
-                        backgroundColor: '#eeeded'
+                        backgroundColor: 'background.paper'
                       }}
                     >
                       <CustomTypo>Total</CustomTypo>
@@ -461,10 +479,13 @@ const TableFunds = (props: TableFundsProps) => {
                   ) : (
                     <>
                       {funds.map((row: any, index: number) => {
+                        const lastOne = funds.length - 1 === index
+
                         return (
                           <TableRow key={index} sx={{ zIndex: -20 }}>
                             <TableCellCustom
                               sx={{
+                                ...(lastOne ? { borderBottom: 'none' } : {}),
                                 width: isDDay ? '25%' : '20%',
                                 align: 'left',
                                 position: 'sticky',
@@ -507,7 +528,13 @@ const TableFunds = (props: TableFundsProps) => {
                                 {row.protocol === UNISWAP_PROTOCOL ? <UniswapHelpText /> : null}
                               </BoxWrapperRow>
                             </TableCellCustom>
-                            <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
+                            <TableCellCustom
+                              sx={{
+                                ...(lastOne ? { borderBottom: 'none' } : {}),
+                                width: isDDay ? '25%' : '20%'
+                              }}
+                              align="right"
+                            >
                               <BoxWrapperColumn>
                                 <CustomTypo>
                                   {currency === 'USD'
@@ -531,7 +558,10 @@ const TableFunds = (props: TableFundsProps) => {
                               </BoxWrapperColumn>
                             </TableCellCustom>
                             {!isDDay ? (
-                              <TableCellCustom sx={{ width: '20%' }} align="right">
+                              <TableCellCustom
+                                sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                                align="right"
+                              >
                                 <CustomTypo sx={{ fontWeight: '400 !important' }}>
                                   {currency === 'USD'
                                     ? formatCurrency(row.unclaimed || 0)
@@ -539,7 +569,13 @@ const TableFunds = (props: TableFundsProps) => {
                                 </CustomTypo>
                               </TableCellCustom>
                             ) : null}
-                            <TableCellCustom sx={{ width: isDDay ? '25%' : '20%' }} align="right">
+                            <TableCellCustom
+                              sx={{
+                                width: isDDay ? '25%' : '20%',
+                                ...(lastOne ? { borderBottom: 'none' } : {})
+                              }}
+                              align="right"
+                            >
                               <CustomTypo>
                                 {currency === 'USD'
                                   ? formatCurrency(row.results || 0)

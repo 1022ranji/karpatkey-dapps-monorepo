@@ -127,7 +127,7 @@ const TableOperations = (props: TableResultsProps) => {
                     position: 'sticky',
                     left: 0,
                     zIndex: 1,
-                    backgroundColor: '#eeeded'
+                    backgroundColor: 'background.paper'
                   }}
                   align="left"
                 >
@@ -167,10 +167,13 @@ const TableOperations = (props: TableResultsProps) => {
                   {operationDetails.map((row: any, index: number) => {
                     if (!displayAll && index > 4) return null
 
+                    const lastOne = operationDetails.length - 1 === index
+
                     return (
                       <TableRow key={index}>
                         <TableCellCustom
                           sx={{
+                            ...(lastOne ? { borderBottom: 'none' } : {}),
                             width: '25%',
                             position: 'sticky',
                             left: 0,
@@ -208,7 +211,10 @@ const TableOperations = (props: TableResultsProps) => {
                             </CustomTypography>
                           </BoxWrapperColumn>
                         </TableCellCustom>
-                        <TableCellCustom sx={{ width: '25%' }} align="right">
+                        <TableCellCustom
+                          sx={{ width: '25%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                          align="right"
+                        >
                           <CustomTypo>
                             {currency === 'USD'
                               ? formatCurrency(row?.operationsFunds || 0)
@@ -229,14 +235,20 @@ const TableOperations = (props: TableResultsProps) => {
                             </CustomTypography>
                           )}
                         </TableCellCustom>
-                        <TableCellCustom sx={{ width: '25%' }} align="right">
+                        <TableCellCustom
+                          sx={{ width: '25%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                          align="right"
+                        >
                           <CustomTypo>
                             {currency === 'USD'
                               ? formatCurrency(row?.operationResults?.toFixed(2) || 0)
                               : formatNumber(row?.operationResults?.toFixed(2) || 0, 1)}
                           </CustomTypo>
                         </TableCellCustom>
-                        <TableCellCustom sx={{ width: '25%' }} align="right">
+                        <TableCellCustom
+                          sx={{ width: '25%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                          align="right"
+                        >
                           <CustomTypo sx={{ fontWeight: '400 !important' }}>
                             {currency === 'USD'
                               ? formatCurrency(row?.priceVariation?.toFixed(2) || 0)
@@ -249,7 +261,7 @@ const TableOperations = (props: TableResultsProps) => {
 
                   {operationDetails.length > 5 ? (
                     <TableRow>
-                      <TableCellCustom colSpan={4} align="center">
+                      <TableCellCustom colSpan={4} align="center" sx={{ borderBottom: 'none' }}>
                         <BoxWrapperRow gap={1}>
                           <CustomTypography
                             variant="tableCellSubData"
@@ -427,10 +439,13 @@ const TableOperations = (props: TableResultsProps) => {
                   ) : (
                     <>
                       {operationDetails.map((row: any, index: number) => {
+                        const lastOne = operationDetails.length - 1 === index
+
                         return (
                           <TableRow key={index} sx={{ zIndex: -20 }}>
                             <TableCellCustom
                               sx={{
+                                ...(lastOne ? { borderBottom: 'none' } : {}),
                                 width: '25%',
                                 position: 'sticky',
                                 left: 0,
@@ -468,7 +483,10 @@ const TableOperations = (props: TableResultsProps) => {
                                 </CustomTypography>
                               </BoxWrapperColumn>
                             </TableCellCustom>
-                            <TableCellCustom sx={{ width: '25%' }} align="right">
+                            <TableCellCustom
+                              sx={{ width: '25%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                              align="right"
+                            >
                               <CustomTypo>
                                 {currency === 'USD'
                                   ? formatCurrency(row?.operationsFunds || 0)
@@ -489,14 +507,20 @@ const TableOperations = (props: TableResultsProps) => {
                                 </CustomTypography>
                               )}
                             </TableCellCustom>
-                            <TableCellCustom sx={{ width: '25%' }} align="right">
+                            <TableCellCustom
+                              sx={{ width: '25%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                              align="right"
+                            >
                               <CustomTypo>
                                 {currency === 'USD'
                                   ? formatCurrency(row?.operationResults?.toFixed(2) || 0)
                                   : formatNumber(row?.operationResults?.toFixed(2) || 0, 1)}
                               </CustomTypo>
                             </TableCellCustom>
-                            <TableCellCustom sx={{ width: '25%' }} align="right">
+                            <TableCellCustom
+                              sx={{ width: '25%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                              align="right"
+                            >
                               <CustomTypo sx={{ fontWeight: '400 !important' }}>
                                 {currency === 'USD'
                                   ? formatCurrency(row?.priceVariation?.toFixed(2) || 0)

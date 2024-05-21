@@ -129,7 +129,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                   position: 'sticky',
                   left: 0,
                   zIndex: 1,
-                  backgroundColor: '#eeeded'
+                  backgroundColor: 'background.paper'
                 }}
                 align="left"
               >
@@ -193,22 +193,29 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                 (dataFooterType['Operations funds'] || 0) + row['Operations funds']
               dataFooterType['Wallet'] = (dataFooterType['Wallet'] || 0) + row['Wallet']
               dataFooterType['Total'] = (dataFooterType['Total'] || 0) + row['Total']
+
+              const lastOne = balanceOverviewType.length - 1 === index
+
               return (
                 <TableRow key={index}>
                   <TableCellCustom
                     sx={{
+                      ...(lastOne ? { borderBottom: 'none' } : {}),
                       width: haveOperationsFundsField ? '20%' : '25%',
                       position: 'sticky',
                       left: 0,
                       zIndex: 1,
-                      backgroundColor: '#eeeded'
+                      backgroundColor: 'background.paper'
                     }}
                     align="left"
                   >
                     <CustomTypo>{row['Token Category']}</CustomTypo>
                   </TableCellCustom>
                   <TableCellCustom
-                    sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                    sx={{
+                      width: haveOperationsFundsField ? '20%' : '25%',
+                      ...(lastOne ? { borderBottom: 'none' } : {})
+                    }}
                     align="right"
                   >
                     <CustomTypo sx={{ fontWeight: '400 !important' }}>
@@ -218,7 +225,10 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                     </CustomTypo>
                   </TableCellCustom>
                   {haveOperationsFundsField ? (
-                    <TableCellCustom sx={{ width: '20%' }} align="right">
+                    <TableCellCustom
+                      sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                      align="right"
+                    >
                       <CustomTypo sx={{ fontWeight: '400 !important' }}>
                         {currency === 'USD'
                           ? formatCurrency(row['Operations funds'] || 0)
@@ -227,7 +237,10 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                     </TableCellCustom>
                   ) : null}
                   <TableCellCustom
-                    sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                    sx={{
+                      width: haveOperationsFundsField ? '20%' : '25%',
+                      ...(lastOne ? { borderBottom: 'none' } : {})
+                    }}
                     align="right"
                   >
                     <CustomTypo sx={{ fontWeight: '400 !important' }}>
@@ -237,7 +250,10 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                     </CustomTypo>
                   </TableCellCustom>
                   <TableCellCustom
-                    sx={{ width: haveOperationsFundsField ? '20%' : '25%' }}
+                    sx={{
+                      width: haveOperationsFundsField ? '20%' : '25%',
+                      ...(lastOne ? { borderBottom: 'none' } : {})
+                    }}
                     align="right"
                   >
                     <CustomTypo>
@@ -256,7 +272,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
                   position: 'sticky',
                   left: 0,
                   zIndex: 1,
-                  backgroundColor: '#eeeded'
+                  backgroundColor: 'background.paper'
                 }}
                 align="left"
               >
