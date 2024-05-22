@@ -56,7 +56,7 @@ export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
   }
 }))
 
-const TableFunds = (props: TableFundsProps) => {
+const TableFunds = React.memo((props: TableFundsProps) => {
   const { funds, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
@@ -86,7 +86,7 @@ const TableFunds = (props: TableFundsProps) => {
       left: element.scrollLeft > 0,
       right: element.scrollLeft < element.scrollWidth - element.clientWidth - 1
     })
-  }, 100)
+  }, 250)
 
   React.useEffect(() => {
     checkScrollable()
@@ -94,7 +94,7 @@ const TableFunds = (props: TableFundsProps) => {
     return () => {
       window.removeEventListener('resize', checkScrollable)
     }
-  }, [checkScrollable])
+  }, [])
 
   React.useEffect(() => {
     const element = tableContainerRef.current
@@ -104,7 +104,7 @@ const TableFunds = (props: TableFundsProps) => {
     return () => {
       element.removeEventListener('scroll', checkScrollable)
     }
-  }, [checkScrollable])
+  }, [])
 
   const firstRowRef = React.useRef<HTMLElement>(null)
   const lastRowRef = React.useRef<HTMLElement>(null)
@@ -387,7 +387,7 @@ const TableFunds = (props: TableFundsProps) => {
               margin: 0,
               padding: 0,
               left: '50%',
-              animation: 'jumpInfiniteUp 1.5s infinite',
+              animation: 'jumpInfiniteUp 1.2s infinite',
               display: isScrollable.top ? 'block' : 'none',
               zIndex: 2
             }}
@@ -667,7 +667,7 @@ const TableFunds = (props: TableFundsProps) => {
               margin: 0,
               padding: 0,
               right: '10px',
-              animation: 'jumpInfiniteHorizontalRight 1.5s infinite',
+              animation: 'jumpInfiniteHorizontalRight 1.2s infinite',
               display: isScrollable.right ? 'block' : 'none',
               zIndex: 2
             }}
@@ -692,6 +692,8 @@ const TableFunds = (props: TableFundsProps) => {
       )}
     </>
   )
-}
+})
+
+TableFunds.displayName = 'TableFunds'
 
 export default TableFunds

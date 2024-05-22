@@ -53,7 +53,7 @@ export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
   }
 }))
 
-const TableOperations = (props: TableResultsProps) => {
+const TableOperations = React.memo((props: TableResultsProps) => {
   const { operationDetails, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
@@ -81,7 +81,7 @@ const TableOperations = (props: TableResultsProps) => {
       left: element.scrollLeft > 0,
       right: element.scrollLeft < element.scrollWidth - element.clientWidth - 1
     })
-  }, 100)
+  }, 250)
 
   React.useEffect(() => {
     checkScrollable()
@@ -89,7 +89,7 @@ const TableOperations = (props: TableResultsProps) => {
     return () => {
       window.removeEventListener('resize', checkScrollable)
     }
-  }, [checkScrollable])
+  }, [])
 
   React.useEffect(() => {
     const element = tableContainerRef.current
@@ -99,7 +99,7 @@ const TableOperations = (props: TableResultsProps) => {
     return () => {
       element.removeEventListener('scroll', checkScrollable)
     }
-  }, [checkScrollable])
+  }, [])
 
   const firstRowRef = React.useRef<HTMLElement>(null)
   const lastRowRef = React.useRef<HTMLElement>(null)
@@ -359,7 +359,7 @@ const TableOperations = (props: TableResultsProps) => {
               margin: 0,
               padding: 0,
               left: '50%',
-              animation: 'jumpInfiniteUp 1.5s infinite',
+              animation: 'jumpInfiniteUp 1.2s infinite',
               display: isScrollable.top ? 'block' : 'none',
               zIndex: 2
             }}
@@ -373,7 +373,7 @@ const TableOperations = (props: TableResultsProps) => {
               margin: 0,
               padding: 0,
               left: `10px`,
-              animation: 'jumpInfiniteHorizontalLeft 1.5s infinite',
+              animation: 'jumpInfiniteHorizontalLeft 1.2s infinite',
               display: isScrollable.left ? 'block' : 'none',
               zIndex: 2
             }}
@@ -610,7 +610,7 @@ const TableOperations = (props: TableResultsProps) => {
               margin: 0,
               padding: 0,
               right: '10px',
-              animation: 'jumpInfiniteHorizontalRight 1.5s infinite',
+              animation: 'jumpInfiniteHorizontalRight 1.2s infinite',
               display: isScrollable.right ? 'block' : 'none',
               zIndex: 2
             }}
@@ -624,7 +624,7 @@ const TableOperations = (props: TableResultsProps) => {
               margin: 0,
               padding: 0,
               left: '50%',
-              animation: 'jumpInfiniteDown 1.5s infinite',
+              animation: 'jumpInfiniteDown 1.2s infinite',
               display: isScrollable.bottom ? 'block' : 'none',
               zIndex: 2
             }}
@@ -635,6 +635,8 @@ const TableOperations = (props: TableResultsProps) => {
       )}
     </>
   )
-}
+})
+
+TableOperations.displayName = 'TableOperations'
 
 export default TableOperations

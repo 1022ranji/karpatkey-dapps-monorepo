@@ -44,7 +44,7 @@ export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
   }
 }))
 
-export const TableTypeDDay = (props: TableTypeProps) => {
+export const TableTypeDDay = React.memo((props: TableTypeProps) => {
   const { balanceOverviewType } = props
   const dataFooterType = {} as any
 
@@ -67,7 +67,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
       left: element.scrollLeft > 0,
       right: element.scrollLeft < element.scrollWidth - element.clientWidth - 1
     })
-  }, 100)
+  }, 250)
 
   React.useEffect(() => {
     checkScrollable()
@@ -112,7 +112,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
           margin: 0,
           padding: 0,
           left: `${firstColumnWidth}px`,
-          animation: 'jumpInfiniteHorizontalLeft 1.5s infinite',
+          animation: 'jumpInfiniteHorizontalLeft 1.2s infinite',
           display: isScrollable.left ? 'block' : 'none'
         }}
       >
@@ -328,7 +328,7 @@ export const TableTypeDDay = (props: TableTypeProps) => {
           margin: 0,
           padding: 0,
           right: '10px',
-          animation: 'jumpInfiniteHorizontalRight 1.5s infinite',
+          animation: 'jumpInfiniteHorizontalRight 1.2s infinite',
           display: isScrollable.right ? 'block' : 'none'
         }}
       >
@@ -336,4 +336,6 @@ export const TableTypeDDay = (props: TableTypeProps) => {
       </Box>
     </Box>
   )
-}
+})
+
+TableTypeDDay.displayName = 'TableTypeDDay'

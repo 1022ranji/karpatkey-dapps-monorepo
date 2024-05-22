@@ -36,7 +36,7 @@ type TableBlockchainProps = {
   balanceOverviewBlockchain: { funds: number; row: string; column: string }[]
 } & BoxProps
 
-export const TableBlockchain = (props: TableBlockchainProps) => {
+export const TableBlockchain = React.memo((props: TableBlockchainProps) => {
   const { balanceOverviewBlockchain = [] } = props
 
   const { state } = useApp()
@@ -96,7 +96,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
       left: element.scrollLeft > 0,
       right: element.scrollLeft < element.scrollWidth - element.clientWidth - 1
     })
-  }, 100)
+  }, 250)
 
   React.useEffect(() => {
     checkScrollable()
@@ -141,7 +141,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
           margin: 0,
           padding: 0,
           left: `${firstColumnWidth}px`,
-          animation: 'jumpInfiniteHorizontalLeft 1.5s infinite',
+          animation: 'jumpInfiniteHorizontalLeft 1.2s infinite',
           display: isScrollable.left ? 'block' : 'none'
         }}
       >
@@ -286,7 +286,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
           margin: 0,
           padding: 0,
           right: '10px',
-          animation: 'jumpInfiniteHorizontalRight 1.5s infinite',
+          animation: 'jumpInfiniteHorizontalRight 1.2s infinite',
           display: isScrollable.right ? 'block' : 'none'
         }}
       >
@@ -294,4 +294,6 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
       </Box>
     </Box>
   )
-}
+})
+
+TableBlockchain.displayName = 'TableBlockchain'
