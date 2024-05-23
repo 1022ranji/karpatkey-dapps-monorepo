@@ -101,7 +101,7 @@ export const CardList = (props: CardListProps) => {
         <BoxWrapperColumn gap={0}>
           <Box
             sx={{
-              margin: '0 20px 20px 20px'
+              margin: '0 20px -20px 20px'
             }}
           >
             {tokenDetailByPosition.length > 1 && (

@@ -84,15 +84,18 @@ export const Navbar = styled(Box)(({ height }: NavbarProps) => ({
   backgroundColor: '#eeeded',
   '&.hide': {
     position: 'fixed',
-    top: height ? `-${height}px` : '-60px',
-    transition: '0.3s linear',
-    zIndex: 2
+    transform: `translate3d(0px, ${height ? `-${height}px` : '-60px'}, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);`,
+    transformStyle: 'preserve-3d',
+    zIndex: 2,
+    transition: 'transform 0.5s ease-in-out'
   },
   '&.show , &.down': {
     position: 'fixed',
-    top: '0px',
-    transition: '0.3s linear',
-    zIndex: 15
+    transform:
+      'translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);',
+    transformStyle: 'preserve-3d',
+    zIndex: 15,
+    transition: 'transform 0.5s ease-in-out'
   }
 }))
 
