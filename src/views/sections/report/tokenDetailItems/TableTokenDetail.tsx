@@ -119,7 +119,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
       setFirstRowHeight(firstRowRef.current.clientHeight + 20)
     }
     if (lastRowRef.current) {
-      setLastRowHeight(lastRowRef.current.clientHeight + 20)
+      setLastRowHeight(lastRowRef.current.clientHeight - 20)
     }
   }, [])
 
@@ -132,7 +132,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
               <TableRow>
                 <TableHeadCellCustom
                   sx={{
-                    width: isMD ? '20%' : '33%',
+                    width: '20%',
                     position: 'sticky',
                     left: 0,
                     zIndex: 1,
@@ -142,29 +142,24 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                 >
                   <CustomTypo>Token symbol</CustomTypo>
                 </TableHeadCellCustom>
-                <TableHeadCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
+                <TableHeadCellCustom sx={{ width: '20%' }} align="right">
                   <CustomTypo>{currency === 'USD' ? 'Price' : 'ETH Price'}</CustomTypo>
                 </TableHeadCellCustom>
-                <TableHeadCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
+                <TableHeadCellCustom sx={{ width: '20%' }} align="right">
                   <CustomTypo>Token balance</CustomTypo>
                 </TableHeadCellCustom>
-
-                {isMD ? (
-                  <TableHeadCellCustom sx={{ width: '20%' }} align="right">
-                    <CustomTypo>{isDDay ? 'Share' : 'Allocation'}</CustomTypo>
-                  </TableHeadCellCustom>
-                ) : null}
-                {isMD ? (
-                  <TableHeadCellCustom sx={{ width: '20%' }} align="right">
-                    <CustomTypo>Price variation</CustomTypo>
-                  </TableHeadCellCustom>
-                ) : null}
+                <TableHeadCellCustom sx={{ width: '20%' }} align="right">
+                  <CustomTypo>{isDDay ? 'Share' : 'Allocation'}</CustomTypo>
+                </TableHeadCellCustom>
+                <TableHeadCellCustom sx={{ width: '20%' }} align="right">
+                  <CustomTypo>Price variation</CustomTypo>
+                </TableHeadCellCustom>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredTokenDetails.length === 0 ? (
                 <TableRow>
-                  <TableEmptyCellCustom colSpan={isMD ? 5 : 4}>
+                  <TableEmptyCellCustom colSpan={isMD ? 5 : 3}>
                     <EmptyData />
                   </TableEmptyCellCustom>
                 </TableRow>
@@ -201,7 +196,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                       <TableRow key={index} sx={{ '&:last-child td': { borderBottom: 0 } }}>
                         <TableCellCustom
                           sx={{
-                            width: isMD ? '20%' : '33%',
+                            width: '20%',
                             position: 'sticky',
                             left: 0,
                             zIndex: 1,
@@ -238,7 +233,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                             </CustomTypography>
                           </BoxWrapperColumn>
                         </TableCellCustom>
-                        <TableCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
+                        <TableCellCustom sx={{ width: '20%' }} align="right">
                           <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
                             <BoxWrapperColumn gap={'2px'} sx={{ alignItems: 'flex-end' }}>
                               <Tooltip
@@ -258,34 +253,6 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                                   </CustomTypo>
                                 </div>
                               </Tooltip>
-
-                              {!isMD ? (
-                                <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
-                                  {formatPercentage(row.priceVariation) === '0.00%' ? (
-                                    <Tooltip
-                                      enterTouchDelay={0}
-                                      title={formatPercentage(row.priceVariation, 10)}
-                                      sx={{ ml: 1, cursor: 'pointer' }}
-                                    >
-                                      <div>
-                                        <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                                          {formatPercentage(row.priceVariation)}
-                                        </CustomTypo>
-                                      </div>
-                                    </Tooltip>
-                                  ) : (
-                                    <CustomTypo sx={{ fontWeight: '400 !important' }}>
-                                      {formatPercentage(row.priceVariation)}
-                                    </CustomTypo>
-                                  )}
-
-                                  {row.priceVariation > 0 ? (
-                                    <ArrowUpwardIcon sx={{ fontSize: '1rem !important' }} />
-                                  ) : !row.priceVariation ? null : (
-                                    <ArrowDownwardIcon sx={{ fontSize: '1rem !important' }} />
-                                  )}
-                                </BoxWrapperRow>
-                              ) : null}
                             </BoxWrapperColumn>
 
                             {TOKEN && (
@@ -296,7 +263,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                             )}
                           </BoxWrapperRow>
                         </TableCellCustom>
-                        <TableCellCustom sx={{ width: isMD ? '20%' : '33%' }} align="right">
+                        <TableCellCustom sx={{ width: '20%' }} align="right">
                           <BoxWrapperColumn sx={{ alignItems: 'flex-end' }}>
                             <CustomTypo>{formatNumber(row.balance)}</CustomTypo>
                             <CustomTypography
@@ -313,58 +280,43 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                                 ? formatCurrency(row.usdValue, 2)
                                 : `${formatNumber(row.usdValue, 2)} ETH`}
                             </CustomTypography>
-                            {!isMD ? (
-                              <CustomTypography
-                                variant="tableCellSubData"
-                                sx={{
-                                  fontSize: {
-                                    xs: '11px',
-                                    md: '16px'
-                                  }
-                                }}
-                              >
-                                {formatPercentage(row.allocation)}
-                              </CustomTypography>
-                            ) : null}
                           </BoxWrapperColumn>
                         </TableCellCustom>
-                        {isMD ? (
-                          <TableCellCustom sx={{ width: '20%' }} align="right">
-                            <CustomTypo>{formatPercentage(row.allocation)}</CustomTypo>
-                          </TableCellCustom>
-                        ) : null}
-                        {isMD ? (
-                          <TableCellCustom sx={{ width: '20%' }} align="right">
-                            <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
-                              {formatPercentage(row.priceVariation) === '0.00%' ? (
-                                <Tooltip
-                                  enterTouchDelay={0}
-                                  title={formatPercentage(row.priceVariation, 10)}
-                                  sx={{ ml: 1, cursor: 'pointer' }}
-                                >
-                                  <div>
-                                    <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
-                                  </div>
-                                </Tooltip>
-                              ) : (
-                                <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
-                              )}
 
-                              {row.priceVariation > 0 ? (
-                                <ArrowUpwardIcon sx={{ fontSize: '1rem !important' }} />
-                              ) : !row.priceVariation ? null : (
-                                <ArrowDownwardIcon sx={{ fontSize: '1rem !important' }} />
-                              )}
-                            </BoxWrapperRow>
-                          </TableCellCustom>
-                        ) : null}
+                        <TableCellCustom sx={{ width: '20%' }} align="right">
+                          <CustomTypo>{formatPercentage(row.allocation)}</CustomTypo>
+                        </TableCellCustom>
+
+                        <TableCellCustom sx={{ width: '20%' }} align="right">
+                          <BoxWrapperRow gap={1} sx={{ justifyContent: 'flex-end' }}>
+                            {formatPercentage(row.priceVariation) === '0.00%' ? (
+                              <Tooltip
+                                enterTouchDelay={0}
+                                title={formatPercentage(row.priceVariation, 10)}
+                                sx={{ ml: 1, cursor: 'pointer' }}
+                              >
+                                <div>
+                                  <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
+                                </div>
+                              </Tooltip>
+                            ) : (
+                              <CustomTypo>{formatPercentage(row.priceVariation)}</CustomTypo>
+                            )}
+
+                            {row.priceVariation > 0 ? (
+                              <ArrowUpwardIcon sx={{ fontSize: '1rem !important' }} />
+                            ) : !row.priceVariation ? null : (
+                              <ArrowDownwardIcon sx={{ fontSize: '1rem !important' }} />
+                            )}
+                          </BoxWrapperRow>
+                        </TableCellCustom>
                       </TableRow>
                     )
                   })}
 
                   {filteredTokenDetails.length > 5 ? (
                     <TableRow>
-                      <TableCellCustom colSpan={isMD ? 5 : 3} align="center">
+                      <TableCellCustom colSpan={3} align="center">
                         <BoxWrapperRow gap={1}>
                           <CustomTypography
                             variant="tableCellSubData"
@@ -486,7 +438,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                 <TableBody>
                   {filteredTokenDetails.length === 0 ? (
                     <TableRow>
-                      <TableEmptyCellCustom colSpan={isMD ? 5 : 4}>
+                      <TableEmptyCellCustom colSpan={3}>
                         <EmptyData />
                       </TableEmptyCellCustom>
                     </TableRow>
