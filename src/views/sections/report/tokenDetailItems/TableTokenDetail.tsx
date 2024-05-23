@@ -316,7 +316,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
 
                   {filteredTokenDetails.length > 5 ? (
                     <TableRow>
-                      <TableCellCustom colSpan={3} align="center">
+                      <TableCellCustom colSpan={5} align="center">
                         <BoxWrapperRow gap={1}>
                           <CustomTypography
                             variant="tableCellSubData"
