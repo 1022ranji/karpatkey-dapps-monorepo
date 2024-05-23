@@ -456,17 +456,10 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
 
                         const blockchains = row.blockchain.split('|')
 
-                        let blockchainFilter = blockchains.reduce(
-                          (acc: string, item: string, index: number) => {
-                            if (index % 2 === 0) {
-                              acc += `${item} | `
-                            } else {
-                              acc += `${item} | <br />`
-                            }
-                            return acc
-                          },
-                          ''
-                        )
+                        let blockchainFilter = blockchains.reduce((acc: string, item: string) => {
+                          acc += `${item} | `
+                          return acc
+                        }, '')
                         blockchainFilter = blockchainFilter.slice(0, -3)
 
                         const lastOne = filteredTokenDetails.length - 1 === index
@@ -507,10 +500,13 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
                                       md: '16px'
                                     },
                                     fontWeight: '400 !important',
-                                    fontStyle: 'italic'
+                                    fontStyle: 'italic',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'wrap',
+                                    overflow: 'hidden'
                                   }}
                                 >
-                                  <div dangerouslySetInnerHTML={{ __html: blockchainFilter }} />
+                                  {blockchainFilter}
                                 </CustomTypography>
                               </BoxWrapperColumn>
                             </TableCellCustom>

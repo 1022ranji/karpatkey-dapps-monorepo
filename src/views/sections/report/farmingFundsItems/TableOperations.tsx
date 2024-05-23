@@ -463,7 +463,10 @@ const TableOperations = React.memo((props: TableResultsProps) => {
                                       xs: '11px',
                                       md: '16px'
                                     },
-                                    fontWeight: '400 !important'
+                                    fontWeight: '400 !important',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'wrap',
+                                    overflow: 'hidden'
                                   }}
                                 >
                                   {row?.protocol}
@@ -536,7 +539,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
                           ref={lastRowRef}
                           sx={{
                             position: 'sticky',
-                            zIndex: 1,
+                            zIndex: 2,
                             backgroundColor: 'background.paper',
                             align: 'left',
                             left: 0,
