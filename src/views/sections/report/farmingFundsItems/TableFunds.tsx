@@ -428,25 +428,37 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                         position: 'sticky',
                         left: 0,
                         backgroundColor: 'background.paper',
-                        zIndex: 2
+                        zIndex: 2,
+                        padding: '0.6rem 0 0.6rem 0.5rem'
                       }}
                       align="left"
                     >
                       <CustomTypo>Position</CustomTypo>
                     </TableHeadCellCustom>
                     <TableHeadCellCustom
-                      sx={{ width: isDDay ? '33%' : '25%', zIndex: 1 }}
+                      sx={{
+                        width: isDDay ? '33%' : '25%',
+                        zIndex: 1,
+                        padding: '0.6rem 0 0.6rem 0.5rem'
+                      }}
                       align="right"
                     >
                       <CustomTypo>{isDDay ? 'DeFi funds' : 'Farming funds'}</CustomTypo>
                     </TableHeadCellCustom>
                     {!isDDay ? (
-                      <TableHeadCellCustom sx={{ width: '25%', zIndex: 1 }} align="right">
+                      <TableHeadCellCustom
+                        sx={{ width: '25%', zIndex: 1, padding: '0.6rem 0 0.6rem 0.5rem' }}
+                        align="right"
+                      >
                         <CustomTypo>Unclaimed rewards</CustomTypo>
                       </TableHeadCellCustom>
                     ) : null}
                     <TableHeadCellCustom
-                      sx={{ width: isDDay ? '33%' : '25%', zIndex: 1 }}
+                      sx={{
+                        width: isDDay ? '33%' : '25%',
+                        zIndex: 1,
+                        padding: '0.6rem 0.5rem 0.6rem 0'
+                      }}
                       align="right"
                     >
                       <BoxWrapperRow sx={{ justifyContent: 'flex-end' }} gap={0}>
@@ -491,7 +503,8 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                                 position: 'sticky',
                                 left: 0,
                                 zIndex: 1,
-                                backgroundColor: 'background.paper'
+                                backgroundColor: 'background.paper',
+                                padding: '0.6rem 0 0.6rem 0.5rem'
                               }}
                             >
                               <BoxWrapperRow
@@ -506,7 +519,10 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                                         xs: '11px',
                                         md: '16px'
                                       },
-                                      fontWeight: '400 !important'
+                                      fontWeight: '400 !important',
+                                      textOverflow: 'ellipsis',
+                                      whiteSpace: 'wrap',
+                                      overflow: 'hidden'
                                     }}
                                   >
                                     {row.protocol}
@@ -531,7 +547,8 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                             <TableCellCustom
                               sx={{
                                 ...(lastOne ? { borderBottom: 'none' } : {}),
-                                width: isDDay ? '25%' : '20%'
+                                width: isDDay ? '25%' : '20%',
+                                padding: '0.6rem 0 0.6rem 0.5rem'
                               }}
                               align="right"
                             >
@@ -559,7 +576,11 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                             </TableCellCustom>
                             {!isDDay ? (
                               <TableCellCustom
-                                sx={{ width: '20%', ...(lastOne ? { borderBottom: 'none' } : {}) }}
+                                sx={{
+                                  width: '20%',
+                                  ...(lastOne ? { borderBottom: 'none' } : {}),
+                                  padding: '0.6rem 0 0.6rem 0.5rem'
+                                }}
                                 align="right"
                               >
                                 <CustomTypo sx={{ fontWeight: '400 !important' }}>
@@ -572,7 +593,8 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                             <TableCellCustom
                               sx={{
                                 width: isDDay ? '25%' : '20%',
-                                ...(lastOne ? { borderBottom: 'none' } : {})
+                                ...(lastOne ? { borderBottom: 'none' } : {}),
+                                padding: '0.6rem 0.5rem 0.6rem 0'
                               }}
                               align="right"
                             >
@@ -597,7 +619,8 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                           backgroundColor: 'background.paper',
                           align: 'left',
                           left: 0,
-                          bottom: 0
+                          bottom: 0,
+                          padding: '0.6rem 0 0.6rem 0.5rem'
                         }}
                         colSpan={1}
                         align="left"
@@ -610,7 +633,8 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                           position: 'sticky',
                           bottom: 0,
                           zIndex: 1,
-                          backgroundColor: 'background.paper'
+                          backgroundColor: 'background.paper',
+                          padding: '0.6rem 0 0.6rem 0.5rem'
                         }}
                         align="right"
                       >
@@ -627,7 +651,8 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                             position: 'sticky',
                             bottom: 0,
                             zIndex: 1,
-                            backgroundColor: 'background.paper'
+                            backgroundColor: 'background.paper',
+                            padding: '0.6rem 0.5rem 0.6rem 0'
                           }}
                           align="right"
                         >
@@ -644,7 +669,8 @@ const TableFunds = React.memo((props: TableFundsProps) => {
                           position: 'sticky',
                           bottom: 0,
                           zIndex: 1,
-                          backgroundColor: 'background.paper'
+                          backgroundColor: 'background.paper',
+                          padding: '0.6rem 0.5rem 0.6rem 0'
                         }}
                         align="right"
                       >
