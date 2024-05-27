@@ -115,7 +115,6 @@ const TableOperations = React.memo((props: TableResultsProps) => {
   const [firstRowHeight, setFirstRowHeight] = React.useState(0)
   const [firstRowWidth, setFirstRowWidth] = React.useState(0)
   const [lastRowHeight, setLastRowHeight] = React.useState(0)
-  const [lastRowWidth, setLastRowWidth] = React.useState(0)
   React.useEffect(() => {
     if (firstRowRef.current) {
       setFirstRowHeight(firstRowRef.current.clientHeight + 20)
@@ -123,7 +122,6 @@ const TableOperations = React.memo((props: TableResultsProps) => {
     }
     if (lastRowRef.current) {
       setLastRowHeight(lastRowRef.current.clientHeight + 20)
-      setLastRowWidth(lastRowRef.current.offsetWidth + 20)
     }
   }, [])
 
@@ -625,7 +623,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               top: '50%',
               margin: 0,
               padding: 0,
-              right: `${lastRowWidth}px`,
+              right: '10px',
               animation: 'jumpInfiniteHorizontalRight 1.2s infinite',
               display: isScrollable.right ? 'block' : 'none',
               zIndex: 2
