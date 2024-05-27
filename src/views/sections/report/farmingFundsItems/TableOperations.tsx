@@ -40,9 +40,10 @@ export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
   fontStyle: 'normal',
   fontWeight: '700 !important',
   color: `custom.black.primary`,
-  textOverflow: 'ellipsis',
+  // textOverflow: 'ellipsis',
   whiteSpace: 'wrap',
-  overflow: 'hidden',
+  // wordBreak: 'break-word',
+  // overflow: 'hidden',
   [theme.breakpoints.down('md')]: {
     fontSize: '11px',
     lineHeight: '14px'
@@ -52,6 +53,14 @@ export const CustomTypo = styled(CustomTypography)(({ theme }) => ({
     lineHeight: '16px'
   }
 }))
+
+const replaceLastOccurrence = (str: string, searchChar: string, replaceChar: string) => {
+  const index = str.lastIndexOf(searchChar)
+  if (index === -1 || searchChar.length < 10) {
+    return str
+  }
+  return str.substring(0, index) + replaceChar + str.substring(index + searchChar.length)
+}
 
 const TableOperations = React.memo((props: TableResultsProps) => {
   const { operationDetails, totals } = props
@@ -104,10 +113,12 @@ const TableOperations = React.memo((props: TableResultsProps) => {
   const firstRowRef = React.useRef<HTMLElement>(null)
   const lastRowRef = React.useRef<HTMLElement>(null)
   const [firstRowHeight, setFirstRowHeight] = React.useState(0)
+  const [firstRowWidth, setFirstRowWidth] = React.useState(0)
   const [lastRowHeight, setLastRowHeight] = React.useState(0)
   React.useEffect(() => {
     if (firstRowRef.current) {
       setFirstRowHeight(firstRowRef.current.clientHeight + 20)
+      setFirstRowWidth(firstRowRef.current.clientWidth + 20)
     }
     if (lastRowRef.current) {
       setLastRowHeight(lastRowRef.current.clientHeight + 20)
@@ -358,7 +369,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               top: `${firstRowHeight}px`,
               margin: 0,
               padding: 0,
-              left: '50%',
+              left: '65%',
               animation: 'jumpInfiniteUp 1.2s infinite',
               display: isScrollable.top ? 'block' : 'none',
               zIndex: 2
@@ -372,7 +383,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               top: '50%',
               margin: 0,
               padding: 0,
-              left: `10px`,
+              left: `${firstRowWidth}px`,
               animation: 'jumpInfiniteHorizontalLeft 1.2s infinite',
               display: isScrollable.left ? 'block' : 'none',
               zIndex: 2
@@ -441,6 +452,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
                       {operationDetails.map((row: any, index: number) => {
                         const lastOne = operationDetails.length - 1 === index
 
+                        const position = replaceLastOccurrence(row?.position, '/', '\n/')
                         return (
                           <TableRow key={index} sx={{ zIndex: -20 }}>
                             <TableCellCustom
@@ -450,12 +462,13 @@ const TableOperations = React.memo((props: TableResultsProps) => {
                                 position: 'sticky',
                                 left: 0,
                                 zIndex: 1,
-                                backgroundColor: 'background.paper'
+                                backgroundColor: 'background.paper',
+                                maxWidth: '105px'
                               }}
                               align="left"
                             >
                               <BoxWrapperColumn>
-                                <CustomTypo>{row?.position}</CustomTypo>
+                                <CustomTypo>{position}</CustomTypo>
                                 <CustomTypography
                                   variant="tableCellSubData"
                                   sx={{
@@ -464,9 +477,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
                                       md: '16px'
                                     },
                                     fontWeight: '400 !important',
-                                    textOverflow: 'ellipsis',
-                                    whiteSpace: 'wrap',
-                                    overflow: 'hidden'
+                                    whiteSpace: 'nowrap'
                                   }}
                                 >
                                   {row?.protocol}
@@ -626,7 +637,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               bottom: `${lastRowHeight}px`,
               margin: 0,
               padding: 0,
-              left: '50%',
+              left: '65%',
               animation: 'jumpInfiniteDown 1.2s infinite',
               display: isScrollable.bottom ? 'block' : 'none',
               zIndex: 2
