@@ -113,13 +113,17 @@ const TableOperations = React.memo((props: TableResultsProps) => {
   const firstRowRef = React.useRef<HTMLElement>(null)
   const lastRowRef = React.useRef<HTMLElement>(null)
   const [firstRowHeight, setFirstRowHeight] = React.useState(0)
+  const [firstRowWidth, setFirstRowWidth] = React.useState(0)
   const [lastRowHeight, setLastRowHeight] = React.useState(0)
+  const [lastRowWidth, setLastRowWidth] = React.useState(0)
   React.useEffect(() => {
     if (firstRowRef.current) {
       setFirstRowHeight(firstRowRef.current.clientHeight + 20)
+      setFirstRowWidth(firstRowRef.current.clientWidth + 20)
     }
     if (lastRowRef.current) {
       setLastRowHeight(lastRowRef.current.clientHeight + 20)
+      setLastRowWidth(lastRowRef.current.offsetWidth + 20)
     }
   }, [])
 
@@ -367,7 +371,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               top: `${firstRowHeight}px`,
               margin: 0,
               padding: 0,
-              left: '50%',
+              left: '65%',
               animation: 'jumpInfiniteUp 1.2s infinite',
               display: isScrollable.top ? 'block' : 'none',
               zIndex: 2
@@ -381,7 +385,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               top: '50%',
               margin: 0,
               padding: 0,
-              left: `10px`,
+              left: `${firstRowWidth}px`,
               animation: 'jumpInfiniteHorizontalLeft 1.2s infinite',
               display: isScrollable.left ? 'block' : 'none',
               zIndex: 2
@@ -621,7 +625,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               top: '50%',
               margin: 0,
               padding: 0,
-              right: '10px',
+              right: `${lastRowWidth}px`,
               animation: 'jumpInfiniteHorizontalRight 1.2s infinite',
               display: isScrollable.right ? 'block' : 'none',
               zIndex: 2
@@ -635,7 +639,7 @@ const TableOperations = React.memo((props: TableResultsProps) => {
               bottom: `${lastRowHeight}px`,
               margin: 0,
               padding: 0,
-              left: '50%',
+              left: '65%',
               animation: 'jumpInfiniteDown 1.2s infinite',
               display: isScrollable.bottom ? 'block' : 'none',
               zIndex: 2
