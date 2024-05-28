@@ -33,7 +33,8 @@ export const CustomPopover = (props: CustomPopoverProps) => {
           style: {
             backgroundColor: 'transparent',
             boxShadow: 'none',
-            borderRadius: 0
+            borderRadius: 0,
+            maxHeight: 'fit-content'
           }
         }}
       >
