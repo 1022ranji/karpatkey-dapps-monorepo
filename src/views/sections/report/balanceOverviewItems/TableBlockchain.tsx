@@ -36,7 +36,7 @@ type TableBlockchainProps = {
   balanceOverviewBlockchain: { funds: number; row: string; column: string }[]
 } & BoxProps
 
-export const TableBlockchain = (props: TableBlockchainProps) => {
+export const TableBlockchain = React.memo((props: TableBlockchainProps) => {
   const { balanceOverviewBlockchain = [] } = props
 
   const { state } = useApp()
@@ -96,7 +96,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
       left: element.scrollLeft > 0,
       right: element.scrollLeft < element.scrollWidth - element.clientWidth - 1
     })
-  }, 100)
+  }, 250)
 
   React.useEffect(() => {
     checkScrollable()
@@ -116,7 +116,6 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
     }
   }, [])
 
-  // add
   const firstColumnRef = React.useRef<HTMLElement>(null)
   const [firstColumnWidth, setFirstColumnWidth] = React.useState(0)
   React.useEffect(() => {
@@ -142,7 +141,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
           margin: 0,
           padding: 0,
           left: `${firstColumnWidth}px`,
-          animation: 'jumpInfiniteHorizontalLeft 1.5s infinite',
+          animation: 'jumpInfiniteHorizontalLeft 1.2s infinite',
           display: isScrollable.left ? 'block' : 'none'
         }}
       >
@@ -160,22 +159,24 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
                     position: 'sticky',
                     left: 0,
                     zIndex: 1,
-                    backgroundColor: '#eeeded'
+                    backgroundColor: 'background.paper'
                   })
                 }}
                 align="left"
               >
                 <CustomTypo>Token category</CustomTypo>
               </TableHeadCellCustom>
-              {columns.map((blockchainName: any, index: number) => (
-                <TableHeadCellCustom
-                  key={index}
-                  sx={{ width: columnWidthPercentage }}
-                  align="right"
-                >
-                  <CustomTypo>{blockchainName}</CustomTypo>
-                </TableHeadCellCustom>
-              ))}
+              {columns.map((blockchainName: any, index: number) => {
+                return (
+                  <TableHeadCellCustom
+                    key={index}
+                    sx={{ width: columnWidthPercentage }}
+                    align="right"
+                  >
+                    <CustomTypo>{blockchainName}</CustomTypo>
+                  </TableHeadCellCustom>
+                )
+              })}
               <TableHeadCellCustom sx={{ width: columnWidthPercentage }} align="right">
                 <CustomTypo>Total</CustomTypo>
               </TableHeadCellCustom>
@@ -184,16 +185,21 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
           <TableBody>
             {balanceOverviewBlockchainFlattenedAndSortedByTotal.map((item: any, index: number) => {
               const { category, total = 0 } = item
+
+              const lastOne =
+                balanceOverviewBlockchainFlattenedAndSortedByTotal.length - 1 === index
+
               return (
                 <TableRow key={index}>
                   <TableCellCustom
                     sx={{
+                      ...(lastOne ? { borderBottom: 'none' } : {}),
                       width: columnWidthPercentage,
                       ...(columns.length > 2 && {
                         position: 'sticky',
                         left: 0,
                         zIndex: 1,
-                        backgroundColor: '#eeeded'
+                        backgroundColor: 'background.paper'
                       })
                     }}
                     align="left"
@@ -205,7 +211,10 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
                     return (
                       <TableCellCustom
                         key={index}
-                        sx={{ width: columnWidthPercentage }}
+                        sx={{
+                          ...(lastOne ? { borderBottom: 'none' } : {}),
+                          width: columnWidthPercentage
+                        }}
                         align="right"
                       >
                         <CustomTypo sx={{ fontWeight: '400 !important' }}>
@@ -214,7 +223,13 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
                       </TableCellCustom>
                     )
                   })}
-                  <TableCellCustom sx={{ width: columnWidthPercentage }} align="right">
+                  <TableCellCustom
+                    sx={{
+                      width: columnWidthPercentage,
+                      ...(lastOne ? { borderBottom: 'none' } : {})
+                    }}
+                    align="right"
+                  >
                     <CustomTypo>
                       {currency === 'USD'
                         ? formatCurrency(total || 0)
@@ -232,7 +247,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
                     position: 'sticky',
                     left: 0,
                     zIndex: 1,
-                    backgroundColor: '#eeeded'
+                    backgroundColor: 'background.paper'
                   })
                 }}
                 align="left"
@@ -271,7 +286,7 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
           margin: 0,
           padding: 0,
           right: '10px',
-          animation: 'jumpInfiniteHorizontalRight 1.5s infinite',
+          animation: 'jumpInfiniteHorizontalRight 1.2s infinite',
           display: isScrollable.right ? 'block' : 'none'
         }}
       >
@@ -279,4 +294,6 @@ export const TableBlockchain = (props: TableBlockchainProps) => {
       </Box>
     </Box>
   )
-}
+})
+
+TableBlockchain.displayName = 'TableBlockchain'
