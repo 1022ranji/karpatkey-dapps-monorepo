@@ -349,6 +349,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -440,6 +446,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -530,6 +542,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -620,6 +638,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -738,6 +762,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -856,6 +886,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -947,6 +983,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -1013,6 +1055,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -1143,6 +1191,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -1192,6 +1246,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   },
@@ -1234,6 +1294,12 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         month: 4,
         year: 2024,
         id: '4_2024'
+      },
+      {
+        label: 'May',
+        month: 5,
+        year: 2024,
+        id: '5_2024'
       }
     ]
   }
