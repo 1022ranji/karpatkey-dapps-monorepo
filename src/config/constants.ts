@@ -121,7 +121,7 @@ export const CHAINS: CHAIN[] = [
   {
     id: 42161,
     name: 'Arbitrum',
-    short: 'arb',
+    short: 'arb1',
     explorer: 'https://arbiscan.io/address',
     logo: '/images/protocols/arbitrum.svg'
   },
@@ -135,21 +135,21 @@ export const CHAINS: CHAIN[] = [
   {
     id: 10,
     name: 'Optimism',
-    short: 'opt',
+    short: 'oeth',
     explorer: 'https://optimistic.etherscan.io/address',
     logo: '/images/protocols/optimism.svg'
   },
   {
     id: 137,
     name: 'Polygon',
-    short: 'pol',
+    short: 'matic',
     explorer: 'https://polygonscan.com/address',
     logo: '/images/protocols/polygon.svg'
   },
   {
     id: 8453,
     name: 'Base',
-    short: 'bas',
+    short: 'base',
     explorer: 'https://basescan.org/address',
     logo: '/images/protocols/base.svg'
   },
