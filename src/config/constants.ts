@@ -285,6 +285,13 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         isSafe: true,
         order: 8,
         since: '3_2024'
+      },
+      {
+        address: '0x2923c1b5313f7375fdaee80b7745106debc1b53e',
+        chainId: 1,
+        isSafe: true,
+        order: 9,
+        since: '5_2024'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -698,6 +705,20 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         isSafe: true,
         order: 5,
         since: '4_2024'
+      },
+      {
+        address: '0x9ac1b015378B086496f529Be50d5979447De1730',
+        chainId: 42161,
+        isSafe: true,
+        order: 6,
+        since: '5_2024'
+      },
+      {
+        address: '0x9009b4411d0e1171cc042b77d7701f46b737fdb9',
+        chainId: 100,
+        isSafe: true,
+        order: 7,
+        since: '5_2024'
       }
     ],
     defaultCurrency: 'USD' as Currency,
@@ -822,6 +843,20 @@ export const FILTER_DAOS: FILTER_DAO[] = [
         isSafe: true,
         order: 5,
         since: '1_2024'
+      },
+      {
+        address: '0x720642ec9b04e56b296075ae95c262bf58b1eaeb',
+        chainId: 8453,
+        isSafe: true,
+        order: 6,
+        since: '5_2024'
+      },
+      {
+        address: '0x720642ec9b04e56b296075ae95c262bf58b1eaeb',
+        chainId: 10,
+        isSafe: true,
+        order: 7,
+        since: '5_2024'
       }
     ],
     defaultCurrency: 'USD' as Currency,
