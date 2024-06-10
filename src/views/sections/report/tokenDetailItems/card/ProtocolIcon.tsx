@@ -38,7 +38,8 @@ import {
   Sommelier,
   Dolomite,
   ChorusOne,
-  Bread
+  Bread,
+  Centrifuge
 } from 'components/icons/protocols'
 import { Safe } from 'components/icons/protocols/Safe'
 import * as React from 'react'
@@ -190,6 +191,9 @@ export const ProtocolIcon = (props: ProtocolIconProps) => {
       break
     case 'Bread':
       icon = <Bread width={24} height={24} />
+      break
+    case 'Centrifuge':
+      icon = <Centrifuge width={24} height={24} />
       break
     default:
       icon = <Default width={24} height={24} />
