@@ -10,7 +10,7 @@ import { getDAO } from 'src/utils'
 import InfoIcon from '@mui/icons-material/Info'
 import { Theme, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material'
 import * as React from 'react'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
@@ -74,7 +74,7 @@ export const TreasuryVariation = (props: TreasuryVariationProps) => {
 
   const [toggleType, setToggleType] = React.useState(0)
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const handleToggleOnChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
     if (newToggleType === null) return

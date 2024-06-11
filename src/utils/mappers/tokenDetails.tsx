@@ -1,4 +1,4 @@
-import { isYearAndMonthValid } from '../params'
+import { isFeatureFlagOne } from '../params'
 
 export const getTokenDetails = (data: any, dataV2: any) => {
   const rowsFilteredUSD = dataV2.filter((row: any) => {
@@ -324,7 +324,7 @@ export const getTokenDetailsGrouped = (data: any, dataV2: any) => {
 }
 
 export const getTokenDetailByPositionUSD = (data: any, params: any) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   const rowsFiltered = data.filter((row: any) => {
     return (
@@ -676,7 +676,7 @@ export const getTokenDetailByPositionUSD = (data: any, params: any) => {
 }
 
 export const getTokenDetailByPositionETH = (data: any, params: any) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   const rowsFiltered = data.filter((row: any) => {
     return (

@@ -1,6 +1,6 @@
 import { MIN_ALLOWED_ALLOCATION, OTHERS_SUMMARY_LIMIT } from '../../config/constants'
 import { SUMMARY_COLORS } from '../../config/theme'
-import { isYearAndMonthValid } from '../params'
+import { isFeatureFlagOne } from '../params'
 
 export const getSummaryFundsByTokenCategory = (data: any) => {
   const rows: { funds: number; label: string }[] = data
@@ -49,7 +49,7 @@ export const getSummaryFundsByTokenCategory = (data: any) => {
 }
 
 export const getSummaryFundsByType = (data: any, params: any) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   let rows: any[] = []
 
@@ -309,7 +309,7 @@ export const getFarmingResults = (
   financialMetricsFiltered: any,
   params: any
 ) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   let deFiResultsUSD = 0
   let deFiResultsETH = 0

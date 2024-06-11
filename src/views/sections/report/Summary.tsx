@@ -9,7 +9,7 @@ import {
 import * as React from 'react'
 import { Box, Theme } from '@mui/material'
 import { getDAO } from 'src/utils'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne, isFeatureFlagTwo } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { CarouselPieChart } from 'components/carousels/pieCharts'
@@ -57,7 +57,7 @@ export const Summary = (props: SummaryProps) => {
   /* eslint-disable */
   const negativeTotalValue = balanceOverviewType.find((item) => item.Total < 0)
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   // check if the screen size is md
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
@@ -81,6 +81,9 @@ export const Summary = (props: SummaryProps) => {
     width: isBreakpointOne ? 500 : isBreakpointTwo ? 350 : isBreakpointThree ? 320 : 300,
     height: isBreakpointOne ? 500 : isBreakpointTwo ? 320 : isBreakpointThree ? 300 : 280
   }
+
+  const params = { yearArg: year + '', monthArg: month + '' }
+  const isFeatureFlagTwoValue = isFeatureFlagTwo(params)
 
   return (
     <AnimatePresenceWrapper>
@@ -132,15 +135,17 @@ export const Summary = (props: SummaryProps) => {
                 : formatNumber(farmingResults || 0, 0)
             }
           />
-          <InfoCard
-            title="APY"
-            value={APY}
-            helpInfo={
-              isDDay
-                ? 'Calculated as (1+(DeFi results / DeFi initial funds at final prices))^12-1.'
-                : 'This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1.'
-            }
-          />
+          {!isFeatureFlagTwoValue && (
+            <InfoCard
+              title="APY"
+              value={APY}
+              helpInfo={
+                isDDay
+                  ? 'Calculated as (1+(DeFi results / DeFi initial funds at final prices))^12-1.'
+                  : 'This value is calculated as (1+(Farming Results / Initial Balance at Final Prices))^12-1.'
+              }
+            />
+          )}
         </Box>
         {isMD ? (
           <Box

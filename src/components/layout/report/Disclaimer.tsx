@@ -1,11 +1,11 @@
 import { BoxWrapperColumn } from 'components/wrappers'
 import { CustomTypography } from 'components/CustomTypography'
 import React from 'react'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { AnimatePresenceWrapper } from 'components/AnimatePresenceWrapper'
 
 export const Disclaimer = () => {
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn

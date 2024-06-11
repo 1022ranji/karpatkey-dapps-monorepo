@@ -1,4 +1,4 @@
-import { isYearAndMonthValid } from '../params'
+import { isFeatureFlagOne } from '../params'
 
 export const getFarmingFundsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
@@ -88,7 +88,7 @@ export const getOperationDetails = (data: any) => {
 }
 
 export const getFarmingFundsByProtocol = (data: any, params: any) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   let rowsUSD = []
 

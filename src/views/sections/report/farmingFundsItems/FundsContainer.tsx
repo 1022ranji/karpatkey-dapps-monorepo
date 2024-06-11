@@ -1,7 +1,7 @@
 import { AutocompleteOption, EmptyData, PaperSection, Form, Filter } from 'src/components'
 import { getFarmingFundsByProtocolTotals } from 'src/utils/mappers/farmingFunds'
 import * as React from 'react'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import TableFunds from './TableFunds'
 import { FilterContent } from 'components/filters/mobile/FilterContent'
@@ -147,7 +147,7 @@ export const FundsContainer = (props: FundsContainerProps) => {
 
   const isFilterActive = blockchainFilter || protocolFilter
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   // check if the screen size is md
   const isMD = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
