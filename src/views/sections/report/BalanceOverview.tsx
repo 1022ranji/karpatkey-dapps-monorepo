@@ -10,7 +10,7 @@ import {
 } from 'src/components'
 import { BoxProps, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import * as React from 'react'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 
 type BalanceOverview = { balanceOverviewType: any; balanceOverviewBlockchain: any } & BoxProps
@@ -62,7 +62,7 @@ export const BalanceOverview = (props: BalanceOverview) => {
 
   const [toggleType, setToggleType] = React.useState(1)
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const handleToggleOnChange = (event: React.MouseEvent<HTMLElement>, newToggleType: number) => {
     if (newToggleType === null) return

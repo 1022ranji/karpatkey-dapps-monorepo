@@ -11,7 +11,7 @@ import {
 } from 'src/components'
 import { FILTER_DAO, FILTER_DAOS, MONTHS } from 'src/config/constants'
 import { useApp } from 'src/contexts/app.context'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 
 export const Menu = () => {
   const { state } = useApp()
@@ -21,7 +21,7 @@ export const Menu = () => {
 
   const param = year && month ? { yearArg: year + '', monthArg: month + '' } : undefined
 
-  const isDDay = isYearAndMonthValid(param)
+  const isDDay = isFeatureFlagOne(param)
 
   const [anchorEl, setAnchorEl] = React.useState(null)
 

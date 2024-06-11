@@ -16,7 +16,7 @@ import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
-import { isYearAndMonthValid } from '../../../../utils/params'
+import { isFeatureFlagOne } from '../../../../utils/params'
 
 export type Section =
   | 'Summary'
@@ -54,7 +54,7 @@ export const Sidebar = () => {
     delay: 3000
   })
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
   const SECTIONS: Section[] = ['Summary', 'Balance overview', 'Treasury variation', 'Token detail']
 
   if (isDDay) {

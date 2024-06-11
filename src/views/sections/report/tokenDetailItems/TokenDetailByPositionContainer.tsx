@@ -1,7 +1,7 @@
 import { CardList } from './CardList'
 import { PaperSection, Form, Filter, EmptyData } from 'src/components'
 import * as React from 'react'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import { FilterContent } from 'components/filters/mobile/FilterContent'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -14,7 +14,7 @@ interface TokenDetailByPositionContainerProps {
 export const TokenDetailByPositionContainer = (props: TokenDetailByPositionContainerProps) => {
   const { tokenDetailByPosition = [] } = props
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const [blockchainFilter, setBlockchainFilter] = React.useState<Maybe<string>>(null)
   const [protocolFilter, setProtocolFilter] = React.useState<Maybe<string>>(null)

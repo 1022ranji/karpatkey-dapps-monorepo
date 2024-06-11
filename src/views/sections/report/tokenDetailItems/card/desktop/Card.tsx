@@ -8,7 +8,7 @@ import * as React from 'react'
 import { Common } from './Common'
 import { Ratios } from './Ratios'
 import { UNISWAP_PROTOCOL } from '../../../../../../config/constants'
-import { isYearAndMonthValid } from '../../../../../../utils/params'
+import { isFeatureFlagOne } from '../../../../../../utils/params'
 import { useApp } from '../../../../../../contexts/app.context'
 
 interface CardItemProps {
@@ -20,7 +20,7 @@ export const Card = (props: CardItemProps) => {
   const { card } = props
   const { blockchain, protocol, position, totalUsdValue, cardType, categories, deFiType } = card
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const { state } = useApp()
   const { currency } = state

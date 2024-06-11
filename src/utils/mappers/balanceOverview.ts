@@ -1,7 +1,7 @@
-import { isYearAndMonthValid } from '../params'
+import { isFeatureFlagOne } from '../params'
 
 export const getBalanceOverviewByType = (data: any, params: any) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   let rowsUSD = data.filter((row: any) => {
     return row.metric.includes('balances') || row.metric.includes('unclaim')

@@ -24,7 +24,7 @@ import {
   UniswapHelpText
 } from 'src/components'
 import { UNISWAP_PROTOCOL } from 'src/config/constants'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
@@ -60,7 +60,7 @@ const TableFunds = React.memo((props: TableFundsProps) => {
   const { funds, totals } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const { state } = useApp()
   const { currency } = state
