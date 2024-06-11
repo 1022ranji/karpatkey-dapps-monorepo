@@ -22,6 +22,7 @@ import {
   BoxWrapperRow
 } from 'src/components'
 import { Currency, DAOResume } from 'src/contexts/state'
+import { isFeatureFlagTwo } from '../../../utils/params'
 
 interface TableProps {
   daoResume: DAOResume[]
@@ -39,6 +40,9 @@ export const Table = ({
   const router = useRouter()
 
   const latestMonthLabel = MONTHS.find((month) => month.id === Number(latestMonth))?.label
+
+  const params = { yearArg: latestYear.toString(), monthArg: latestMonth.toString() }
+  const isFeatureFlagTwoValue = isFeatureFlagTwo(params)
 
   return (
     <TableContainer component={Box} sx={{ overflow: 'hidden' /* Hide scrollbars */ }}>
@@ -92,19 +96,21 @@ export const Table = ({
             >
               <Value value={`DeFi results`} fontWeight={600} fontSize={'16px'} />
             </TableCellCustom>
-            <TableCellCustom
-              align="left"
-              sx={{
-                minWidth: '115px',
-                maxWidth: '115px',
-                paddingY: '4px',
-                paddingLeft: '20px',
-                marginRight: '5px',
-                display: 'table-cell'
-              }}
-            >
-              <Value value={'APY'} fontWeight={600} fontSize={'16px'} />
-            </TableCellCustom>
+            {!isFeatureFlagTwoValue && (
+              <TableCellCustom
+                align="left"
+                sx={{
+                  minWidth: '115px',
+                  maxWidth: '115px',
+                  paddingY: '4px',
+                  paddingLeft: '20px',
+                  marginRight: '5px',
+                  display: 'table-cell'
+                }}
+              >
+                <Value value={'APY'} fontWeight={600} fontSize={'16px'} />
+              </TableCellCustom>
+            )}
             <TableEmptyCellCustom
               sx={{
                 minWidth: '25px',
@@ -264,21 +270,23 @@ export const Table = ({
                           />
                         </LinkWrapper>
                       </TableCellCustom>
-                      <TableCellCustom
-                        align="left"
-                        sx={{
-                          minWidth: '115px',
-                          maxWidth: '115px',
-                          paddingY: '4px',
-                          paddingLeft: '20px',
-                          marginRight: '5px',
-                          display: 'table-cell'
-                        }}
-                      >
-                        <LinkWrapper url={urlToReport}>
-                          <Value value={CUSTOM_APY} />
-                        </LinkWrapper>
-                      </TableCellCustom>
+                      {!isFeatureFlagTwoValue && (
+                        <TableCellCustom
+                          align="left"
+                          sx={{
+                            minWidth: '115px',
+                            maxWidth: '115px',
+                            paddingY: '4px',
+                            paddingLeft: '20px',
+                            marginRight: '5px',
+                            display: 'table-cell'
+                          }}
+                        >
+                          <LinkWrapper url={urlToReport}>
+                            <Value value={CUSTOM_APY} />
+                          </LinkWrapper>
+                        </TableCellCustom>
+                      )}
                       <TableCellCustom
                         align="left"
                         sx={{

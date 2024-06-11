@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { PieChart, EmptyData, PaperSection } from 'src/components'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Theme } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -12,7 +12,7 @@ interface FundsByProtocolContainerProps {
 export const FundsByProtocolContainer = (props: FundsByProtocolContainerProps) => {
   const { fundsByProtocol } = props
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const isBreakpointOne = useMediaQuery((theme: Theme) => theme.breakpoints.up(1000))
   const isBreakpointTwo = useMediaQuery((theme: Theme) => theme.breakpoints.up(720))

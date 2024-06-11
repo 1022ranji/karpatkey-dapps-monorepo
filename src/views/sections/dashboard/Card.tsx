@@ -15,6 +15,7 @@ import { formatCurrency, formatNumber, formatPercentage } from 'src/utils/format
 import { Value } from './Value'
 import moment from 'moment'
 import { FILTER_DAOS } from '../../../config/constants'
+import { isFeatureFlagTwo } from '../../../utils/params'
 
 interface CardProps {
   name: string
@@ -83,6 +84,9 @@ export const Card = (props: CardProps) => {
   const defaultCurrency =
     FILTER_DAOS.find((dao) => dao.keyName === keyName)?.defaultCurrency ?? currency
 
+  const params = { yearArg: latestYear.toString(), monthArg: latestMonth.toString() }
+  const isFeatureFlagTwoValue = isFeatureFlagTwo(params)
+
   return (
     <AnimatePresenceWrapper>
       <BoxWrapperColumn
@@ -109,7 +113,13 @@ export const Card = (props: CardProps) => {
             </LinkWrapper>
           </BoxWrapperRow>
         </BoxWrapperRow>
-        <BoxWrapperRow sx={{ justifyContent: 'space-between' }} gap={4}>
+        <BoxWrapperRow
+          sx={{
+            justifyContent: 'space-between',
+            alignItems: !isFeatureFlagTwoValue ? 'flex-start' : 'center'
+          }}
+          gap={4}
+        >
           <BoxWrapperColumn gap={4}>
             <NumberBlockCard
               amount={
@@ -133,7 +143,7 @@ export const Card = (props: CardProps) => {
               amount={formatPercentage(allocatedFunds || 0, 0)}
               title={'Allocated funds'}
             />
-            <NumberBlockCard amount={APY} title={'APY'} />
+            {!isFeatureFlagTwoValue && <NumberBlockCard amount={APY} title={'APY'} />}
           </BoxWrapperColumn>
         </BoxWrapperRow>
       </BoxWrapperColumn>

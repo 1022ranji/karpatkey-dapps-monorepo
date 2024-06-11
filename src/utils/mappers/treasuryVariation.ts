@@ -1,4 +1,4 @@
-import { isYearAndMonthValid } from '../params'
+import { isFeatureFlagOne } from '../params'
 
 export const getTreasuryVariationForThePeriod = (
   waterfall1ReportFiltered: any,
@@ -9,7 +9,7 @@ export const getTreasuryVariationForThePeriod = (
   const valuesForThePeriodUSD: any[] = []
   const valuesForThePeriodETH: any[] = []
 
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   const rowsUSD = isDDay
     ? waterfall1ReportFiltered
@@ -260,7 +260,7 @@ export const getTreasuryVariationForThePeriod = (
 }
 
 export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any) => {
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   const valuesForThisYearUSD: any[] = []
   const rowsUSD = data
@@ -446,7 +446,7 @@ export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any,
   const valuesForThePeriodDetailUSD: any[] = []
   const valuesForThePeriodDetailETH: any[] = []
 
-  const isDDay = isYearAndMonthValid({ yearArg: params?.year, monthArg: params?.month })
+  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
   let rowsUSD = data.filter((row: any) => {
     return (

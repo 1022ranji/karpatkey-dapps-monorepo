@@ -2,7 +2,7 @@ import React from 'react'
 import { PNG as Logo, BoxWrapperColumn } from 'components/index'
 import { Box, IconButton, ListItemButton, Slide } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import { isYearAndMonthValid } from '../../../../utils/params'
+import { isFeatureFlagOne } from '../../../../utils/params'
 import { Section } from 'components/layout/report/desktop/Sidebar'
 import { slugify } from '../../../../utils'
 import { useRouter } from 'next/router'
@@ -22,7 +22,7 @@ export const Header = () => {
   }
   const handleClose = () => setOpen(false)
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
   const SECTIONS: Section[] = ['Summary', 'Balance overview', 'Treasury variation', 'Token detail']
 
   if (isDDay) {

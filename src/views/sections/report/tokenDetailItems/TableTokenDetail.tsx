@@ -31,7 +31,7 @@ import {
   Tooltip
 } from '@mui/material'
 import * as React from 'react'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { useApp } from 'src/contexts/app.context'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { debounce } from 'lodash'
@@ -64,7 +64,7 @@ export const TableTokenDetail = React.memo((props: TableTokenDetailProps) => {
   const { filteredTokenDetails } = props
   const [displayAll, setDisplayAll] = React.useState(false)
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const { state } = useApp()
   const { currency } = state

@@ -3,7 +3,7 @@ import { FundsByProtocolContainer } from 'src/views/sections/report/farmingFunds
 import { OperationsContainer } from 'src/views/sections/report/farmingFundsItems/OperationsContainer'
 import { AnimatePresenceWrapper, CustomTypography, PaperSection } from 'src/components'
 import * as React from 'react'
-import { isYearAndMonthValid } from 'src/utils/params'
+import { isFeatureFlagOne } from 'src/utils/params'
 import { formatCurrency, formatNumber } from 'src/utils/format'
 import { useApp } from 'src/contexts/app.context'
 
@@ -22,7 +22,7 @@ export const FarmingFunds = (props: FarmingFundsProps) => {
     operationDetails
   } = props
 
-  const isDDay = isYearAndMonthValid()
+  const isDDay = isFeatureFlagOne()
 
   const { state } = useApp()
   const { currency } = state
