@@ -116,7 +116,7 @@ export const Card = (props: CardProps) => {
         <BoxWrapperRow
           sx={{
             justifyContent: 'space-between',
-            alignItems: !isFeatureFlagTwoValue ? 'flex-start' : 'center'
+            alignItems: !isFeatureFlagTwoValue ? 'center' : 'flex-start'
           }}
           gap={4}
         >
