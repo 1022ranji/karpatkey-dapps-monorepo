@@ -79,7 +79,7 @@ export const Card = (props: CardProps) => {
     }
   }
 
-  const formattedDate = moment(`${latestYear}-${latestMonth}`, 'YYYY-MM').format('MMM YY')
+  const formattedDate = moment(`${latestYear}-${latestMonth}`, 'YYYY-MM').format('MMM YYYY')
 
   const defaultCurrency =
     FILTER_DAOS.find((dao) => dao.keyName === keyName)?.defaultCurrency ?? currency
@@ -116,7 +116,7 @@ export const Card = (props: CardProps) => {
         <BoxWrapperRow
           sx={{
             justifyContent: 'space-between',
-            alignItems: !isFeatureFlagTwoValue ? 'flex-start' : 'center'
+            alignItems: !isFeatureFlagTwoValue ? 'center' : 'flex-start'
           }}
           gap={4}
         >
