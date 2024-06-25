@@ -1,4 +1,4 @@
-import { isFeatureFlagOne } from '../params'
+import { isFeatureFlagOne, isFeatureFlagTwo } from '../params'
 
 export const getTreasuryVariationForThePeriod = (
   waterfall1ReportFiltered: any,
@@ -369,7 +369,8 @@ export const getTreasuryVariationForThePeriodDetails = (
   const valuesForThePeriodDetailUSD: any[] = []
   const valuesForThePeriodDetailETH: any[] = []
 
-  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagOneVar = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagTwoVar = isFeatureFlagTwo({ yearArg: params?.year, monthArg: params?.month })
 
   let rowsUSD = dataUSD.filter((row: any) => {
     return (
@@ -386,7 +387,7 @@ export const getTreasuryVariationForThePeriodDetails = (
     )
   })
 
-  if (isDDay) {
+  if (isFeatureFlagOneVar) {
     rowsUSD = rowsUSD.reduce(
       (
         acc: any,
@@ -401,7 +402,9 @@ export const getTreasuryVariationForThePeriodDetails = (
             ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
             : metricCode === 'm11'
               ? {
-                  value: 'Ops-Price variation for initial balance',
+                  value: isFeatureFlagTwoVar
+                    ? 'Price variation for initial balance'
+                    : 'Ops-Price variation for initial balance',
                   shortedValue: 'NFP',
                   key: 2
                 }
@@ -576,7 +579,7 @@ export const getTreasuryVariationForThePeriodDetails = (
     )
   })
 
-  if (isDDay) {
+  if (isFeatureFlagOneVar) {
     rowsETH = rowsETH.reduce(
       (
         acc: any,
@@ -591,7 +594,9 @@ export const getTreasuryVariationForThePeriodDetails = (
             ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
             : metricCode === 'm11_eth'
               ? {
-                  value: 'Ops-Price variation for initial balance',
+                  value: isFeatureFlagTwoVar
+                    ? 'Price variation for initial balance'
+                    : 'Ops-Price variation for initial balance',
                   shortedValue: 'NFP',
                   key: 2
                 }
