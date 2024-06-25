@@ -259,182 +259,101 @@ export const getTreasuryVariationForThePeriod = (
   }
 }
 
-export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any) => {
+export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: any) => {
   const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
-  const valuesForThisYearUSD: any[] = []
-  const rowsUSD = data
-    .map((row: any) => {
-      const value = row?.metric?.replace(/[0-9][0-9] /g, '')?.trim()
-      const funds = +row?.metric_value ?? 0
+  const processData = (data: any) => {
+    const valuesForThisYear: any[] = []
+    const rows = data
+      .map((row: any) => {
+        const value = row?.metric?.replace(/[0-9][0-9] /g, '')?.trim()
+        const funds = +row?.metric_value ?? 0
 
-      let valueCustom = ''
-      let key = 0
-      if (isDDay) {
-        valueCustom = value
-        key = value?.includes('Initial Balance')
-          ? 1
-          : value?.includes('Operations')
-            ? 2
-            : value?.includes('DeFi')
-              ? 3
-              : 4
-      } else {
-        valueCustom = value.includes('Initial Balance')
-          ? 'Initial Balance'
-          : value?.includes('Operations')
-            ? 'NonFarming Results'
-            : value?.includes('DeFi')
-              ? 'Farming Results'
-              : value?.includes('Final Balance')
-                ? 'Final Balance'
-                : value
-        key = value?.includes('Initial Balance')
-          ? 1
-          : value?.includes('Operations')
-            ? 2
-            : value?.includes('DeFi')
-              ? 3
-              : 4
-      }
+        let valueCustom = ''
+        let key = 0
+        if (isDDay) {
+          valueCustom = value
+          key = value?.includes('Initial Balance')
+            ? 1
+            : value?.includes('Operations')
+              ? 2
+              : value?.includes('DeFi')
+                ? 3
+                : 4
+        } else {
+          valueCustom = value.includes('Initial Balance')
+            ? 'Initial Balance'
+            : value?.includes('Operations')
+              ? 'NonFarming Results'
+              : value?.includes('DeFi')
+                ? 'Farming Results'
+                : value?.includes('Final Balance')
+                  ? 'Final Balance'
+                  : value
+          key = value?.includes('Initial Balance')
+            ? 1
+            : value?.includes('Operations')
+              ? 2
+              : value?.includes('DeFi')
+                ? 3
+                : 4
+        }
 
-      return {
-        value: valueCustom,
-        funds,
-        key
-      }
-    })
-    .filter((elm: any) => elm)
-    .sort((a: any, b: any) => a.key - b.key)
-    .map((row: any, index: number) => {
-      valuesForThisYearUSD[index] = {
-        uv: row.funds,
-        pv:
-          index === 0 ? 0 : valuesForThisYearUSD[index - 1].pv + valuesForThisYearUSD[index - 1].uv
-      }
-      return {
-        ...row,
-        uv: row.funds,
-        pv:
-          index === 0 || index === 3
-            ? 0
-            : valuesForThisYearUSD[index - 1].pv + valuesForThisYearUSD[index - 1].uv
-      }
-    })
+        return {
+          value: valueCustom,
+          funds,
+          key
+        }
+      })
+      .filter((elm: any) => elm)
+      .sort((a: any, b: any) => a.key - b.key)
+      .map((row: any, index: number) => {
+        valuesForThisYear[index] = {
+          uv: row.funds,
+          pv: index === 0 ? 0 : valuesForThisYear[index - 1].pv + valuesForThisYear[index - 1].uv
+        }
+        return {
+          ...row,
+          uv: row.funds,
+          pv:
+            index === 0 || index === 3
+              ? 0
+              : valuesForThisYear[index - 1].pv + valuesForThisYear[index - 1].uv
+        }
+      })
 
-  const haveValueInitialBalanceUSD = rowsUSD?.find((row: any) => row.key === 1)
-  if (!haveValueInitialBalanceUSD && rowsUSD.length > 0) {
-    // add the initial balance at the beginning
-    rowsUSD.unshift({
-      funds: 0,
-      value: 'Initial Balance',
-      key: 1,
-      uv: 0,
-      pv: 0
-    })
+    const haveValueInitialBalance = rows?.find((row: any) => row.key === 1)
+    if (!haveValueInitialBalance && rows.length > 0) {
+      // add the initial balance at the beginning
+      rows.unshift({
+        funds: 0,
+        value: 'Initial Balance',
+        key: 1,
+        uv: 0,
+        pv: 0
+      })
+    }
+
+    if (rows.length > 0) {
+      const total = rows.reduce(
+        (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
+        0
+      )
+
+      rows.push({
+        funds: total,
+        value: 'Final Balance',
+        key: rows.length + 1,
+        uv: total,
+        pv: 0
+      })
+    }
+
+    return rows
   }
 
-  if (rowsUSD.length > 0) {
-    const total = rowsUSD.reduce(
-      (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
-      0
-    )
-
-    rowsUSD.push({
-      funds: total,
-      value: 'Final Balance',
-      key: rowsUSD.length + 1,
-      uv: total,
-      pv: 0
-    })
-  }
-
-  const valuesForThisYearETH: any[] = []
-  const rowsETH = dataETH
-    .map((row: any) => {
-      const value = row?.metric?.replace(/[0-9][0-9] /g, '')?.trim()
-      const funds = +row?.metric_value ?? 0
-
-      let valueCustom = ''
-      let key = 0
-      if (isDDay) {
-        valueCustom = value
-        key = value?.includes('Initial Balance')
-          ? 1
-          : value?.includes('Operations')
-            ? 2
-            : value?.includes('DeFi')
-              ? 3
-              : 4
-      } else {
-        valueCustom = value.includes('Initial Balance')
-          ? 'Initial Balance'
-          : value?.includes('Operations')
-            ? 'NonFarming Results'
-            : value?.includes('DeFi')
-              ? 'Farming Results'
-              : value?.includes('Final Balance')
-                ? 'Final Balance'
-                : value
-        key = value?.includes('Initial Balance')
-          ? 1
-          : value?.includes('Operations')
-            ? 2
-            : value?.includes('DeFi')
-              ? 3
-              : 4
-      }
-
-      return {
-        value: valueCustom,
-        funds,
-        key
-      }
-    })
-    .filter((elm: any) => elm)
-    .sort((a: any, b: any) => a.key - b.key)
-    .map((row: any, index: number) => {
-      valuesForThisYearETH[index] = {
-        uv: row.funds,
-        pv:
-          index === 0 ? 0 : valuesForThisYearETH[index - 1].pv + valuesForThisYearETH[index - 1].uv
-      }
-      return {
-        ...row,
-        uv: row.funds,
-        pv:
-          index === 0 || index === 3
-            ? 0
-            : valuesForThisYearETH[index - 1].pv + valuesForThisYearETH[index - 1].uv
-      }
-    })
-
-  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.key === 1)
-  if (!haveValueInitialBalanceETH && rowsETH.length > 0) {
-    // add the initial balance at the beginning
-    rowsETH.unshift({
-      funds: 0,
-      value: 'Initial Balance',
-      key: 1,
-      uv: 0,
-      pv: 0
-    })
-  }
-
-  if (rowsETH.length > 0) {
-    const total = rowsETH.reduce(
-      (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
-      0
-    )
-
-    rowsETH.push({
-      funds: total,
-      value: 'Final Balance',
-      key: rowsETH.length + 1,
-      uv: total,
-      pv: 0
-    })
-  }
+  const rowsUSD = processData(dataUSD)
+  const rowsETH = processData(dataETH)
 
   return {
     rowsUSD,
@@ -442,13 +361,17 @@ export const getTreasuryVariationHistory = (data: any, dataETH: any, params: any
   }
 }
 
-export const getTreasuryVariationForThePeriodDetails = (data: any, dataETH: any, params: any) => {
+export const getTreasuryVariationForThePeriodDetails = (
+  dataUSD: any,
+  dataETH: any,
+  params: any
+) => {
   const valuesForThePeriodDetailUSD: any[] = []
   const valuesForThePeriodDetailETH: any[] = []
 
   const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
 
-  let rowsUSD = data.filter((row: any) => {
+  let rowsUSD = dataUSD.filter((row: any) => {
     return (
       row.metric === 'non farming price variation' ||
       row.metric === 'usd initial balance & UR' ||
