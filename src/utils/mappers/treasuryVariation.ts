@@ -9,102 +9,150 @@ export const getTreasuryVariationForThePeriod = (
   const valuesForThePeriodUSD: any[] = []
   const valuesForThePeriodETH: any[] = []
 
-  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagOneVar = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagTwoVar = isFeatureFlagTwo({ yearArg: params?.year, monthArg: params?.month })
 
-  const rowsUSD = isDDay
-    ? waterfall1ReportFiltered
-        .map((row: any) => {
-          const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
-          const funds = +row?.metric_value ?? 0
+  let rowsUSD = []
+  if (isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+    rowsUSD = waterfall1ReportFiltered
+      .map((row: any) => {
+        const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
+        const funds = +row?.metric_value ?? 0
 
-          const key = value?.includes('Initial Balance')
-            ? 1
-            : value?.includes('Operations')
-              ? 2
-              : value?.includes('DeFi')
-                ? 3
-                : 4
+        const key = value?.includes('Initial Balance')
+          ? 1
+          : value?.includes('Operations')
+            ? 2
+            : value?.includes('DeFi')
+              ? 3
+              : 0
 
-          return {
-            value,
-            funds,
-            key
-          }
-        })
-        .filter((elm: any) => elm)
-        .sort((a: any, b: any) => a.key - b.key)
-        .map((row: any, index: number) => {
-          valuesForThePeriodUSD[index] = {
-            uv: row.funds,
-            pv:
-              index === 0
-                ? 0
-                : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
-          }
-          return {
-            ...row,
-            uv: row.funds,
-            pv:
-              index === 0 || index === 3
-                ? 0
-                : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
-          }
-        })
-    : financialMetricsFiltered
-        .filter((row: any) => {
-          return (
-            row.metric_code === 'm07' ||
-            row.metric_code === 'm08' ||
-            row.metric_code === 'm09' ||
-            row.metric_code === 'm10'
-          )
-        })
-        .reduce((acc: any, obj: any): { funds: number; value: string; key: number }[] => {
-          const metricCode = obj['metric_code'].trim()
-          const metric = obj['metric'].trim()
-          const metricKey =
-            metricCode === 'm07'
-              ? { value: 'Initial Balance', key: 1 }
-              : metricCode === 'm10'
-                ? { value: 'NonFarming Results', key: 2 }
-                : metricCode === 'm09'
-                  ? { value: 'Farming Results', key: 3 }
-                  : metricCode === 'm08'
-                    ? { value: 'Final Balance', key: 4 }
-                    : { value: metric, key: 5 }
+        return {
+          value,
+          funds,
+          key
+        }
+      })
+      .filter((elm: any) => elm && elm.key !== 0)
+      .sort((a: any, b: any) => a.key - b.key)
+      .map((row: any, index: number) => {
+        valuesForThePeriodUSD[index] = {
+          uv: row.funds,
+          pv:
+            index === 0
+              ? 0
+              : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
+        }
+        return {
+          ...row,
+          uv: row.funds,
+          pv:
+            index === 0 || index === 3
+              ? 0
+              : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
+        }
+      })
+  } else if (!isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+    rowsUSD = financialMetricsFiltered
+      .filter((row: any) => {
+        return (
+          row.metric_code === 'm07' ||
+          row.metric_code === 'm08' ||
+          row.metric_code === 'm09' ||
+          row.metric_code === 'm10'
+        )
+      })
+      .reduce((acc: any, obj: any): { funds: number; value: string; key: number }[] => {
+        const metricCode = obj['metric_code'].trim()
+        const metric = obj['metric'].trim()
+        const metricKey =
+          metricCode === 'm07'
+            ? { value: 'Initial Balance', key: 1 }
+            : metricCode === 'm10'
+              ? { value: 'NonFarming Results', key: 2 }
+              : metricCode === 'm09'
+                ? { value: 'Farming Results', key: 3 }
+                : metricCode === 'm08'
+                  ? { value: 'Final Balance', key: 4 }
+                  : { value: metric, key: 5 }
 
-          if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
+        if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
 
-          const value = obj['metric_value'] ? obj['metric_value'] : 0
-          acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + value
-          acc[metricKey.key - 1] = {
-            ...acc[metricKey.key - 1],
-            ...metricKey
-          }
+        const value = obj['metric_value'] ? obj['metric_value'] : 0
+        acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + value
+        acc[metricKey.key - 1] = {
+          ...acc[metricKey.key - 1],
+          ...metricKey
+        }
 
-          return acc
-        }, [])
-        .filter((elm: any) => elm)
-        .sort((a: any, b: any) => a.key - b.key)
-        .map((row: any, index: number) => {
-          valuesForThePeriodUSD[index] = {
-            uv: row.funds,
-            pv:
-              index === 0
-                ? 0
-                : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
-          }
-          return {
-            ...row,
-            uv: row.funds,
-            pv:
-              index === 0 || index === 3
-                ? 0
-                : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
-          }
-        })
+        return acc
+      }, [])
+      .filter((elm: any) => elm)
+      .sort((a: any, b: any) => a.key - b.key)
+      .map((row: any, index: number) => {
+        valuesForThePeriodUSD[index] = {
+          uv: row.funds,
+          pv:
+            index === 0
+              ? 0
+              : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
+        }
+        return {
+          ...row,
+          uv: row.funds,
+          pv:
+            index === 0 || index === 3
+              ? 0
+              : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
+        }
+      })
+  } else {
+    rowsUSD = waterfall1ReportFiltered
+      .map((row: any) => {
+        const valueCleaned = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
+        const funds = +row?.metric_value ?? 0
 
-  const haveValueInitialBalanceUSD = rowsUSD?.find((row: any) => row.key === 1)
+        const key = valueCleaned?.includes('Initial Balance')
+          ? 1
+          : valueCleaned?.includes('Price Var')
+            ? 2
+            : valueCleaned?.includes('Operations')
+              ? 3
+              : valueCleaned?.includes('DeFi')
+                ? 4
+                : 0
+
+        const value = valueCleaned?.includes('Price Var')
+          ? 'Price variation for initial balance'
+          : valueCleaned
+        return {
+          value,
+          funds,
+          key
+        }
+      })
+      .filter((elm: any) => elm && elm.key !== 0)
+      .sort((a: any, b: any) => a.key - b.key)
+      .map((row: any, index: number) => {
+        valuesForThePeriodUSD[index] = {
+          uv: row.funds,
+          pv:
+            index === 0
+              ? 0
+              : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
+        }
+        return {
+          ...row,
+          uv: row.funds,
+          pv:
+            index === 0 || index === 4
+              ? 0
+              : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
+        }
+      })
+  }
+
+  const haveValueInitialBalanceUSD = rowsUSD?.find((row: any) => row.value === 'Initial Balance')
   if (!haveValueInitialBalanceUSD && rowsUSD.length > 0) {
     // add the initial balance at the beginning
     rowsUSD.unshift({
@@ -116,7 +164,7 @@ export const getTreasuryVariationForThePeriod = (
     })
   }
 
-  const haveValueFinalBalanceUSD = rowsUSD?.find((row: any) => row.key === 4)
+  const haveValueFinalBalanceUSD = rowsUSD?.find((row: any) => row.value === 'Final Balance')
   if (!haveValueFinalBalanceUSD && rowsUSD.length > 0) {
     const total = rowsUSD.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,
@@ -132,100 +180,148 @@ export const getTreasuryVariationForThePeriod = (
     })
   }
 
-  const rowsETH = isDDay
-    ? waterfall1ReportETHFiltered
-        .map((row: any) => {
-          const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
-          const funds = +row?.metric_value ?? 0
+  let rowsETH = []
+  if (isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+    rowsETH = waterfall1ReportETHFiltered
+      .map((row: any) => {
+        const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
+        const funds = +row?.metric_value_eth ?? 0
 
-          const key = value?.includes('Initial Balance')
-            ? 1
-            : value?.includes('Operations')
-              ? 2
-              : value?.includes('DeFi')
-                ? 3
-                : 4
+        const key = value?.includes('Initial Balance')
+          ? 1
+          : value?.includes('Operations')
+            ? 2
+            : value?.includes('DeFi')
+              ? 3
+              : 0
 
-          return {
-            value,
-            funds,
-            key
-          }
-        })
-        .filter((elm: any) => elm)
-        .sort((a: any, b: any) => a.key - b.key)
-        .map((row: any, index: number) => {
-          valuesForThePeriodETH[index] = {
-            uv: row.funds,
-            pv:
-              index === 0
-                ? 0
-                : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
-          }
-          return {
-            ...row,
-            uv: row.funds,
-            pv:
-              index === 0 || index === 3
-                ? 0
-                : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
-          }
-        })
-    : financialMetricsFiltered
-        .filter((row: any) => {
-          return (
-            row.metric_code === 'm07' ||
-            row.metric_code === 'm08' ||
-            row.metric_code === 'm09' ||
-            row.metric_code === 'm10'
-          )
-        })
-        .reduce((acc: any, obj: any): { funds: number; value: string; key: number }[] => {
-          const metricCode = obj['metric_code'].trim()
-          const metric = obj['metric'].trim()
-          const metricKey =
-            metricCode === 'm07'
-              ? { value: 'Initial Balance', key: 1 }
-              : metricCode === 'm10'
-                ? { value: 'NonFarming Results', key: 2 }
-                : metricCode === 'm09'
-                  ? { value: 'Farming Results', key: 3 }
-                  : metricCode === 'm08'
-                    ? { value: 'Final Balance', key: 4 }
-                    : { value: metric, key: 5 }
+        return {
+          value,
+          funds,
+          key
+        }
+      })
+      .filter((elm: any) => elm && elm.key !== 0)
+      .sort((a: any, b: any) => a.key - b.key)
+      .map((row: any, index: number) => {
+        valuesForThePeriodETH[index] = {
+          uv: row.funds,
+          pv:
+            index === 0
+              ? 0
+              : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
+        }
+        return {
+          ...row,
+          uv: row.funds,
+          pv:
+            index === 0 || index === 3
+              ? 0
+              : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
+        }
+      })
+  } else if (!isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+    rowsETH = financialMetricsFiltered
+      .filter((row: any) => {
+        return (
+          row.metric_code === 'm07' ||
+          row.metric_code === 'm08' ||
+          row.metric_code === 'm09' ||
+          row.metric_code === 'm10'
+        )
+      })
+      .reduce((acc: any, obj: any): { funds: number; value: string; key: number }[] => {
+        const metricCode = obj['metric_code'].trim()
+        const metric = obj['metric'].trim()
+        const metricKey =
+          metricCode === 'm07'
+            ? { value: 'Initial Balance', key: 1 }
+            : metricCode === 'm10'
+              ? { value: 'NonFarming Results', key: 2 }
+              : metricCode === 'm09'
+                ? { value: 'Farming Results', key: 3 }
+                : metricCode === 'm08'
+                  ? { value: 'Final Balance', key: 4 }
+                  : { value: metric, key: 5 }
 
-          if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
+        if (!acc[metricKey.key - 1]) acc[metricKey.key - 1] = { funds: 0, ...metricKey }
 
-          const value = obj['metric_value'] ? obj['metric_value'] : 0
-          acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + value
-          acc[metricKey.key - 1] = {
-            ...acc[metricKey.key - 1],
-            ...metricKey
-          }
+        const value = obj['metric_value'] ? obj['metric_value'] : 0
+        acc[metricKey.key - 1].funds = acc[metricKey.key - 1].funds + value
+        acc[metricKey.key - 1] = {
+          ...acc[metricKey.key - 1],
+          ...metricKey
+        }
 
-          return acc
-        }, [])
-        .filter((elm: any) => elm)
-        .sort((a: any, b: any) => a.key - b.key)
-        .map((row: any, index: number) => {
-          valuesForThePeriodETH[index] = {
-            uv: row.funds,
-            pv:
-              index === 0
-                ? 0
-                : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
-          }
-          return {
-            ...row,
-            uv: row.funds,
-            pv:
-              index === 0 || index === 3
-                ? 0
-                : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
-          }
-        })
+        return acc
+      }, [])
+      .filter((elm: any) => elm)
+      .sort((a: any, b: any) => a.key - b.key)
+      .map((row: any, index: number) => {
+        valuesForThePeriodETH[index] = {
+          uv: row.funds,
+          pv:
+            index === 0
+              ? 0
+              : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
+        }
+        return {
+          ...row,
+          uv: row.funds,
+          pv:
+            index === 0 || index === 3
+              ? 0
+              : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
+        }
+      })
+  } else {
+    rowsETH = waterfall1ReportETHFiltered
+      .map((row: any) => {
+        const valueCleaned = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
+        const funds = +row?.metric_value_eth ?? 0
 
-  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.key === 1)
+        const key = valueCleaned?.includes('Initial Balance')
+          ? 1
+          : valueCleaned?.includes('Price Var')
+            ? 2
+            : valueCleaned?.includes('Operations')
+              ? 3
+              : valueCleaned?.includes('DeFi')
+                ? 4
+                : 0
+
+        const value = valueCleaned?.includes('Price Var')
+          ? 'Price variation for initial balance'
+          : valueCleaned
+
+        return {
+          value,
+          funds,
+          key
+        }
+      })
+      .filter((elm: any) => elm && elm.key !== 0)
+      .sort((a: any, b: any) => a.key - b.key)
+      .map((row: any, index: number) => {
+        valuesForThePeriodETH[index] = {
+          uv: row.funds,
+          pv:
+            index === 0
+              ? 0
+              : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
+        }
+        return {
+          ...row,
+          uv: row.funds,
+          pv:
+            index === 0 || index === 4
+              ? 0
+              : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
+        }
+      })
+  }
+
+  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.key === 'Initial Balance')
   if (!haveValueInitialBalanceETH && rowsETH.length > 0) {
     // add the initial balance at the beginning
     rowsETH.unshift({
@@ -237,7 +333,7 @@ export const getTreasuryVariationForThePeriod = (
     })
   }
 
-  const haveValueFinalBalanceETH = rowsETH?.find((row: any) => row.key === 4)
+  const haveValueFinalBalanceETH = rowsETH?.find((row: any) => row.value === 'Final Balance')
   if (!haveValueFinalBalanceETH && rowsETH.length > 0) {
     const total = rowsETH.reduce(
       (accumulator: number, currentValue: { funds: number }) => accumulator + currentValue.funds,

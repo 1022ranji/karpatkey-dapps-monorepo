@@ -180,13 +180,13 @@ export const Waterfall = ({
   )
   if (isMoreThanMDAndLessThanLG) {
     charactersLength = 8
-    fontSize = 12
+    fontSize = 11
   }
 
   const isLessThanMD = useMediaQuery((theme: any) => theme.breakpoints.down('md'))
   if (isLessThanMD) {
     charactersLength = 8
-    fontSize = 12
+    fontSize = 9
   }
 
   return (
