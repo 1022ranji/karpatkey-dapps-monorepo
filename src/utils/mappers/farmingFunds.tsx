@@ -10,7 +10,7 @@ export const getFarmingFundsTotal = (data: any) => {
 
 export const getDeFiFundsTotal = (data: any) => {
   return data.reduce((acc: any, obj: any): number => {
-    const value = obj?.waterfall_metric === '03 DeFi results' ? obj?.metric_value : 0
+    const value = obj?.waterfall_metric === '04 DeFi results' ? obj?.metric_value : 0
     acc += value
     return acc
   }, 0)
