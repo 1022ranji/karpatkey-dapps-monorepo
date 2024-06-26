@@ -356,7 +356,8 @@ export const getTreasuryVariationForThePeriod = (
 }
 
 export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: any) => {
-  const isDDay = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagOneVar = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagTwoVar = isFeatureFlagTwo({ yearArg: params?.year, monthArg: params?.month })
 
   const processData = (data: any) => {
     const valuesForThisYear: any[] = []
@@ -367,7 +368,7 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
 
         let valueCustom = ''
         let key = 0
-        if (isDDay) {
+        if (isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
           valueCustom = value
           key = value?.includes('Initial Balance')
             ? 1
@@ -375,8 +376,8 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
               ? 2
               : value?.includes('DeFi')
                 ? 3
-                : 4
-        } else {
+                : 0
+        } else if (!isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
           valueCustom = value.includes('Initial Balance')
             ? 'Initial Balance'
             : value?.includes('Operations')
@@ -392,7 +393,21 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
               ? 2
               : value?.includes('DeFi')
                 ? 3
-                : 4
+                : 0
+        } else {
+          valueCustom = value
+
+          valueCustom = value?.includes('Price Var') ? 'Price variation for initial balance' : value
+
+          key = value?.includes('Initial Balance')
+            ? 1
+            : value?.includes('Price Var')
+              ? 2
+              : value?.includes('Operations')
+                ? 3
+                : value?.includes('DeFi')
+                  ? 4
+                  : 0
         }
 
         return {
@@ -401,7 +416,7 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
           key
         }
       })
-      .filter((elm: any) => elm)
+      .filter((elm: any) => elm && elm.key !== 0)
       .sort((a: any, b: any) => a.key - b.key)
       .map((row: any, index: number) => {
         valuesForThisYear[index] = {
@@ -412,13 +427,13 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
           ...row,
           uv: row.funds,
           pv:
-            index === 0 || index === 3
+            index === 0 || index === (isFeatureFlagTwoVar ? 4 : 3)
               ? 0
               : valuesForThisYear[index - 1].pv + valuesForThisYear[index - 1].uv
         }
       })
 
-    const haveValueInitialBalance = rows?.find((row: any) => row.key === 1)
+    const haveValueInitialBalance = rows?.find((row: any) => row.value === 'Initial Balance')
     if (!haveValueInitialBalance && rows.length > 0) {
       // add the initial balance at the beginning
       rows.unshift({
