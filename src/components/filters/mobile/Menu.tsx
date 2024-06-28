@@ -391,7 +391,7 @@ export const Menu = () => {
               .map((option: FILTER_DAO) => {
                 const imageWithViewerInter =
                   option?.keyName === 'CoW DAO'
-                    ? { height: 42 }
+                    ? { width: 42 }
                     : option?.keyName === 'Safe<>Gnosis'
                       ? { width: 60 }
                       : option?.keyName === 'Lido'
