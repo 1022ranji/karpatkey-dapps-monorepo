@@ -165,10 +165,22 @@ export const Menu = () => {
 
   const imageHeight = { height: dao?.keyName === 'CoW DAO' ? 48 : 38 }
 
+  const daoWithValues: FILTER_DAO | undefined = getDAO(selectedDAO)
   const imageWidthViewer =
-    dao?.keyName === 'Lido' ? {} : dao?.keyName === 'CoW DAO' ? {} : { width: 30 }
+    daoWithValues?.keyName === 'Lido'
+      ? {}
+      : daoWithValues?.keyName === 'CoW DAO'
+        ? {}
+        : daoWithValues?.keyName === 'Safe<>Gnosis'
+          ? { width: 44 }
+          : { width: 30 }
 
-  const imageHeightViewer = { height: dao?.keyName === 'CoW DAO' ? 34 : 30 }
+  const imageHeightViewer =
+    daoWithValues?.keyName === 'CoW DAO'
+      ? { height: 34 }
+      : daoWithValues?.keyName === 'Safe<>Gnosis'
+        ? { height: 44 }
+        : { height: 30 }
 
   return (
     <>
@@ -377,7 +389,21 @@ export const Menu = () => {
             {FILTER_DAOS.filter((option: FILTER_DAO) => option.isEnabled)
               .sort((a, b) => (a.name < b.name ? -1 : 1))
               .map((option: FILTER_DAO) => {
-                const imageHeightViewerInter = { height: option?.keyName === 'CoW DAO' ? 42 : 30 }
+                const imageWithViewerInter =
+                  option?.keyName === 'CoW DAO'
+                    ? { height: 42 }
+                    : option?.keyName === 'Safe<>Gnosis'
+                      ? { width: 60 }
+                      : option?.keyName === 'Lido'
+                        ? { width: 24 }
+                        : { width: 30 }
+
+                const imageHeightViewerInter =
+                  option?.keyName === 'CoW DAO'
+                    ? { height: 42 }
+                    : option?.keyName === 'Safe<>Gnosis'
+                      ? { height: 42 }
+                      : { height: 30 }
 
                 return (
                   <CustomButton
@@ -396,7 +422,7 @@ export const Menu = () => {
                           src={option.icon}
                           alt={option.name}
                           key={option.name}
-                          {...imageWidthViewer}
+                          {...imageWithViewerInter}
                           {...imageHeightViewerInter}
                         />
                       </Box>
