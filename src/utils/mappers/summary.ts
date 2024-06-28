@@ -1,6 +1,6 @@
 import { MIN_ALLOWED_ALLOCATION, OTHERS_SUMMARY_LIMIT } from '../../config/constants'
 import { SUMMARY_COLORS } from '../../config/theme'
-import { isFeatureFlagOne, isFeatureFlagTwo } from '../params'
+import { isFeatureFlagOne, isFeatureFlagThree } from '../params'
 
 export const getSummaryFundsByTokenCategory = (data: any) => {
   const rows: { funds: number; label: string }[] = data
@@ -310,7 +310,10 @@ export const getFarmingResults = (
   params: any
 ) => {
   const isFeatureFlagOneVar = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
-  const isFeatureFlagTwoVar = isFeatureFlagTwo({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagThreeVar = isFeatureFlagThree({
+    yearArg: params?.year,
+    monthArg: params?.month
+  })
 
   let deFiResultsUSD = 0
   let deFiResultsETH = 0
@@ -318,7 +321,7 @@ export const getFarmingResults = (
   if (isFeatureFlagOneVar) {
     deFiResultsUSD = waterfall1ReportFiltered.reduce((acc: any, obj: any): number => {
       const value =
-        obj?.waterfall_metric === (isFeatureFlagTwoVar ? '04 DeFi results' : '03 DeFi results')
+        obj?.waterfall_metric === (isFeatureFlagThreeVar ? '04 DeFi results' : '03 DeFi results')
           ? obj?.metric_value
           : 0
       acc = acc + value
@@ -335,7 +338,7 @@ export const getFarmingResults = (
   if (isFeatureFlagOneVar) {
     deFiResultsETH = waterfall1ReportETHFiltered.reduce((acc: any, obj: any): number => {
       const value =
-        obj?.waterfall_metric === (isFeatureFlagTwoVar ? '04 DeFi results' : '03 DeFi results')
+        obj?.waterfall_metric === (isFeatureFlagThreeVar ? '04 DeFi results' : '03 DeFi results')
           ? obj?.metric_value
           : 0
       acc = acc + value

@@ -1,4 +1,4 @@
-import { isFeatureFlagOne, isFeatureFlagTwo } from '../params'
+import { isFeatureFlagOne, isFeatureFlagThree } from '../params'
 
 export const getTreasuryVariationForThePeriod = (
   waterfall1ReportFiltered: any,
@@ -10,10 +10,13 @@ export const getTreasuryVariationForThePeriod = (
   const valuesForThePeriodETH: any[] = []
 
   const isFeatureFlagOneVar = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
-  const isFeatureFlagTwoVar = isFeatureFlagTwo({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagThreeVar = isFeatureFlagThree({
+    yearArg: params?.year,
+    monthArg: params?.month
+  })
 
   let rowsUSD = []
-  if (isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+  if (isFeatureFlagOneVar && !isFeatureFlagThreeVar) {
     rowsUSD = waterfall1ReportFiltered
       .map((row: any) => {
         const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
@@ -52,7 +55,7 @@ export const getTreasuryVariationForThePeriod = (
               : valuesForThePeriodUSD[index - 1].pv + valuesForThePeriodUSD[index - 1].uv
         }
       })
-  } else if (!isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+  } else if (!isFeatureFlagOneVar && !isFeatureFlagThreeVar) {
     rowsUSD = financialMetricsFiltered
       .filter((row: any) => {
         return (
@@ -181,7 +184,7 @@ export const getTreasuryVariationForThePeriod = (
   }
 
   let rowsETH = []
-  if (isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+  if (isFeatureFlagOneVar && !isFeatureFlagThreeVar) {
     rowsETH = waterfall1ReportETHFiltered
       .map((row: any) => {
         const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
@@ -220,7 +223,7 @@ export const getTreasuryVariationForThePeriod = (
               : valuesForThePeriodETH[index - 1].pv + valuesForThePeriodETH[index - 1].uv
         }
       })
-  } else if (!isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+  } else if (!isFeatureFlagOneVar && !isFeatureFlagThreeVar) {
     rowsETH = financialMetricsFiltered
       .filter((row: any) => {
         return (
@@ -357,7 +360,10 @@ export const getTreasuryVariationForThePeriod = (
 
 export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: any) => {
   const isFeatureFlagOneVar = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
-  const isFeatureFlagTwoVar = isFeatureFlagTwo({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagThreeVar = isFeatureFlagThree({
+    yearArg: params?.year,
+    monthArg: params?.month
+  })
 
   const processData = (data: any) => {
     const valuesForThisYear: any[] = []
@@ -368,7 +374,7 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
 
         let valueCustom = ''
         let key = 0
-        if (isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+        if (isFeatureFlagOneVar && !isFeatureFlagThreeVar) {
           valueCustom = value
           key = value?.includes('Initial Balance')
             ? 1
@@ -377,7 +383,7 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
               : value?.includes('DeFi')
                 ? 3
                 : 0
-        } else if (!isFeatureFlagOneVar && !isFeatureFlagTwoVar) {
+        } else if (!isFeatureFlagOneVar && !isFeatureFlagThreeVar) {
           valueCustom = value.includes('Initial Balance')
             ? 'Initial Balance'
             : value?.includes('Operations')
@@ -427,7 +433,7 @@ export const getTreasuryVariationHistory = (dataUSD: any, dataETH: any, params: 
           ...row,
           uv: row.funds,
           pv:
-            index === 0 || index === (isFeatureFlagTwoVar ? 4 : 3)
+            index === 0 || index === (isFeatureFlagThreeVar ? 4 : 3)
               ? 0
               : valuesForThisYear[index - 1].pv + valuesForThisYear[index - 1].uv
         }
@@ -481,7 +487,10 @@ export const getTreasuryVariationForThePeriodDetails = (
   const valuesForThePeriodDetailETH: any[] = []
 
   const isFeatureFlagOneVar = isFeatureFlagOne({ yearArg: params?.year, monthArg: params?.month })
-  const isFeatureFlagTwoVar = isFeatureFlagTwo({ yearArg: params?.year, monthArg: params?.month })
+  const isFeatureFlagThreeVar = isFeatureFlagThree({
+    yearArg: params?.year,
+    monthArg: params?.month
+  })
 
   let rowsUSD = dataUSD.filter((row: any) => {
     return (
@@ -513,7 +522,7 @@ export const getTreasuryVariationForThePeriodDetails = (
             ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
             : metricCode === 'm11'
               ? {
-                  value: isFeatureFlagTwoVar
+                  value: isFeatureFlagThreeVar
                     ? 'Price variation for initial balance'
                     : 'Ops-Price variation for initial balance',
                   shortedValue: 'NFP',
@@ -705,7 +714,7 @@ export const getTreasuryVariationForThePeriodDetails = (
             ? { value: 'Initial Balance', shortedValue: 'IB', key: 1 }
             : metricCode === 'm11_eth'
               ? {
-                  value: isFeatureFlagTwoVar
+                  value: isFeatureFlagThreeVar
                     ? 'Price variation for initial balance'
                     : 'Ops-Price variation for initial balance',
                   shortedValue: 'NFP',

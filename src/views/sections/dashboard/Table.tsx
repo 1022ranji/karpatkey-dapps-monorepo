@@ -207,7 +207,11 @@ export const Table = ({
                       >
                         <LinkWrapper url={urlToReport}>
                           <Box sx={{ textAlign: 'center' }}>
-                            <img src={icon} alt={name} height={48} />
+                            {name.includes('CoW') ? (
+                              <img src={icon} alt={name} height={64} />
+                            ) : (
+                              <img src={icon} alt={name} height={48} />
+                            )}
                           </Box>
                         </LinkWrapper>
                       </TableCellCustom>
@@ -238,7 +242,9 @@ export const Table = ({
                             value={
                               defaultCurrency === 'USD'
                                 ? formatCurrency(totalFundsUSD || 0)
-                                : `${formatNumber(totalFundsETH || 0, 0)} ETH`
+                                : totalFundsETH
+                                  ? `${formatNumber(totalFundsETH || 0, 0)} ETH`
+                                  : '-'
                             }
                           />
                         </LinkWrapper>
@@ -272,7 +278,9 @@ export const Table = ({
                             value={
                               defaultCurrency === 'USD'
                                 ? formatCurrency(deFiResultsUSD || 0)
-                                : `${formatNumber(deFiResultsETH || 0, 0)} ETH`
+                                : deFiResultsETH
+                                  ? `${formatNumber(deFiResultsETH || 0, 0)} ETH`
+                                  : '-'
                             }
                           />
                         </LinkWrapper>
