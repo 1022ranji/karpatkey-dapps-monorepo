@@ -376,30 +376,37 @@ export const Menu = () => {
             <CustomTypo sx={{ color: 'primary.main', marginY: '20px' }}>Select DAO</CustomTypo>
             {FILTER_DAOS.filter((option: FILTER_DAO) => option.isEnabled)
               .sort((a, b) => (a.name < b.name ? -1 : 1))
-              .map((option: FILTER_DAO) => (
-                <CustomButton
-                  key={option.id}
-                  onClick={() => {
-                    setIsMenuBeenDisplayed(true)
-                    setIsDAOSelectionBeenDisplayed(false)
-                    setSelectedDAO(option.id)
-                    setSelectedPeriod(null)
-                    setSelectedCurrency(null)
-                  }}
-                  sx={{ justifyContent: 'center' }}
-                >
-                  <BoxWrapperRow gap={2}>
-                    <img
-                      src={option.icon}
-                      alt={option.name}
-                      key={option.name}
-                      {...imageWidthViewer}
-                      {...imageHeightViewer}
-                    />
-                    <CustomTypo>{option.name}</CustomTypo>
-                  </BoxWrapperRow>
-                </CustomButton>
-              ))}
+              .map((option: FILTER_DAO) => {
+                const imageHeightViewerInter = { height: option?.keyName === 'CoW DAO' ? 42 : 30 }
+
+                return (
+                  <CustomButton
+                    key={option.id}
+                    onClick={() => {
+                      setIsMenuBeenDisplayed(true)
+                      setIsDAOSelectionBeenDisplayed(false)
+                      setSelectedDAO(option.id)
+                      setSelectedPeriod(null)
+                      setSelectedCurrency(null)
+                    }}
+                  >
+                    <BoxWrapperRow gap={2} sx={{ width: '100%' }}>
+                      <Box sx={{ width: '40%', justifyContent: 'center', paddingLeft: '45px' }}>
+                        <img
+                          src={option.icon}
+                          alt={option.name}
+                          key={option.name}
+                          {...imageWidthViewer}
+                          {...imageHeightViewerInter}
+                        />
+                      </Box>
+                      <Box sx={{ width: '60%', textAlign: 'left' }}>
+                        <CustomTypo>{option.name}</CustomTypo>
+                      </Box>
+                    </BoxWrapperRow>
+                  </CustomButton>
+                )
+              })}
           </BoxWrapperColumn>
         </BoxWrapperColumn>
 
