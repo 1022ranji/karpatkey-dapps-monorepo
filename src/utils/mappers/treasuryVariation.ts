@@ -188,7 +188,7 @@ export const getTreasuryVariationForThePeriod = (
     rowsETH = waterfall1ReportETHFiltered
       .map((row: any) => {
         const value = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
-        const funds = +row?.metric_value_eth ?? 0
+        const funds = +row?.metric_value ?? 0
 
         const key = value?.includes('Initial Balance')
           ? 1
@@ -281,7 +281,7 @@ export const getTreasuryVariationForThePeriod = (
     rowsETH = waterfall1ReportETHFiltered
       .map((row: any) => {
         const valueCleaned = row?.waterfall_metric?.replace(/[0-9][0-9] /g, '')?.trim()
-        const funds = +row?.metric_value_eth ?? 0
+        const funds = +row?.metric_value ?? 0
 
         const key = valueCleaned?.includes('Initial Balance')
           ? 1
@@ -324,7 +324,7 @@ export const getTreasuryVariationForThePeriod = (
       })
   }
 
-  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.key === 'Initial Balance')
+  const haveValueInitialBalanceETH = rowsETH?.find((row: any) => row.value === 'Initial Balance')
   if (!haveValueInitialBalanceETH && rowsETH.length > 0) {
     // add the initial balance at the beginning
     rowsETH.unshift({
